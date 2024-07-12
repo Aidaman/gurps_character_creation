@@ -12,33 +12,35 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GURPS Character Creation',
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Colors.indigo,
-          onPrimary: Color(0xFEFEFEFF),
-          secondary: Colors.deepOrange,
-          onSecondary: Color(0xFEFEFEFF),
-          error: Colors.red,
-          onError: Color(0xFEFEFEFF),
-          surface: Color(0xFEFEFEFF),
-          onSurface: Color(0x212121FF),
+          primary: Color(0xFFFF4040),
+          onPrimary: Color(0xFFfefefe),
+          secondary: Color(0xFF4527A0),
+          onSecondary: Color(0xFFfefefe),
+          error: Color(0xFFFF6E40),
+          onError: Color(0xFFfefefe),
+          surface: Color(0xFFfefefe),
+          onSurface: Color(0xFF212121),
         ),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
-          colorScheme: const ColorScheme(
-        brightness: Brightness.dark,
-        primary: Colors.indigo,
-        onPrimary: Color(0xFEFEFEFF),
-        secondary: Colors.deepOrange,
-        onSecondary: Color(0xFEFEFEFF),
-        error: Colors.red,
-        onError: Color(0xFEFEFEFF),
-        surface: Color(0x212121FF),
-        onSurface: Color(0xFEFEFEFF),
-      )),
+        colorScheme: const ColorScheme(
+          brightness: Brightness.dark,
+          primary: Color(0xFFEF9A9A),
+          onPrimary: Color(0xFF212121),
+          secondary: Color(0xFFB39DDB),
+          onSecondary: Color(0xFEFEFEFF),
+          error: Colors.red,
+          onError: Color(0xFEFEFEFF),
+          surface: Color(0xFF212121),
+          onSurface: Color(0xFFfefefe),
+        ),
+      ),
+      themeMode: ThemeMode.system,
       routes: Map.fromEntries(
         routes.map(
           (route) => MapEntry(route.destination, (context) => route.page),
