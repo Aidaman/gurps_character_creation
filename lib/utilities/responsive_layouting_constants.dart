@@ -1,0 +1,9 @@
+const int MAX_MOBILE_WIDTH = 800;
+
+const int MAX_DESKTOP_COLUMNS = 2;
+
+const double DESKTOP_COLUMNS_SPACING = 16;
+
+const double MOBILE_HORIZONTAL_PADDING = 16;
+
+const double MOBILE_VERTICAL_PADDING = 4;
