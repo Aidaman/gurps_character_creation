@@ -8,11 +8,12 @@ class RouteName {
   final IconData iconName;
   final Widget page;
 
-  RouteName(
-      {required this.name,
-      required this.destination,
-      required this.iconName,
-      required this.page});
+  RouteName({
+    required this.name,
+    required this.destination,
+    required this.iconName,
+    required this.page,
+  });
 }
 
 final List<RouteName> routes = [
