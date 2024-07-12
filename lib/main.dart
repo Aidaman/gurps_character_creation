@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
+import 'package:gurps_character_creation/utilities/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +39,12 @@ class MyApp extends StatelessWidget {
         surface: Color(0x212121FF),
         onSurface: Color(0xFEFEFEFF),
       )),
-      home: const MyHomePage(),
+      routes: Map.fromEntries(
+        routes.map(
+          (route) => MapEntry(route.destination, (context) => route.page),
+        ),
+      ),
+      initialRoute: '/',
     );
   }
 }

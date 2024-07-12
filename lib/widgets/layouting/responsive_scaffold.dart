@@ -1,69 +1,100 @@
+import 'dart:ffi';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
-class ResponsiveScaffold extends StatelessWidget {
+class ResponsiveScaffold extends StatefulWidget {
   final Widget body;
+  final Widget? drawer;
+  final Widget? endDrawer;
+  final int selectedIndex;
 
-  const ResponsiveScaffold({super.key, required this.body});
+  const ResponsiveScaffold({
+    super.key,
+    required this.body,
+    this.drawer,
+    this.endDrawer,
+    required this.selectedIndex,
+  });
+
+  @override
+  State<ResponsiveScaffold> createState() => _ResponsiveScaffoldState();
+}
+
+class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
+  void _onItemTapped(int index) {
+    Navigator.pushNamed(context, routes[index].destination);
+  }
+
+  Widget getBody(BuildContext context) {
+    final bool isDesktop =
+        kIsWeb || MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH;
+
+    if (!isDesktop) {
+      return widget.body;
+    }
+
+    return Row(children: [
+      NavigationRail(
+        destinations: routes
+            .map(
+              (e) => NavigationRailDestination(
+                icon: Icon(e.iconName),
+                label: Text(e.name),
+              ),
+            )
+            .toList(),
+        onDestinationSelected: _onItemTapped,
+        selectedIndex: widget.selectedIndex,
+        elevation: 4,
+        indicatorColor: Colors.red[800],
+        useIndicator: true,
+        labelType: NavigationRailLabelType.all,
+        backgroundColor: Colors.grey[100],
+        unselectedIconTheme: const IconThemeData(color: Colors.black),
+        unselectedLabelTextStyle: const TextStyle(color: Colors.black),
+        selectedIconTheme: const IconThemeData(color: Colors.white),
+        selectedLabelTextStyle: TextStyle(color: Colors.red[800]),
+      ),
+      widget.body
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop =
+        kIsWeb || MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH;
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: Colors.red[900],
       ),
-      body: body,
-      drawer: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth <= MAX_MOBILE_WIDTH) {
-            return Container();
-          }
-
-          return Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                const DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                  ),
-                  child: Text('Menu'),
-                ),
-                ListTile(
-                  title: const Text('Item 1'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: const Text('Item 2'),
-                  onTap: () {},
-                ),
-              ],
+      drawer: widget.drawer,
+      endDrawer: widget.endDrawer,
+      body: getBody(context),
+      bottomNavigationBar: isDesktop
+          ? null
+          : BottomNavigationBar(
+              currentIndex: widget.selectedIndex,
+              items: routes
+                  .map(
+                    (e) => BottomNavigationBarItem(
+                      icon: Icon(e.iconName),
+                      label: e.name,
+                    ),
+                  )
+                  .toList(),
+              onTap: _onItemTapped,
+              unselectedIconTheme: const IconThemeData(color: Colors.black),
+              selectedIconTheme: IconThemeData(color: Colors.red[800]),
+              elevation: 4,
+              backgroundColor: Colors.grey[100],
+              unselectedLabelStyle: const TextStyle(color: Colors.black),
+              selectedLabelStyle: TextStyle(color: Colors.red[800]),
             ),
-          );
-        },
-      ),
-      bottomNavigationBar: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth > MAX_MOBILE_WIDTH) {
-            return Container();
-          }
-
-          return BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.business),
-                label: 'Business',
-              ),
-            ],
-            selectedItemColor: Colors.amber[800],
-          );
-        },
-      ),
     );
   }
 }

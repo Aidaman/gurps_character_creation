@@ -1,4 +1,4 @@
-const int MAX_MOBILE_WIDTH = 800;
+const int MAX_MOBILE_WIDTH = 600;
 
 const int MAX_DESKTOP_COLUMNS = 2;
 
