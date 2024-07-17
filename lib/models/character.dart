@@ -1,8 +1,7 @@
-import 'package:gurps_character_creation/models/traits/advantage.dart';
-import 'package:gurps_character_creation/models/traits/disadvantage.dart';
-import 'package:gurps_character_creation/models/traits/skills/magic_spell.dart';
-import 'package:gurps_character_creation/models/traits/skills/skill.dart';
-import 'package:gurps_character_creation/models/traits/skills/skill_stat.dart';
+// import 'package:gurps_character_creation/models/traits/advantage.dart';
+// import 'package:gurps_character_creation/models/traits/disadvantage.dart';
+import 'package:gurps_character_creation/models/skills/skill.dart';
+import 'package:gurps_character_creation/models/skills/skill_stat.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 
 class Character {
@@ -27,10 +26,8 @@ class Character {
   int dexterity;
   int health;
 
-  List<Advantage> advantages;
-  List<Disadvantage> disadvantages;
   List<Skill> skills;
-  List<MagicSpell> magicSpells;
+  List<Trait> traits;
 
   // Calculated characteristics
   int get hitPoints => strength + sizeModifier;
@@ -40,14 +37,22 @@ class Character {
   int get basicMove => (basicSpeed - (basicSpeed % 1)).toInt();
 
   int get remainingPoints {
-    int totalCount = [
-      ...advantages,
-      ...disadvantages,
-      ...skills,
-      ...magicSpells,
-    ].map((Trait t) => t.cost).reduce((sum, cost) => sum + cost);
+    int traitsTotalCount = traits
+        .map(
+          (Trait t) => t.basePoints,
+        )
+        .reduce(
+          (sum, cost) => sum + cost,
+        );
+    int skillsTotalCount = skills
+        .map(
+          (Skill s) => s.basePoints + s.investedPoints,
+        )
+        .reduce(
+          (sum, cost) => sum + cost,
+        );
 
-    return points - totalCount;
+    return points - (traitsTotalCount + skillsTotalCount);
   }
 
   Character({
@@ -68,59 +73,52 @@ class Character {
     required this.iq,
     required this.dexterity,
     required this.health,
-    required this.advantages,
-    required this.disadvantages,
     required this.skills,
-    required this.magicSpells,
+    required this.traits,
   });
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        id: json["id"],
-        gameId: json["gameId"],
-        strength: json["strength"],
-        dexterity: json["dexterity"],
-        iq: json["iq"],
-        health: json["health"],
-        height: json["height"],
-        age: json["age"],
-        points: json["points"],
-        maxDisadvantages: json["maxDisadvantages"],
-        sizeModifier: json["sizeModifier"],
-        fatiguePoints: json["fatiguePoints"],
-        name: json["name"],
-        avatarURL: json["avatarURL"],
-        playerName: json["playerName"],
-        religion: json["religion"],
-        appearanceDetails: json["appearanceDetails"],
-        advantages: List<Advantage>.from(json["advantages"].map((x) => x)),
-        disadvantages:
-            List<Disadvantage>.from(json["disadvantages"].map((x) => x)),
-        skills: List<Skill>.from(json["skills"].map((x) => x)),
-        magicSpells: List<MagicSpell>.from(json["magicSpells"].map((x) => x)),
+        id: json['id'],
+        gameId: json['gameId'],
+        strength: json['strength'],
+        dexterity: json['dexterity'],
+        iq: json['iq'],
+        health: json['health'],
+        height: json['height'],
+        age: json['age'],
+        points: json['points'],
+        maxDisadvantages: json['maxDisadvantages'],
+        sizeModifier: json['sizeModifier'],
+        fatiguePoints: json['fatiguePoints'],
+        name: json['name'],
+        avatarURL: json['avatarURL'],
+        playerName: json['playerName'],
+        religion: json['religion'],
+        appearanceDetails: json['appearanceDetails'],
+        skills: List<Skill>.from(json['skills'].map((x) => x)),
+        traits: List<Trait>.from(json['traits'].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "gameId": gameId,
-        "strength": strength,
-        "dexterity": dexterity,
-        "iq": iq,
-        "health": health,
-        "height": height,
-        "age": age,
-        "points": points,
-        "maxDisadvantages": maxDisadvantages,
-        "sizeModifier": sizeModifier,
-        "fatiguePoints": fatiguePoints,
-        "name": name,
-        "avatarURL": avatarURL,
-        "playerName": playerName,
-        "religion": religion,
-        "appearanceDetails": appearanceDetails,
-        "advantages": List<dynamic>.from(advantages.map((x) => x)),
-        "disadvantages": List<dynamic>.from(disadvantages.map((x) => x)),
-        "skills": List<dynamic>.from(skills.map((x) => x)),
-        "magicSpells": List<dynamic>.from(magicSpells.map((x) => x)),
+        'id': id,
+        'gameId': gameId,
+        'strength': strength,
+        'dexterity': dexterity,
+        'iq': iq,
+        'health': health,
+        'height': height,
+        'age': age,
+        'points': points,
+        'maxDisadvantages': maxDisadvantages,
+        'sizeModifier': sizeModifier,
+        'fatiguePoints': fatiguePoints,
+        'name': name,
+        'avatarURL': avatarURL,
+        'playerName': playerName,
+        'religion': religion,
+        'appearanceDetails': appearanceDetails,
+        'skills': List<dynamic>.from(skills.map((x) => x)),
+        'traits': List<dynamic>.from(traits.map((x) => x)),
       };
 
   int getPrimaryAttribute(SkillStat stat) {
@@ -133,6 +131,10 @@ class Character {
         return iq;
       case SkillStat.HT:
         return health;
+      case SkillStat.Per:
+        return perception;
+      case SkillStat.Will:
+        return will;
     }
   }
 }

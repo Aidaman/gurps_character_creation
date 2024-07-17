@@ -60,7 +60,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         labelType: NavigationRailLabelType.all,
         backgroundColor: Theme.of(context).colorScheme.surface,
       ),
-      widget.body
+      Expanded(child: widget.body)
     ]);
   }
 

@@ -1,26 +1,56 @@
-// ignore_for_file: constant_identifier_names
+import 'dart:convert';
 
-enum TraitTypes {
-  MENTAl,
-  PHYSICAL,
-  SOCIAL,
-  MAGICAL,
-  SKILLS,
-  PERKS,
-  QUIRKS,
-  SPELLS,
-  PSIONIC,
-}
+import 'package:gurps_character_creation/models/traits/skill_bonus.dart';
+import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
+
+List<Trait> traitFromJson(String str) =>
+    List<Trait>.from(json.decode(str).map((x) => Trait.fromJson(x)));
+
+String traitToJson(List<Trait> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Trait {
   final String name;
-  final String description;
-  final TraitTypes traitType;
-  final int cost;
+  final String type;
+  final int basePoints;
+  final TraitModifier? modifier;
+  final String reference;
+  final List<String> categories;
+  final SkillBonus? skillBonus;
 
-  Trait(
-      {required this.name,
-      required this.description,
-      required this.traitType,
-      required this.cost});
+  Trait({
+    required this.name,
+    required this.type,
+    required this.basePoints,
+    this.modifier,
+    required this.reference,
+    required this.categories,
+    this.skillBonus,
+  });
+
+  factory Trait.fromJson(Map<String, dynamic> json) {
+    return Trait(
+      name: json['name'] ?? '',
+      type: json['type'] ?? '',
+      basePoints: json['base_points'] ?? 0,
+      modifier: json['modifier'] == null
+          ? null
+          : TraitModifier.fromJson(json['modifier']),
+      reference: json['reference'] ?? '',
+      categories: List<String>.from(json['categories'].map((x) => x)),
+      skillBonus: json['skill_bonus'] == null
+          ? null
+          : SkillBonus.fromJson(json['skill_bonus']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'type': type,
+        'base_points': basePoints,
+        'modifier': modifier?.toJson(),
+        'reference': reference,
+        'categories': List<dynamic>.from(categories.map((x) => x)),
+        'skill_bonus': skillBonus?.toJson(),
+      };
 }
