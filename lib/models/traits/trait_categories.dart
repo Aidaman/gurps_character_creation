@@ -19,10 +19,10 @@ extension TraitCategoriesExtension on TraitCategories {
 
   Color get colorValue => switch (this) {
         TraitCategories.NONE => Colors.white,
-        TraitCategories.ADVANTAGE => Colors.amberAccent,
-        TraitCategories.DISADVANTAGE => Colors.redAccent,
-        TraitCategories.QUIRK => Colors.indigoAccent,
-        TraitCategories.PERK => Colors.purpleAccent,
+        TraitCategories.ADVANTAGE => Colors.amber[800]!,
+        TraitCategories.DISADVANTAGE => Colors.red[800]!,
+        TraitCategories.QUIRK => Colors.blue[800]!,
+        TraitCategories.PERK => Colors.purple[800]!,
       };
 
   static TraitCategories? fromString(String category) {

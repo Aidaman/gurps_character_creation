@@ -35,15 +35,14 @@ class Homepage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('No data found.'));
-          } else {
-            final List<Trait> traits = snapshot.data!;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                final trait = traits[index];
-                return TraitView(trait: trait);
-              },
-            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
           }
+
+          final List<Trait> traits = snapshot.data!;
+          return ListView.builder(
+            itemBuilder: (context, index) => TraitView(trait: traits[index]),
+          );
         },
       ),
     );
