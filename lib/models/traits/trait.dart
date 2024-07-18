@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:gurps_character_creation/models/traits/skill_bonus.dart';
+import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
 
 List<Trait> traitFromJson(String str) =>
@@ -15,7 +16,7 @@ class Trait {
   final int basePoints;
   final TraitModifier? modifier;
   final String reference;
-  final List<String> categories;
+  final List<TraitCategories> categories;
   final SkillBonus? skillBonus;
 
   Trait({
@@ -29,6 +30,8 @@ class Trait {
   });
 
   factory Trait.fromJson(Map<String, dynamic> json) {
+    final List<String> categories =
+        List<String>.from(json['categories'].map((x) => x));
     return Trait(
       name: json['name'] ?? '',
       type: json['type'] ?? '',
@@ -37,7 +40,7 @@ class Trait {
           ? null
           : TraitModifier.fromJson(json['modifier']),
       reference: json['reference'] ?? '',
-      categories: List<String>.from(json['categories'].map((x) => x)),
+      categories: _categoriesFromStringList(categories),
       skillBonus: json['skill_bonus'] == null
           ? null
           : SkillBonus.fromJson(json['skill_bonus']),
@@ -53,4 +56,18 @@ class Trait {
         'categories': List<dynamic>.from(categories.map((x) => x)),
         'skill_bonus': skillBonus?.toJson(),
       };
+
+  static List<TraitCategories> _categoriesFromStringList(
+    List<String> categoriesStringList,
+  ) {
+    return List<TraitCategories>.from(
+      categoriesStringList
+          .map(
+            (e) => TraitCategoriesExtension.fromString(e),
+          )
+          .where(
+            (element) => element != TraitCategories.NONE,
+          ),
+    );
+  }
 }

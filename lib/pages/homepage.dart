@@ -4,6 +4,7 @@ import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/widgets/button/button.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
+import 'package:gurps_character_creation/widgets/traits/trait.dart';
 
 class Homepage extends StatelessWidget {
   Future<List<Trait>> loadTraits() async {
@@ -39,12 +40,7 @@ class Homepage extends StatelessWidget {
             return ListView.builder(
               itemBuilder: (context, index) {
                 final trait = traits[index];
-                return ListTile(
-                  title: Text(trait.name),
-                  subtitle: Text(
-                    'Type: ${trait.type}, Points: ${trait.basePoints}',
-                  ),
-                );
+                return TraitView(trait: trait);
               },
             );
           }
