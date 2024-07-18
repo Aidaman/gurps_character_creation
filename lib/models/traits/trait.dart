@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/models/traits/skill_bonus.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
@@ -9,6 +10,13 @@ List<Trait> traitFromJson(String str) =>
 
 String traitToJson(List<Trait> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+Future<List<Trait>> loadTraits() async {
+  final jsonString = await rootBundle.loadString(
+    'assets/Advantages/BasicSet.json',
+  );
+  return traitFromJson(jsonString);
+}
 
 class Trait {
   final String name;

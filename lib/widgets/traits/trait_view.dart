@@ -21,36 +21,36 @@ class TraitView extends StatelessWidget {
         color: const Color(0xFFfdfdfd),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              trait.name,
-              style: const TextStyle(fontSize: 16),
-            ),
             Row(
               children: [
                 Expanded(
                   child: Text(
-                    'type: ${trait.type}',
-                    style: const TextStyle(fontSize: 12),
+                    trait.name,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                Expanded(
-                  child: Text(
-                    'points: ${trait.basePoints}',
-                    style: const TextStyle(fontSize: 12),
-                  ),
+                Text(
+                  trait.categories.map((e) => e.stringValue).join(', '),
+                  style: const TextStyle(fontSize: 14),
                 ),
-                Expanded(
-                  child: Text(
-                    'categories: ${trait.categories.map(
-                      (e) => e.stringValue,
-                    )}',
-                    style: const TextStyle(fontSize: 12),
-                  ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  trait.type,
+                  style: const TextStyle(fontSize: 12),
+                ),
+                Text(
+                  'points: ${trait.basePoints}',
+                  style: const TextStyle(fontSize: 12),
                 ),
               ],
             ),

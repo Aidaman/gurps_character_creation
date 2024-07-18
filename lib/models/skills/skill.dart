@@ -1,7 +1,22 @@
-import 'package:gurps_character_creation/models/traits/skill_bonus.dart';
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/skills/skill_stat.dart';
-import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
+
+Future<List<Skill>> loadSkills() async {
+  final jsonString = await rootBundle.loadString(
+    'assets/Skills/BasicSet.json',
+  );
+  return skillsFromJson(jsonString);
+}
+
+List<Skill> skillsFromJson(String str) =>
+    List<Skill>.from(json.decode(str).map((x) => Skill.fromJson(x)));
+
+String skillToJson(List<Skill> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Skill {
   final SkillStat associatedStat;
@@ -9,23 +24,54 @@ class Skill {
   int investedPoints;
 
   final String name;
+  final String reference;
   final int basePoints;
-  final String type;
   final List<String> categories;
-  final SkillBonus? skillBonus;
-  final List<TraitModifier> modifiers;
+  final List<SkillModifier> modifiers;
+  final String? specialization;
 
   Skill({
-    required this.basePoints,
-    required this.skillBonus,
-    required this.modifiers,
     required this.name,
-    required this.categories,
-    required this.type,
-    required this.associatedStat,
+    required this.reference,
     required this.difficulty,
+    required this.basePoints,
+    required this.categories,
+    required this.modifiers,
+    required this.associatedStat,
     required this.investedPoints,
+    this.specialization,
   });
+
+  factory Skill.fromJson(Map<String, dynamic> json) {
+    return Skill(
+      name: json['name'],
+      reference: json['reference'],
+      basePoints: int.parse(json['base_points']),
+      categories: List<String>.from(json['categories'].map((x) => x)),
+      modifiers: List<SkillModifier>.from(
+          json['modifiers'].map((x) => SkillModifier.fromJson(x))),
+      specialization: json['specialization'],
+      investedPoints: json['invested_points'] ?? 0,
+      associatedStat: SkillStatExtension.fromString(
+            json['difficulty'].toString().split('/').first,
+          ) ??
+          SkillStat.NONE,
+      difficulty: SkillDifficultyExtension.fromString(
+            json['difficulty'].toString().split('/').last,
+          ) ??
+          SkillDifficulty.NONE,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'reference': reference,
+        'difficulty': difficulty,
+        'base_points': basePoints,
+        'categories': List<dynamic>.from(categories.map((x) => x)),
+        'modifiers': List<dynamic>.from(modifiers.map((x) => x.toJson())),
+        'specialization': specialization,
+      };
 
   int calculateEffectiveSkill(int primaryAttribute) {
     int skillLevel = 0;
@@ -79,6 +125,9 @@ class Skill {
           case >= 1:
             skillLevel = -3;
         }
+        break;
+
+      case SkillDifficulty.NONE:
         break;
     }
 

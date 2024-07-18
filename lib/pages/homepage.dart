@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/traits/trait.dart';
+import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
-import 'package:gurps_character_creation/widgets/button/button.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
-import 'package:gurps_character_creation/widgets/traits/trait.dart';
+import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 
 class Homepage extends StatelessWidget {
-  Future<List<Trait>> loadTraits() async {
-    final jsonString = await rootBundle.loadString(
-      'assets/Advantages/BasicSet.json',
-    );
-    return traitFromJson(jsonString);
-  }
-
   const Homepage({super.key});
 
   @override
@@ -28,8 +19,8 @@ class Homepage extends StatelessWidget {
         toolbarHeight: APP_BAR_HEIGHT,
         elevation: COMMON_ELLEVATION,
       ),
-      body: FutureBuilder<List<Trait>>(
-        future: loadTraits(),
+      body: FutureBuilder<List<Skill>>(
+        future: loadSkills(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -39,9 +30,9 @@ class Homepage extends StatelessWidget {
             return const CircularProgressIndicator();
           }
 
-          final List<Trait> traits = snapshot.data!;
+          final List<Skill> skills = snapshot.data!;
           return ListView.builder(
-            itemBuilder: (context, index) => TraitView(trait: traits[index]),
+            itemBuilder: (context, index) => SkillView(skill: skills[index]),
           );
         },
       ),

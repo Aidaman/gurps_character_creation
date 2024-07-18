@@ -135,6 +135,8 @@ class Character {
         return perception;
       case SkillStat.Will:
         return will;
+      case SkillStat.NONE:
+        return -1;
     }
   }
 }
