@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
+import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/button/button.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
@@ -29,7 +30,7 @@ class _ComposePageState extends State<ComposePage> {
                 print('Skills');
               },
               icon: const Icon(
-                Icons.handyman_sharp,
+                Icons.handyman_outlined,
               ),
             ),
             const Text(
@@ -48,7 +49,7 @@ class _ComposePageState extends State<ComposePage> {
                 print('Magic');
               },
               icon: const Icon(
-                Icons.bolt_rounded,
+                Icons.bolt_outlined,
               ),
             ),
             const Text(
@@ -96,8 +97,8 @@ class _ComposePageState extends State<ComposePage> {
               ),
             ),
           ),
-          // _skillsIconButton,
-          // _magicSpellsIconButton
+          _skillsIconButton,
+          _magicSpellsIconButton
         ],
       );
 
@@ -120,74 +121,84 @@ class _ComposePageState extends State<ComposePage> {
         toolbarHeight: APP_BAR_HEIGHT,
         elevation: COMMON_ELLEVATION,
         actions: [
-          CustomButton(
-            child: const Icon(Icons.now_widgets_rounded),
-            onPressed: () => setState(() {
-              _isSidebarVisible = !_isSidebarVisible;
-            }),
-          ),
+          if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
+            CustomButton(
+              child: const Icon(Icons.now_widgets_rounded),
+              onPressed: () => setState(() {
+                _isSidebarVisible = !_isSidebarVisible;
+              }),
+            ),
         ],
       ),
       body: ComposePageLayout(
         isSidebarVisible: _isSidebarVisible,
-        sidebarContent: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                      color: Theme.of(context).colorScheme.onSurface),
-                ),
-              ),
-              margin: const EdgeInsets.only(bottom: 8),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 4,
-                ),
-                child: Column(
-                  children: [
-                    _filters,
-                    _filterSearchField,
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: FutureBuilder<List<Trait>>(
-                future: loadTraits(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No data found.'));
-                  }
-
-                  // final List<Skill> skills = snapshot.data!;
-                  final List<Trait> traits = snapshot.data!
-                      .where(
-                        (element) => selectedCategory == TraitCategories.NONE
-                            ? true
-                            : element.categories.contains(selectedCategory),
-                      )
-                      .where(
-                        (element) => element.name
-                            .toLowerCase()
-                            .contains(_filterValue.toLowerCase()),
-                      )
-                      .toList();
-                  return ListView.builder(
-                    itemCount: traits.length,
-                    itemBuilder: (context, index) =>
-                        TraitView(trait: traits[index]),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+        sidebarContent: _sidebarContent,
         bodyContent: const Placeholder(),
       ),
+      endDrawer: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+          ? null
+          : Drawer(
+              child: _sidebarContent,
+            ),
+    );
+  }
+
+  Widget get _sidebarContent {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border(
+              bottom:
+                  BorderSide(color: Theme.of(context).colorScheme.onSurface),
+            ),
+          ),
+          margin: const EdgeInsets.only(bottom: 8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+              vertical: 4,
+            ),
+            child: Column(
+              children: [
+                _filters,
+                _filterSearchField,
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder<List<Trait>>(
+            future: loadTraits(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No data found.'));
+              }
+
+              // final List<Skill> skills = snapshot.data!;
+              final List<Trait> traits = snapshot.data!
+                  .where(
+                    (element) => selectedCategory == TraitCategories.NONE
+                        ? true
+                        : element.categories.contains(selectedCategory),
+                  )
+                  .where(
+                    (element) => element.name
+                        .toLowerCase()
+                        .contains(_filterValue.toLowerCase()),
+                  )
+                  .toList();
+              return ListView.builder(
+                itemCount: traits.length,
+                itemBuilder: (context, index) =>
+                    TraitView(trait: traits[index]),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

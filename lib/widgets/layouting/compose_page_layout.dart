@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class ComposePageLayout extends StatelessWidget {
   final Widget sidebarContent;
@@ -22,11 +23,12 @@ class ComposePageLayout extends StatelessWidget {
             child: bodyContent,
           ),
         ),
-        if (isSidebarVisible)
+        if (isSidebarVisible &&
+            MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
           Container(
             decoration: const BoxDecoration(
                 border: Border(left: BorderSide(color: Color(0x64eeeeee)))),
-            width: MediaQuery.of(context).size.width < 1250
+            width: MediaQuery.of(context).size.width < 1100
                 ? 256
                 : MediaQuery.of(context).size.width * 0.32,
             child: sidebarContent,
