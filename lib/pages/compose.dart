@@ -122,8 +122,8 @@ class _ComposePageState extends State<ComposePage> {
         elevation: COMMON_ELLEVATION,
         actions: [
           if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
-            CustomButton(
-              child: const Icon(Icons.now_widgets_rounded),
+            IconButton(
+              icon: const Icon(Icons.now_widgets_outlined),
               onPressed: () => setState(() {
                 _isSidebarVisible = !_isSidebarVisible;
               }),
