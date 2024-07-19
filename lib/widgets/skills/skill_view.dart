@@ -15,7 +15,6 @@ class SkillView extends StatelessWidget {
         border: Border(
           top: BorderSide(color: Color(0x64000000), width: 1.0),
         ),
-        color: Color(0xFFfdfdfd),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),

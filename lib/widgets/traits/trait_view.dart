@@ -18,7 +18,6 @@ class TraitView extends StatelessWidget {
             width: 8.0,
           ),
         ),
-        color: const Color(0xFFfdfdfd),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4),
