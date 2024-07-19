@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
@@ -6,7 +7,14 @@ import 'package:gurps_character_creation/utilities/responsive_layouting_constant
 import 'package:gurps_character_creation/widgets/button/button.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
+import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
+
+enum SidebarFutureTypes {
+  TRAITS,
+  SKILLS,
+  MAGIC,
+}
 
 class ComposePage extends StatefulWidget {
   const ComposePage({super.key});
@@ -21,13 +29,16 @@ class _ComposePageState extends State<ComposePage> {
   String _filterValue = '';
 
   TraitCategories selectedCategory = TraitCategories.NONE;
+  SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
 
   Widget get _skillsIconButton => Expanded(
         child: Column(
           children: [
             IconButton(
               onPressed: () {
-                print('Skills');
+                setState(() {
+                  sidebarContent = SidebarFutureTypes.SKILLS;
+                });
               },
               icon: const Icon(
                 Icons.handyman_outlined,
@@ -46,7 +57,9 @@ class _ComposePageState extends State<ComposePage> {
           children: [
             IconButton(
               onPressed: () {
-                print('Magic');
+                setState(() {
+                  sidebarContent = SidebarFutureTypes.MAGIC;
+                });
               },
               icon: const Icon(
                 Icons.bolt_outlined,
@@ -60,8 +73,10 @@ class _ComposePageState extends State<ComposePage> {
         ),
       );
 
-  void onFilterButtonPressed(TraitCategories category) {
+  void onTraitFilterButtonPressed(TraitCategories category) {
     setState(() {
+      sidebarContent = SidebarFutureTypes.TRAITS;
+
       if (selectedCategory == category) {
         selectedCategory = TraitCategories.NONE;
         return;
@@ -87,7 +102,7 @@ class _ComposePageState extends State<ComposePage> {
                       category.iconValue,
                       size: 24,
                     ),
-                    onPressed: () => onFilterButtonPressed(category),
+                    onPressed: () => onTraitFilterButtonPressed(category),
                   ),
                   Text(
                     category.stringValue,
@@ -168,36 +183,61 @@ class _ComposePageState extends State<ComposePage> {
           ),
         ),
         Expanded(
-          child: FutureBuilder<List<Trait>>(
-            future: loadTraits(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No data found.'));
-              }
+            child: switch (sidebarContent) {
+          SidebarFutureTypes.TRAITS => FutureBuilder<List<Trait>>(
+              future: loadTraits(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No data found.'));
+                }
 
-              // final List<Skill> skills = snapshot.data!;
-              final List<Trait> traits = snapshot.data!
-                  .where(
-                    (element) => selectedCategory == TraitCategories.NONE
-                        ? true
-                        : element.categories.contains(selectedCategory),
-                  )
-                  .where(
-                    (element) => element.name
-                        .toLowerCase()
-                        .contains(_filterValue.toLowerCase()),
-                  )
-                  .toList();
-              return ListView.builder(
-                itemCount: traits.length,
-                itemBuilder: (context, index) =>
-                    TraitView(trait: traits[index]),
-              );
-            },
-          ),
-        ),
+                final List<Trait> traits = snapshot.data!
+                    .where(
+                      (element) => selectedCategory == TraitCategories.NONE
+                          ? true
+                          : element.categories.contains(selectedCategory),
+                    )
+                    .where(
+                      (element) => element.name
+                          .toLowerCase()
+                          .contains(_filterValue.toLowerCase()),
+                    )
+                    .toList();
+                return ListView.builder(
+                  itemCount: traits.length,
+                  itemBuilder: (context, index) =>
+                      TraitView(trait: traits[index]),
+                );
+              },
+            ),
+          SidebarFutureTypes.SKILLS => FutureBuilder<List<Skill>>(
+              future: loadSkills(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No data found.'));
+                }
+
+                final List<Skill> skills = snapshot.data!
+                    .where(
+                      (element) => element.name
+                          .toLowerCase()
+                          .contains(_filterValue.toLowerCase()),
+                    )
+                    .toList();
+                return ListView.builder(
+                  itemCount: skills.length,
+                  itemBuilder: (context, index) =>
+                      SkillView(skill: skills[index]),
+                );
+              },
+            ),
+          // TODO: Handle this case.
+          SidebarFutureTypes.MAGIC => Container(),
+        }),
       ],
     );
   }
