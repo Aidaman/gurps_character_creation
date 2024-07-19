@@ -10,7 +10,7 @@ enum TraitCategories {
 
 extension TraitCategoriesExtension on TraitCategories {
   String get stringValue => switch (this) {
-        TraitCategories.NONE => '',
+        TraitCategories.NONE => 'All Traits',
         TraitCategories.ADVANTAGE => 'Advantage',
         TraitCategories.DISADVANTAGE => 'Disadvantage',
         TraitCategories.PERK => 'Perk',
@@ -23,6 +23,14 @@ extension TraitCategoriesExtension on TraitCategories {
         TraitCategories.DISADVANTAGE => Colors.pink[400]!,
         TraitCategories.QUIRK => Colors.purple[400]!,
         TraitCategories.PERK => Colors.cyan[400]!,
+      };
+
+  IconData get iconValue => switch (this) {
+        TraitCategories.NONE => Icons.not_interested,
+        TraitCategories.ADVANTAGE => Icons.add,
+        TraitCategories.DISADVANTAGE => Icons.remove,
+        TraitCategories.QUIRK => Icons.wb_incandescent_outlined,
+        TraitCategories.PERK => Icons.circle_outlined,
       };
 
   static TraitCategories? fromString(String category) {

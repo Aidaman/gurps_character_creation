@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
-          primary: Color(0xFFFF4040),
+          primary: Color.fromARGB(255, 134, 53, 39),
           onPrimary: Color(0xFFfefefe),
           secondary: Color(0xFF4527A0),
           onSecondary: Color(0xFFfefefe),
@@ -28,9 +28,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
-        colorScheme: const ColorScheme(
+        colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: Color(0xFFEF9A9A),
+          primary: Colors.cyan[100]!,
           onPrimary: Color(0xFF212121),
           secondary: Color(0xFFB39DDB),
           onSecondary: Color(0xFEFEFEFF),
