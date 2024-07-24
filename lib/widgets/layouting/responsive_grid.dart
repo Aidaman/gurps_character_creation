@@ -7,26 +7,25 @@ class ResponsiveGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > 800) {
-        return GridView.count(
-          crossAxisCount: MAX_DESKTOP_COLUMNS,
-          crossAxisSpacing: DESKTOP_COLUMNS_SPACING,
-          children: children,
-        );
-      } else {
-        return ListView.builder(
-          itemBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: MOBILE_HORIZONTAL_PADDING,
-                vertical: MOBILE_VERTICAL_PADDING,
-              ),
-              // child: ,
-            );
-          },
-        );
-      }
-    });
+    if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH) {
+      return GridView.count(
+        crossAxisCount: MAX_DESKTOP_COLUMNS,
+        crossAxisSpacing: DESKTOP_COLUMNS_SPACING,
+        children: children,
+      );
+    } else {
+      return ListView.builder(
+        itemCount: children.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: MOBILE_HORIZONTAL_PADDING,
+              vertical: MOBILE_VERTICAL_PADDING,
+            ),
+            child: children[index],
+          );
+        },
+      );
+    }
   }
 }
