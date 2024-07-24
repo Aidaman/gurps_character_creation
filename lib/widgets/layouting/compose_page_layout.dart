@@ -19,9 +19,7 @@ class ComposePageLayout extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            child: bodyContent,
-          ),
+          child: bodyContent,
         ),
         if (isSidebarVisible &&
             MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
