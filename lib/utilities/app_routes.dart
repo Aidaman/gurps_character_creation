@@ -6,13 +6,13 @@ class RouteName {
   final String name;
   final String destination;
   final IconData iconName;
-  final Widget page;
+  final WidgetBuilder pageBuilder;
 
   RouteName({
     required this.name,
     required this.destination,
     required this.iconName,
-    required this.page,
+    required this.pageBuilder,
   });
 }
 
@@ -21,12 +21,14 @@ final List<RouteName> routes = [
     destination: '/',
     name: 'home',
     iconName: Icons.home,
-    page: const Homepage(),
+    pageBuilder: (context) => const Homepage(),
   ),
   RouteName(
     destination: '/compose',
     name: 'compose',
     iconName: Icons.create,
-    page: const ComposePage(),
+    pageBuilder: (context) => ComposePage(
+      character: null,
+    ),
   ),
 ];

@@ -43,7 +43,10 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       routes: Map.fromEntries(
         routes.map(
-          (route) => MapEntry(route.destination, (context) => route.page),
+          (route) => MapEntry(
+            route.destination,
+            route.pageBuilder,
+          ),
         ),
       ),
       initialRoute: '/',
