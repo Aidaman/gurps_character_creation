@@ -26,6 +26,8 @@ class Spell {
   final List<String> categories;
   final List<String> prereqList;
 
+  final int investedPoints;
+
   Spell({
     required this.name,
     required this.college,
@@ -38,7 +40,8 @@ class Spell {
     required this.reference,
     required this.categories,
     required this.prereqList,
-  });
+    int? investedPoints,
+  }) : investedPoints = investedPoints ?? 0;
 
   factory Spell.fromJson(Map<String, dynamic> json) => Spell(
         name: json['name'],
