@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ExpandedTextField extends StatelessWidget {
+class CustomTextField extends StatelessWidget {
   final void Function(String) onChanged;
   final String fieldName;
   final TextEditingController textEditingController;
 
-  const ExpandedTextField({
+  const CustomTextField({
     super.key,
     required this.onChanged,
     required this.fieldName,
@@ -14,15 +14,18 @@ class ExpandedTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: TextField(
-        controller: textEditingController,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          label: Text(fieldName),
+    return TextField(
+      controller: textEditingController,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        label: Text(
+          fieldName,
+          style: const TextStyle(
+            fontSize: 12,
+          ),
         ),
-        onChanged: onChanged,
       ),
+      onChanged: onChanged,
     );
   }
 }

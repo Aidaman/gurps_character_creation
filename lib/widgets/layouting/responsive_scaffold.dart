@@ -8,6 +8,7 @@ class ResponsiveScaffold extends StatefulWidget {
   final Widget body;
   final Widget? drawer;
   final Widget? endDrawer;
+  final Widget? floatingActionButton;
   final AppBar? appBar;
   final int selectedIndex;
 
@@ -18,6 +19,7 @@ class ResponsiveScaffold extends StatefulWidget {
     this.drawer,
     this.endDrawer,
     this.appBar,
+    this.floatingActionButton,
   });
 
   @override
@@ -54,6 +56,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         selectedIconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.onPrimary,
         ),
+        minWidth: 64,
         useIndicator: true,
         labelType: NavigationRailLabelType.all,
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -72,6 +75,7 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
       drawer: widget.drawer,
       endDrawer: widget.endDrawer,
       body: getBody(context),
+      floatingActionButton: isDesktop ? null : widget.floatingActionButton,
       bottomNavigationBar: isDesktop
           ? null
           : BottomNavigationBar(

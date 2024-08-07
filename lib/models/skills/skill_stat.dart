@@ -12,6 +12,23 @@ extension SkillStatExtension on SkillStat {
         SkillStat.NONE => 'None'
       };
 
+  String get abbreviatedStringValue => switch (this) {
+        SkillStat.ST => 'ST',
+        SkillStat.DX => 'DX',
+        SkillStat.IQ => 'IQ',
+        SkillStat.HT => 'HT',
+        SkillStat.Per => 'Per',
+        SkillStat.Will => 'Will',
+        SkillStat.NONE => 'None'
+      };
+
+  static List<SkillStat> baseStats() => [
+        SkillStat.ST,
+        SkillStat.DX,
+        SkillStat.IQ,
+        SkillStat.HT,
+      ];
+
   static SkillStat? fromString(String stat) {
     return switch (stat.toLowerCase()) {
       'st' => SkillStat.ST,

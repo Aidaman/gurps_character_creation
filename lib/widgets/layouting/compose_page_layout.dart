@@ -4,7 +4,6 @@ import 'package:gurps_character_creation/utilities/responsive_layouting_constant
 class ComposePageLayout extends StatelessWidget {
   final Widget sidebarContent;
   final Widget bodyContent;
-
   final bool isSidebarVisible;
 
   const ComposePageLayout({
@@ -16,21 +15,29 @@ class ComposePageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double sidebarWidth = MediaQuery.of(context).size.width * 0.32;
+
+    if (MediaQuery.of(context).size.width < MIN_DESKTOP_WIDTH) {
+      sidebarWidth = 256;
+    }
+
     return Row(
       children: [
         Expanded(
           child: bodyContent,
         ),
-        if (isSidebarVisible &&
-            MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
-          Container(
-            decoration: const BoxDecoration(
-                border: Border(left: BorderSide(color: Color(0x64eeeeee)))),
-            width: MediaQuery.of(context).size.width < 1100
-                ? 256
-                : MediaQuery.of(context).size.width * 0.32,
-            child: sidebarContent,
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 256),
+          decoration: const BoxDecoration(
+            border: Border(left: BorderSide(color: Color(0x64eeeeee))),
           ),
+          curve: Curves.easeInOut,
+          width: isSidebarVisible &&
+                  MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+              ? sidebarWidth
+              : 0,
+          child: sidebarContent,
+        ),
       ],
     );
   }

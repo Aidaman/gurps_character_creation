@@ -1,9 +1,12 @@
 // import 'package:gurps_character_creation/models/traits/advantage.dart';
 // import 'package:gurps_character_creation/models/traits/disadvantage.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
+import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
 import 'package:gurps_character_creation/models/skills/skill_stat.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
+import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:uuid/uuid.dart';
 
 class Character {
@@ -127,9 +130,88 @@ class Character {
         iq: 10,
         dexterity: 10,
         health: 10,
-        skills: [],
+        skills: [
+          Skill(
+            name: 'skl 1',
+            reference: 'reference',
+            difficulty: SkillDifficulty.EASY,
+            basePoints: 0,
+            categories: ['category 1', 'category 2'],
+            modifiers: [
+              SkillModifier(
+                type: 'type',
+                modifier: 'modifier',
+                name: 'name',
+                specialization: 'specialization',
+              )
+            ],
+            associatedStat: SkillStat.IQ,
+            investedPoints: 0,
+          ),
+          Skill(
+            name: 'skl 2',
+            reference: 'reference',
+            difficulty: SkillDifficulty.EASY,
+            basePoints: 0,
+            categories: ['category 1', 'category 2'],
+            modifiers: [
+              SkillModifier(
+                type: 'type',
+                modifier: 'modifier',
+                name: 'name',
+                specialization: 'specialization',
+              )
+            ],
+            associatedStat: SkillStat.IQ,
+            investedPoints: 0,
+          ),
+          Skill(
+            name: 'skl 3',
+            reference: 'reference',
+            difficulty: SkillDifficulty.EASY,
+            basePoints: 0,
+            categories: ['category 1', 'category 2'],
+            modifiers: [
+              SkillModifier(
+                type: 'type',
+                modifier: 'modifier',
+                name: 'name',
+                specialization: 'specialization',
+              )
+            ],
+            associatedStat: SkillStat.IQ,
+            investedPoints: 0,
+          ),
+        ],
         traits: [],
-        spells: [],
+        spells: [
+          Spell(
+            name: 'spl 1',
+            college: ['college'],
+            powerSource: 'powerSource',
+            spellClass: 'spellClass',
+            castingCost: 'castingCost',
+            maintenanceCost: 'maintenanceCost',
+            castingTime: 'castingTime',
+            duration: 'duration',
+            reference: 'reference',
+            categories: ['categories'],
+            prereqList: ['prereqList'],
+          ),
+          Spell(
+            name: 'spl 2',
+            college: ['college'],
+            powerSource: 'powerSource',
+            spellClass: 'spellClass',
+            castingCost: 'castingCost',
+            maintenanceCost: 'maintenanceCost',
+            castingTime: 'castingTime',
+            duration: 'duration',
+            reference: 'reference',
+            categories: ['categories'],
+            prereqList: ['prereqList'],
+          ),
+        ],
         weight: 60,
       );
 

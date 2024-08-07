@@ -8,10 +8,25 @@ class ResponsiveGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH) {
-      return GridView.count(
-        crossAxisCount: MAX_DESKTOP_COLUMNS,
-        crossAxisSpacing: DESKTOP_COLUMNS_SPACING,
-        children: children,
+      return Center(
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: MAX_DESKTOP_CONTENT_WIDTH,
+          ),
+          padding: const EdgeInsets.symmetric(
+            horizontal: DESKTOP_HORIZONTAL_PADDING,
+            vertical: DESKTOP_VERTICAL_PADDING,
+          ),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: MAX_TABLET_COLUMNS,
+              crossAxisSpacing: DESKTOP_COLUMNS_SPACING,
+              mainAxisSpacing: DESKTOP_COLUMNS_SPACING,
+            ),
+            itemCount: children.length,
+            itemBuilder: (context, index) => children[index],
+          ),
+        ),
       );
     } else {
       return ListView.builder(
