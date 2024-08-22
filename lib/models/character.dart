@@ -34,6 +34,11 @@ class Character {
   List<Trait> traits;
   List<Spell> spells;
 
+  static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 3;
+  static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
+  static const int DEFAULT_PRIMARY_ATTRIBUTE_VALUE = 10;
+  static const int POINTS_PER_ATTRIBUTE_INCREMENT = 20;
+
   // Calculated characteristics
   int get hitPoints => strength + sizeModifier;
   int get will => iq;
@@ -67,7 +72,23 @@ class Character {
           (sum, cost) => sum + cost,
         );
 
-    return points - (traitsTotalCount + skillsTotalCount + magicTotalCount);
+    int strengthTotalCount = (strength - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        POINTS_PER_ATTRIBUTE_INCREMENT;
+    int dexterityTotalCount = (dexterity - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        POINTS_PER_ATTRIBUTE_INCREMENT;
+    int inteligenceTotalCount =
+        (iq - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_ATTRIBUTE_INCREMENT;
+    int healthTotalCount = (health - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        POINTS_PER_ATTRIBUTE_INCREMENT;
+
+    return points -
+        (traitsTotalCount +
+            skillsTotalCount +
+            magicTotalCount +
+            strengthTotalCount +
+            dexterityTotalCount +
+            inteligenceTotalCount +
+            healthTotalCount);
   }
 
   Character({
@@ -236,6 +257,16 @@ class Character {
         'traits': List<dynamic>.from(traits.map((x) => x)),
         'spells': List<dynamic>.from(spells.map((x) => x)),
       };
+
+  int setPrimaryAttribute(SkillStat stat, int newValue) {
+    if (newValue < MIN_PRIMARY_ATTRIBUTE_VALUE) {
+      return MIN_PRIMARY_ATTRIBUTE_VALUE;
+    } else if (newValue > MAX_PRIMARY_ATTRIBUTE_VALUE) {
+      return MAX_PRIMARY_ATTRIBUTE_VALUE;
+    }
+
+    return newValue;
+  }
 
   int getPrimaryAttribute(SkillStat stat) {
     switch (stat) {

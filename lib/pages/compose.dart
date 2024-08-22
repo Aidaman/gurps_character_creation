@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gurps_character_creation/models/character.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_stat.dart';
@@ -9,18 +11,13 @@ import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/compose_page/custom_text_field.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_grid.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
-
-enum SidebarFutureTypes {
-  TRAITS,
-  SKILLS,
-  MAGIC,
-}
 
 class ComposePage extends StatefulWidget {
   final Character character;
@@ -34,7 +31,6 @@ class ComposePage extends StatefulWidget {
 
 class _ComposePageState extends State<ComposePage> {
   bool _isSidebarVisible = true;
-  String _filterValue = '';
 
   TraitCategories selectedCategory = TraitCategories.NONE;
   SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
@@ -51,6 +47,21 @@ class _ComposePageState extends State<ComposePage> {
     {
       'Weight': TextEditingController(),
       'Size Modifier': TextEditingController(),
+    },
+  ];
+
+  final List<Map<SkillStat, TextEditingController>> _primaryAttributeFields = [
+    {
+      SkillStat.ST: TextEditingController(text: '10'),
+    },
+    {
+      SkillStat.DX: TextEditingController(text: '10'),
+    },
+    {
+      SkillStat.IQ: TextEditingController(text: '10'),
+    },
+    {
+      SkillStat.HT: TextEditingController(text: '10'),
     },
   ];
 
@@ -78,6 +89,26 @@ class _ComposePageState extends State<ComposePage> {
           widget.character.sizeModifier =
               int.tryParse(value) ?? widget.character.sizeModifier;
           break;
+        case 'Strength':
+          widget.character.strength = widget.character.setPrimaryAttribute(
+            SkillStat.ST,
+            int.parse(value),
+          );
+        case 'Dexterity':
+          widget.character.dexterity = widget.character.setPrimaryAttribute(
+            SkillStat.DX,
+            int.parse(value),
+          );
+        case 'IQ':
+          widget.character.iq = widget.character.setPrimaryAttribute(
+            SkillStat.IQ,
+            int.parse(value),
+          );
+        case 'Health':
+          widget.character.health = widget.character.setPrimaryAttribute(
+            SkillStat.HT,
+            int.parse(value),
+          );
         default:
           break;
       }
@@ -117,6 +148,29 @@ class _ComposePageState extends State<ComposePage> {
 
   @override
   Widget build(BuildContext context) {
+    final SidebarContent sidebar = SidebarContent(
+      character: widget.character,
+      selectedCategory: selectedCategory,
+      sidebarContent: sidebarContent,
+      onTraitFilterButtonPressed: (TraitCategories category) {
+        setState(() {
+          sidebarContent = SidebarFutureTypes.TRAITS;
+
+          if (selectedCategory == category) {
+            selectedCategory = TraitCategories.NONE;
+            return;
+          }
+
+          selectedCategory = category;
+        });
+      },
+      onSidebarFutureChange: (SidebarFutureTypes type) {
+        setState(() {
+          sidebarContent = type;
+        });
+      },
+    );
+
     return ResponsiveScaffold(
       selectedIndex: 1,
       appBar: AppBar(
@@ -153,7 +207,7 @@ class _ComposePageState extends State<ComposePage> {
         isSidebarVisible: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
             ? _isSidebarVisible
             : false,
-        sidebarContent: _buildSidebarContent(),
+        sidebarContent: sidebar,
         bodyContent: ComposePageResponsiveGrid(
           basicInfoFields: [
             Container(
@@ -177,26 +231,8 @@ class _ComposePageState extends State<ComposePage> {
           ],
           characterStats: [
             Column(
-              children: List.from(SkillStatExtension.baseStats().map(
-                (stat) => Row(
-                  children: [
-                    Text(
-                      stat.abbreviatedStringValue,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Text(
-                      widget.character.getPrimaryAttribute(stat).toString(),
-                    ),
-                  ],
-                ),
-              )),
-            )
+              children: _buildCharacterStats(),
+            ),
           ],
           traits: [
             _generateTraitView([
@@ -233,10 +269,49 @@ class _ComposePageState extends State<ComposePage> {
       ),
       endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
           ? null
-          : Drawer(
-              child: _buildSidebarContent(),
-            ),
+          : sidebar,
     );
+  }
+
+  List<Widget> _buildCharacterStats() {
+    return List.from(_primaryAttributeFields.map(
+      (entry) {
+        SkillStat stat = entry.entries.first.key;
+        TextEditingController textEditControl = entry.entries.first.value;
+        final int primaryAttributeValue =
+            widget.character.getPrimaryAttribute(stat);
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '${stat.abbreviatedStringValue}:',
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            SizedBox(
+              width: 24,
+              child: TextFormField(
+                controller: textEditControl,
+                onChanged: (value) {
+                  _updateCharacterField(stat.stringValue, value);
+                },
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    ));
   }
 
   Widget _generateTraitView(List<TraitCategories> categories) {
@@ -286,7 +361,13 @@ class _ComposePageState extends State<ComposePage> {
   void dispose() {
     for (var entry in _basicInfoControllers) {
       for (var e in entry.entries) {
-        e.value.dispose;
+        e.value.dispose();
+      }
+    }
+
+    for (var entry in _primaryAttributeFields) {
+      for (var e in entry.entries) {
+        e.value.dispose();
       }
     }
 
@@ -294,6 +375,26 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   List<Widget> _buildBasicInfoFields() {
+    Widget _generateSingleInput(Map<String, TextEditingController> map) {
+      return Row(
+        children: [
+          const SizedBox(
+            width: 8,
+          ),
+          CustomTextField(
+            textEditingController: map.entries.first.value,
+            onChanged: (value) {
+              _updateCharacterField(map.entries.first.key, value);
+            },
+            fieldName: map.entries.first.key,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+        ],
+      );
+    }
+
     return _basicInfoControllers
         .map((map) {
           final bool isSingleElement = map.entries.length == 1;
@@ -330,189 +431,5 @@ class _ComposePageState extends State<ComposePage> {
           (pair) => pair,
         )
         .toList();
-  }
-
-  Widget _generateSingleInput(Map<String, TextEditingController> map) {
-    return Row(
-      children: [
-        const SizedBox(
-          width: 8,
-        ),
-        CustomTextField(
-          textEditingController: map.entries.first.value,
-          onChanged: (value) {
-            _updateCharacterField(map.entries.first.key, value);
-          },
-          fieldName: map.entries.first.key,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSidebarContent() {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-          ),
-          margin: const EdgeInsets.only(
-            bottom: 8,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-              vertical: 4,
-            ),
-            child: Column(
-              children: [
-                _buildFilters(),
-                TextField(
-                  onChanged: (value) => setState(() {
-                    _filterValue = value;
-                  }),
-                  decoration: const InputDecoration(labelText: 'Filter'),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: switch (sidebarContent) {
-            SidebarFutureTypes.TRAITS => _buildTraitList(),
-            SidebarFutureTypes.SKILLS => _buildSkillList(),
-            SidebarFutureTypes.MAGIC => _buildSpellList(),
-          },
-        ),
-      ],
-    );
-  }
-
-  Wrap _buildFilters() {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      runAlignment: WrapAlignment.spaceAround,
-      runSpacing: 0,
-      spacing: 24,
-      children: [
-        ...TraitCategories.values.map(
-          (category) => LabeledIconButton(
-            iconValue: category.iconValue,
-            onPressed: () => onTraitFilterButtonPressed(category),
-            label: category.stringValue,
-          ),
-        ),
-        LabeledIconButton(
-          iconValue: Icons.handyman_outlined,
-          onPressed: () {
-            setState(() {
-              sidebarContent = SidebarFutureTypes.SKILLS;
-            });
-          },
-          label: 'Skills',
-        ),
-        LabeledIconButton(
-          iconValue: Icons.bolt_outlined,
-          onPressed: () {
-            setState(() {
-              sidebarContent = SidebarFutureTypes.MAGIC;
-            });
-          },
-          label: 'Magic',
-        ),
-      ],
-    );
-  }
-
-  FutureBuilder<List<Spell>> _buildSpellList() {
-    return FutureBuilder(
-      future: loadSpells(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
-        }
-
-        final List<Spell> spells = snapshot.data!
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
-
-        return ListView.builder(
-          itemCount: spells.length,
-          itemBuilder: (context, index) => ListTile(
-            title: Text(spells[index].name),
-            subtitle: Text(spells[index].prereqList.join(', ')),
-          ),
-        );
-      },
-    );
-  }
-
-  FutureBuilder<List<Skill>> _buildSkillList() {
-    return FutureBuilder<List<Skill>>(
-      future: loadSkills(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
-        }
-
-        final List<Skill> skills = snapshot.data!
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
-        return ListView.builder(
-          itemCount: skills.length,
-          itemBuilder: (context, index) => SkillView(skill: skills[index]),
-        );
-      },
-    );
-  }
-
-  FutureBuilder<List<Trait>> _buildTraitList() {
-    return FutureBuilder<List<Trait>>(
-      future: loadTraits(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
-        }
-
-        final List<Trait> traits = snapshot.data!
-            .where(
-              (element) => selectedCategory == TraitCategories.NONE
-                  ? true
-                  : element.categories.contains(selectedCategory),
-            )
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
-        return ListView.builder(
-          itemCount: traits.length,
-          itemBuilder: (context, index) => TraitView(trait: traits[index]),
-        );
-      },
-    );
   }
 }
