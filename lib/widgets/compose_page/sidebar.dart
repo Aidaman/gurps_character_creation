@@ -42,45 +42,48 @@ class _SidebarContentState extends State<SidebarContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Theme.of(context).colorScheme.onSurface,
+    return Container(
+      color: Theme.of(context).colorScheme.surface,
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+            margin: const EdgeInsets.only(
+              bottom: 8,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: SIDEBAR_HORIZONTAL_PADDING,
+                vertical: SIDEBAR_VERTICAL_PADDING,
+              ),
+              child: Column(
+                children: [
+                  _buildFilters(),
+                  TextField(
+                    onChanged: (value) => setState(() {
+                      _filterValue = value;
+                    }),
+                    decoration: const InputDecoration(labelText: 'Filter'),
+                  ),
+                ],
               ),
             ),
           ),
-          margin: const EdgeInsets.only(
-            bottom: 8,
+          Expanded(
+            child: switch (widget.sidebarContent) {
+              SidebarFutureTypes.TRAITS => _buildTraitList(),
+              SidebarFutureTypes.SKILLS => _buildSkillList(),
+              SidebarFutureTypes.MAGIC => _buildSpellList(),
+            },
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: SIDEBAR_HORIZONTAL_PADDING,
-              vertical: SIDEBAR_VERTICAL_PADDING,
-            ),
-            child: Column(
-              children: [
-                _buildFilters(),
-                TextField(
-                  onChanged: (value) => setState(() {
-                    _filterValue = value;
-                  }),
-                  decoration: const InputDecoration(labelText: 'Filter'),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: switch (widget.sidebarContent) {
-            SidebarFutureTypes.TRAITS => _buildTraitList(),
-            SidebarFutureTypes.SKILLS => _buildSkillList(),
-            SidebarFutureTypes.MAGIC => _buildSpellList(),
-          },
-        ),
-      ],
+        ],
+      ),
     );
   }
 
