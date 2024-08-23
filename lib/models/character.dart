@@ -37,7 +37,8 @@ class Character {
   static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 3;
   static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
   static const int DEFAULT_PRIMARY_ATTRIBUTE_VALUE = 10;
-  static const int POINTS_PER_ATTRIBUTE_INCREMENT = 20;
+  static const int POINTS_PER_DX_IQ_INCREMENT = 20;
+  static const int POINTS_PER_HT_ST_INCREMENT = 10;
 
   // Calculated characteristics
   int get hitPoints => strength + sizeModifier;
@@ -73,13 +74,13 @@ class Character {
         );
 
     int strengthTotalCount = (strength - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        POINTS_PER_ATTRIBUTE_INCREMENT;
+        POINTS_PER_HT_ST_INCREMENT;
     int dexterityTotalCount = (dexterity - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        POINTS_PER_ATTRIBUTE_INCREMENT;
+        POINTS_PER_DX_IQ_INCREMENT;
     int inteligenceTotalCount =
-        (iq - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_ATTRIBUTE_INCREMENT;
-    int healthTotalCount = (health - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        POINTS_PER_ATTRIBUTE_INCREMENT;
+        (iq - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_DX_IQ_INCREMENT;
+    int healthTotalCount =
+        (health - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_HT_ST_INCREMENT;
 
     return points -
         (traitsTotalCount +
@@ -258,7 +259,26 @@ class Character {
         'spells': List<dynamic>.from(spells.map((x) => x)),
       };
 
+  int getPrimaryAttributePointsPerIncrement(SkillStat stat) {
+    switch (stat) {
+      case SkillStat.ST:
+      case SkillStat.HT:
+        return POINTS_PER_HT_ST_INCREMENT;
+
+      case SkillStat.DX:
+      case SkillStat.IQ:
+        return POINTS_PER_DX_IQ_INCREMENT;
+
+      default:
+        return 0;
+    }
+  }
+
   int setPrimaryAttribute(SkillStat stat, int newValue) {
+    if (remainingPoints < getPrimaryAttributePointsPerIncrement(stat)) {
+      return getPrimaryAttribute(stat);
+    }
+
     if (newValue < MIN_PRIMARY_ATTRIBUTE_VALUE) {
       return MIN_PRIMARY_ATTRIBUTE_VALUE;
     } else if (newValue > MAX_PRIMARY_ATTRIBUTE_VALUE) {
@@ -266,6 +286,19 @@ class Character {
     }
 
     return newValue;
+  }
+
+  String getPointsSpentOnAttribute(SkillStat stat) {
+    final int statValue = getPrimaryAttribute(stat);
+
+    int pointsSpent = (statValue - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        getPrimaryAttributePointsPerIncrement(stat);
+
+    if (pointsSpent < 0) {
+      return '-${pointsSpent.abs().toString().padLeft(pointsSpent <= -100 ? 2 : 3, '0')}';
+    }
+
+    return pointsSpent.toString().padLeft(pointsSpent < 100 ? 3 : 0, '0');
   }
 
   int getPrimaryAttribute(SkillStat stat) {

@@ -50,21 +50,6 @@ class _ComposePageState extends State<ComposePage> {
     },
   ];
 
-  final List<Map<SkillStat, TextEditingController>> _primaryAttributeFields = [
-    {
-      SkillStat.ST: TextEditingController(text: '10'),
-    },
-    {
-      SkillStat.DX: TextEditingController(text: '10'),
-    },
-    {
-      SkillStat.IQ: TextEditingController(text: '10'),
-    },
-    {
-      SkillStat.HT: TextEditingController(text: '10'),
-    },
-  ];
-
   void _updateCharacterField(String key, String value) {
     setState(() {
       switch (key) {
@@ -112,19 +97,6 @@ class _ComposePageState extends State<ComposePage> {
         default:
           break;
       }
-    });
-  }
-
-  void onTraitFilterButtonPressed(TraitCategories category) {
-    setState(() {
-      sidebarContent = SidebarFutureTypes.TRAITS;
-
-      if (selectedCategory == category) {
-        selectedCategory = TraitCategories.NONE;
-        return;
-      }
-
-      selectedCategory = category;
     });
   }
 
@@ -256,11 +228,14 @@ class _ComposePageState extends State<ComposePage> {
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children:
-                    List.from(widget.character.spells.map((spl) => ListTile(
-                          title: Text(spl.name),
-                          subtitle: Text(spl.college.first),
-                        ))),
+                children: List.from(
+                  widget.character.spells.map(
+                    (spl) => ListTile(
+                      title: Text(spl.name),
+                      subtitle: Text(spl.college.first),
+                    ),
+                  ),
+                ),
               ),
             )
           ],
@@ -274,38 +249,75 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   List<Widget> _buildCharacterStats() {
-    return List.from(_primaryAttributeFields.map(
-      (entry) {
-        SkillStat stat = entry.entries.first.key;
-        TextEditingController textEditControl = entry.entries.first.value;
+    return List.from(SkillStatExtension.baseStats().map(
+      (SkillStat stat) {
         final int primaryAttributeValue =
             widget.character.getPrimaryAttribute(stat);
 
+        final ButtonStyle iconButtonStyle = IconButton.styleFrom(
+          iconSize: 16,
+          padding: const EdgeInsets.all(4),
+          hoverColor: Colors.transparent,
+        );
+        const BoxConstraints iconButtonConstraints = BoxConstraints(
+          maxHeight: 24,
+          maxWidth: 24,
+        );
+
         return Row(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               '${stat.abbreviatedStringValue}:',
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Courier',
               ),
             ),
             const SizedBox(
-              width: 12,
+              width: 4,
             ),
-            SizedBox(
-              width: 24,
-              child: TextFormField(
-                controller: textEditControl,
-                onChanged: (value) {
-                  _updateCharacterField(stat.stringValue, value);
-                },
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
+            Text(
+              '$primaryAttributeValue',
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Courier',
+              ),
+            ),
+            const SizedBox(
+              width: 4,
+            ),
+            IconButton(
+              style: iconButtonStyle,
+              constraints: iconButtonConstraints,
+              onPressed: () {
+                _updateCharacterField(
+                  stat.stringValue,
+                  (primaryAttributeValue + 1).toString(),
+                );
+              },
+              icon: const Icon(Icons.add),
+            ),
+            IconButton(
+              style: iconButtonStyle,
+              constraints: iconButtonConstraints,
+              onPressed: () {
+                _updateCharacterField(
+                  stat.stringValue,
+                  (primaryAttributeValue - 1).toString(),
+                );
+              },
+              icon: const Icon(Icons.remove),
+            ),
+            Text(
+              '[${widget.character.getPointsSpentOnAttribute(stat)}p]',
+              style: const TextStyle(
+                fontSize: 16,
+                fontFamily: 'Courier',
+                fontWeight: FontWeight.w100,
               ),
             ),
           ],
@@ -334,7 +346,6 @@ class _ComposePageState extends State<ComposePage> {
               child: Builder(builder: (context) {
                 return IconButton.filled(
                   onPressed: () {
-                    onTraitFilterButtonPressed(categories.first);
                     _openSideBar(context, value: true);
                   },
                   icon: const Icon(Icons.add),
@@ -360,12 +371,6 @@ class _ComposePageState extends State<ComposePage> {
   @override
   void dispose() {
     for (var entry in _basicInfoControllers) {
-      for (var e in entry.entries) {
-        e.value.dispose();
-      }
-    }
-
-    for (var entry in _primaryAttributeFields) {
       for (var e in entry.entries) {
         e.value.dispose();
       }
