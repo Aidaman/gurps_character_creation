@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/models/skills/skill_stat.dart';
+import 'package:gurps_character_creation/models/skills/attributes.dart';
 
 class SkillView extends StatelessWidget {
   final Skill skill;

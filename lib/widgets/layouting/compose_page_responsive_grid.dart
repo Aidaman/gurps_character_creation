@@ -9,8 +9,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
   final List<Widget> skillsAndMagic;
   final List<Widget> restOfTheBody;
 
-  static const double _SEPARATOR_HEIGHT = 1;
-  static const double _SEPARATOR_INDENT = 16;
+  // static const double _SEPARATOR_HEIGHT = 1;
+  // static const double _SEPARATOR_INDENT = 16;
 
   const ComposePageResponsiveGrid({
     super.key,
@@ -60,7 +60,10 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     } else {
       final List<Widget> children = [
         ...basicInfoFields,
-        ...characterStats,
+        Wrap(
+          alignment: WrapAlignment.spaceEvenly,
+          children: characterStats,
+        ),
         ...traits,
         ...skillsAndMagic,
         ...restOfTheBody,

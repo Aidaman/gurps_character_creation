@@ -1,12 +1,9 @@
-// import 'package:gurps_character_creation/models/traits/advantage.dart';
-// import 'package:gurps_character_creation/models/traits/disadvantage.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
-import 'package:gurps_character_creation/models/skills/skill_stat.dart';
+import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
-import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:uuid/uuid.dart';
 
 class Character {
@@ -23,7 +20,6 @@ class Character {
   int weight;
   int age;
   int sizeModifier;
-  int fatiguePoints;
 
   int strength;
   int iq;
@@ -37,15 +33,31 @@ class Character {
   static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 3;
   static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
   static const int DEFAULT_PRIMARY_ATTRIBUTE_VALUE = 10;
-  static const int POINTS_PER_DX_IQ_INCREMENT = 20;
-  static const int POINTS_PER_HT_ST_INCREMENT = 10;
 
   // Calculated characteristics
-  int get hitPoints => strength + sizeModifier;
-  int get will => iq;
-  int get perception => iq;
-  double get basicSpeed => (health + dexterity) / 4;
-  int get basicMove => (basicSpeed - (basicSpeed % 1)).toInt();
+  int get hitPoints =>
+      strength + sizeModifier + pointsSpentOnHP ~/ Attributes.HP.adjustPriceOf;
+  int pointsSpentOnHP = 0;
+
+  int get will => iq + pointsSpentOnWill ~/ Attributes.Will.adjustPriceOf;
+  int pointsSpentOnWill = 0;
+
+  int get perception => iq + pointsSpentOnPer ~/ Attributes.Per.adjustPriceOf;
+  int pointsSpentOnPer = 0;
+
+  double get basicSpeed =>
+      ((health + dexterity) / 4) +
+      (pointsSpentOnBS / Attributes.BASIC_SPEED.adjustPriceOf);
+  int pointsSpentOnBS = 0;
+
+  int get basicMove =>
+      ((basicSpeed - (basicSpeed % 1)).toInt()) +
+      pointsSpentOnBM ~/ Attributes.BASIC_MOVE.adjustPriceOf;
+  int pointsSpentOnBM = 0;
+
+  int get fatiguePoints =>
+      health + pointsSpentOnFP ~/ Attributes.FP.adjustPriceOf;
+  int pointsSpentOnFP = 0;
 
   int get remainingPoints {
     int traitsTotalCount = traits
@@ -73,23 +85,17 @@ class Character {
           (sum, cost) => sum + cost,
         );
 
-    int strengthTotalCount = (strength - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        POINTS_PER_HT_ST_INCREMENT;
-    int dexterityTotalCount = (dexterity - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        POINTS_PER_DX_IQ_INCREMENT;
-    int inteligenceTotalCount =
-        (iq - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_DX_IQ_INCREMENT;
-    int healthTotalCount =
-        (health - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) * POINTS_PER_HT_ST_INCREMENT;
+    int pointsSpentOnAttributes = 0;
+
+    for (Attributes attribute in Attributes.values) {
+      pointsSpentOnAttributes += getPointsSpentOnAttribute(attribute);
+    }
 
     return points -
         (traitsTotalCount +
             skillsTotalCount +
             magicTotalCount +
-            strengthTotalCount +
-            dexterityTotalCount +
-            inteligenceTotalCount +
-            healthTotalCount);
+            pointsSpentOnAttributes);
   }
 
   Character({
@@ -104,7 +110,6 @@ class Character {
     required this.age,
     required this.points,
     required this.sizeModifier,
-    required this.fatiguePoints,
     required this.strength,
     required this.iq,
     required this.dexterity,
@@ -126,7 +131,6 @@ class Character {
         age: json['age'],
         points: json['po  ints'],
         sizeModifier: json['sizeModifier'],
-        fatiguePoints: json['fatiguePoints'],
         name: json['name'],
         avatarURL: json['avatarURL'],
         playerName: json['playerName'],
@@ -147,7 +151,6 @@ class Character {
         age: 21,
         points: 256,
         sizeModifier: 0,
-        fatiguePoints: 10,
         strength: 10,
         iq: 10,
         dexterity: 10,
@@ -167,7 +170,7 @@ class Character {
                 specialization: 'specialization',
               )
             ],
-            associatedStat: SkillStat.IQ,
+            associatedStat: Attributes.IQ,
             investedPoints: 0,
           ),
           Skill(
@@ -184,7 +187,7 @@ class Character {
                 specialization: 'specialization',
               )
             ],
-            associatedStat: SkillStat.IQ,
+            associatedStat: Attributes.IQ,
             investedPoints: 0,
           ),
           Skill(
@@ -201,7 +204,7 @@ class Character {
                 specialization: 'specialization',
               )
             ],
-            associatedStat: SkillStat.IQ,
+            associatedStat: Attributes.IQ,
             investedPoints: 0,
           ),
         ],
@@ -249,7 +252,6 @@ class Character {
         'age': age,
         'points': points,
         'sizeModifier': sizeModifier,
-        'fatiguePoints': fatiguePoints,
         'name': name,
         'avatarURL': avatarURL,
         'playerName': playerName,
@@ -259,63 +261,88 @@ class Character {
         'spells': List<dynamic>.from(spells.map((x) => x)),
       };
 
-  int getPrimaryAttributePointsPerIncrement(SkillStat stat) {
-    switch (stat) {
-      case SkillStat.ST:
-      case SkillStat.HT:
-        return POINTS_PER_HT_ST_INCREMENT;
+  double adjustPrimaryAttribute(Attributes stat, double newValue) {
+    int attributeValue = getAttribute(stat);
 
-      case SkillStat.DX:
-      case SkillStat.IQ:
-        return POINTS_PER_DX_IQ_INCREMENT;
-
-      default:
-        return 0;
-    }
-  }
-
-  int setPrimaryAttribute(SkillStat stat, int newValue) {
-    if (remainingPoints < getPrimaryAttributePointsPerIncrement(stat)) {
-      return getPrimaryAttribute(stat);
+    if (remainingPoints < stat.adjustPriceOf) {
+      return attributeValue.toDouble();
     }
 
-    if (newValue < MIN_PRIMARY_ATTRIBUTE_VALUE) {
-      return MIN_PRIMARY_ATTRIBUTE_VALUE;
-    } else if (newValue > MAX_PRIMARY_ATTRIBUTE_VALUE) {
-      return MAX_PRIMARY_ATTRIBUTE_VALUE;
+    if (newValue <= MIN_PRIMARY_ATTRIBUTE_VALUE) {
+      return MIN_PRIMARY_ATTRIBUTE_VALUE.toDouble();
+    }
+
+    if (newValue >= MAX_PRIMARY_ATTRIBUTE_VALUE) {
+      return MAX_PRIMARY_ATTRIBUTE_VALUE.toDouble();
     }
 
     return newValue;
   }
 
-  String getPointsSpentOnAttribute(SkillStat stat) {
-    final int statValue = getPrimaryAttribute(stat);
+  double adjustDerivedAttribute(Attributes stat, double newValue) {
+    int attributeValue = getPointsSpentOnAttribute(stat);
 
-    int pointsSpent = (statValue - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-        getPrimaryAttributePointsPerIncrement(stat);
-
-    if (pointsSpent < 0) {
-      return '-${pointsSpent.abs().toString().padLeft(pointsSpent <= -100 ? 2 : 3, '0')}';
+    if (remainingPoints < stat.adjustPriceOf) {
+      return attributeValue.toDouble();
     }
 
-    return pointsSpent.toString().padLeft(pointsSpent < 100 ? 3 : 0, '0');
+    return newValue;
   }
 
-  int getPrimaryAttribute(SkillStat stat) {
+  int getPointsSpentOnAttribute(Attributes stat) {
     switch (stat) {
-      case SkillStat.ST:
+      case Attributes.ST:
+        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+            Attributes.ST.adjustPriceOf;
+      case Attributes.DX:
+        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+            Attributes.DX.adjustPriceOf;
+      case Attributes.IQ:
+        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+            Attributes.IQ.adjustPriceOf;
+      case Attributes.HT:
+        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+            Attributes.HT.adjustPriceOf;
+      case Attributes.Per:
+        return pointsSpentOnPer;
+      case Attributes.Will:
+        return pointsSpentOnWill;
+      case Attributes.HP:
+        return pointsSpentOnHP;
+      case Attributes.FP:
+        return pointsSpentOnFP;
+      case Attributes.BASIC_SPEED:
+        return pointsSpentOnBS;
+      case Attributes.BASIC_MOVE:
+        return pointsSpentOnBM;
+      case Attributes.NONE:
+        return -1;
+    }
+  }
+
+  int getAttribute(Attributes stat) {
+    switch (stat) {
+      case Attributes.ST:
         return strength;
-      case SkillStat.DX:
+      case Attributes.DX:
         return dexterity;
-      case SkillStat.IQ:
+      case Attributes.IQ:
         return iq;
-      case SkillStat.HT:
+      case Attributes.HT:
         return health;
-      case SkillStat.Per:
+      case Attributes.Per:
         return perception;
-      case SkillStat.Will:
+      case Attributes.Will:
         return will;
-      case SkillStat.NONE:
+      case Attributes.HP:
+        return hitPoints;
+      case Attributes.FP:
+        return fatiguePoints;
+      case Attributes.BASIC_SPEED:
+        return basicSpeed.toInt();
+      case Attributes.BASIC_MOVE:
+        return basicMove;
+      case Attributes.NONE:
         return -1;
     }
   }

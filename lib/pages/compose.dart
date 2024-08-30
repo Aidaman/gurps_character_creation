@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gurps_character_creation/models/character.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/models/skills/skill_stat.dart';
-import 'package:gurps_character_creation/models/spells/spell.dart';
+import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
+import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
 import 'package:gurps_character_creation/widgets/compose_page/custom_text_field.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
-import 'package:gurps_character_creation/widgets/layouting/responsive_grid.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
@@ -75,25 +70,45 @@ class _ComposePageState extends State<ComposePage> {
               int.tryParse(value) ?? widget.character.sizeModifier;
           break;
         case 'Strength':
-          widget.character.strength = widget.character.setPrimaryAttribute(
-            SkillStat.ST,
-            int.parse(value),
-          );
+          widget.character.strength = widget.character
+              .adjustPrimaryAttribute(
+                Attributes.ST,
+                double.parse(value),
+              )
+              .toInt();
         case 'Dexterity':
-          widget.character.dexterity = widget.character.setPrimaryAttribute(
-            SkillStat.DX,
-            int.parse(value),
-          );
+          widget.character.dexterity = widget.character
+              .adjustPrimaryAttribute(
+                Attributes.DX,
+                double.parse(value),
+              )
+              .toInt();
         case 'IQ':
-          widget.character.iq = widget.character.setPrimaryAttribute(
-            SkillStat.IQ,
-            int.parse(value),
-          );
+          widget.character.iq = widget.character
+              .adjustPrimaryAttribute(
+                Attributes.IQ,
+                double.parse(value),
+              )
+              .toInt();
         case 'Health':
-          widget.character.health = widget.character.setPrimaryAttribute(
-            SkillStat.HT,
-            int.parse(value),
-          );
+          widget.character.health = widget.character
+              .adjustPrimaryAttribute(
+                Attributes.HT,
+                double.parse(value),
+              )
+              .toInt();
+        case 'Perception':
+          widget.character.pointsSpentOnPer += int.parse(value);
+        case 'Will':
+          widget.character.pointsSpentOnWill += int.parse(value);
+        case 'Hit Points':
+          widget.character.pointsSpentOnHP += int.parse(value);
+        case 'Fatigue Points':
+          widget.character.pointsSpentOnFP += int.parse(value);
+        case 'Basic Speed':
+          widget.character.pointsSpentOnBS += int.parse(value);
+        case 'Basic Move':
+          widget.character.pointsSpentOnBM += int.parse(value);
         default:
           break;
       }
@@ -201,11 +216,17 @@ class _ComposePageState extends State<ComposePage> {
             ),
             ..._buildBasicInfoFields(),
           ],
-          characterStats: [
-            Column(
-              children: _buildCharacterStats(),
-            ),
-          ],
+          characterStats: List.from(_buildCharacterStats().map(
+            (List<Widget> attributes) {
+              return Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: attributes,
+                ),
+              );
+            },
+          )),
           traits: [
             _generateTraitView([
               TraitCategories.ADVANTAGE,
@@ -248,82 +269,59 @@ class _ComposePageState extends State<ComposePage> {
     );
   }
 
-  List<Widget> _buildCharacterStats() {
-    return List.from(SkillStatExtension.baseStats().map(
-      (SkillStat stat) {
-        final int primaryAttributeValue =
-            widget.character.getPrimaryAttribute(stat);
+  List<List<Widget>> _buildCharacterStats() {
+    return [
+      List.from(AttributesExtension.primaryAttributes.map(
+        (Attributes attribute) {
+          final int primaryAttributeValue =
+              widget.character.getAttribute(attribute);
 
-        final ButtonStyle iconButtonStyle = IconButton.styleFrom(
-          iconSize: 16,
-          padding: const EdgeInsets.all(4),
-          hoverColor: Colors.transparent,
-        );
-        const BoxConstraints iconButtonConstraints = BoxConstraints(
-          maxHeight: 24,
-          maxWidth: 24,
-        );
+          return AttributeView(
+            attribute: attribute,
+            stat: primaryAttributeValue,
+            pointsSpent: widget.character.getPointsSpentOnAttribute(attribute),
+            onIncrement: () {
+              _updateCharacterField(
+                attribute.stringValue,
+                (primaryAttributeValue + attribute.adjustValueOf).toString(),
+              );
+            },
+            onDecrement: () {
+              _updateCharacterField(
+                attribute.stringValue,
+                (primaryAttributeValue - attribute.adjustValueOf).toString(),
+              );
+            },
+          );
+        },
+      )),
+      List.from(AttributesExtension.derivedAttributes.map(
+        (Attributes attribute) {
+          final int derivedAttributesValue =
+              widget.character.getAttribute(attribute);
 
-        return Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              '${stat.abbreviatedStringValue}:',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Courier',
-              ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              '$primaryAttributeValue',
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Courier',
-              ),
-            ),
-            const SizedBox(
-              width: 4,
-            ),
-            IconButton(
-              style: iconButtonStyle,
-              constraints: iconButtonConstraints,
-              onPressed: () {
-                _updateCharacterField(
-                  stat.stringValue,
-                  (primaryAttributeValue + 1).toString(),
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-            IconButton(
-              style: iconButtonStyle,
-              constraints: iconButtonConstraints,
-              onPressed: () {
-                _updateCharacterField(
-                  stat.stringValue,
-                  (primaryAttributeValue - 1).toString(),
-                );
-              },
-              icon: const Icon(Icons.remove),
-            ),
-            Text(
-              '[${widget.character.getPointsSpentOnAttribute(stat)}p]',
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Courier',
-                fontWeight: FontWeight.w100,
-              ),
-            ),
-          ],
-        );
-      },
-    ));
+          return AttributeView(
+            attribute: attribute,
+            stat: derivedAttributesValue,
+            pointsSpent: widget.character.getPointsSpentOnAttribute(attribute),
+            onIncrement: () {
+              print(
+                  '${attribute.stringValue} current: $derivedAttributesValue\n${attribute.stringValue} next value: ${derivedAttributesValue + attribute.adjustValueOf}');
+              _updateCharacterField(
+                attribute.stringValue,
+                (attribute.adjustPriceOf).toString(),
+              );
+            },
+            onDecrement: () {
+              _updateCharacterField(
+                attribute.stringValue,
+                (attribute.adjustPriceOf * -1).toString(),
+              );
+            },
+          );
+        },
+      )),
+    ];
   }
 
   Widget _generateTraitView(List<TraitCategories> categories) {
