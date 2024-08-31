@@ -67,24 +67,27 @@ class TraitView extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton(
-                  onPressed: onAddClick,
-                  style: iconButtonStyle,
-                  constraints: iconButtonConstraints,
-                  icon: const Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: onRemoveClick,
-                  style: iconButtonStyle,
-                  constraints: iconButtonConstraints,
-                  icon: const Icon(Icons.remove),
-                ),
-                IconButton(
-                  onPressed: onInfoClick,
-                  style: iconButtonStyle,
-                  constraints: iconButtonConstraints,
-                  icon: const Icon(Icons.info),
-                ),
+                if (onAddClick != null)
+                  IconButton(
+                    onPressed: onAddClick,
+                    style: iconButtonStyle,
+                    constraints: iconButtonConstraints,
+                    icon: const Icon(Icons.add),
+                  ),
+                if (onRemoveClick != null)
+                  IconButton(
+                    onPressed: onRemoveClick,
+                    style: iconButtonStyle,
+                    constraints: iconButtonConstraints,
+                    icon: const Icon(Icons.remove),
+                  ),
+                if (onInfoClick != null)
+                  IconButton(
+                    onPressed: onInfoClick,
+                    style: iconButtonStyle,
+                    constraints: iconButtonConstraints,
+                    icon: const Icon(Icons.info),
+                  ),
               ],
             )
           ],

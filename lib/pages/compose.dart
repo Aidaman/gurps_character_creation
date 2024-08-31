@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character.dart';
+import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
@@ -13,12 +13,10 @@ import 'package:gurps_character_creation/widgets/layouting/compose_page_responsi
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
+import 'package:provider/provider.dart';
 
 class ComposePage extends StatefulWidget {
-  final Character character;
-
-  ComposePage({super.key, Character? character})
-      : character = character ?? Character.empty();
+  const ComposePage({super.key});
 
   @override
   State<ComposePage> createState() => _ComposePageState();
@@ -45,76 +43,6 @@ class _ComposePageState extends State<ComposePage> {
     },
   ];
 
-  void _updateCharacterField(String key, String value) {
-    setState(() {
-      switch (key) {
-        case 'Players Name':
-          widget.character.playerName = value;
-          break;
-        case 'Character Name':
-          widget.character.name = value;
-          break;
-        case 'Age':
-          widget.character.age = int.tryParse(value) ?? widget.character.age;
-          break;
-        case 'Height':
-          widget.character.height =
-              int.tryParse(value) ?? widget.character.height;
-          break;
-        case 'Weight':
-          widget.character.weight =
-              int.tryParse(value) ?? widget.character.weight;
-          break;
-        case 'Size Modifier':
-          widget.character.sizeModifier =
-              int.tryParse(value) ?? widget.character.sizeModifier;
-          break;
-        case 'Strength':
-          widget.character.strength = widget.character
-              .adjustPrimaryAttribute(
-                Attributes.ST,
-                double.parse(value),
-              )
-              .toInt();
-        case 'Dexterity':
-          widget.character.dexterity = widget.character
-              .adjustPrimaryAttribute(
-                Attributes.DX,
-                double.parse(value),
-              )
-              .toInt();
-        case 'IQ':
-          widget.character.iq = widget.character
-              .adjustPrimaryAttribute(
-                Attributes.IQ,
-                double.parse(value),
-              )
-              .toInt();
-        case 'Health':
-          widget.character.health = widget.character
-              .adjustPrimaryAttribute(
-                Attributes.HT,
-                double.parse(value),
-              )
-              .toInt();
-        case 'Perception':
-          widget.character.pointsSpentOnPer += int.parse(value);
-        case 'Will':
-          widget.character.pointsSpentOnWill += int.parse(value);
-        case 'Hit Points':
-          widget.character.pointsSpentOnHP += int.parse(value);
-        case 'Fatigue Points':
-          widget.character.pointsSpentOnFP += int.parse(value);
-        case 'Basic Speed':
-          widget.character.pointsSpentOnBS += int.parse(value);
-        case 'Basic Move':
-          widget.character.pointsSpentOnBM += int.parse(value);
-        default:
-          break;
-      }
-    });
-  }
-
   void _openSideBar(BuildContext context, {bool? value}) {
     if (value != null) {
       setState(() {
@@ -135,8 +63,10 @@ class _ComposePageState extends State<ComposePage> {
 
   @override
   Widget build(BuildContext context) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     final SidebarContent sidebar = SidebarContent(
-      character: widget.character,
       selectedCategory: selectedCategory,
       sidebarContent: sidebarContent,
       onTraitFilterButtonPressed: (TraitCategories category) {
@@ -161,14 +91,14 @@ class _ComposePageState extends State<ComposePage> {
     return ResponsiveScaffold(
       selectedIndex: 1,
       appBar: AppBar(
-        title: Text(widget.character.name),
+        title: Text(characterProvider.character.name),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         toolbarHeight: APP_BAR_HEIGHT,
         centerTitle: true,
         actions: [
           Text(
-            'points: ${widget.character.remainingPoints}/${widget.character.points}',
+            'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
           ),
           const SizedBox(
             width: 32,
@@ -241,7 +171,7 @@ class _ComposePageState extends State<ComposePage> {
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: List.from(widget.character.skills.map(
+                children: List.from(characterProvider.character.skills.map(
                   (skl) => SkillView(skill: skl),
                 )),
               ),
@@ -250,7 +180,7 @@ class _ComposePageState extends State<ComposePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: List.from(
-                  widget.character.spells.map(
+                  characterProvider.character.spells.map(
                     (spl) => ListTile(
                       title: Text(spl.name),
                       subtitle: Text(spl.college.first),
@@ -270,24 +200,28 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   List<List<Widget>> _buildCharacterStats() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return [
       List.from(AttributesExtension.primaryAttributes.map(
         (Attributes attribute) {
           final int primaryAttributeValue =
-              widget.character.getAttribute(attribute);
+              characterProvider.character.getAttribute(attribute);
 
           return AttributeView(
             attribute: attribute,
             stat: primaryAttributeValue,
-            pointsSpent: widget.character.getPointsSpentOnAttribute(attribute),
+            pointsSpent: characterProvider.character
+                .getPointsSpentOnAttribute(attribute),
             onIncrement: () {
-              _updateCharacterField(
+              characterProvider.updateCharacterField(
                 attribute.stringValue,
                 (primaryAttributeValue + attribute.adjustValueOf).toString(),
               );
             },
             onDecrement: () {
-              _updateCharacterField(
+              characterProvider.updateCharacterField(
                 attribute.stringValue,
                 (primaryAttributeValue - attribute.adjustValueOf).toString(),
               );
@@ -298,22 +232,21 @@ class _ComposePageState extends State<ComposePage> {
       List.from(AttributesExtension.derivedAttributes.map(
         (Attributes attribute) {
           final int derivedAttributesValue =
-              widget.character.getAttribute(attribute);
+              characterProvider.character.getAttribute(attribute);
 
           return AttributeView(
             attribute: attribute,
             stat: derivedAttributesValue,
-            pointsSpent: widget.character.getPointsSpentOnAttribute(attribute),
+            pointsSpent: characterProvider.character
+                .getPointsSpentOnAttribute(attribute),
             onIncrement: () {
-              print(
-                  '${attribute.stringValue} current: $derivedAttributesValue\n${attribute.stringValue} next value: ${derivedAttributesValue + attribute.adjustValueOf}');
-              _updateCharacterField(
+              characterProvider.updateCharacterField(
                 attribute.stringValue,
                 (attribute.adjustPriceOf).toString(),
               );
             },
             onDecrement: () {
-              _updateCharacterField(
+              characterProvider.updateCharacterField(
                 attribute.stringValue,
                 (attribute.adjustPriceOf * -1).toString(),
               );
@@ -325,7 +258,10 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   Widget _generateTraitView(List<TraitCategories> categories) {
-    final Iterable<Trait> traits = widget.character.traits.where(
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    final Iterable<Trait> traits = characterProvider.character.traits.where(
       (trait) => trait.categories.any(
         (category) => categories.contains(category),
       ),
@@ -360,7 +296,10 @@ class _ComposePageState extends State<ComposePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: List.from(traits.map(
-          (e) => TraitView(trait: e),
+          (Trait t) => TraitView(
+            trait: t,
+            onRemoveClick: () => characterProvider.removeTrait(t),
+          ),
         )),
       ),
     );
@@ -378,6 +317,9 @@ class _ComposePageState extends State<ComposePage> {
   }
 
   List<Widget> _buildBasicInfoFields() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     Widget _generateSingleInput(Map<String, TextEditingController> map) {
       return Row(
         children: [
@@ -387,7 +329,8 @@ class _ComposePageState extends State<ComposePage> {
           CustomTextField(
             textEditingController: map.entries.first.value,
             onChanged: (value) {
-              _updateCharacterField(map.entries.first.key, value);
+              characterProvider.updateCharacterField(
+                  map.entries.first.key, value);
             },
             fieldName: map.entries.first.key,
           ),
@@ -413,7 +356,7 @@ class _ComposePageState extends State<ComposePage> {
               children: List.from(map.entries.map(
                 (e) => CustomTextField(
                   onChanged: (value) {
-                    _updateCharacterField(e.key, value);
+                    characterProvider.updateCharacterField(e.key, value);
                   },
                   fieldName: e.key,
                   textEditingController: e.value,

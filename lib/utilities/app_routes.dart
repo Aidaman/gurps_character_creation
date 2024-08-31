@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/pages/compose.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
+import 'package:provider/provider.dart';
 
 class RouteName {
   final String name;
@@ -27,8 +29,9 @@ final List<RouteName> routes = [
     destination: '/compose',
     name: 'compose',
     iconName: Icons.create,
-    pageBuilder: (context) => ComposePage(
-      character: null,
+    pageBuilder: (context) => ChangeNotifierProvider(
+      create: (_) => CharacterProvider(),
+      child: const ComposePage(),
     ),
   ),
 ];

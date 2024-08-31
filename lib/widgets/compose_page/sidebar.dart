@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character.dart';
+import 'package:gurps_character_creation/models/character/character.dart';
+import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
@@ -7,6 +8,7 @@ import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
+import 'package:provider/provider.dart';
 
 enum SidebarFutureTypes {
   TRAITS,
@@ -15,7 +17,6 @@ enum SidebarFutureTypes {
 }
 
 class SidebarContent extends StatefulWidget {
-  final Character character;
   final TraitCategories selectedCategory;
   final SidebarFutureTypes sidebarContent;
   final void Function(TraitCategories category) onTraitFilterButtonPressed;
@@ -23,7 +24,6 @@ class SidebarContent extends StatefulWidget {
 
   const SidebarContent({
     super.key,
-    required this.character,
     required this.selectedCategory,
     required this.sidebarContent,
     required this.onTraitFilterButtonPressed,
@@ -178,6 +178,9 @@ class _SidebarContentState extends State<SidebarContent> {
   }
 
   FutureBuilder<List<Trait>> _buildTraitList() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return FutureBuilder<List<Trait>>(
       future: loadTraits(),
       builder: (context, snapshot) {
@@ -203,25 +206,8 @@ class _SidebarContentState extends State<SidebarContent> {
           itemCount: traits.length,
           itemBuilder: (context, index) => TraitView(
             trait: traits[index],
-            onAddClick: () {
-              setState(() {
-                final bool traitIsPresent = widget.character.traits.any(
-                  (element) => element.name == traits[index].name,
-                );
-                if (!traitIsPresent) {
-                  widget.character.traits.add(traits[index]);
-                }
-              });
-            },
-            onRemoveClick: () {
-              setState(() {
-                widget.character.traits = List.from(
-                  widget.character.traits.where(
-                    (element) => element.name != traits[index].name,
-                  ),
-                );
-              });
-            },
+            onAddClick: () => characterProvider.addTrait(traits[index]),
+            onRemoveClick: () => characterProvider.removeTrait(traits[index]),
           ),
         );
       },
