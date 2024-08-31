@@ -81,7 +81,8 @@ class AttributeView extends StatelessWidget {
       ],
     );
 
-    if (MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH) {
+    if (MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH ||
+        MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) {
       return LayoutBuilder(
         builder: (context, constraints) {
           return SizedBox(
@@ -101,7 +102,6 @@ class AttributeView extends StatelessWidget {
         },
       );
     }
-
     return body;
   }
 }

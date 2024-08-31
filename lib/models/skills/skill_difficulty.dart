@@ -16,12 +16,24 @@ extension SkillDifficultyExtension on SkillDifficulty {
         SkillDifficulty.NONE => 'NONE',
       };
 
+  String get abbreviatedStringValue => switch (this) {
+        SkillDifficulty.EASY => 'E',
+        SkillDifficulty.AVERAGE => 'A',
+        SkillDifficulty.HARD => 'H',
+        SkillDifficulty.VERY_HARD => 'VH',
+        SkillDifficulty.NONE => 'NONE',
+      };
+
   static SkillDifficulty? fromString(String difficulty) {
     return switch (difficulty.toLowerCase()) {
       'e' => SkillDifficulty.EASY,
+      'easy' => SkillDifficulty.EASY,
       'a' => SkillDifficulty.AVERAGE,
+      'average' => SkillDifficulty.AVERAGE,
       'h' => SkillDifficulty.HARD,
+      'hard' => SkillDifficulty.HARD,
       'vh' => SkillDifficulty.VERY_HARD,
+      'very hard' => SkillDifficulty.VERY_HARD,
       String() => SkillDifficulty.NONE,
     };
   }
