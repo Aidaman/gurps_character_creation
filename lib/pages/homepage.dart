@@ -19,22 +19,10 @@ class Homepage extends StatelessWidget {
         toolbarHeight: APP_BAR_HEIGHT,
         elevation: COMMON_ELLEVATION,
       ),
-      body: FutureBuilder<List<Skill>>(
-        future: loadSkills(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No data found.'));
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          }
-
-          final List<Skill> skills = snapshot.data!;
-          return ListView.builder(
-            itemBuilder: (context, index) => SkillView(skill: skills[index]),
-          );
-        },
+      body: const Center(
+        child: Text(
+          'Not Ready Yet',
+        ),
       ),
     );
   }
