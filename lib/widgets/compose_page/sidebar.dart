@@ -153,6 +153,9 @@ class _SidebarContentState extends State<SidebarContent> {
   }
 
   FutureBuilder<List<Skill>> _buildSkillList() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return FutureBuilder<List<Skill>>(
       future: loadSkills(),
       builder: (context, snapshot) {
@@ -171,7 +174,15 @@ class _SidebarContentState extends State<SidebarContent> {
             .toList();
         return ListView.builder(
           itemCount: skills.length,
-          itemBuilder: (context, index) => SkillView(skill: skills[index]),
+          itemBuilder: (context, index) => SkillView(
+            skill: skills[index],
+            onAddClick: () {
+              characterProvider.addSkill(skills[index]);
+            },
+            onRemoveClick: () {
+              characterProvider.removeSkill(skills[index]);
+            },
+          ),
         );
       },
     );

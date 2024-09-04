@@ -70,7 +70,7 @@ class Character {
         );
     int skillsTotalCount = skills
         .map(
-          (Skill s) => s.basePoints + s.investedPoints,
+          (Skill s) => s.investedPoints,
         )
         .fold(
           0,
@@ -155,88 +155,9 @@ class Character {
         iq: 10,
         dexterity: 10,
         health: 10,
-        skills: [
-          Skill(
-            name: 'skl 1',
-            reference: 'reference',
-            difficulty: SkillDifficulty.EASY,
-            basePoints: 0,
-            categories: ['category 1', 'category 2'],
-            modifiers: [
-              SkillModifier(
-                type: 'type',
-                modifier: 'modifier',
-                name: 'name',
-                specialization: 'specialization',
-              )
-            ],
-            associatedStat: Attributes.IQ,
-            investedPoints: 0,
-          ),
-          Skill(
-            name: 'skl 2',
-            reference: 'reference',
-            difficulty: SkillDifficulty.EASY,
-            basePoints: 0,
-            categories: ['category 1', 'category 2'],
-            modifiers: [
-              SkillModifier(
-                type: 'type',
-                modifier: 'modifier',
-                name: 'name',
-                specialization: 'specialization',
-              )
-            ],
-            associatedStat: Attributes.IQ,
-            investedPoints: 0,
-          ),
-          Skill(
-            name: 'skl 3',
-            reference: 'reference',
-            difficulty: SkillDifficulty.EASY,
-            basePoints: 0,
-            categories: ['category 1', 'category 2'],
-            modifiers: [
-              SkillModifier(
-                type: 'type',
-                modifier: 'modifier',
-                name: 'name',
-                specialization: 'specialization',
-              )
-            ],
-            associatedStat: Attributes.IQ,
-            investedPoints: 0,
-          ),
-        ],
+        skills: [],
         traits: [],
-        spells: [
-          Spell(
-            name: 'spl 1',
-            college: ['college'],
-            powerSource: 'powerSource',
-            spellClass: 'spellClass',
-            castingCost: 'castingCost',
-            maintenanceCost: 'maintenanceCost',
-            castingTime: 'castingTime',
-            duration: 'duration',
-            reference: 'reference',
-            categories: ['categories'],
-            prereqList: ['prereqList'],
-          ),
-          Spell(
-            name: 'spl 2',
-            college: ['college'],
-            powerSource: 'powerSource',
-            spellClass: 'spellClass',
-            castingCost: 'castingCost',
-            maintenanceCost: 'maintenanceCost',
-            castingTime: 'castingTime',
-            duration: 'duration',
-            reference: 'reference',
-            categories: ['categories'],
-            prereqList: ['prereqList'],
-          ),
-        ],
+        spells: [],
         weight: 60,
       );
 
@@ -320,8 +241,8 @@ class Character {
     }
   }
 
-  int getAttribute(Attributes stat) {
-    switch (stat) {
+  int getAttribute(Attributes attribute) {
+    switch (attribute) {
       case Attributes.ST:
         return strength;
       case Attributes.DX:

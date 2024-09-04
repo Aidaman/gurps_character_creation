@@ -102,7 +102,16 @@ class CharacterProvider with ChangeNotifier {
       return;
     }
 
-    _character.skills.add(skill);
+    _character.skills.add(Skill.copyWith(skill, investedPoints: 1));
+    notifyListeners();
+  }
+
+  void adjustSkillInvestedPoints(Skill skill, int adjustment) {
+    if (adjustment < 0 && skill.investedPoints == 1) {
+      return;
+    }
+
+    skill.investedPoints += adjustment;
     notifyListeners();
   }
 

@@ -19,7 +19,7 @@ String skillToJson(List<Skill> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Skill {
-  final Attributes associatedStat;
+  final Attributes associatedAttribute;
   final SkillDifficulty difficulty;
   int investedPoints;
 
@@ -37,7 +37,7 @@ class Skill {
     required this.basePoints,
     required this.categories,
     required this.modifiers,
-    required this.associatedStat,
+    required this.associatedAttribute,
     required this.investedPoints,
     this.specialization,
   });
@@ -52,7 +52,7 @@ class Skill {
           json['modifiers'].map((x) => SkillModifier.fromJson(x))),
       specialization: json['specialization'],
       investedPoints: json['invested_points'] ?? 0,
-      associatedStat: AttributesExtension.fromString(
+      associatedAttribute: AttributesExtension.fromString(
             json['difficulty'].toString().split('/').first,
           ) ??
           Attributes.NONE,
@@ -60,6 +60,31 @@ class Skill {
             json['difficulty'].toString().split('/').last,
           ) ??
           SkillDifficulty.NONE,
+    );
+  }
+
+  factory Skill.copyWith(
+    Skill skill, {
+    String? name,
+    String? reference,
+    int? basePoints,
+    List<String>? categories,
+    List<SkillModifier>? modifiers,
+    String? specialization,
+    int? investedPoints,
+    Attributes? associatedAttribute,
+    SkillDifficulty? difficulty,
+  }) {
+    return Skill(
+      name: name ?? skill.name,
+      reference: reference ?? skill.reference,
+      basePoints: basePoints ?? skill.basePoints,
+      categories: categories ?? skill.categories,
+      modifiers: modifiers ?? skill.modifiers,
+      specialization: specialization ?? skill.specialization,
+      investedPoints: investedPoints ?? skill.investedPoints,
+      associatedAttribute: associatedAttribute ?? skill.associatedAttribute,
+      difficulty: difficulty ?? skill.difficulty,
     );
   }
 
@@ -131,6 +156,6 @@ class Skill {
         break;
     }
 
-    return primaryAttribute + skillLevel;
+    return skillLevel;
   }
 }

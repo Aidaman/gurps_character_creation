@@ -1,19 +1,48 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:provider/provider.dart';
 
 class SkillView extends StatelessWidget {
   final Skill skill;
-  const SkillView({super.key, required this.skill});
+  final void Function()? onAddClick;
+  final void Function()? onRemoveClick;
+  final bool? isIncluded;
+
+  const SkillView({
+    super.key,
+    required this.skill,
+    this.onAddClick,
+    this.onRemoveClick,
+    this.isIncluded,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    final ButtonStyle iconButtonStyle = IconButton.styleFrom(
+      iconSize: 16,
+      padding: const EdgeInsets.all(4),
+    );
+    const BoxConstraints iconButtonConstraints = BoxConstraints(
+      maxHeight: 32,
+      maxWidth: 32,
+    );
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: Color(0x64000000), width: 1.0),
+          bottom: BorderSide(
+            color: Theme.of(context).colorScheme.onSurface,
+            width: 1.0,
+          ),
         ),
       ),
       child: Padding(
@@ -31,14 +60,12 @@ class SkillView extends StatelessWidget {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                if (skill.investedPoints > 0)
+                if (skill.investedPoints < 1)
                   Text(
-                    'points: ${skill.investedPoints} (${skill.associatedStat.stringValue}/${skill.difficulty.stringValue})',
+                    'cost: ${skill.basePoints} (${skill.associatedAttribute.stringValue}/${skill.difficulty.stringValue})',
                   )
                 else
-                  Text(
-                    'cost: ${skill.basePoints} (${skill.associatedStat.stringValue}/${skill.difficulty.stringValue})',
-                  ),
+                  _generateSkillCostText(context),
               ],
             ),
             Row(
@@ -48,10 +75,121 @@ class SkillView extends StatelessWidget {
                   style: const TextStyle(fontSize: 14),
                 ),
               ],
+            ),
+            Row(
+              children: [
+                _generateAddRemoveButtons(
+                  iconButtonStyle,
+                  iconButtonConstraints,
+                ),
+                _generateAdjustmentButtons(
+                  characterProvider,
+                  iconButtonStyle,
+                  iconButtonConstraints,
+                ),
+              ],
             )
           ],
         ),
       ),
+    );
+  }
+
+  Expanded _generateAddRemoveButtons(
+    ButtonStyle iconButtonStyle,
+    BoxConstraints iconButtonConstraints,
+  ) {
+    return Expanded(
+      child: Row(
+        children: [
+          if (onAddClick != null)
+            IconButton(
+              onPressed: onAddClick,
+              style: iconButtonStyle,
+              constraints: iconButtonConstraints,
+              icon: const Icon(Icons.add),
+            ),
+          if (onRemoveClick != null)
+            IconButton(
+              onPressed: onRemoveClick,
+              style: iconButtonStyle,
+              constraints: iconButtonConstraints,
+              icon: const Icon(Icons.remove),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _generateAdjustmentButtons(
+    CharacterProvider characterProvider,
+    ButtonStyle iconButtonStyle,
+    BoxConstraints iconButtonConstraints,
+  ) {
+    return Row(
+      children: [
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSkillInvestedPoints(skill, 1);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.arrow_upward),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSkillInvestedPoints(skill, 4);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.keyboard_double_arrow_up_outlined),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSkillInvestedPoints(skill, -1);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.arrow_downward),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSkillInvestedPoints(skill, -4);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.keyboard_double_arrow_down_outlined),
+          ),
+      ],
+    );
+  }
+
+  Text _generateSkillCostText(BuildContext context) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    final int attributeValue =
+        characterProvider.character.getAttribute(skill.associatedAttribute);
+    final int effectiveSkill = skill.calculateEffectiveSkill(attributeValue);
+
+    if (effectiveSkill < 0) {
+      return Text(
+        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue}$effectiveSkill)',
+      );
+    }
+
+    if (effectiveSkill == 0) {
+      return Text(
+        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue})',
+      );
+    }
+
+    return Text(
+      'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue}+$effectiveSkill)',
     );
   }
 }

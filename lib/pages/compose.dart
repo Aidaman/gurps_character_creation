@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/skills/skill.dart';
+import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
@@ -167,35 +169,81 @@ class _ComposePageState extends State<ComposePage> {
               TraitCategories.QUIRK,
             ]),
           ],
-          skillsAndMagic: [
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.from(characterProvider.character.skills.map(
-                  (skl) => SkillView(skill: skl),
-                )),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: List.from(
-                  characterProvider.character.spells.map(
-                    (spl) => ListTile(
-                      title: Text(spl.name),
-                      subtitle: Text(spl.college.first),
-                    ),
-                  ),
-                ),
-              ),
-            )
-          ],
+          skillsAndMagic: [_generateSkills(), _generateMagic()],
           restOfTheBody: [],
         ),
       ),
       endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
           ? null
           : sidebar,
+    );
+  }
+
+  @override
+  void dispose() {
+    for (var entry in _basicInfoControllers) {
+      for (var e in entry.entries) {
+        e.value.dispose();
+      }
+    }
+
+    super.dispose();
+  }
+
+  Widget _generateMagic() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    // final List<Widget> spells = List.from(
+    //   characterProvider.character.spells.map(
+    //     (Spell spl) => SpellView(skill: spl),
+    //   ),
+    // );
+
+    if (characterProvider.character.spells.isEmpty) {
+      return _generateEmptyTraitOrSkillView(['spells']);
+    }
+
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: List.from(
+          characterProvider.character.spells.map(
+            (spl) => ListTile(
+              title: Text(spl.name),
+              subtitle: Text(spl.college.first),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _generateSkills() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    final List<Widget> skills = List.from(
+      characterProvider.character.skills.map(
+        (Skill skl) => SkillView(
+          skill: skl,
+          isIncluded: true,
+          onRemoveClick: () {
+            characterProvider.removeSkill(skl);
+          },
+        ),
+      ),
+    );
+
+    if (skills.isEmpty) {
+      return _generateEmptyTraitOrSkillView(['Skills']);
+    }
+
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: skills,
+      ),
     );
   }
 
@@ -257,6 +305,34 @@ class _ComposePageState extends State<ComposePage> {
     ];
   }
 
+  Widget _generateEmptyTraitOrSkillView(List<String> categories) {
+    final String types = categories.join('/');
+    const double DIVIDER_INDENT = 32;
+
+    return Expanded(
+      child: Column(
+        children: [
+          const Divider(
+            endIndent: DIVIDER_INDENT,
+            indent: DIVIDER_INDENT,
+          ),
+          Text('Click to add $types '),
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Builder(builder: (context) {
+              return IconButton.filled(
+                onPressed: () {
+                  _openSideBar(context, value: true);
+                },
+                icon: const Icon(Icons.add),
+              );
+            }),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _generateTraitView(List<TraitCategories> categories) {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
@@ -268,26 +344,8 @@ class _ComposePageState extends State<ComposePage> {
     );
 
     if (traits.isEmpty) {
-      final String types = categories.map((c) => c.stringValue).join('/');
-
-      return Expanded(
-        child: Column(
-          children: [
-            const Divider(),
-            Text('Click to add $types '),
-            Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: Builder(builder: (context) {
-                return IconButton.filled(
-                  onPressed: () {
-                    _openSideBar(context, value: true);
-                  },
-                  icon: const Icon(Icons.add),
-                );
-              }),
-            ),
-          ],
-        ),
+      return _generateEmptyTraitOrSkillView(
+        List.from(categories.map((TraitCategories tc) => tc.stringValue)),
       );
     }
 
@@ -303,17 +361,6 @@ class _ComposePageState extends State<ComposePage> {
         )),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    for (var entry in _basicInfoControllers) {
-      for (var e in entry.entries) {
-        e.value.dispose();
-      }
-    }
-
-    super.dispose();
   }
 
   List<Widget> _buildBasicInfoFields() {
