@@ -5,6 +5,7 @@ import 'package:gurps_character_creation/models/character/character_provider.dar
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
 import 'package:provider/provider.dart';
 
 class SkillView extends StatelessWidget {
@@ -35,7 +36,7 @@ class SkillView extends StatelessWidget {
       maxWidth: 32,
     );
 
-    return Container(
+    Widget body = Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
       decoration: BoxDecoration(
         border: Border(
@@ -66,12 +67,21 @@ class SkillView extends StatelessWidget {
                 _generateSkillCostText(context),
             ],
           ),
+          const SizedBox(
+            height: 4.0,
+          ),
           Row(
             children: [
-              Text(
-                skill.categories.map((e) => e).join(', '),
-                style: const TextStyle(fontSize: 14),
+              Expanded(
+                child: Text(
+                  skill.categories.join(', '),
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
+              if (skill.specialization != null)
+                Expanded(
+                  child: Text(skill.specialization!),
+                ),
             ],
           ),
           Row(
@@ -90,6 +100,27 @@ class SkillView extends StatelessWidget {
         ],
       ),
     );
+
+    return body;
+
+    // if (skill.modifiers.isEmpty ||
+    //     isIncluded == null ||
+    //     isIncluded != null && !isIncluded!) {
+    //   return body;
+    // }
+
+    // return Column(
+    //   children: [
+    //     body,
+    //     const Text('Modifiers: '),
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: List.from(skill.modifiers.map(
+    //         (mod) => Text('${mod.name ?? mod.type} ${mod.modifier}'),
+    //       )),
+    //     )
+    //   ],
+    // );
   }
 
   Expanded _generateAddRemoveButtons(

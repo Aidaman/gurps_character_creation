@@ -147,8 +147,8 @@ class Character {
         avatarURL: '',
         playerName: 'player\'s name',
         appearanceDetails: 'appearance details',
-        height: 150,
-        age: 21,
+        height: 0,
+        age: 0,
         points: 256,
         sizeModifier: 0,
         strength: 10,
@@ -158,7 +158,7 @@ class Character {
         skills: [],
         traits: [],
         spells: [],
-        weight: 60,
+        weight: 0,
       );
 
   Map<String, dynamic> toJson() => {
