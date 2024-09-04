@@ -7,6 +7,7 @@ import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
+import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
 import 'package:provider/provider.dart';
 
@@ -124,6 +125,9 @@ class _SidebarContentState extends State<SidebarContent> {
   }
 
   FutureBuilder<List<Spell>> _buildSpellList() {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return FutureBuilder(
       future: loadSpells(),
       builder: (context, snapshot) {
@@ -143,9 +147,14 @@ class _SidebarContentState extends State<SidebarContent> {
 
         return ListView.builder(
           itemCount: spells.length,
-          itemBuilder: (context, index) => ListTile(
-            title: Text(spells[index].name),
-            subtitle: Text(spells[index].prereqList.join(', ')),
+          itemBuilder: (context, index) => SpellView(
+            spell: spells[index],
+            onAddClick: () {
+              characterProvider.addSpell(spells[index]);
+            },
+            onRemoveClick: () {
+              characterProvider.removeSpell(spells[index]);
+            },
           ),
         );
       },

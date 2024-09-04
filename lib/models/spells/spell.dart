@@ -27,6 +27,7 @@ class Spell {
   final List<String> prereqList;
 
   final int investedPoints;
+  final List<String>? unsatisfitedPrerequisitesList;
 
   Spell({
     required this.name,
@@ -40,6 +41,7 @@ class Spell {
     required this.reference,
     required this.categories,
     required this.prereqList,
+    this.unsatisfitedPrerequisitesList,
     int? investedPoints,
   }) : investedPoints = investedPoints ?? 0;
 
@@ -72,4 +74,38 @@ class Spell {
         'categories': List<String>.from(categories.map((x) => x)),
         'prereq_list': List<String>.from(prereqList.map((x) => x)),
       };
+
+  factory Spell.copyWith(
+    Spell spl, {
+    String? name,
+    List<String>? college,
+    String? powerSource,
+    String? spellClass,
+    String? castingCost,
+    String? maintenanceCost,
+    String? castingTime,
+    String? duration,
+    String? reference,
+    List<String>? categories,
+    List<String>? prereqList,
+    int? investedPoints,
+    List<String>? unsatisfitedPrerequisitesList,
+  }) {
+    return Spell(
+      name: name ?? spl.name,
+      college: college ?? spl.college,
+      powerSource: powerSource ?? spl.powerSource,
+      spellClass: spellClass ?? spl.spellClass,
+      castingCost: castingCost ?? spl.castingCost,
+      maintenanceCost: maintenanceCost ?? spl.maintenanceCost,
+      castingTime: castingTime ?? spl.castingTime,
+      duration: duration ?? spl.duration,
+      reference: reference ?? spl.reference,
+      categories: categories ?? spl.categories,
+      prereqList: prereqList ?? spl.prereqList,
+      investedPoints: investedPoints ?? spl.investedPoints,
+      unsatisfitedPrerequisitesList:
+          unsatisfitedPrerequisitesList ?? spl.unsatisfitedPrerequisitesList,
+    );
+  }
 }

@@ -45,52 +45,49 @@ class SkillView extends StatelessWidget {
           ),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    skill.name,
-                    style: const TextStyle(fontSize: 16),
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  skill.name,
+                  style: const TextStyle(fontSize: 16),
                 ),
-                if (skill.investedPoints < 1)
-                  Text(
-                    'cost: ${skill.basePoints} (${skill.associatedAttribute.stringValue}/${skill.difficulty.stringValue})',
-                  )
-                else
-                  _generateSkillCostText(context),
-              ],
-            ),
-            Row(
-              children: [
+              ),
+              if (skill.investedPoints < 1)
                 Text(
-                  skill.categories.map((e) => e).join(', '),
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                _generateAddRemoveButtons(
-                  iconButtonStyle,
-                  iconButtonConstraints,
-                ),
-                _generateAdjustmentButtons(
-                  characterProvider,
-                  iconButtonStyle,
-                  iconButtonConstraints,
-                ),
-              ],
-            )
-          ],
-        ),
+                  'cost: ${skill.basePoints} (${skill.associatedAttribute.stringValue}/${skill.difficulty.stringValue})',
+                )
+              else
+                _generateSkillCostText(context),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                skill.categories.map((e) => e).join(', '),
+                style: const TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              _generateAddRemoveButtons(
+                iconButtonStyle,
+                iconButtonConstraints,
+              ),
+              _generateAdjustmentButtons(
+                characterProvider,
+                iconButtonStyle,
+                iconButtonConstraints,
+              ),
+            ],
+          )
+        ],
       ),
     );
   }

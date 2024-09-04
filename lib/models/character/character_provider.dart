@@ -122,12 +122,33 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void refreshSpellUnsatisfiedPrereqs() {
+    _character.spells = List.from(
+      _character.spells.map((spl) {
+        final List<String> unsatisfitedPrerequisitesList = List.from(
+          spl.prereqList.where(
+            (s) => !_character.spells.any(
+              (e) => e.name.toLowerCase() == s.toLowerCase(),
+            ),
+          ),
+        );
+
+        return Spell.copyWith(
+          spl,
+          unsatisfitedPrerequisitesList: unsatisfitedPrerequisitesList,
+        );
+      }),
+    );
+  }
+
   void addSpell(Spell spell) {
-    if (_character.skills.any((s) => s.name == spell.name)) {
+    if (_character.spells.any((s) => s.name == spell.name)) {
       return;
     }
 
     _character.spells.add(spell);
+
+    refreshSpellUnsatisfiedPrereqs();
     notifyListeners();
   }
 
@@ -135,6 +156,7 @@ class CharacterProvider with ChangeNotifier {
     _character.spells.removeWhere(
       (s) => s.name == spell.name,
     );
+    refreshSpellUnsatisfiedPrereqs();
     notifyListeners();
   }
 }

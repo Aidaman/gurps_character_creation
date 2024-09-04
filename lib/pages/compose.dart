@@ -14,6 +14,7 @@ import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.d
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
+import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
 import 'package:provider/provider.dart';
 
@@ -194,11 +195,17 @@ class _ComposePageState extends State<ComposePage> {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
-    // final List<Widget> spells = List.from(
-    //   characterProvider.character.spells.map(
-    //     (Spell spl) => SpellView(skill: spl),
-    //   ),
-    // );
+    final List<Widget> spells = List.from(
+      characterProvider.character.spells.map(
+        (Spell spl) => SpellView(
+          spell: spl,
+          isIncluded: true,
+          onRemoveClick: () {
+            characterProvider.removeSpell(spl);
+          },
+        ),
+      ),
+    );
 
     if (characterProvider.character.spells.isEmpty) {
       return _generateEmptyTraitOrSkillView(['spells']);
@@ -207,14 +214,7 @@ class _ComposePageState extends State<ComposePage> {
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: List.from(
-          characterProvider.character.spells.map(
-            (spl) => ListTile(
-              title: Text(spl.name),
-              subtitle: Text(spl.college.first),
-            ),
-          ),
-        ),
+        children: spells,
       ),
     );
   }
