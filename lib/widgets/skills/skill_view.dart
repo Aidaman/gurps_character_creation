@@ -102,25 +102,6 @@ class SkillView extends StatelessWidget {
     );
 
     return body;
-
-    // if (skill.modifiers.isEmpty ||
-    //     isIncluded == null ||
-    //     isIncluded != null && !isIncluded!) {
-    //   return body;
-    // }
-
-    // return Column(
-    //   children: [
-    //     body,
-    //     const Text('Modifiers: '),
-    //     Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: List.from(skill.modifiers.map(
-    //         (mod) => Text('${mod.name ?? mod.type} ${mod.modifier}'),
-    //       )),
-    //     )
-    //   ],
-    // );
   }
 
   Expanded _generateAddRemoveButtons(
