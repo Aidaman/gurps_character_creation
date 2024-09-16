@@ -86,6 +86,12 @@ class _ComposePageState extends State<ComposePage> {
       },
       onSidebarFutureChange: (SidebarFutureTypes type) {
         setState(() {
+          if (type == SidebarFutureTypes.TRAITS &&
+              sidebarContent == SidebarFutureTypes.TRAITS) {
+            selectedCategory = TraitCategories.NONE;
+            return;
+          }
+
           sidebarContent = type;
         });
       },
@@ -171,7 +177,7 @@ class _ComposePageState extends State<ComposePage> {
             ]),
           ],
           skillsAndMagic: [_generateSkills(), _generateMagic()],
-          restOfTheBody: [],
+          restOfTheBody: const [],
         ),
       ),
       endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
@@ -367,7 +373,7 @@ class _ComposePageState extends State<ComposePage> {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
-    Widget _generateSingleInput(Map<String, TextEditingController> map) {
+    Widget generateSingleInput(Map<String, TextEditingController> map) {
       return Row(
         children: [
           const SizedBox(
@@ -393,7 +399,7 @@ class _ComposePageState extends State<ComposePage> {
           final bool isSingleElement = map.entries.length == 1;
 
           if (isSingleElement) {
-            return _generateSingleInput(map);
+            return generateSingleInput(map);
           }
 
           return Expanded(

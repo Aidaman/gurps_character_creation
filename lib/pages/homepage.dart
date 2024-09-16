@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
-import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});

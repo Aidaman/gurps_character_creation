@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
@@ -88,38 +87,61 @@ class _SidebarContentState extends State<SidebarContent> {
     );
   }
 
-  Wrap _buildFilters() {
+  Widget _buildFilters() {
     const double FILTER_SPACING = 24.0;
     const double FILTER_RUN_SPACING = 0.0;
 
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      runAlignment: WrapAlignment.spaceAround,
-      runSpacing: FILTER_RUN_SPACING,
-      spacing: FILTER_SPACING,
+    return Column(
       children: [
-        ...TraitCategories.values.map(
-          (category) => LabeledIconButton(
-            iconValue: category.iconValue,
-            onPressed: () => widget.onTraitFilterButtonPressed(category),
-            label: category.stringValue,
-          ),
+        Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          runAlignment: WrapAlignment.spaceAround,
+          runSpacing: FILTER_RUN_SPACING,
+          spacing: FILTER_SPACING,
+          children: [
+            LabeledIconButton(
+              iconValue: Icons.accessibility_outlined,
+              onPressed: () =>
+                  widget.onSidebarFutureChange(SidebarFutureTypes.TRAITS),
+              label: 'Traits',
+            ),
+            LabeledIconButton(
+              iconValue: Icons.handyman_outlined,
+              onPressed: () => widget.onSidebarFutureChange(
+                SidebarFutureTypes.SKILLS,
+              ),
+              label: 'Skills',
+            ),
+            LabeledIconButton(
+              iconValue: Icons.bolt_outlined,
+              onPressed: () => widget.onSidebarFutureChange(
+                SidebarFutureTypes.MAGIC,
+              ),
+              label: 'Magic',
+            ),
+          ],
         ),
-        LabeledIconButton(
-          iconValue: Icons.handyman_outlined,
-          onPressed: () => widget.onSidebarFutureChange(
-            SidebarFutureTypes.SKILLS,
-          ),
-          label: 'Skills',
-        ),
-        LabeledIconButton(
-          iconValue: Icons.bolt_outlined,
-          onPressed: () => widget.onSidebarFutureChange(
-            SidebarFutureTypes.MAGIC,
-          ),
-          label: 'Magic',
-        ),
+        if (widget.sidebarContent == SidebarFutureTypes.TRAITS)
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            runAlignment: WrapAlignment.spaceAround,
+            runSpacing: FILTER_RUN_SPACING,
+            spacing: FILTER_SPACING,
+            children: List.from(
+              TraitCategories.values
+                  .where((c) => c != TraitCategories.NONE)
+                  .map(
+                    (category) => LabeledIconButton(
+                      iconValue: category.iconValue,
+                      onPressed: () =>
+                          widget.onTraitFilterButtonPressed(category),
+                      label: category.stringValue,
+                    ),
+                  ),
+            ),
+          )
       ],
     );
   }

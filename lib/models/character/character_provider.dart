@@ -6,7 +6,7 @@ import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 
 class CharacterProvider with ChangeNotifier {
-  Character _character = Character.empty();
+  final Character _character = Character.empty();
 
   Character get character => _character;
 

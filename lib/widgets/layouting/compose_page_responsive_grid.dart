@@ -7,6 +7,10 @@ class ComposePageResponsiveGrid extends StatelessWidget {
   final List<Widget> traits;
   final List<Widget> characterStats;
   final List<Widget> skillsAndMagic;
+  final List<Widget>? handWeapons;
+  final List<Widget>? rangeWeapons;
+  final List<Widget>? armor;
+  final List<Widget>? posession;
   final List<Widget> restOfTheBody;
 
   // static const double _SEPARATOR_HEIGHT = 1;
@@ -19,6 +23,10 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     required this.traits,
     required this.skillsAndMagic,
     required this.restOfTheBody,
+    this.handWeapons,
+    this.rangeWeapons,
+    this.armor,
+    this.posession,
   });
 
   @override

@@ -1,6 +1,4 @@
 import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';

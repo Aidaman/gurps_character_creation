@@ -126,7 +126,8 @@ class SpellView extends StatelessWidget {
                 Expanded(
                   child: Text(
                     e,
-                    style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+                    style: const TextStyle(
+                        fontSize: 14, fontStyle: FontStyle.italic),
                   ),
                 ),
               ],
