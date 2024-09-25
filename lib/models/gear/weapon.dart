@@ -18,11 +18,20 @@ abstract class Weapon extends Gear {
   final int damage;
   final String notes;
 
-  const Weapon({
+  Weapon({
     required this.damage,
     required this.notes,
     required super.name,
     required super.price,
     required super.weight,
   });
+
+  Weapon.withId({
+    required this.damage,
+    required this.notes,
+    required super.name,
+    required super.price,
+    required super.weight,
+    required super.id,
+  }) : super.withId();
 }

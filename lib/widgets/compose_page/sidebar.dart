@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
@@ -36,12 +38,29 @@ class SidebarContent extends StatefulWidget {
 
 class _SidebarContentState extends State<SidebarContent> {
   String _filterValue = '';
+  Timer? _debounce;
 
   static const double SIDEBAR_HORIZONTAL_PADDING = 8.0;
   static const double SIDEBAR_VERTICAL_PADDING = 4.0;
 
+  late Future<List<Spell>> _spellsFuture;
+  late Future<List<Trait>> _traitsFuture;
+  late Future<List<Skill>> _skillsFuture;
+
+  @override
+  void initState() {
+    _spellsFuture = loadSpells();
+    _traitsFuture = loadTraits();
+    _skillsFuture = loadSkills();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return Container(
       color: Theme.of(context).colorScheme.surface,
       child: Column(
@@ -65,25 +84,88 @@ class _SidebarContentState extends State<SidebarContent> {
               child: Column(
                 children: [
                   _buildFilters(),
-                  TextField(
-                    onChanged: (value) => setState(() {
-                      _filterValue = value;
-                    }),
-                    decoration: const InputDecoration(labelText: 'Filter'),
-                  ),
+                  _buildSearchField(),
                 ],
               ),
             ),
           ),
           Expanded(
             child: switch (widget.sidebarContent) {
-              SidebarFutureTypes.TRAITS => _buildTraitList(),
-              SidebarFutureTypes.SKILLS => _buildSkillList(),
-              SidebarFutureTypes.MAGIC => _buildSpellList(),
+              SidebarFutureTypes.TRAITS => _buildFutureList(
+                  future: _traitsFuture,
+                  errorText: 'errorText',
+                  noDataText: 'noDataText',
+                  filterPredicate: (trt) =>
+                      trt.name.toLowerCase().contains(_filterValue) &&
+                      (widget.selectedCategory == TraitCategories.NONE
+                          ? true
+                          : trt.categories.contains(widget.selectedCategory)),
+                  itemBuilder: (trt) => TraitView(
+                    trait: trt,
+                    onAddClick: () {
+                      characterProvider.addTrait(trt);
+                    },
+                    onRemoveClick: () {
+                      characterProvider.removeTrait(trt);
+                    },
+                  ),
+                ),
+              SidebarFutureTypes.SKILLS => _buildFutureList(
+                  future: _skillsFuture,
+                  errorText: 'errorText',
+                  noDataText: 'noDataText',
+                  filterPredicate: (skl) =>
+                      skl.name.toLowerCase().contains(_filterValue),
+                  itemBuilder: (skl) => SkillView(
+                    skill: skl,
+                    onAddClick: () {
+                      characterProvider.addSkill(skl);
+                    },
+                    onRemoveClick: () {
+                      characterProvider.removeSkill(skl);
+                    },
+                  ),
+                ),
+              SidebarFutureTypes.MAGIC => _buildFutureList(
+                  future: _spellsFuture,
+                  errorText: 'errorText',
+                  noDataText: 'noDataText',
+                  filterPredicate: (spl) =>
+                      spl.name.toLowerCase().contains(_filterValue),
+                  itemBuilder: (spl) => SpellView(
+                    spell: spl,
+                    onAddClick: () {
+                      characterProvider.addSpell(spl);
+                    },
+                    onRemoveClick: () {
+                      characterProvider.removeSpell(spl);
+                    },
+                  ),
+                ),
             },
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return TextField(
+      onChanged: (value) {
+        if (_debounce?.isActive ?? false) {
+          _debounce?.cancel();
+        }
+
+        _debounce = Timer(
+          const Duration(
+            milliseconds: 300,
+          ),
+          () => setState(() {
+            _filterValue = value;
+          }),
+        );
+      },
+      decoration: const InputDecoration(labelText: 'Filter'),
     );
   }
 
@@ -146,113 +228,142 @@ class _SidebarContentState extends State<SidebarContent> {
     );
   }
 
-  FutureBuilder<List<Spell>> _buildSpellList() {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
+  FutureBuilder<List<T>> _buildFutureList<T>({
+    required Future<List<T>> future,
+    required Widget Function(T item) itemBuilder,
+    required String errorText,
+    required String noDataText,
+    bool Function(T item)? filterPredicate,
+  }) {
     return FutureBuilder(
-      future: loadSpells(),
+      future: future,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Error: $errorText ${snapshot.error}'));
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
+          return Center(child: Text(noDataText));
         }
 
-        final List<Spell> spells = snapshot.data!
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
+        List<T> data = snapshot.data!;
+        if (filterPredicate != null) {
+          data = data.where(filterPredicate).toList();
+        }
 
         return ListView.builder(
-          itemCount: spells.length,
-          itemBuilder: (context, index) => SpellView(
-            spell: spells[index],
-            onAddClick: () {
-              characterProvider.addSpell(spells[index]);
-            },
-            onRemoveClick: () {
-              characterProvider.removeSpell(spells[index]);
-            },
-          ),
+          itemCount: data.length,
+          itemBuilder: (context, index) => itemBuilder(data[index]),
         );
       },
     );
   }
 
-  FutureBuilder<List<Skill>> _buildSkillList() {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
+  // FutureBuilder<List<Spell>> _buildSpellList() {
+  //   final CharacterProvider characterProvider =
+  //       Provider.of<CharacterProvider>(context);
 
-    return FutureBuilder<List<Skill>>(
-      future: loadSkills(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
-        }
+  //   return FutureBuilder(
+  //     future: _spellsFuture,
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Center(child: Text('Error: ${snapshot.error}'));
+  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+  //         return const Center(child: Text('No data found.'));
+  //       }
 
-        final List<Skill> skills = snapshot.data!
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
-        return ListView.builder(
-          itemCount: skills.length,
-          itemBuilder: (context, index) => SkillView(
-            skill: skills[index],
-            onAddClick: () {
-              characterProvider.addSkill(skills[index]);
-            },
-            onRemoveClick: () {
-              characterProvider.removeSkill(skills[index]);
-            },
-          ),
-        );
-      },
-    );
-  }
+  //       final List<Spell> spells = snapshot.data!
+  //           .where(
+  //             (element) => element.name
+  //                 .toLowerCase()
+  //                 .contains(_filterValue.toLowerCase()),
+  //           )
+  //           .toList();
 
-  FutureBuilder<List<Trait>> _buildTraitList() {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
+  //       return ListView.builder(
+  //         itemCount: spells.length,
+  //         itemBuilder: (context, index) => SpellView(
+  //           spell: spells[index],
+  //           onAddClick: () {
+  //             characterProvider.addSpell(spells[index]);
+  //           },
+  //           onRemoveClick: () {
+  //             characterProvider.removeSpell(spells[index]);
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-    return FutureBuilder<List<Trait>>(
-      future: loadTraits(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No data found.'));
-        }
+  // FutureBuilder<List<Skill>> _buildSkillList() {
+  //   final CharacterProvider characterProvider =
+  //       Provider.of<CharacterProvider>(context);
 
-        final List<Trait> traits = snapshot.data!
-            .where(
-              (element) => widget.selectedCategory == TraitCategories.NONE
-                  ? true
-                  : element.categories.contains(widget.selectedCategory),
-            )
-            .where(
-              (element) => element.name
-                  .toLowerCase()
-                  .contains(_filterValue.toLowerCase()),
-            )
-            .toList();
-        return ListView.builder(
-          itemCount: traits.length,
-          itemBuilder: (context, index) => TraitView(
-            trait: traits[index],
-            onAddClick: () => characterProvider.addTrait(traits[index]),
-            onRemoveClick: () => characterProvider.removeTrait(traits[index]),
-          ),
-        );
-      },
-    );
-  }
+  //   return FutureBuilder<List<Skill>>(
+  //     future: _skillsFuture,
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Center(child: Text('Error: ${snapshot.error}'));
+  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+  //         return const Center(child: Text('No data found.'));
+  //       }
+
+  //       final List<Skill> skills = snapshot.data!
+  //           .where(
+  //             (element) => element.name
+  //                 .toLowerCase()
+  //                 .contains(_filterValue.toLowerCase()),
+  //           )
+  //           .toList();
+  //       return ListView.builder(
+  //         itemCount: skills.length,
+  //         itemBuilder: (context, index) => SkillView(
+  //           skill: skills[index],
+  //           onAddClick: () {
+  //             characterProvider.addSkill(skills[index]);
+  //           },
+  //           onRemoveClick: () {
+  //             characterProvider.removeSkill(skills[index]);
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
+
+  // FutureBuilder<List<Trait>> _buildTraitList() {
+  //   final CharacterProvider characterProvider =
+  //       Provider.of<CharacterProvider>(context);
+
+  //   return FutureBuilder<List<Trait>>(
+  //     future: _traitsFuture,
+  //     builder: (context, snapshot) {
+  //       if (snapshot.hasError) {
+  //         return Center(child: Text('Error: ${snapshot.error}'));
+  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+  //         return const Center(child: Text('No data found.'));
+  //       }
+
+  //       final List<Trait> traits = snapshot.data!
+  //           .where(
+  //             (element) => widget.selectedCategory == TraitCategories.NONE
+  //                 ? true
+  //                 : element.categories.contains(widget.selectedCategory),
+  //           )
+  //           .where(
+  //             (element) => element.name
+  //                 .toLowerCase()
+  //                 .contains(_filterValue.toLowerCase()),
+  //           )
+  //           .toList();
+  //       return ListView.builder(
+  //         itemCount: traits.length,
+  //         itemBuilder: (context, index) => TraitView(
+  //           trait: traits[index],
+  //           onAddClick: () => characterProvider.addTrait(traits[index]),
+  //           onRemoveClick: () => characterProvider.removeTrait(traits[index]),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 }

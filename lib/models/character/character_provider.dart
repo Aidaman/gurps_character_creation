@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
+import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
@@ -123,22 +126,20 @@ class CharacterProvider with ChangeNotifier {
   }
 
   void refreshSpellUnsatisfiedPrereqs() {
-    _character.spells = List.from(
-      _character.spells.map((spl) {
-        final List<String> unsatisfitedPrerequisitesList = List.from(
-          spl.prereqList.where(
+    _character.spells = _character.spells.map((spl) {
+      final List<String> unsatisfitedPrerequisitesList = spl.prereqList
+          .where(
             (s) => !_character.spells.any(
               (e) => e.name.toLowerCase() == s.toLowerCase(),
             ),
-          ),
-        );
+          )
+          .toList();
 
-        return Spell.copyWith(
-          spl,
-          unsatisfitedPrerequisitesList: unsatisfitedPrerequisitesList,
-        );
-      }),
-    );
+      return Spell.copyWith(
+        spl,
+        unsatisfitedPrerequisitesList: unsatisfitedPrerequisitesList,
+      );
+    }).toList();
   }
 
   void addSpell(Spell spell) {
@@ -157,6 +158,27 @@ class CharacterProvider with ChangeNotifier {
       (s) => s.name == spell.name,
     );
     refreshSpellUnsatisfiedPrereqs();
+    notifyListeners();
+  }
+
+  void addWeapon(Weapon weapon) {
+    if (_character.weapons.any((Weapon wpn) => wpn.id == weapon.id)) {
+      return;
+    }
+
+    _character.weapons.add(weapon);
+    notifyListeners();
+  }
+
+  void removeWeapon(Weapon weapon) {
+    if (!_character.weapons.any(
+      (Weapon wpn) => wpn.id == weapon.id,
+    )) {
+      return;
+    }
+
+    _character.weapons =
+        _character.weapons.where((Weapon wpn) => wpn.id != weapon.id).toList();
     notifyListeners();
   }
 }

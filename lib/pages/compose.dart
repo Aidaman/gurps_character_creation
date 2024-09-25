@@ -1,5 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
+import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
@@ -26,6 +30,8 @@ class ComposePage extends StatefulWidget {
 }
 
 class _ComposePageState extends State<ComposePage> {
+  static const double _DIVIDER_INDENT = 32;
+
   bool _isSidebarVisible = true;
 
   TraitCategories selectedCategory = TraitCategories.NONE;
@@ -177,6 +183,12 @@ class _ComposePageState extends State<ComposePage> {
             ]),
           ],
           skillsAndMagic: [_generateSkills(), _generateMagic()],
+          handWeapons: [
+            _buildHandWeapons(characterProvider),
+          ],
+          rangedWeapons: [
+            _buildRangedWeapons(characterProvider),
+          ],
           restOfTheBody: const [],
         ),
       ),
@@ -184,6 +196,270 @@ class _ComposePageState extends State<ComposePage> {
           ? null
           : sidebar,
     );
+  }
+
+  Expanded _buildRangedWeapons(CharacterProvider characterProvider) {
+    if (characterProvider.character.weapons.whereType<RangedWeapon>().isEmpty) {
+      return Expanded(
+        child: Column(
+          children: [
+            const Divider(
+              endIndent: _DIVIDER_INDENT,
+              indent: _DIVIDER_INDENT,
+            ),
+            const Text('Click to add a Ranged Weapon'),
+            IconButton.filled(
+              onPressed: () {
+                characterProvider.addWeapon(RangedWeapon.empty());
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Expanded(
+      child: Column(
+        children: [
+          Center(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: [
+                  ...RangedWeapon.empty().toDataTableColumns().keys.map(
+                        (String key) => DataColumn(
+                          label: Text(key),
+                        ),
+                      ),
+                  const DataColumn(label: Text('Actions')),
+                ],
+                rows: characterProvider.character.weapons
+                    .whereType<RangedWeapon>()
+                    .map(
+                      (RangedWeapon rw) => _buildRangedWeaponDataCell(rw),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+          IconButton.filled(
+            onPressed: () {
+              characterProvider.addWeapon(RangedWeapon.empty());
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHandWeapons(CharacterProvider characterProvider) {
+    if (characterProvider.character.weapons.whereType<HandWeapon>().isEmpty) {
+      return Expanded(
+        child: Column(
+          children: [
+            const Divider(
+              endIndent: _DIVIDER_INDENT,
+              indent: _DIVIDER_INDENT,
+            ),
+            const Text('Click to add a Weapon'),
+            IconButton.filled(
+              onPressed: () {
+                characterProvider.addWeapon(HandWeapon.empty());
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return Expanded(
+      child: Center(
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: [
+                  ...HandWeapon.empty()
+                      .toJson()
+                      .keys
+                      .where(
+                        (String key) => key != 'notes',
+                      )
+                      .map(
+                        (String key) => DataColumn(
+                          label: Text(key),
+                        ),
+                      ),
+                  const DataColumn(label: Text('Actions')),
+                ],
+                rows: characterProvider.character.weapons
+                    .whereType<HandWeapon>()
+                    .map(
+                      (HandWeapon hw) => _buildHandWeaponDataCell(hw),
+                    )
+                    .toList(),
+              ),
+            ),
+            IconButton.filled(
+              onPressed: () {
+                characterProvider.addWeapon(HandWeapon.empty());
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  DataRow _buildRangedWeaponDataCell(RangedWeapon rw) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    Iterable<DataCell> cells = rw.toDataTableColumns().entries.map(
+      (MapEntry<String, dynamic> e) {
+        final bool valueIsMap = e.value is Map;
+
+        if (valueIsMap) {
+          final Map<String, dynamic> json = e.value;
+          if (Range.isRange(json)) {
+            return DataCell(
+              Text(
+                Range.fromJson(json).toString(),
+              ),
+            );
+          }
+
+          if (WeaponStrengths.isWeaponStrengths(json)) {
+            return DataCell(
+              Text(
+                WeaponStrengths.fromJson(json).toString(),
+              ),
+            );
+          }
+
+          if (RangeWeaponShots.isShots(json)) {
+            return DataCell(
+              Text(
+                RangeWeaponShots.fromJson(json).toString(),
+              ),
+            );
+          }
+        }
+
+        if (e.value is String) {
+          final RangedWeaponLegalityClass legalityClass =
+              RangedWeaponLegalityClassExtention.fromString(e.value);
+
+          if (legalityClass != RangedWeaponLegalityClass.NONE) {
+            return DataCell(Text(legalityClass.stringValue));
+          }
+        }
+
+        return DataCell(Center(
+          child: Text(
+            e.value is String ? e.value : e.value.toString(),
+          ),
+        ));
+      },
+    ).toList();
+
+    return DataRow(cells: [
+      ...cells,
+      DataCell(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            IconButton(
+              onPressed: () => characterProvider.removeWeapon(rw),
+              icon: const Icon(Icons.remove_outlined),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.info_outlined),
+            ),
+          ],
+        ),
+      )
+    ]);
+  }
+
+  DataRow _buildHandWeaponDataCell(HandWeapon hw) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    Iterable<DataCell> cells = hw
+        .toJson()
+        .entries
+        .where(
+          (MapEntry<String, dynamic> element) => element.key != 'notes',
+        )
+        .map(
+      (MapEntry<String, dynamic> e) {
+        final bool valueIsMap = e.value is Map;
+
+        if (valueIsMap) {
+          Map<String, dynamic> json = e.value;
+
+          if (HandWeaponReach.isReach(json)) {
+            return DataCell(
+              Text(
+                HandWeaponReach.fromJson(
+                  json,
+                ).toString(),
+              ),
+            );
+          }
+
+          if (HandWeaponParry.isParry(json)) {
+            return DataCell(
+              Text(
+                HandWeaponParry.fromJson(
+                  json,
+                ).toString(),
+              ),
+            );
+          }
+        }
+
+        return DataCell(
+          Text(
+            e.value is String ? e.value : e.value.toString(),
+          ),
+        );
+      },
+    );
+
+    return DataRow(cells: [
+      ...cells,
+      DataCell(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.edit_outlined),
+            ),
+            IconButton(
+              onPressed: () => characterProvider.removeWeapon(hw),
+              icon: const Icon(Icons.remove_outlined),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.info_outline),
+            ),
+          ],
+        ),
+      )
+    ]);
   }
 
   @override
@@ -313,14 +589,13 @@ class _ComposePageState extends State<ComposePage> {
 
   Widget _generateEmptyTraitOrSkillView(List<String> categories) {
     final String types = categories.join('/');
-    const double DIVIDER_INDENT = 32;
 
     return Expanded(
       child: Column(
         children: [
           const Divider(
-            endIndent: DIVIDER_INDENT,
-            indent: DIVIDER_INDENT,
+            endIndent: _DIVIDER_INDENT,
+            indent: _DIVIDER_INDENT,
           ),
           Text('Click to add $types '),
           Padding(

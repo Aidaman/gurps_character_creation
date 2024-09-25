@@ -1,3 +1,8 @@
+import 'package:gurps_character_creation/models/gear/armor.dart';
+import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/posession.dart';
+import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
@@ -27,6 +32,10 @@ class Character {
   List<Skill> skills;
   List<Trait> traits;
   List<Spell> spells;
+
+  List<Weapon> weapons;
+  List<Armor> armor;
+  List<Posession> possessions;
 
   static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 3;
   static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
@@ -97,6 +106,29 @@ class Character {
   }
 
   Character({
+    required this.gameId,
+    required this.name,
+    required this.avatarURL,
+    required this.playerName,
+    required this.appearanceDetails,
+    required this.height,
+    required this.weight,
+    required this.age,
+    required this.points,
+    required this.sizeModifier,
+    required this.strength,
+    required this.iq,
+    required this.dexterity,
+    required this.health,
+    required this.skills,
+    required this.traits,
+    required this.spells,
+    required this.weapons,
+    required this.armor,
+    required this.possessions,
+  }) : id = const Uuid().v4();
+
+  Character.withId({
     required this.id,
     required this.gameId,
     required this.name,
@@ -115,9 +147,12 @@ class Character {
     required this.skills,
     required this.traits,
     required this.spells,
+    required this.weapons,
+    required this.armor,
+    required this.possessions,
   });
 
-  factory Character.fromJson(Map<String, dynamic> json) => Character(
+  factory Character.fromJson(Map<String, dynamic> json) => Character.withId(
         id: json['id'],
         gameId: json['gameId'],
         strength: json['strength'],
@@ -136,10 +171,12 @@ class Character {
         skills: List<Skill>.from(json['skills'].map((x) => x)),
         traits: List<Trait>.from(json['traits'].map((x) => x)),
         spells: List<Spell>.from(json['spells'].map((x) => x)),
+        weapons: List<Weapon>.from(json['weapons'].map((x) => x)),
+        armor: List<Armor>.from(json['armor'].map((x) => x)),
+        possessions: List<Posession>.from(json['possessions'].map((x) => x)),
       );
 
   factory Character.empty() => Character(
-        id: const Uuid().v4(),
         gameId: 'random',
         name: 'name',
         avatarURL: '',
@@ -157,6 +194,13 @@ class Character {
         traits: [],
         spells: [],
         weight: 0,
+        armor: [],
+        weapons: [
+          HandWeapon.empty(),
+          HandWeapon.empty(),
+          HandWeapon.empty(),
+        ],
+        possessions: [],
       );
 
   Map<String, dynamic> toJson() => {

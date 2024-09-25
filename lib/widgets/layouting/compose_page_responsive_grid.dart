@@ -7,8 +7,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
   final List<Widget> traits;
   final List<Widget> characterStats;
   final List<Widget> skillsAndMagic;
-  final List<Widget>? handWeapons;
-  final List<Widget>? rangeWeapons;
+  final List<Widget> handWeapons;
+  final List<Widget> rangedWeapons;
   final List<Widget>? armor;
   final List<Widget>? posession;
   final List<Widget> restOfTheBody;
@@ -23,8 +23,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     required this.traits,
     required this.skillsAndMagic,
     required this.restOfTheBody,
-    this.handWeapons,
-    this.rangeWeapons,
+    required this.handWeapons,
+    required this.rangedWeapons,
     this.armor,
     this.posession,
   });
@@ -38,6 +38,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
         traits,
         skillsAndMagic,
         restOfTheBody,
+        handWeapons,
+        rangedWeapons,
       ];
 
       return Center(
@@ -75,6 +77,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
         ...traits,
         ...skillsAndMagic,
         ...restOfTheBody,
+        ...handWeapons,
+        ...rangedWeapons,
       ];
 
       return ListView.builder(
