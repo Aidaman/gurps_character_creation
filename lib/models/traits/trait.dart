@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/traits/skill_bonus.dart';
+import 'package:gurps_character_creation/models/skills/skill_bonus.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
 

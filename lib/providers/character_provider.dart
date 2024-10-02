@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
-import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';

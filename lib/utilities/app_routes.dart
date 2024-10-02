@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character_provider.dart';
+import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/pages/compose.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:provider/provider.dart';

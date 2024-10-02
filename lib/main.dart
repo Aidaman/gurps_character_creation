@@ -1,18 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/providers/characteristics_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CharacteristicsProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<CharacteristicsProvider>(context, listen: false)
+        .loadCharacteristics();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GURPS Character Creation',
+      title: 'GURPS Character Sheet',
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,

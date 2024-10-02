@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character_provider.dart';
+import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
+import 'package:gurps_character_creation/providers/characteristics_provider.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
@@ -95,9 +96,8 @@ class _SidebarContentState extends State<SidebarContent> {
           ),
           Expanded(
             child: switch (widget.sidebarContent) {
-              SidebarFutureTypes.TRAITS => _buildFutureList(
-                  future: _traitsFuture,
-                  errorText: 'errorText',
+              SidebarFutureTypes.TRAITS => _buildList<Trait>(
+                  list: Provider.of<CharacteristicsProvider>(context).traits,
                   noDataText: 'noDataText',
                   filterPredicate: (trt) =>
                       trt.name.toLowerCase().contains(_filterValue) &&
@@ -114,9 +114,8 @@ class _SidebarContentState extends State<SidebarContent> {
                     },
                   ),
                 ),
-              SidebarFutureTypes.SKILLS => _buildFutureList(
-                  future: _skillsFuture,
-                  errorText: 'errorText',
+              SidebarFutureTypes.SKILLS => _buildList<Skill>(
+                  list: Provider.of<CharacteristicsProvider>(context).skills,
                   noDataText: 'noDataText',
                   filterPredicate: (skl) =>
                       skl.name.toLowerCase().contains(_filterValue),
@@ -130,9 +129,8 @@ class _SidebarContentState extends State<SidebarContent> {
                     },
                   ),
                 ),
-              SidebarFutureTypes.MAGIC => _buildFutureList(
-                  future: _spellsFuture,
-                  errorText: 'errorText',
+              SidebarFutureTypes.MAGIC => _buildList<Spell>(
+                  list: Provider.of<CharacteristicsProvider>(context).spells,
                   noDataText: 'noDataText',
                   filterPredicate: (spl) =>
                       spl.name.toLowerCase().contains(_filterValue),
@@ -154,22 +152,47 @@ class _SidebarContentState extends State<SidebarContent> {
   }
 
   Widget _buildSearchField() {
-    return TextField(
-      onChanged: (value) {
-        if (_debounce?.isActive ?? false) {
-          _debounce?.cancel();
-        }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: TextField(
+        onChanged: (value) {
+          if (_debounce?.isActive ?? false) {
+            _debounce?.cancel();
+          }
 
-        _debounce = Timer(
-          const Duration(
-            milliseconds: 300,
+          _debounce = Timer(
+            const Duration(
+              milliseconds: 300,
+            ),
+            () => setState(() {
+              _filterValue = value;
+            }),
+          );
+        },
+        decoration: InputDecoration(
+          labelText: 'Filter',
+          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+          enabledBorder: UnderlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
+            ),
+            borderSide: BorderSide(
+              width: 0.5,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.75),
+            ),
           ),
-          () => setState(() {
-            _filterValue = value;
-          }),
-        );
-      },
-      decoration: const InputDecoration(labelText: 'Filter'),
+          focusedBorder: UnderlineInputBorder(
+            borderRadius: const BorderRadius.all(
+              Radius.circular(16),
+            ),
+            borderSide: BorderSide(
+              width: 0.5,
+              color: Theme.of(context).colorScheme.primary.withOpacity(1),
+            ),
+          ),
+          prefixIcon: const Icon(Icons.search),
+        ),
+      ),
     );
   }
 
@@ -229,32 +252,28 @@ class _SidebarContentState extends State<SidebarContent> {
     );
   }
 
-  FutureBuilder<List<T>> _buildFutureList<T>({
-    required Future<List<T>> future,
+  Widget _buildList<T>({
+    required List<T> list,
     required Widget Function(T item) itemBuilder,
-    required String errorText,
     required String noDataText,
     bool Function(T item)? filterPredicate,
   }) {
-    return FutureBuilder(
-      future: future,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: $errorText ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(child: Text(noDataText));
-        }
+    if (list.isEmpty) {
+      return Center(
+        child: Text(noDataText),
+      );
+    }
 
-        List<T> data = snapshot.data!;
-        if (filterPredicate != null) {
-          data = data.where(filterPredicate).toList();
-        }
+    if (filterPredicate != null) {
+      list = list.where(filterPredicate).toList();
+    }
 
-        return ListView.builder(
-          itemCount: data.length,
-          itemBuilder: (context, index) => itemBuilder(data[index]),
-        );
-      },
+    return ListView.builder(
+      itemBuilder: (context, index) => itemBuilder(
+        list.elementAt(
+          index,
+        ),
+      ),
     );
   }
 }
