@@ -5,9 +5,9 @@ import 'package:gurps_character_creation/models/dices.dart';
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/providers/characteristics_provider.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/custom_text_field.dart';
 import 'package:provider/provider.dart';
@@ -463,6 +463,20 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
                           ),
                           const Gap(16),
                         ],
+                      ),
+                      _buildFormDropdownMenu<String>(
+                        items: Provider.of<AspectsProvider>(context)
+                            .skills
+                            .map(
+                              (Skill skl) => DropdownMenuItem(
+                                value: skl.name,
+                                child: Text(
+                                  skl.name,
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {},
                       ),
                       _buildTextFormField(
                         maxLines: null,

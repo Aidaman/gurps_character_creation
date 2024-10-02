@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class AttributeView extends StatelessWidget {

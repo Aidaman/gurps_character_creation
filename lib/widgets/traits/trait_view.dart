@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/traits/trait.dart';
-import 'package:gurps_character_creation/models/traits/trait_categories.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 
 class TraitView extends StatelessWidget {
   final Trait trait;

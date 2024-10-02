@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/models/spells/spell.dart';
-import 'package:gurps_character_creation/models/traits/trait.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 
 class CharacterProvider with ChangeNotifier {
   final Character _character = Character.empty();

@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/models/spells/spell.dart';
-import 'package:gurps_character_creation/models/traits/trait.dart';
-import 'package:gurps_character_creation/models/traits/trait_categories.dart';
-import 'package:gurps_character_creation/providers/characteristics_provider.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
+import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
@@ -97,10 +97,12 @@ class _SidebarContentState extends State<SidebarContent> {
           Expanded(
             child: switch (widget.sidebarContent) {
               SidebarFutureTypes.TRAITS => _buildList<Trait>(
-                  list: Provider.of<CharacteristicsProvider>(context).traits,
+                  list: Provider.of<AspectsProvider>(context).traits,
                   noDataText: 'noDataText',
                   filterPredicate: (trt) =>
-                      trt.name.toLowerCase().contains(_filterValue) &&
+                      trt.name.toLowerCase().contains(
+                            _filterValue.toLowerCase(),
+                          ) &&
                       (widget.selectedCategory == TraitCategories.NONE
                           ? true
                           : trt.categories.contains(widget.selectedCategory)),
@@ -115,10 +117,11 @@ class _SidebarContentState extends State<SidebarContent> {
                   ),
                 ),
               SidebarFutureTypes.SKILLS => _buildList<Skill>(
-                  list: Provider.of<CharacteristicsProvider>(context).skills,
+                  list: Provider.of<AspectsProvider>(context).skills,
                   noDataText: 'noDataText',
-                  filterPredicate: (skl) =>
-                      skl.name.toLowerCase().contains(_filterValue),
+                  filterPredicate: (skl) => skl.name.toLowerCase().contains(
+                        _filterValue.toLowerCase(),
+                      ),
                   itemBuilder: (skl) => SkillView(
                     skill: skl,
                     onAddClick: () {
@@ -130,10 +133,11 @@ class _SidebarContentState extends State<SidebarContent> {
                   ),
                 ),
               SidebarFutureTypes.MAGIC => _buildList<Spell>(
-                  list: Provider.of<CharacteristicsProvider>(context).spells,
+                  list: Provider.of<AspectsProvider>(context).spells,
                   noDataText: 'noDataText',
-                  filterPredicate: (spl) =>
-                      spl.name.toLowerCase().contains(_filterValue),
+                  filterPredicate: (spl) => spl.name.toLowerCase().contains(
+                        _filterValue.toLowerCase(),
+                      ),
                   itemBuilder: (spl) => SpellView(
                     spell: spl,
                     onAddClick: () {
@@ -269,6 +273,7 @@ class _SidebarContentState extends State<SidebarContent> {
     }
 
     return ListView.builder(
+      itemCount: list.length,
       itemBuilder: (context, index) => itemBuilder(
         list.elementAt(
           index,

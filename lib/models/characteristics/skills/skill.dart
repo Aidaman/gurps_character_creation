@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/skills/skill_modifier.dart';
-import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/aspect.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_modifier.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 
 Future<List<Skill>> loadSkills() async {
   final jsonString = await rootBundle.loadString(
@@ -18,21 +19,19 @@ List<Skill> skillsFromJson(String str) =>
 String skillToJson(List<Skill> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Skill {
+class Skill extends Aspect {
   final Attributes associatedAttribute;
   final SkillDifficulty difficulty;
   int investedPoints;
 
-  final String name;
-  final String reference;
   final int basePoints;
   final List<String> categories;
   final List<SkillModifier> modifiers;
   final String? specialization;
 
   Skill({
-    required this.name,
-    required this.reference,
+    required super.name,
+    required super.reference,
     required this.difficulty,
     required this.basePoints,
     required this.categories,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/providers/characteristics_provider.dart';
+import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +8,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CharacteristicsProvider()),
+        ChangeNotifierProvider(create: (_) => AspectsProvider()),
       ],
       child: const MyApp(),
     ),
@@ -27,8 +27,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    Provider.of<CharacteristicsProvider>(context, listen: false)
-        .loadCharacteristics();
+    Provider.of<AspectsProvider>(context, listen: false).loadCharacteristics();
   }
 
   @override

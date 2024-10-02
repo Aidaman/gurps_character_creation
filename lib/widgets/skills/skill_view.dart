@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
-import 'package:gurps_character_creation/models/skills/skill.dart';
-import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:provider/provider.dart';
 
 class SkillView extends StatelessWidget {

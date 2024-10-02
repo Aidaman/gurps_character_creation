@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/skills/skill_bonus.dart';
-import 'package:gurps_character_creation/models/traits/trait_categories.dart';
-import 'package:gurps_character_creation/models/traits/trait_modifier.dart';
+import 'package:gurps_character_creation/models/characteristics/aspect.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_bonus.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
 
 List<Trait> traitFromJson(String str) =>
     List<Trait>.from(json.decode(str).map((x) => Trait.fromJson(x)));
@@ -18,21 +19,19 @@ Future<List<Trait>> loadTraits() async {
   return traitFromJson(jsonString);
 }
 
-class Trait {
-  final String name;
+class Trait extends Aspect {
   final String type;
   final int basePoints;
   final TraitModifier? modifier;
-  final String reference;
   final List<TraitCategories> categories;
   final SkillBonus? skillBonus;
 
   Trait({
-    required this.name,
+    required super.name,
     required this.type,
     required this.basePoints,
     this.modifier,
-    required this.reference,
+    required super.reference,
     required this.categories,
     this.skillBonus,
   });

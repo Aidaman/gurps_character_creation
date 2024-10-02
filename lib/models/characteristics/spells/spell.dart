@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:gurps_character_creation/models/characteristics/aspect.dart';
 
 Future<List<Spell>> loadSpells() async {
   final jsonString = await rootBundle.loadString('assets/Spells/magic.json');
@@ -13,8 +14,7 @@ List<Spell> spellFromJson(String str) =>
 String spellToJson(List<Spell> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Spell {
-  final String name;
+class Spell extends Aspect {
   final List<String> college;
   final String powerSource;
   final String spellClass;
@@ -22,7 +22,6 @@ class Spell {
   final String maintenanceCost;
   final String castingTime;
   final String duration;
-  final String reference;
   final List<String> categories;
   final List<String> prereqList;
 
@@ -30,7 +29,7 @@ class Spell {
   final List<String>? unsatisfitedPrerequisitesList;
 
   Spell({
-    required this.name,
+    required super.name,
     required this.college,
     required this.powerSource,
     required this.spellClass,
@@ -38,7 +37,7 @@ class Spell {
     required this.maintenanceCost,
     required this.castingTime,
     required this.duration,
-    required this.reference,
+    required super.reference,
     required this.categories,
     required this.prereqList,
     this.unsatisfitedPrerequisitesList,

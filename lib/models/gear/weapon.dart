@@ -1,7 +1,7 @@
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/gear.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
-import 'package:gurps_character_creation/models/skills/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 
 abstract class Weapon extends Gear {
   final WeaponDamage damage;
