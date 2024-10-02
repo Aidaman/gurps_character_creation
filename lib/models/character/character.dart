@@ -196,9 +196,9 @@ class Character {
         weight: 0,
         armor: [],
         weapons: [
-          HandWeapon.empty(),
-          HandWeapon.empty(),
-          HandWeapon.empty(),
+          HandWeapon.copyWith(HandWeapon.empty(),
+              parry: const HandWeaponParry(
+                  modifier: HandWeaponParryModifier.POSITIVE, parryValue: 1)),
         ],
         possessions: [],
       );

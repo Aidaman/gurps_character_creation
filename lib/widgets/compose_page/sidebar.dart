@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
+import 'package:gurps_character_creation/models/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
 import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
@@ -39,6 +40,9 @@ class SidebarContent extends StatefulWidget {
 class _SidebarContentState extends State<SidebarContent> {
   String _filterValue = '';
   Timer? _debounce;
+
+  static const double _FILTER_SPACING = 24.0;
+  static const double _FILTER_RUN_SPACING = 0.0;
 
   static const double SIDEBAR_HORIZONTAL_PADDING = 8.0;
   static const double SIDEBAR_VERTICAL_PADDING = 4.0;
@@ -170,17 +174,14 @@ class _SidebarContentState extends State<SidebarContent> {
   }
 
   Widget _buildFilters() {
-    const double FILTER_SPACING = 24.0;
-    const double FILTER_RUN_SPACING = 0.0;
-
     return Column(
       children: [
         Wrap(
           alignment: WrapAlignment.center,
           crossAxisAlignment: WrapCrossAlignment.center,
           runAlignment: WrapAlignment.spaceAround,
-          runSpacing: FILTER_RUN_SPACING,
-          spacing: FILTER_SPACING,
+          runSpacing: _FILTER_RUN_SPACING,
+          spacing: _FILTER_SPACING,
           children: [
             LabeledIconButton(
               iconValue: Icons.accessibility_outlined,
@@ -209,8 +210,8 @@ class _SidebarContentState extends State<SidebarContent> {
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             runAlignment: WrapAlignment.spaceAround,
-            runSpacing: FILTER_RUN_SPACING,
-            spacing: FILTER_SPACING,
+            runSpacing: _FILTER_RUN_SPACING,
+            spacing: _FILTER_SPACING,
             children: List.from(
               TraitCategories.values
                   .where((c) => c != TraitCategories.NONE)
@@ -256,114 +257,4 @@ class _SidebarContentState extends State<SidebarContent> {
       },
     );
   }
-
-  // FutureBuilder<List<Spell>> _buildSpellList() {
-  //   final CharacterProvider characterProvider =
-  //       Provider.of<CharacterProvider>(context);
-
-  //   return FutureBuilder(
-  //     future: _spellsFuture,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasError) {
-  //         return Center(child: Text('Error: ${snapshot.error}'));
-  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-  //         return const Center(child: Text('No data found.'));
-  //       }
-
-  //       final List<Spell> spells = snapshot.data!
-  //           .where(
-  //             (element) => element.name
-  //                 .toLowerCase()
-  //                 .contains(_filterValue.toLowerCase()),
-  //           )
-  //           .toList();
-
-  //       return ListView.builder(
-  //         itemCount: spells.length,
-  //         itemBuilder: (context, index) => SpellView(
-  //           spell: spells[index],
-  //           onAddClick: () {
-  //             characterProvider.addSpell(spells[index]);
-  //           },
-  //           onRemoveClick: () {
-  //             characterProvider.removeSpell(spells[index]);
-  //           },
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // FutureBuilder<List<Skill>> _buildSkillList() {
-  //   final CharacterProvider characterProvider =
-  //       Provider.of<CharacterProvider>(context);
-
-  //   return FutureBuilder<List<Skill>>(
-  //     future: _skillsFuture,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasError) {
-  //         return Center(child: Text('Error: ${snapshot.error}'));
-  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-  //         return const Center(child: Text('No data found.'));
-  //       }
-
-  //       final List<Skill> skills = snapshot.data!
-  //           .where(
-  //             (element) => element.name
-  //                 .toLowerCase()
-  //                 .contains(_filterValue.toLowerCase()),
-  //           )
-  //           .toList();
-  //       return ListView.builder(
-  //         itemCount: skills.length,
-  //         itemBuilder: (context, index) => SkillView(
-  //           skill: skills[index],
-  //           onAddClick: () {
-  //             characterProvider.addSkill(skills[index]);
-  //           },
-  //           onRemoveClick: () {
-  //             characterProvider.removeSkill(skills[index]);
-  //           },
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
-  // FutureBuilder<List<Trait>> _buildTraitList() {
-  //   final CharacterProvider characterProvider =
-  //       Provider.of<CharacterProvider>(context);
-
-  //   return FutureBuilder<List<Trait>>(
-  //     future: _traitsFuture,
-  //     builder: (context, snapshot) {
-  //       if (snapshot.hasError) {
-  //         return Center(child: Text('Error: ${snapshot.error}'));
-  //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-  //         return const Center(child: Text('No data found.'));
-  //       }
-
-  //       final List<Trait> traits = snapshot.data!
-  //           .where(
-  //             (element) => widget.selectedCategory == TraitCategories.NONE
-  //                 ? true
-  //                 : element.categories.contains(widget.selectedCategory),
-  //           )
-  //           .where(
-  //             (element) => element.name
-  //                 .toLowerCase()
-  //                 .contains(_filterValue.toLowerCase()),
-  //           )
-  //           .toList();
-  //       return ListView.builder(
-  //         itemCount: traits.length,
-  //         itemBuilder: (context, index) => TraitView(
-  //           trait: traits[index],
-  //           onAddClick: () => characterProvider.addTrait(traits[index]),
-  //           onRemoveClick: () => characterProvider.removeTrait(traits[index]),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 }

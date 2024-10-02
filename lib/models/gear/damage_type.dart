@@ -63,7 +63,7 @@ extension DamageTypeString on DamageType {
         DamageType.NONE => '',
       };
 
-  DamageType fromString(String type) {
+  static DamageType fromString(String type) {
     return _stringToDamageTypeMap[type.toLowerCase()] ?? DamageType.NONE;
   }
 }

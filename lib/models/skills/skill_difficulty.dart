@@ -1,4 +1,6 @@
 // ignore: constant_identifier_names
+import 'package:flutter/material.dart';
+
 enum SkillDifficulty {
   EASY,
   AVERAGE,
@@ -22,6 +24,14 @@ extension SkillDifficultyExtension on SkillDifficulty {
         SkillDifficulty.HARD => 'H',
         SkillDifficulty.VERY_HARD => 'VH',
         SkillDifficulty.NONE => 'NONE',
+      };
+
+  IconData get iconValue => switch (this) {
+        SkillDifficulty.EASY => Icons.abc,
+        SkillDifficulty.AVERAGE => Icons.star_half_rounded,
+        SkillDifficulty.HARD => Icons.star_rounded,
+        SkillDifficulty.VERY_HARD => Icons.warning_amber_rounded,
+        SkillDifficulty.NONE => Icons.abc,
       };
 
   static SkillDifficulty? fromString(String difficulty) {

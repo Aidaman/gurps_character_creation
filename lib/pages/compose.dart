@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character_provider.dart';
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:gurps_character_creation/models/skills/attributes.dart';
 import 'package:gurps_character_creation/models/skills/skill.dart';
 import 'package:gurps_character_creation/models/spells/spell.dart';
@@ -11,6 +10,7 @@ import 'package:gurps_character_creation/models/traits/trait.dart';
 import 'package:gurps_character_creation/models/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/hand_weapon_editor_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
 import 'package:gurps_character_creation/widgets/compose_page/custom_text_field.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
@@ -265,8 +265,15 @@ class _ComposePageState extends State<ComposePage> {
             ),
             const Text('Click to add a Weapon'),
             IconButton.filled(
-              onPressed: () {
-                characterProvider.addWeapon(HandWeapon.empty());
+              onPressed: () async {
+                HandWeapon? hw = await showDialog<HandWeapon?>(
+                  context: context,
+                  builder: (context) => const HandWeaponEditorDialog(),
+                );
+
+                if (hw != null) {
+                  characterProvider.addWeapon(hw);
+                }
               },
               icon: const Icon(Icons.add),
             ),
@@ -305,8 +312,15 @@ class _ComposePageState extends State<ComposePage> {
               ),
             ),
             IconButton.filled(
-              onPressed: () {
-                characterProvider.addWeapon(HandWeapon.empty());
+              onPressed: () async {
+                HandWeapon? hw = await showDialog<HandWeapon?>(
+                  context: context,
+                  builder: (context) => const HandWeaponEditorDialog(),
+                );
+
+                if (hw != null) {
+                  characterProvider.addWeapon(hw);
+                }
               },
               icon: const Icon(Icons.add),
             ),
@@ -428,11 +442,26 @@ class _ComposePageState extends State<ComposePage> {
               ),
             );
           }
+
+          if (WeaponDamage.isDamage(json)) {
+            return DataCell(
+              Text(
+                WeaponDamage.fromJson(
+                  json,
+                ).calculateDamage(
+                  characterProvider.character.getAttribute(Attributes.ST),
+                  hw.minimumSt,
+                ),
+              ),
+            );
+          }
         }
 
         return DataCell(
-          Text(
-            e.value is String ? e.value : e.value.toString(),
+          Center(
+            child: Text(
+              e.value is String ? e.value : e.value.toString(),
+            ),
           ),
         );
       },
@@ -445,7 +474,18 @@ class _ComposePageState extends State<ComposePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                HandWeapon? newWeapon = await showDialog<HandWeapon?>(
+                  context: context,
+                  builder: (context) => HandWeaponEditorDialog(
+                    hw: hw,
+                  ),
+                );
+
+                if (newWeapon != null) {
+                  characterProvider.updateWeapon(hw.id, newWeapon);
+                }
+              },
               icon: const Icon(Icons.edit_outlined),
             ),
             IconButton(

@@ -162,23 +162,28 @@ class CharacterProvider with ChangeNotifier {
   }
 
   void addWeapon(Weapon weapon) {
-    if (_character.weapons.any((Weapon wpn) => wpn.id == weapon.id)) {
-      return;
-    }
-
     _character.weapons.add(weapon);
     notifyListeners();
   }
 
-  void removeWeapon(Weapon weapon) {
-    if (!_character.weapons.any(
-      (Weapon wpn) => wpn.id == weapon.id,
-    )) {
+  void updateWeapon(String oldWeaponId, Weapon newWeapon) {
+    int weaponIndex = _character.weapons.indexWhere(
+      (Weapon wpn) => wpn.id == oldWeaponId,
+    );
+
+    if (weaponIndex == -1) {
       return;
     }
 
-    _character.weapons =
-        _character.weapons.where((Weapon wpn) => wpn.id != weapon.id).toList();
+    _character.weapons[weaponIndex] = newWeapon;
+
+    notifyListeners();
+  }
+
+  void removeWeapon(Weapon weapon) {
+    _character.weapons.removeWhere(
+      (Weapon wpn) => wpn.id == weapon.id,
+    );
     notifyListeners();
   }
 }

@@ -10,7 +10,7 @@ const double DESKTOP_ROWS_SPACING = 24;
 const double MOBILE_HORIZONTAL_PADDING = 16;
 const double MOBILE_VERTICAL_PADDING = 4;
 
-const double DESKTOP_HORIZONTAL_PADDING = 172;
+const double DESKTOP_HORIZONTAL_PADDING = 32;
 const double DESKTOP_VERTICAL_PADDING = 16;
 
-const double MAX_DESKTOP_CONTENT_WIDTH = double.infinity;
+const double MAX_DESKTOP_CONTENT_WIDTH = 896;

@@ -1,4 +1,6 @@
+import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 
 enum HandWeaponParryModifier { POSITIVE, NEGATIVE, NONE }
 
@@ -64,7 +66,7 @@ class HandWeaponReach {
   factory HandWeaponReach.fromJson(Map<String, dynamic> json) =>
       HandWeaponReach(
         minimalRange: json['minimal_range'],
-        maximumRange: json['modifier'],
+        maximumRange: json['maximum_range'],
       );
 
   static bool isReach(Map<String, dynamic> json) =>
@@ -97,6 +99,8 @@ class HandWeapon extends Weapon {
     required super.name,
     required super.price,
     required super.weight,
+    required super.associatedSkillName,
+    required super.minimumSt,
   });
 
   HandWeapon.withId({
@@ -107,8 +111,35 @@ class HandWeapon extends Weapon {
     required super.name,
     required super.price,
     required super.weight,
+    required super.associatedSkillName,
+    required super.minimumSt,
     required super.id,
   }) : super.withId();
+
+  factory HandWeapon.copyWith(
+    HandWeapon hw, {
+    HandWeaponReach? reach,
+    HandWeaponParry? parry,
+    WeaponDamage? damage,
+    String? notes,
+    String? name,
+    double? price,
+    double? weight,
+    String? associatedSkillName,
+    int? minimumSt,
+  }) {
+    return HandWeapon(
+      reach: reach ?? hw.reach,
+      parry: parry ?? hw.parry,
+      damage: damage ?? hw.damage,
+      notes: notes ?? hw.notes,
+      name: name ?? hw.name,
+      price: price ?? hw.price,
+      weight: weight ?? hw.weight,
+      associatedSkillName: associatedSkillName ?? hw.associatedSkillName,
+      minimumSt: minimumSt ?? hw.minimumSt,
+    );
+  }
 
   factory HandWeapon.empty() => HandWeapon(
         reach: const HandWeaponReach(
@@ -119,11 +150,17 @@ class HandWeapon extends Weapon {
           modifier: HandWeaponParryModifier.NONE,
           parryValue: 0,
         ),
-        damage: 0,
+        damage: WeaponDamage(
+          attackType: AttackTypes.THRUST,
+          modifier: 0,
+          damageType: DamageType.NONE,
+        ),
         notes: '',
         name: '',
         price: 0,
         weight: 0,
+        associatedSkillName: '',
+        minimumSt: 10,
       );
 
   factory HandWeapon.fromJson(Map<String, dynamic> json) => HandWeapon(
@@ -134,6 +171,8 @@ class HandWeapon extends Weapon {
         damage: json['damage'],
         reach: HandWeaponReach.fromJson(json['reach']),
         parry: HandWeaponParry.fromJson(json['parry']),
+        associatedSkillName: json['associated_skill_name'],
+        minimumSt: json['minimum_st'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -141,8 +180,9 @@ class HandWeapon extends Weapon {
         'price': price,
         'weight': weight,
         'notes': notes,
-        'damage': damage,
+        'damage': damage.toJson(),
         'reach': reach.toJson(),
         'parry': parry.toJson(),
+        'associated_skill_name': associatedSkillName,
       };
 }

@@ -1,4 +1,7 @@
+import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
+import 'package:gurps_character_creation/models/skills/attributes.dart';
 
 enum RangedWeaponLegalityClass {
   BANNED,
@@ -159,6 +162,7 @@ class RangedWeapon extends Weapon {
     required super.name,
     required super.price,
     required super.weight,
+    required super.associatedSkillName,
     required this.range,
     required this.accuracy,
     required this.rateOfFire,
@@ -167,6 +171,7 @@ class RangedWeapon extends Weapon {
     required this.recoil,
     required this.st,
     required this.lc,
+    required super.minimumSt,
   });
 
   RangedWeapon.withId({
@@ -175,6 +180,8 @@ class RangedWeapon extends Weapon {
     required super.name,
     required super.price,
     required super.weight,
+    required super.associatedSkillName,
+    required super.minimumSt,
     required this.range,
     required this.accuracy,
     required this.rateOfFire,
@@ -187,7 +194,11 @@ class RangedWeapon extends Weapon {
   }) : super.withId();
 
   factory RangedWeapon.empty() => RangedWeapon(
-        damage: 0,
+        damage: WeaponDamage(
+          attackType: AttackTypes.THRUST,
+          modifier: 0,
+          damageType: DamageType.NONE,
+        ),
         notes: '',
         name: '',
         price: 0,
@@ -207,6 +218,8 @@ class RangedWeapon extends Weapon {
           isTwoHanded: false,
         ),
         lc: RangedWeaponLegalityClass.NONE,
+        associatedSkillName: '',
+        minimumSt: 10,
       );
 
   // factory RangedWeapon.fromJson() => {};
