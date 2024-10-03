@@ -196,9 +196,7 @@ class Character {
         weight: 0,
         armor: [],
         weapons: [
-          HandWeapon.copyWith(HandWeapon.empty(),
-              parry: const HandWeaponParry(
-                  modifier: HandWeaponParryModifier.POSITIVE, parryValue: 1)),
+          HandWeapon.empty(),
         ],
         possessions: [],
       );
@@ -279,7 +277,7 @@ class Character {
       case Attributes.BASIC_MOVE:
         return pointsSpentOnBM;
       case Attributes.NONE:
-        return -1;
+        return 0;
     }
   }
 

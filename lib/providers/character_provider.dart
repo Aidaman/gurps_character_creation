@@ -108,7 +108,15 @@ class CharacterProvider with ChangeNotifier {
   }
 
   void adjustSkillInvestedPoints(Skill skill, int adjustment) {
-    if (adjustment < 0 && skill.investedPoints == 1) {
+    if (adjustment <= 0 && skill.investedPoints == 1) {
+      return;
+    }
+
+    if (character.remainingPoints - adjustment > character.points) {
+      return;
+    }
+
+    if (character.remainingPoints - adjustment < 0) {
       return;
     }
 

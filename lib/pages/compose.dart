@@ -290,13 +290,7 @@ class _ComposePageState extends State<ComposePage> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: [
-                  ...HandWeapon.empty()
-                      .toJson()
-                      .keys
-                      .where(
-                        (String key) => key != 'notes',
-                      )
-                      .map(
+                  ...HandWeapon.empty().dataTableColumns.keys.map(
                         (String key) => DataColumn(
                           label: Text(key),
                         ),
@@ -410,13 +404,7 @@ class _ComposePageState extends State<ComposePage> {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
-    Iterable<DataCell> cells = hw
-        .toJson()
-        .entries
-        .where(
-          (MapEntry<String, dynamic> element) => element.key != 'notes',
-        )
-        .map(
+    Iterable<DataCell> cells = hw.dataTableColumns.entries.map(
       (MapEntry<String, dynamic> e) {
         final bool valueIsMap = e.value is Map;
 
@@ -427,16 +415,6 @@ class _ComposePageState extends State<ComposePage> {
             return DataCell(
               Text(
                 HandWeaponReach.fromJson(
-                  json,
-                ).toString(),
-              ),
-            );
-          }
-
-          if (HandWeaponParry.isParry(json)) {
-            return DataCell(
-              Text(
-                HandWeaponParry.fromJson(
                   json,
                 ).toString(),
               ),
@@ -455,6 +433,10 @@ class _ComposePageState extends State<ComposePage> {
               ),
             );
           }
+        }
+
+        if (e.key == 'parry') {
+          return _getParryCell(characterProvider, hw);
         }
 
         return DataCell(
@@ -478,7 +460,7 @@ class _ComposePageState extends State<ComposePage> {
                 HandWeapon? newWeapon = await showDialog<HandWeapon?>(
                   context: context,
                   builder: (context) => HandWeaponEditorDialog(
-                    hw: hw,
+                    oldHandWeapon: hw,
                   ),
                 );
 
@@ -500,6 +482,36 @@ class _ComposePageState extends State<ComposePage> {
         ),
       )
     ]);
+  }
+
+  DataCell _getParryCell(CharacterProvider characterProvider, HandWeapon hw) {
+    int skillIndex = characterProvider.character.skills.indexWhere(
+      (Skill skl) => skl.name == hw.associatedSkillName,
+    );
+
+    if (skillIndex == -1) {
+      return DataCell(
+        Center(
+          child: Text(
+            HandWeapon.calculateParry(0).toString(),
+          ),
+        ),
+      );
+    }
+
+    Skill skill = characterProvider.character.skills.elementAt(skillIndex);
+
+    int skillLevel = skill.skillLevel(
+      characterProvider.character.getAttribute(skill.associatedAttribute),
+    );
+
+    return DataCell(
+      Center(
+        child: Text(
+          HandWeapon.calculateParry(skillLevel).toString(),
+        ),
+      ),
+    );
   }
 
   @override

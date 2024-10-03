@@ -58,7 +58,7 @@ class SkillView extends StatelessWidget {
               ),
               if (skill.investedPoints < 1)
                 Text(
-                  'cost: ${skill.basePoints} (${skill.associatedAttribute.stringValue}/${skill.difficulty.stringValue})',
+                  'cost: ${skill.basePoints} (${skill.associatedAttribute.abbreviatedStringValue}/${skill.difficulty.stringValue})',
                 )
               else
                 _generateSkillCostText(context),
@@ -175,27 +175,22 @@ class SkillView extends StatelessWidget {
   }
 
   Text _generateSkillCostText(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
-    final int attributeValue =
-        characterProvider.character.getAttribute(skill.associatedAttribute);
-    final int effectiveSkill = skill.calculateEffectiveSkill(attributeValue);
+    final int effectiveSkill = skill.skillEfficiency;
 
     if (effectiveSkill < 0) {
       return Text(
-        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue}$effectiveSkill)',
+        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.abbreviatedStringValue}$effectiveSkill)',
       );
     }
 
     if (effectiveSkill == 0) {
       return Text(
-        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue})',
+        'invested points: ${skill.investedPoints} (${skill.associatedAttribute.abbreviatedStringValue})',
       );
     }
 
     return Text(
-      'invested points: ${skill.investedPoints} (${skill.associatedAttribute.stringValue}+$effectiveSkill)',
+      'invested points: ${skill.investedPoints} (${skill.associatedAttribute.abbreviatedStringValue}+$effectiveSkill)',
     );
   }
 }

@@ -19,10 +19,32 @@ List<Skill> skillsFromJson(String str) =>
 String skillToJson(List<Skill> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+class _SkillThreshold {
+  final int threshold;
+  final int modifier;
+
+  const _SkillThreshold({
+    required this.threshold,
+    required this.modifier,
+  });
+}
+
 class Skill extends Aspect {
   final Attributes associatedAttribute;
   final SkillDifficulty difficulty;
   int investedPoints;
+
+  set investedPoint(int value) {
+    if (value < 1) {
+      return;
+    }
+
+    if (investedPoints - value < 1) {
+      investedPoint = 1;
+    }
+
+    investedPoint = value;
+  }
 
   final int basePoints;
   final List<String> categories;
@@ -97,64 +119,105 @@ class Skill extends Aspect {
         'specialization': specialization,
       };
 
-  int calculateEffectiveSkill(int primaryAttribute) {
-    int skillLevel = 0;
+  static const Map<SkillDifficulty, List<_SkillThreshold>>
+      _skillDifficultyThresholds = {
+    SkillDifficulty.NONE: [],
+    SkillDifficulty.EASY: [
+      _SkillThreshold(
+        threshold: 0,
+        modifier: 0,
+      ),
+      _SkillThreshold(
+        threshold: 2,
+        modifier: 1,
+      ),
+      _SkillThreshold(
+        threshold: 4,
+        modifier: 2,
+      ),
+    ],
+    SkillDifficulty.AVERAGE: [
+      _SkillThreshold(
+        threshold: 0,
+        modifier: -1,
+      ),
+      _SkillThreshold(
+        threshold: 2,
+        modifier: 0,
+      ),
+      _SkillThreshold(
+        threshold: 4,
+        modifier: 1,
+      ),
+    ],
+    SkillDifficulty.HARD: [
+      _SkillThreshold(
+        threshold: 0,
+        modifier: -2,
+      ),
+      _SkillThreshold(
+        threshold: 2,
+        modifier: -1,
+      ),
+      _SkillThreshold(
+        threshold: 4,
+        modifier: 0,
+      ),
+      _SkillThreshold(
+        threshold: 8,
+        modifier: 1,
+      ),
+    ],
+    SkillDifficulty.VERY_HARD: [
+      _SkillThreshold(
+        threshold: 0,
+        modifier: -3,
+      ),
+      _SkillThreshold(
+        threshold: 2,
+        modifier: -2,
+      ),
+      _SkillThreshold(
+        threshold: 4,
+        modifier: -1,
+      ),
+      _SkillThreshold(
+        threshold: 8,
+        modifier: 0,
+      ),
+      _SkillThreshold(
+        threshold: 12,
+        modifier: 1,
+      ),
+    ],
+  };
 
-    switch (difficulty) {
-      case SkillDifficulty.EASY:
-        switch (investedPoints) {
-          case >= 4:
-            skillLevel = 1 + ((investedPoints - 4) ~/ 4);
-          case >= 2:
-            skillLevel = 1;
-          case >= 1:
-            skillLevel = 0;
-        }
-        break;
+  int skillLevel(int characterAttributeValue) {
+    return characterAttributeValue + skillEfficiency;
+  }
 
-      case SkillDifficulty.AVERAGE:
-        switch (investedPoints) {
-          case >= 4:
-            skillLevel = 1 + ((investedPoints - 4) ~/ 4);
-          case >= 2:
-            skillLevel = 0;
-          case >= 1:
-            skillLevel = -1;
-        }
-        break;
+  int get skillEfficiency {
+    List<_SkillThreshold>? thresholds = _skillDifficultyThresholds[difficulty];
 
-      case SkillDifficulty.HARD:
-        switch (investedPoints) {
-          case >= 8:
-            skillLevel = 1 + ((investedPoints - 8) ~/ 4);
-          case >= 4:
-            skillLevel = 0;
-          case >= 2:
-            skillLevel = -1;
-          case >= 1:
-            skillLevel = -2;
-        }
-        break;
-
-      case SkillDifficulty.VERY_HARD:
-        switch (investedPoints) {
-          case >= 12:
-            skillLevel = 1 + ((investedPoints - 12) ~/ 4);
-          case >= 8:
-            skillLevel = 0;
-          case >= 4:
-            skillLevel = -1;
-          case >= 2:
-            skillLevel = -2;
-          case >= 1:
-            skillLevel = -3;
-        }
-        break;
-
-      case SkillDifficulty.NONE:
-        break;
+    if (thresholds == null) {
+      return 0;
     }
 
-    return skillLevel;
+    if (investedPoints > thresholds.last.threshold) {
+      return thresholds.last.modifier +
+          ((investedPoints - thresholds.last.threshold) ~/ 4);
+    }
+
+    int efficiency = thresholds.first.modifier;
+
+    for (int i = 0; i < thresholds.length; i++) {
+      int threshold = thresholds[i].threshold;
+
+      if (investedPoints >= threshold) {
+        efficiency = thresholds[i].modifier;
+      }
+    }
+
+    return efficiency;
   }
 }
