@@ -10,6 +10,7 @@ import 'package:gurps_character_creation/models/characteristics/traits/trait.dar
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/hand_weapon_editor_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
 import 'package:gurps_character_creation/widgets/compose_page/custom_text_field.dart';
@@ -475,7 +476,12 @@ class _ComposePageState extends State<ComposePage> {
               icon: const Icon(Icons.remove_outlined),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => HandWeaponDetailsDialog(handWeapon: hw),
+                );
+              },
               icon: const Icon(Icons.info_outline),
             ),
           ],

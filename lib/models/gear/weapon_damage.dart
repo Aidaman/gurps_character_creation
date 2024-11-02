@@ -125,7 +125,7 @@ class WeaponDamage {
       return calculatedModifier;
     }
 
-    return calculatedModifier - (characterST - minST);
+    return calculatedModifier - (minST - characterST);
   }
 
   // Unlike the Thrusting damage it seems that there is a clearer pattern
@@ -169,7 +169,7 @@ class WeaponDamage {
       return calculatedModifier;
     }
 
-    return calculatedModifier - (characterST - minST);
+    return calculatedModifier - (minST - characterST);
   }
 
   /*
@@ -184,7 +184,10 @@ class WeaponDamage {
 
   @override
   String toString() {
-    final String modifierSymbol = modifier >= 0 ? '+' : '';
+    if (modifier == 0) {
+      return '${attackType.stringValue} ${damageType.abbreviatedStringValue}';
+    }
+    final String modifierSymbol = modifier > 0 ? '+' : '';
 
     return '${attackType.abbreviatedStringValue}$modifierSymbol$modifier ${damageType.abbreviatedStringValue}';
   }

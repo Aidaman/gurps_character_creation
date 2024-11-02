@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
@@ -7,8 +5,8 @@ import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/utilities/dialog_size.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {
@@ -142,19 +140,13 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
   @override
   Widget build(BuildContext context) {
-    RoundedRectangleBorder dialogShape = const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(
-        Radius.circular(12),
-      ),
-    );
-
     return AlertDialog.adaptive(
       title: _buildTitle(),
       shape: dialogShape,
       actions: _buildActions(context),
       scrollable: true,
       content: ConstrainedBox(
-        constraints: _defineConstraints(context),
+        constraints: defineDialogConstraints(context),
         child: SingleChildScrollView(
           child: _buildForm(),
         ),
@@ -196,8 +188,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           _buildReachSection(),
           const Gap(16),
           _buildDamageSection(),
+          const Gap(16),
           _buildTextFormField(
             maxLines: null,
+            defaultValue: widget.oldHandWeapon?.notes,
             label: 'Notes for this Weapon',
             keyboardType: TextInputType.multiline,
             validator: (String? value) {
@@ -217,6 +211,8 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   }
 
   List<Widget> _buildBaseInfoSection() {
+    const String MIN_ST_EXPLANATION =
+        'All Handweapons in GURPS have a minimum Strength required to wield them\nIf your character ST is lower than this parametre — they will receive a penalty to any check for the weapon equal to: Character ST - Minimum ST';
     return [
       _buildTextFormField(
         label: 'Name of the weapon',
@@ -231,7 +227,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           });
         },
       ),
-      const Gap(16),
+      const Gap(12),
       _buildTextFormField(
         keyboardType: TextInputType.number,
         allowsDecimal: true,
@@ -249,7 +245,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           );
         },
       ),
-      const Gap(16),
+      const Gap(12),
       _buildTextFormField(
         keyboardType: TextInputType.number,
         allowsDecimal: true,
@@ -267,7 +263,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           );
         },
       ),
-      const Gap(16),
+      const Gap(24),
       _buildTextFormField(
         label: 'Minimum Strengths required to wield this weapon',
         defaultValue: widget.oldHandWeapon?.minimumSt.toString(),
@@ -287,8 +283,14 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           );
         },
       ),
-      const Gap(16),
+      const Gap(8),
+      Text(
+        MIN_ST_EXPLANATION,
+        style: Theme.of(context).textTheme.labelSmall,
+      ),
+      const Gap(24),
       _buildFormDropdownMenu<String>(
+        hint: 'Associated skill',
         initialValue: widget.oldHandWeapon?.associatedSkillName,
         items: Provider.of<AspectsProvider>(context)
             .skills
@@ -312,6 +314,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           );
         },
       ),
+      const Gap(8),
+      Text(
+        'Any weapon has a skill attached that determines how successfull you parry and hit with a given weapon',
+        style: Theme.of(context).textTheme.labelSmall,
+      ),
       const Gap(16),
     ];
   }
@@ -319,6 +326,8 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   Widget _buildReachSection() {
     return _markAsGroup(
       title: 'Reach',
+      description:
+          'Any weapon in GURPS has an effective distance that is measured in Hexes. Hex is a 0.9 meters (1yard) hexagon area',
       child: Row(
         children: [
           Expanded(
@@ -372,12 +381,16 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   Widget _buildDamageSection() {
     return _markAsGroup(
       title: 'Damage',
+      description:
+          'Any weapon has an attack type (Thrust or Swing). The Swing damage is higher since the weapon functions as a lever in that case\n\nAny weapon has some modifier on top of the basic throw. For example Thr+2 means you pick a Thrusting throw from the table and add 2\n\nAnd damage type is self explainatory',
       child: Column(
         children: [
           Row(
             children: [
               Expanded(
                 child: _buildFormDropdownMenu(
+                  hint: 'Attack type',
+                  initialValue: widget.oldHandWeapon?.damage.attackType,
                   items: AttackTypes.values
                       .where((AttackTypes type) => type != AttackTypes.NONE)
                       .map((AttackTypes type) => DropdownMenuItem<AttackTypes>(
@@ -425,6 +438,8 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           ),
           const Gap(16),
           _buildFormDropdownMenu(
+            hint: 'Damage type',
+            initialValue: widget.oldHandWeapon?.damage.damageType,
             items: DamageType.values
                 .where((DamageType type) => type != DamageType.NONE)
                 .map((DamageType type) => DropdownMenuItem<DamageType>(
@@ -453,6 +468,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   Widget _markAsGroup({
     required Widget child,
     required String title,
+    String? description,
   }) {
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -469,23 +485,40 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
         ),
         child: Column(
           children: [
-            Text(title),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
             child,
+            const Gap(16),
+            if (description != null)
+              Text(
+                description,
+                style: Theme.of(context).textTheme.labelSmall,
+              )
           ],
         ),
       ),
     );
   }
 
-  DropdownButtonFormField _buildFormDropdownMenu<T>({
+  Widget _buildFormDropdownMenu<T>({
     required List<DropdownMenuItem<T>> items,
     required void Function(T? value) onChanged,
+    required String hint,
     T? initialValue,
   }) {
-    return DropdownButtonFormField<T>(
-      items: items,
-      onChanged: onChanged,
-      value: initialValue,
+    return Column(
+      children: [
+        DropdownButtonFormField<T>(
+          style: Theme.of(context).textTheme.bodyMedium,
+          borderRadius: BorderRadius.circular(8),
+          hint: Text(hint),
+          items: items,
+          onChanged: onChanged,
+          value: initialValue,
+        ),
+      ],
     );
   }
 
@@ -512,33 +545,6 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
       initialValue: defaultValue,
       onChanged: onChanged,
       validator: validator,
-    );
-  }
-
-  BoxConstraints _defineConstraints(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double maxHeight = MediaQuery.of(context).size.height / 2;
-
-    if (screenWidth > MIN_DESKTOP_WIDTH) {
-      return BoxConstraints(
-        maxHeight: maxHeight,
-        maxWidth: min(screenWidth / 2, MAX_DESKTOP_CONTENT_WIDTH / 2),
-        minWidth: min(screenWidth / 2, MAX_DESKTOP_CONTENT_WIDTH / 2),
-      );
-    }
-
-    if (screenWidth < MIN_DESKTOP_WIDTH && screenWidth > MAX_MOBILE_WIDTH) {
-      return BoxConstraints(
-        minHeight: maxHeight,
-        minWidth: screenWidth / 2,
-        maxWidth: screenWidth / 2,
-      );
-    }
-
-    return BoxConstraints(
-      maxHeight: MediaQuery.of(context).size.height - MOBILE_VERTICAL_PADDING,
-      maxWidth: screenWidth - MOBILE_HORIZONTAL_PADDING,
-      minWidth: screenWidth - MOBILE_HORIZONTAL_PADDING,
     );
   }
 }
