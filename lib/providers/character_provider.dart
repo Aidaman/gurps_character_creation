@@ -61,17 +61,29 @@ class CharacterProvider with ChangeNotifier {
             )
             .toInt();
       case 'Perception':
-        _character.pointsSpentOnPer += int.parse(value);
+        if (_character.remainingPoints > Attributes.Per.adjustPriceOf) {
+          _character.pointsSpentOnPer += int.parse(value);
+        }
       case 'Will':
-        _character.pointsSpentOnWill += int.parse(value);
+        if (_character.remainingPoints > Attributes.Will.adjustPriceOf) {
+          _character.pointsSpentOnWill += int.parse(value);
+        }
       case 'Hit Points':
-        _character.pointsSpentOnHP += int.parse(value);
+        if (_character.remainingPoints > Attributes.HP.adjustPriceOf) {
+          _character.pointsSpentOnHP += int.parse(value);
+        }
       case 'Fatigue Points':
-        _character.pointsSpentOnFP += int.parse(value);
+        if (_character.remainingPoints > Attributes.FP.adjustPriceOf) {
+          _character.pointsSpentOnFP += int.parse(value);
+        }
       case 'Basic Speed':
-        _character.pointsSpentOnBS += int.parse(value);
+        if (_character.remainingPoints > Attributes.BASIC_SPEED.adjustPriceOf) {
+          _character.pointsSpentOnBS += int.parse(value);
+        }
       case 'Basic Move':
-        _character.pointsSpentOnBM += int.parse(value);
+        if (_character.remainingPoints > Attributes.BASIC_MOVE.adjustPriceOf) {
+          _character.pointsSpentOnBM += int.parse(value);
+        }
       default:
     }
 

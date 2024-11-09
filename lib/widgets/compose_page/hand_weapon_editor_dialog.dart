@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
@@ -7,6 +9,7 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill.dar
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/dialog_size.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
+import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {
@@ -31,7 +34,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
   HandWeapon _handWeapon = HandWeapon.empty();
 
-  void updateHandWeaponFields(String value, _HandWeaponEditorFields key) {
+  void updateHandWeaponFields(String? value, _HandWeaponEditorFields key) {
+    if (value == null) {
+      return;
+    }
+
     switch (key) {
       case _HandWeaponEditorFields.ATTACK_TYPE:
         final WeaponDamage newWeaponDamage = WeaponDamage(
@@ -132,24 +139,40 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
   @override
   void initState() {
-    if (widget.oldHandWeapon != null) {
-      _handWeapon = widget.oldHandWeapon!;
+    if (widget.oldHandWeapon == null) {
+      super.initState();
+      return;
     }
+
+    _handWeapon = widget.oldHandWeapon!;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double maxHeight = MediaQuery.of(context).size.height / 1.5;
+    final bool isMobile = screenWidth <= MAX_MOBILE_WIDTH;
+
+    Widget body = AlertDialog.adaptive(
       title: _buildTitle(),
       shape: dialogShape,
       actions: _buildActions(context),
       scrollable: true,
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: SingleChildScrollView(
-          child: _buildForm(),
-        ),
+      content: SingleChildScrollView(
+        child: _buildForm(),
+      ),
+    );
+
+    if (isMobile) {
+      return body;
+    }
+
+    return Center(
+      child: SizedBox(
+        width: min(screenWidth / 1.5, MAX_DESKTOP_CONTENT_WIDTH / 1.5),
+        height: maxHeight,
+        child: body,
       ),
     );
   }
@@ -172,7 +195,9 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
       ),
       FilledButton.icon(
         onPressed: () {
-          Navigator.pop(context, _handWeapon);
+          if (_formkey.currentState!.validate()) {
+            Navigator.pop(context, _handWeapon);
+          }
         },
         label: const Text('add'),
       ),
@@ -189,7 +214,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           const Gap(16),
           _buildDamageSection(),
           const Gap(16),
-          _buildTextFormField(
+          buildTextFormField(
             maxLines: null,
             defaultValue: widget.oldHandWeapon?.notes,
             label: 'Notes for this Weapon',
@@ -204,6 +229,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
               _handWeapon = HandWeapon.copyWith(_handWeapon, notes: value);
             },
+            context: context,
           )
         ],
       ),
@@ -213,8 +239,21 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   List<Widget> _buildBaseInfoSection() {
     const String MIN_ST_EXPLANATION =
         'All Handweapons in GURPS have a minimum Strength required to wield them\nIf your character ST is lower than this parametre — they will receive a penalty to any check for the weapon equal to: Character ST - Minimum ST';
+    final List<DropdownMenuItem<String>> assosiatedSkillsItems =
+        Provider.of<AspectsProvider>(context)
+            .skills
+            .map(
+              (Skill skl) => DropdownMenuItem(
+                value: skl.name,
+                child: Text(
+                  skl.name,
+                ),
+              ),
+            )
+            .toList();
+
     return [
-      _buildTextFormField(
+      buildTextFormField(
         label: 'Name of the weapon',
         defaultValue: widget.oldHandWeapon?.name,
         validator: validateText,
@@ -226,9 +265,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             _handWeapon = HandWeapon.copyWith(_handWeapon, name: value);
           });
         },
+        context: context,
       ),
       const Gap(12),
-      _buildTextFormField(
+      buildTextFormField(
         keyboardType: TextInputType.number,
         allowsDecimal: true,
         defaultValue: widget.oldHandWeapon?.weight.toString(),
@@ -244,9 +284,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             weight: parseInput<double>(value, double.parse),
           );
         },
+        context: context,
       ),
       const Gap(12),
-      _buildTextFormField(
+      buildTextFormField(
         keyboardType: TextInputType.number,
         allowsDecimal: true,
         defaultValue: widget.oldHandWeapon?.price.toString(),
@@ -262,9 +303,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             price: parseInput<double>(value, double.parse),
           );
         },
+        context: context,
       ),
       const Gap(24),
-      _buildTextFormField(
+      buildTextFormField(
         label: 'Minimum Strengths required to wield this weapon',
         defaultValue: widget.oldHandWeapon?.minimumSt.toString(),
         keyboardType: const TextInputType.numberWithOptions(
@@ -282,6 +324,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             minimumSt: parseInput<int>(value, int.parse),
           );
         },
+        context: context,
       ),
       const Gap(8),
       Text(
@@ -289,30 +332,17 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
         style: Theme.of(context).textTheme.labelSmall,
       ),
       const Gap(24),
-      _buildFormDropdownMenu<String>(
+      buildFormDropdownMenu<String>(
         hint: 'Associated skill',
         initialValue: widget.oldHandWeapon?.associatedSkillName,
-        items: Provider.of<AspectsProvider>(context)
-            .skills
-            .map(
-              (Skill skl) => DropdownMenuItem(
-                value: skl.name,
-                child: Text(
-                  skl.name,
-                ),
-              ),
-            )
-            .toList(),
+        items: assosiatedSkillsItems,
         onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
-
           _handWeapon = HandWeapon.copyWith(
             _handWeapon,
             associatedSkillName: value,
           );
         },
+        context: context,
       ),
       const Gap(8),
       Text(
@@ -324,227 +354,139 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   }
 
   Widget _buildReachSection() {
-    return _markAsGroup(
+    return markAsGroup(
       title: 'Reach',
       description:
           'Any weapon in GURPS has an effective distance that is measured in Hexes. Hex is a 0.9 meters (1yard) hexagon area',
       child: Row(
         children: [
           Expanded(
-            child: _buildTextFormField(
-              label: 'Minimum Reach Distance in hexes',
+            child: buildTextFormField(
+              label: 'Min Rearch',
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: false,
               ),
               allowsDecimal: false,
               defaultValue: widget.oldHandWeapon?.reach.minimalRange.toString(),
               validator: validatePositiveNumber,
-              onChanged: (String? value) {
-                if (value == null) {
-                  return;
-                }
-
-                updateHandWeaponFields(
-                  value,
-                  _HandWeaponEditorFields.MINIMUM_REACH_DISTANCE,
-                );
-              },
+              onChanged: (String? value) => updateHandWeaponFields(
+                value,
+                _HandWeaponEditorFields.MINIMUM_REACH_DISTANCE,
+              ),
+              context: context,
             ),
           ),
           const Gap(16),
           Expanded(
-            child: _buildTextFormField(
-              label: 'maximum Reach Distance in hexes',
+            child: buildTextFormField(
+              label: 'Max Reach',
               defaultValue: widget.oldHandWeapon?.reach.maximumRange.toString(),
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: false,
               ),
               allowsDecimal: false,
               validator: validatePositiveNumber,
-              onChanged: (String? value) {
-                if (value == null) {
-                  return;
-                }
-
-                updateHandWeaponFields(
-                  value,
-                  _HandWeaponEditorFields.MAXIMUM_REACH_DISTANCE,
-                );
-              },
+              onChanged: (String? value) => updateHandWeaponFields(
+                value,
+                _HandWeaponEditorFields.MAXIMUM_REACH_DISTANCE,
+              ),
+              context: context,
             ),
           ),
         ],
       ),
+      context: context,
+    );
+  }
+
+  void onAttackTypeChanged(AttackTypes? value) {
+    if (value == null) {
+      return;
+    }
+
+    updateHandWeaponFields(
+      value.stringValue,
+      _HandWeaponEditorFields.ATTACK_TYPE,
+    );
+  }
+
+  void onDamageTypeChanged(DamageType? value) {
+    if (value == null) {
+      return;
+    }
+
+    updateHandWeaponFields(
+      value.stringValue,
+      _HandWeaponEditorFields.DAMAGE_TYPE,
     );
   }
 
   Widget _buildDamageSection() {
-    return _markAsGroup(
+    final List<DropdownMenuItem<AttackTypes>> attackTypesItems =
+        AttackTypes.values
+            .where((AttackTypes type) => type != AttackTypes.NONE)
+            .map((AttackTypes type) => DropdownMenuItem<AttackTypes>(
+                  value: type,
+                  child: Text(
+                    type.stringValue,
+                  ),
+                ))
+            .toList();
+
+    final List<DropdownMenuItem<DamageType>> damageTypesItems =
+        DamageType.values
+            .where((DamageType type) => type != DamageType.NONE)
+            .map((DamageType type) => DropdownMenuItem<DamageType>(
+                  value: type,
+                  child: Text(
+                    type.stringValue,
+                  ),
+                ))
+            .toList();
+
+    return markAsGroup(
       title: 'Damage',
       description:
           'Any weapon has an attack type (Thrust or Swing). The Swing damage is higher since the weapon functions as a lever in that case\n\nAny weapon has some modifier on top of the basic throw. For example Thr+2 means you pick a Thrusting throw from the table and add 2\n\nAnd damage type is self explainatory',
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: _buildFormDropdownMenu(
-                  hint: 'Attack type',
-                  initialValue: widget.oldHandWeapon?.damage.attackType,
-                  items: AttackTypes.values
-                      .where((AttackTypes type) => type != AttackTypes.NONE)
-                      .map((AttackTypes type) => DropdownMenuItem<AttackTypes>(
-                            value: type,
-                            child: Text(
-                              type.stringValue,
-                            ),
-                          ))
-                      .toList(),
-                  onChanged: (AttackTypes? value) {
-                    if (value == null) {
-                      return;
-                    }
-
-                    updateHandWeaponFields(
-                      value.stringValue,
-                      _HandWeaponEditorFields.ATTACK_TYPE,
-                    );
-                  },
-                ),
-              ),
-              const Gap(16),
-              Expanded(
-                child: _buildTextFormField(
-                  label: 'weapon damage modifier',
-                  keyboardType: TextInputType.number,
-                  allowsDecimal: false,
-                  defaultValue:
-                      widget.oldHandWeapon?.damage.modifier.toString(),
-                  validator: validateWoleNumber,
-                  onChanged: (String? value) {
-                    if (value == null) {
-                      return;
-                    }
-
-                    updateHandWeaponFields(
-                      value,
-                      _HandWeaponEditorFields.DAMAGE_MODIFIER,
-                    );
-                  },
-                ),
-              ),
-              const Gap(16),
-            ],
+          buildFormDropdownMenu(
+            hint: 'Attack type',
+            initialValue: widget.oldHandWeapon?.damage.attackType,
+            items: attackTypesItems,
+            onChanged: onAttackTypeChanged,
+            context: context,
           ),
           const Gap(16),
-          _buildFormDropdownMenu(
-            hint: 'Damage type',
-            initialValue: widget.oldHandWeapon?.damage.damageType,
-            items: DamageType.values
-                .where((DamageType type) => type != DamageType.NONE)
-                .map((DamageType type) => DropdownMenuItem<DamageType>(
-                      value: type,
-                      child: Text(
-                        type.stringValue,
-                      ),
-                    ))
-                .toList(),
-            onChanged: (DamageType? value) {
+          buildTextFormField(
+            label: 'weapon damage modifier',
+            keyboardType: TextInputType.number,
+            allowsDecimal: false,
+            defaultValue: widget.oldHandWeapon?.damage.modifier.toString(),
+            validator: validateWoleNumber,
+            onChanged: (String? value) {
               if (value == null) {
                 return;
               }
 
               updateHandWeaponFields(
-                value.stringValue,
-                _HandWeaponEditorFields.DAMAGE_TYPE,
+                value,
+                _HandWeaponEditorFields.DAMAGE_MODIFIER,
               );
             },
+            context: context,
+          ),
+          const Gap(16),
+          buildFormDropdownMenu(
+            hint: 'Damage type',
+            initialValue: widget.oldHandWeapon?.damage.damageType,
+            items: damageTypesItems,
+            onChanged: onDamageTypeChanged,
+            context: context,
           ),
         ],
       ),
-    );
-  }
-
-  Widget _markAsGroup({
-    required Widget child,
-    required String title,
-    String? description,
-  }) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        border: Border.fromBorderSide(
-          BorderSide(color: Theme.of(context).colorScheme.primary),
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          bottom: 16.0,
-          left: 8,
-          right: 8,
-        ),
-        child: Column(
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            child,
-            const Gap(16),
-            if (description != null)
-              Text(
-                description,
-                style: Theme.of(context).textTheme.labelSmall,
-              )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFormDropdownMenu<T>({
-    required List<DropdownMenuItem<T>> items,
-    required void Function(T? value) onChanged,
-    required String hint,
-    T? initialValue,
-  }) {
-    return Column(
-      children: [
-        DropdownButtonFormField<T>(
-          style: Theme.of(context).textTheme.bodyMedium,
-          borderRadius: BorderRadius.circular(8),
-          hint: Text(hint),
-          items: items,
-          onChanged: onChanged,
-          value: initialValue,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTextFormField({
-    required String label,
-    required String? Function(String? str) validator,
-    required void Function(String? value) onChanged,
-    String? defaultValue,
-    TextInputType? keyboardType,
-    int? maxLines = 1,
-    bool? allowsDecimal,
-  }) {
-    return TextFormField(
-      maxLines: maxLines,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      keyboardType: keyboardType ?? TextInputType.text,
-      inputFormatters: addTextInputFormatters(keyboardType, allowsDecimal),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: const TextStyle(
-          fontSize: 12,
-        ),
-      ),
-      initialValue: defaultValue,
-      onChanged: onChanged,
-      validator: validator,
+      context: context,
     );
   }
 }

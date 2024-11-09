@@ -1,4 +1,5 @@
 import 'package:gurps_character_creation/models/gear/armor.dart';
+import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
@@ -7,6 +8,7 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill.dar
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:uuid/uuid.dart';
 
 class Character {
@@ -196,7 +198,59 @@ class Character {
         weight: 0,
         armor: [],
         weapons: [
-          HandWeapon.empty(),
+          HandWeapon(
+            name: 'Bite',
+            associatedSkillName: 'Brawling',
+            damage: WeaponDamage(
+              attackType: AttackTypes.THRUST,
+              damageType: DamageType.CUTTING,
+              modifier: -1,
+            ),
+            minimumSt: 10,
+            price: 0,
+            weight: 0,
+            reach: const HandWeaponReach(
+              minimalRange: 0,
+              maximumRange: 0,
+            ),
+            notes: 'A plain bite, anybody can do it, unless they have no teeth',
+          ),
+          HandWeapon(
+            name: 'Punch',
+            associatedSkillName: 'Brawling',
+            damage: WeaponDamage(
+              attackType: AttackTypes.THRUST,
+              damageType: DamageType.CRUSHING,
+              modifier: 0,
+            ),
+            minimumSt: 10,
+            price: 0,
+            weight: 0,
+            reach: const HandWeaponReach(
+              minimalRange: 0,
+              maximumRange: 0,
+            ),
+            notes:
+                'A punch with a bare hand, when there is no weapon what else you left but your own limbs?',
+          ),
+          HandWeapon(
+            name: 'Kick',
+            associatedSkillName: 'Brawling',
+            damage: WeaponDamage(
+              attackType: AttackTypes.SWING,
+              damageType: DamageType.CRUSHING,
+              modifier: -1,
+            ),
+            minimumSt: 10,
+            price: 0,
+            weight: 0,
+            reach: const HandWeaponReach(
+              minimalRange: 0,
+              maximumRange: 0,
+            ),
+            notes:
+                'A kick with a leg, be carefull and do not fall in the process though',
+          ),
         ],
         possessions: [],
       );

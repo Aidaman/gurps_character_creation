@@ -78,22 +78,22 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
       floatingActionButton: isDesktop ? null : widget.floatingActionButton,
       bottomNavigationBar: isDesktop
           ? null
-          : BottomNavigationBar(
-              currentIndex: widget.selectedIndex,
-              items: routes
+          : NavigationBar(
+              selectedIndex: widget.selectedIndex,
+              destinations: routes
                   .map(
-                    (e) => BottomNavigationBarItem(
+                    (e) => NavigationDestination(
                       icon: Icon(e.iconName),
                       label: e.name,
                     ),
                   )
                   .toList(),
-              onTap: _onItemTapped,
+              onDestinationSelected: _onItemTapped,
               elevation: COMMON_ELLEVATION,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              selectedIconTheme:
-                  IconThemeData(color: Theme.of(context).colorScheme.primary),
-              selectedItemColor: Theme.of(context).colorScheme.primary,
+              indicatorColor: Theme.of(context).colorScheme.primary,
+              animationDuration: const Duration(milliseconds: 256),
+              height: 64,
+              shadowColor: Colors.black,
             ),
     );
   }

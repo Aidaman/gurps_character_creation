@@ -40,8 +40,7 @@ class AttributeView extends StatelessWidget {
     );
 
     final Widget body = Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           '${attribute.abbreviatedStringValue}:',
@@ -81,28 +80,6 @@ class AttributeView extends StatelessWidget {
       ],
     );
 
-    if (MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH ||
-        MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          return SizedBox(
-            width: constraints.maxWidth / 2,
-            child: body,
-          );
-        },
-      );
-    }
-    if (MediaQuery.of(context).size.width < MIN_DESKTOP_WIDTH) {
-      return LayoutBuilder(
-        builder: (context, constraints) {
-          const double ATTRIBUTE_VIEW_TABLET_WIDTH = 200;
-          return SizedBox(
-            width: ATTRIBUTE_VIEW_TABLET_WIDTH,
-            child: body,
-          );
-        },
-      );
-    }
     return body;
   }
 }

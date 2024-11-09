@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
           surface: Color(0xFF212121),
           onSurface: Color(0xFFfefefe),
         ),
+        useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
       routes: Map.fromEntries(

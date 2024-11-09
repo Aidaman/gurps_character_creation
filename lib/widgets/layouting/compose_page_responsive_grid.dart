@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class ComposePageResponsiveGrid extends StatelessWidget {
-  final List<Widget> basicInfoFields;
-  final List<Widget> traits;
-  final List<Widget> characterStats;
-  final List<Widget> skillsAndMagic;
-  final List<Widget> handWeapons;
-  final List<Widget> rangedWeapons;
-  final List<Widget>? armor;
-  final List<Widget>? posession;
-  final List<Widget> restOfTheBody;
+  final Widget basicInfoFields;
+  final Widget characterStats;
+  final Widget traits;
+  final Widget skillsAndMagic;
+  final Widget handWeapons;
+  final Widget rangedWeapons;
+  final Widget? armor;
+  final Widget? posession;
+  final Widget? restOfTheBody;
 
   // static const double _SEPARATOR_HEIGHT = 1;
   // static const double _SEPARATOR_INDENT = 16;
@@ -22,26 +23,26 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     required this.characterStats,
     required this.traits,
     required this.skillsAndMagic,
-    required this.restOfTheBody,
     required this.handWeapons,
     required this.rangedWeapons,
+    this.restOfTheBody,
     this.armor,
     this.posession,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH) {
-      final List<List<Widget>> children = [
-        basicInfoFields,
-        characterStats,
-        traits,
-        skillsAndMagic,
-        restOfTheBody,
-        handWeapons,
-        rangedWeapons,
-      ];
+    final List<Widget> children = [
+      basicInfoFields,
+      characterStats,
+      traits,
+      skillsAndMagic,
+      handWeapons,
+      rangedWeapons,
+      // restOfTheBody,
+    ];
 
+    if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH) {
       return Center(
         child: Container(
           constraints: const BoxConstraints(
@@ -53,46 +54,28 @@ class ComposePageResponsiveGrid extends StatelessWidget {
           ),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: children.elementAt(index),
-              );
+              return children[index];
             },
             separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: DESKTOP_ROWS_SPACING,
+              return const Gap(
+                DESKTOP_ROWS_SPACING,
               );
             },
             itemCount: children.length,
           ),
         ),
       );
-    } else {
-      final List<Widget> children = [
-        ...basicInfoFields,
-        Wrap(
-          alignment: WrapAlignment.spaceEvenly,
-          children: characterStats,
-        ),
-        ...traits,
-        ...skillsAndMagic,
-        ...restOfTheBody,
-        ...handWeapons,
-        ...rangedWeapons,
-      ];
-
-      return ListView.builder(
-        itemCount: children.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: MOBILE_HORIZONTAL_PADDING,
-              vertical: MOBILE_VERTICAL_PADDING,
-            ),
-            child: children[index],
-          );
-        },
-      );
     }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(
+        horizontal: MOBILE_HORIZONTAL_PADDING,
+        vertical: MOBILE_VERTICAL_PADDING,
+      ),
+      itemCount: children.length,
+      itemBuilder: (context, index) {
+        return children[index];
+      },
+    );
   }
 }

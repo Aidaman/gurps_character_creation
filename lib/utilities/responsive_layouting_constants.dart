@@ -4,6 +4,8 @@ const int MIN_DESKTOP_WIDTH = 856;
 const int MAX_DESKTOP_COLUMNS = 4;
 const int MAX_TABLET_COLUMNS = 4;
 
+const double MOBILE_ROWS_SPACING = 16;
+
 const double DESKTOP_COLUMNS_SPACING = 16 + 8;
 const double DESKTOP_ROWS_SPACING = 24;
 

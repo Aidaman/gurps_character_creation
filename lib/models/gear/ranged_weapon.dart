@@ -1,4 +1,5 @@
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
+import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
@@ -76,11 +77,11 @@ class RangeWeaponShots {
 }
 
 class WeaponStrengths {
-  final int strengthValue;
-  final bool? isTwoHanded;
-  final bool? hasBonusForHigherStrength;
+  int strengthValue;
+  bool? isTwoHanded;
+  bool? hasBonusForHigherStrength;
 
-  const WeaponStrengths({
+  WeaponStrengths({
     required this.strengthValue,
     this.isTwoHanded,
     this.hasBonusForHigherStrength,
@@ -193,6 +194,43 @@ class RangedWeapon extends Weapon {
     required super.id,
   }) : super.withId();
 
+  factory RangedWeapon.copyWith(
+    RangedWeapon rw, {
+    WeaponDamage? damage,
+    String? notes,
+    String? name,
+    double? price,
+    double? weight,
+    String? associatedSkillName,
+    int? minimumSt,
+    Range? range,
+    int? accuracy,
+    int? rateOfFire,
+    RangeWeaponShots? shots,
+    int? bulk,
+    int? recoil,
+    WeaponStrengths? st,
+    RangedWeaponLegalityClass? lc,
+  }) {
+    return RangedWeapon(
+      damage: damage ?? rw.damage,
+      notes: notes ?? rw.notes,
+      name: name ?? rw.name,
+      price: price ?? rw.price,
+      weight: weight ?? rw.weight,
+      associatedSkillName: associatedSkillName ?? rw.associatedSkillName,
+      minimumSt: minimumSt ?? rw.minimumSt,
+      range: range ?? rw.range,
+      accuracy: accuracy ?? rw.accuracy,
+      rateOfFire: rateOfFire ?? rw.rateOfFire,
+      shots: shots ?? rw.shots,
+      bulk: bulk ?? rw.bulk,
+      recoil: recoil ?? rw.recoil,
+      st: st ?? rw.st,
+      lc: lc ?? rw.lc,
+    );
+  }
+
   factory RangedWeapon.empty() => RangedWeapon(
         damage: WeaponDamage(
           attackType: AttackTypes.THRUST,
@@ -212,7 +250,7 @@ class RangedWeapon extends Weapon {
         ),
         bulk: 0,
         recoil: 0,
-        st: const WeaponStrengths(
+        st: WeaponStrengths(
           strengthValue: 0,
           hasBonusForHigherStrength: false,
           isTwoHanded: false,
