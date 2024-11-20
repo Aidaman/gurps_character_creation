@@ -41,7 +41,7 @@ class _ComposePageState extends State<ComposePage> {
       });
     }
 
-    if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) {
+    if (MediaQuery.of(context).size.width <= MIN_DESKTOP_WIDTH) {
       Scaffold.of(context).openEndDrawer();
       return;
     }

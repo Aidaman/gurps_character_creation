@@ -100,17 +100,36 @@ class ArmorLocation {
 
 class Armor extends Gear {
   final ArmorLocation armorLocation;
-  final int damageResitance;
   final bool? flexibility;
   final bool? isLayerable;
+  int _passiveDefense;
+  int _damageResistance;
+  String? notes;
+
+  int get passiveDefense => _passiveDefense;
+  set passiveDefense(int value) {
+    if (value > 0) {
+      _passiveDefense = value;
+    }
+  }
+
+  int get damageResistance => _damageResistance;
+  set damageResistance(int value) {
+    if (value >= 0) {
+      _damageResistance = value;
+    }
+  }
 
   Armor({
     required super.name,
     required super.price,
     required super.weight,
     required this.armorLocation,
-    required this.damageResitance,
     required this.flexibility,
     required this.isLayerable,
-  });
+    required int passiveDefense,
+    required int damageResistance,
+    this.notes,
+  })  : _passiveDefense = passiveDefense,
+        _damageResistance = damageResistance;
 }

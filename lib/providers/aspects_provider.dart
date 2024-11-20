@@ -13,7 +13,7 @@ class AspectsProvider extends ChangeNotifier {
   List<Skill> get skills => _skills;
   List<Spell> get spells => _spells;
 
-  List<T> _filterCharacteristicsByNames<T extends Aspect>(
+  List<T> _filterAspectsByNames<T extends Aspect>(
     List<T> list,
   ) {
     final List<T> uniqueEntries = [];
@@ -31,15 +31,15 @@ class AspectsProvider extends ChangeNotifier {
 
   Future<void> loadCharacteristics() async {
     if (traits.isEmpty) {
-      _traits = _filterCharacteristicsByNames(await loadTraits());
+      _traits = _filterAspectsByNames(await loadTraits());
     }
 
     if (_skills.isEmpty) {
-      _skills = _filterCharacteristicsByNames(await loadSkills());
+      _skills = _filterAspectsByNames(await loadSkills());
     }
 
     if (_spells.isEmpty) {
-      _spells = _filterCharacteristicsByNames(await loadSpells());
+      _spells = _filterAspectsByNames(await loadSpells());
     }
 
     notifyListeners();

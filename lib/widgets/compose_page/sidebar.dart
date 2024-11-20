@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
@@ -47,19 +46,6 @@ class _SidebarContentState extends State<SidebarContent> {
 
   static const double SIDEBAR_HORIZONTAL_PADDING = 8.0;
   static const double SIDEBAR_VERTICAL_PADDING = 4.0;
-
-  late Future<List<Spell>> _spellsFuture;
-  late Future<List<Trait>> _traitsFuture;
-  late Future<List<Skill>> _skillsFuture;
-
-  @override
-  void initState() {
-    _spellsFuture = loadSpells();
-    _traitsFuture = loadTraits();
-    _skillsFuture = loadSkills();
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

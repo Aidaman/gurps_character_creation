@@ -279,16 +279,20 @@ class Character {
   double adjustPrimaryAttribute(Attributes stat, double newValue) {
     int attributeValue = getAttribute(stat);
 
-    if (remainingPoints < stat.adjustPriceOf) {
-      return attributeValue.toDouble();
-    }
-
     if (newValue <= MIN_PRIMARY_ATTRIBUTE_VALUE) {
       return MIN_PRIMARY_ATTRIBUTE_VALUE.toDouble();
     }
 
     if (newValue >= MAX_PRIMARY_ATTRIBUTE_VALUE) {
       return MAX_PRIMARY_ATTRIBUTE_VALUE.toDouble();
+    }
+
+    if (attributeValue > newValue) {
+      return newValue;
+    }
+
+    if (remainingPoints < stat.adjustPriceOf) {
+      return attributeValue.toDouble();
     }
 
     return newValue;

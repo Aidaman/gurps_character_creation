@@ -69,20 +69,22 @@ class ComposePageSkillAndMagicSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isMobile = MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH;
 
-    final List<Widget> children = [
-      _buildSpellList(context),
-      _buildSkillList(context),
-    ];
-
     if (isMobile) {
       return Column(
-        children: children,
+        children: [
+          _buildSpellList(context),
+          _buildSkillList(context),
+        ],
       );
     }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: children,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(child: _buildSpellList(context)),
+        Expanded(child: _buildSkillList(context)),
+      ],
     );
   }
 }

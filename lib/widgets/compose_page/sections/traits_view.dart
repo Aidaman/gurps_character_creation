@@ -46,26 +46,38 @@ class ComposePageTraitsView extends StatelessWidget {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
-    final List<Widget> children = [
-      _generateTraitView(
-        [TraitCategories.ADVANTAGE, TraitCategories.PERK],
-        characterProvider,
-      ),
-      _generateTraitView(
-        [TraitCategories.ADVANTAGE, TraitCategories.PERK],
-        characterProvider,
-      ),
-    ];
-
     if (isMobile) {
       return Column(
-        children: children,
+        children: [
+          _generateTraitView(
+            [TraitCategories.ADVANTAGE, TraitCategories.PERK],
+            characterProvider,
+          ),
+          _generateTraitView(
+            [TraitCategories.DISADVANTAGE, TraitCategories.QUIRK],
+            characterProvider,
+          ),
+        ],
       );
     }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: children,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: _generateTraitView(
+            [TraitCategories.ADVANTAGE, TraitCategories.PERK],
+            characterProvider,
+          ),
+        ),
+        Expanded(
+          child: _generateTraitView(
+            [TraitCategories.DISADVANTAGE, TraitCategories.QUIRK],
+            characterProvider,
+          ),
+        ),
+      ],
     );
   }
 }
