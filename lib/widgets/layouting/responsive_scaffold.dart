@@ -52,10 +52,8 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         onDestinationSelected: _onItemTapped,
         selectedIndex: widget.selectedIndex,
         elevation: COMMON_ELLEVATION,
-        minWidth: 64,
         useIndicator: true,
         labelType: NavigationRailLabelType.all,
-        backgroundColor: Theme.of(context).colorScheme.surface,
       ),
       Expanded(child: widget.body)
     ]);

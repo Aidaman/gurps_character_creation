@@ -90,11 +90,11 @@ class _ComposePageState extends State<ComposePage> {
       selectedIndex: 1,
       appBar: AppBar(
         title: Text(characterProvider.character.name),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        foregroundColor: Theme.of(context).colorScheme.onSecondary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: COMMON_ELLEVATION,
-        toolbarHeight: APP_BAR_HEIGHT,
-        centerTitle: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH,
+        centerTitle: true,
+        // shadowColor: Theme.of(context).colorScheme.secondary,
         actions: [
           Text(
             'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
