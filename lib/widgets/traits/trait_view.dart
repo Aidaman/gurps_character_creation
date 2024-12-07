@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
 
 class TraitView extends StatelessWidget {
   final Trait trait;
@@ -45,9 +46,16 @@ class TraitView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              trait.name,
+              trait.title,
               style: const TextStyle(fontSize: 16),
             ),
+            if (trait.selectedModifiers != null &&
+                trait.selectedModifiers!.isNotEmpty)
+              Text(
+                trait.selectedModifiers!
+                    .map((TraitModifier mod) => mod.name)
+                    .join(', '),
+              ),
             Row(
               children: [
                 Text(
@@ -62,7 +70,7 @@ class TraitView extends StatelessWidget {
               ],
             ),
             Text(
-              'points: ${trait.basePoints}',
+              'points: ${trait.cost}',
               style: const TextStyle(fontSize: 12),
             ),
             Row(

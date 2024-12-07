@@ -71,7 +71,7 @@ class Character {
   int get remainingPoints {
     int traitsTotalCount = traits
         .map(
-          (Trait t) => t.basePoints,
+          (Trait t) => t.cost,
         )
         .fold(
           0,

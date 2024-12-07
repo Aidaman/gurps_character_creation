@@ -52,10 +52,6 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
         onDestinationSelected: _onItemTapped,
         selectedIndex: widget.selectedIndex,
         elevation: COMMON_ELLEVATION,
-        indicatorColor: Theme.of(context).colorScheme.primary,
-        selectedIconTheme: IconThemeData(
-          color: Theme.of(context).colorScheme.onPrimary,
-        ),
         minWidth: 64,
         useIndicator: true,
         labelType: NavigationRailLabelType.all,
@@ -90,10 +86,8 @@ class _ResponsiveScaffoldState extends State<ResponsiveScaffold> {
                   .toList(),
               onDestinationSelected: _onItemTapped,
               elevation: COMMON_ELLEVATION,
-              indicatorColor: Theme.of(context).colorScheme.primary,
               animationDuration: const Duration(milliseconds: 256),
-              height: 64,
-              shadowColor: Colors.black,
+              shadowColor: Colors.grey.shade900,
             ),
     );
   }

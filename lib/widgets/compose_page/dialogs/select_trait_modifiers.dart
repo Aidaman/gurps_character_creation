@@ -1,0 +1,117 @@
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
+import 'package:gurps_character_creation/utilities/dialog_size.dart';
+import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/traits/trait_modifier_view.dart';
+
+class SelectTraitModifiersDialog extends StatefulWidget {
+  final Trait trait;
+
+  const SelectTraitModifiersDialog({super.key, required this.trait});
+
+  @override
+  State<SelectTraitModifiersDialog> createState() =>
+      _SelectTraitModifiersDialogState();
+}
+
+class _SelectTraitModifiersDialogState
+    extends State<SelectTraitModifiersDialog> {
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
+  final List<TraitModifier> _selectedTraitModifiers = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog.adaptive(
+      title: _buildTitle(),
+      shape: dialogShape,
+      actions: _buildActions(context),
+      scrollable: true,
+      content: ConstrainedBox(
+        constraints: defineDialogConstraints(context),
+        child: SingleChildScrollView(
+          child: _buildForm(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    return Text(widget.trait.name);
+  }
+
+  List<Widget> _buildActions(BuildContext context) {
+    return [
+      TextButton.icon(
+        onPressed: () {
+          Navigator.pop(context, null);
+        },
+        label: const Text('cancel'),
+      ),
+      FilledButton.icon(
+        onPressed: () {
+          Navigator.pop(
+            context,
+            _selectedTraitModifiers,
+          );
+        },
+        label: const Text('add'),
+      ),
+    ];
+  }
+
+  Widget _buildForm() {
+    widget.trait.modifiers!.sort(
+      (TraitModifier a, TraitModifier b) => a.cost - b.cost,
+    );
+
+    return Column(
+      children: List.from(
+        widget.trait.modifiers!.map(
+          (TraitModifier trtModifier) => TraitModifierView(
+            traitModifier: trtModifier,
+            isSelected: _selectedTraitModifiers
+                .where(
+                  (TraitModifier modifier) => modifier.name == trtModifier.name,
+                )
+                .isNotEmpty,
+            onChanged: (newValue) => _selectModifier(newValue, trtModifier),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _selectModifier(bool? newValue, TraitModifier trtModifier) {
+    if (newValue == null) {
+      return;
+    }
+
+    if (newValue && trtModifier.cost == 0) {
+      setState(() {
+        _selectedTraitModifiers.add(trtModifier);
+      });
+      return;
+    }
+
+    if (newValue && trtModifier.cost != 0) {
+      setState(() {
+        _selectedTraitModifiers.removeWhere(
+          (TraitModifier modifier) => modifier.cost != 0,
+        );
+
+        _selectedTraitModifiers.add(trtModifier);
+      });
+      return;
+    }
+
+    setState(() {
+      _selectedTraitModifiers.removeWhere(
+        (TraitModifier modifier) => modifier.name == trtModifier.name,
+      );
+    });
+  }
+}

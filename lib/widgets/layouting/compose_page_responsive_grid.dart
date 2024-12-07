@@ -11,7 +11,7 @@ class ComposePageResponsiveGrid extends StatelessWidget {
   final Widget handWeapons;
   final Widget rangedWeapons;
   final Widget? armor;
-  final Widget? posession;
+  final Widget? posessions;
   final Widget? restOfTheBody;
 
   // static const double _SEPARATOR_HEIGHT = 1;
@@ -27,7 +27,7 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     required this.rangedWeapons,
     this.restOfTheBody,
     this.armor,
-    this.posession,
+    this.posessions,
   });
 
   @override

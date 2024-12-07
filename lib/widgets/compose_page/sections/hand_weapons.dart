@@ -4,8 +4,8 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill.dar
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
-import 'package:gurps_character_creation/widgets/compose_page/hand_weapon_details_dialog.dart';
-import 'package:gurps_character_creation/widgets/compose_page/hand_weapon_editor_dialog.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_details_dialog.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ComposePageHandWeaponsSection extends StatelessWidget {

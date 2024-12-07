@@ -12,6 +12,7 @@ class ComposePageTraitsView extends StatelessWidget {
   const ComposePageTraitsView({super.key, required this.emptyListBuilder});
 
   Widget _generateTraitView(
+    BuildContext context,
     List<TraitCategories> categories,
     CharacterProvider characterProvider,
   ) {
@@ -50,10 +51,12 @@ class ComposePageTraitsView extends StatelessWidget {
       return Column(
         children: [
           _generateTraitView(
+            context,
             [TraitCategories.ADVANTAGE, TraitCategories.PERK],
             characterProvider,
           ),
           _generateTraitView(
+            context,
             [TraitCategories.DISADVANTAGE, TraitCategories.QUIRK],
             characterProvider,
           ),
@@ -67,12 +70,14 @@ class ComposePageTraitsView extends StatelessWidget {
       children: [
         Expanded(
           child: _generateTraitView(
+            context,
             [TraitCategories.ADVANTAGE, TraitCategories.PERK],
             characterProvider,
           ),
         ),
         Expanded(
           child: _generateTraitView(
+            context,
             [TraitCategories.DISADVANTAGE, TraitCategories.QUIRK],
             characterProvider,
           ),

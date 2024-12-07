@@ -4,12 +4,14 @@ class LabeledIconButton extends StatelessWidget {
   final IconData iconValue;
   final void Function() onPressed;
   final String label;
+  final Color? backgroundColor;
 
   const LabeledIconButton({
     super.key,
     required this.iconValue,
     required this.onPressed,
     required this.label,
+    this.backgroundColor,
   });
 
   @override
@@ -19,8 +21,8 @@ class LabeledIconButton extends StatelessWidget {
         IconButton(
           icon: Icon(
             iconValue,
-            size: 24,
           ),
+          style: IconButton.styleFrom(backgroundColor: backgroundColor),
           onPressed: onPressed,
         ),
         Text(

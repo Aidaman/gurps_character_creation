@@ -23,7 +23,6 @@ class HandWeaponDetailsDialog extends StatelessWidget {
     );
   }
 
-  //TODO make this one better
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       child: Column(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gap/gap.dart';
 
+RegExp placeholderAspectRegex = RegExp(r'@([^@]+)@');
+
 String? validateDropdown<T>(T value) {
   if (value == null || value.toString().isEmpty) {
     return 'please select a value';

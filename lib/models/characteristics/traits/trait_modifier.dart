@@ -2,7 +2,7 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill_bon
 
 class TraitModifier {
   final String name;
-  final num cost;
+  final int cost;
   final String affects;
   final String reference;
   final SkillBonus? skillBonus;
