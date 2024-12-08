@@ -72,8 +72,8 @@ class _MyAppState extends State<MyApp> {
       ),
       themeMode: themeProvider.currentTheme,
       routes: Map.fromEntries(
-        routes.map(
-          (route) => MapEntry(
+        AppRoutes.values.map(
+          (AppRoutes route) => MapEntry(
             route.destination,
             route.pageBuilder,
           ),

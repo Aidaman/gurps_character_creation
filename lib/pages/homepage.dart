@@ -14,10 +14,7 @@ class Homepage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                getRouteByName(AppRoutes.SETTINGS).destination,
-              );
+              Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
             },
             icon: const Icon(
               Icons.settings_outlined,
@@ -42,10 +39,7 @@ class Homepage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  getRouteByName(AppRoutes.SETUP).destination,
-                );
+                Navigator.pushNamed(context, AppRoutes.SETUP.destination);
               },
               child: const Text('Click here to Compose a Character Sheet'),
             ),

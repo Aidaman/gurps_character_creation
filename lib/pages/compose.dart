@@ -116,10 +116,7 @@ class _ComposePageState extends State<ComposePage> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                getRouteByName(AppRoutes.SETTINGS).destination,
-              );
+              Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
             },
             icon: const Icon(
               Icons.settings_outlined,

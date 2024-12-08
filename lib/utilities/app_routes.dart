@@ -4,20 +4,6 @@ import 'package:gurps_character_creation/pages/setup.dart';
 import 'package:gurps_character_creation/pages/compose.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 
-class RouteName {
-  final String name;
-  final String destination;
-  final IconData iconName;
-  final WidgetBuilder pageBuilder;
-
-  RouteName({
-    required this.name,
-    required this.destination,
-    required this.iconName,
-    required this.pageBuilder,
-  });
-}
-
 enum AppRoutes {
   HOMEPAGE,
   SETUP,
@@ -26,43 +12,31 @@ enum AppRoutes {
 }
 
 extension AppRoutesStrings on AppRoutes {
-  String get stringValue => switch (this) {
+  String get name => switch (this) {
         AppRoutes.HOMEPAGE => 'home',
         AppRoutes.SETUP => 'setup',
         AppRoutes.COMPOSE => 'compose',
         AppRoutes.SETTINGS => 'settings',
       };
-}
 
-RouteName getRouteByName(AppRoutes appRoute) {
-  return routes.singleWhere(
-    (RouteName route) => route.name == appRoute.stringValue,
-  );
-}
+  String get destination => switch (this) {
+        AppRoutes.HOMEPAGE => '/',
+        AppRoutes.SETUP => '/setup',
+        AppRoutes.COMPOSE => '/compose',
+        AppRoutes.SETTINGS => '/settings',
+      };
 
-final List<RouteName> routes = [
-  RouteName(
-    destination: '/',
-    name: AppRoutes.HOMEPAGE.stringValue,
-    iconName: Icons.home,
-    pageBuilder: (context) => const Homepage(),
-  ),
-  RouteName(
-    destination: '/setup',
-    name: AppRoutes.SETUP.stringValue,
-    iconName: Icons.abc,
-    pageBuilder: (context) => const SetupPage(),
-  ),
-  RouteName(
-    destination: '/compose',
-    name: AppRoutes.COMPOSE.stringValue,
-    iconName: Icons.create,
-    pageBuilder: (context) => const ComposePage(),
-  ),
-  RouteName(
-    destination: '/settings',
-    name: AppRoutes.SETTINGS.stringValue,
-    iconName: Icons.settings,
-    pageBuilder: (context) => const SettingsPage(),
-  ),
-];
+  IconData get icon => switch (this) {
+        AppRoutes.HOMEPAGE => Icons.home,
+        AppRoutes.SETUP => Icons.abc,
+        AppRoutes.COMPOSE => Icons.create,
+        AppRoutes.SETTINGS => Icons.settings,
+      };
+
+  Widget Function(BuildContext) get pageBuilder => switch (this) {
+        AppRoutes.HOMEPAGE => (context) => const Homepage(),
+        AppRoutes.SETUP => (context) => const SetupPage(),
+        AppRoutes.COMPOSE => (context) => const ComposePage(),
+        AppRoutes.SETTINGS => (context) => const SettingsPage(),
+      };
+}

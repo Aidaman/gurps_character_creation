@@ -48,10 +48,7 @@ class _SelectTraitModifiersDialogState
       ),
       FilledButton.icon(
         onPressed: () {
-          Navigator.pop(
-            context,
-            _selectedTraitModifiers,
-          );
+          Navigator.pop(context, _selectedTraitModifiers);
         },
         label: const Text('add'),
       ),

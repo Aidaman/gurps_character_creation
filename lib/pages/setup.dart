@@ -57,21 +57,17 @@ class _SetupPageState extends State<SetupPage> {
                   characterProvider.clearProgress();
 
                   Navigator.popAndPushNamed(
-                    context,
-                    getRouteByName(AppRoutes.SETUP).destination,
-                  );
+                      context, AppRoutes.SETUP.destination);
                 },
                 child: const Text('proceed'),
               ),
             ),
             Expanded(
               child: TextButton(
-                onPressed: () {
-                  Navigator.popAndPushNamed(
-                    context,
-                    getRouteByName(AppRoutes.COMPOSE).destination,
-                  );
-                },
+                onPressed: () => Navigator.popAndPushNamed(
+                  context,
+                  AppRoutes.COMPOSE.destination,
+                ),
                 child: const Text('save & continue'),
               ),
             ),
@@ -121,7 +117,7 @@ class _SetupPageState extends State<SetupPage> {
             if (_formkey.currentState!.validate()) {
               Navigator.popAndPushNamed(
                 context,
-                getRouteByName(AppRoutes.COMPOSE).destination,
+                AppRoutes.COMPOSE.destination,
               );
             }
           },
@@ -143,9 +139,7 @@ class _SetupPageState extends State<SetupPage> {
           IconButton(
             onPressed: () {
               Navigator.popAndPushNamed(
-                context,
-                getRouteByName(AppRoutes.SETTINGS).destination,
-              );
+                  context, AppRoutes.SETTINGS.destination);
             },
             icon: const Icon(
               Icons.settings_outlined,
