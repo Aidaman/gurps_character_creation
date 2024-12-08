@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/utilities/form_helpers.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
 
 class CharacterProvider with ChangeNotifier {
   final Character _character = Character.empty();
@@ -101,6 +102,19 @@ class CharacterProvider with ChangeNotifier {
     }
 
     _character.traits.add(trait);
+    notifyListeners();
+  }
+
+  void updateTraitTitle(Trait trait, String? newTitle) {
+    if (newTitle == null) {
+      return;
+    }
+
+    removeTrait(trait);
+
+    trait.title = newTitle;
+    addTrait(trait);
+
     notifyListeners();
   }
 
@@ -204,5 +218,26 @@ class CharacterProvider with ChangeNotifier {
       (Weapon wpn) => wpn.id == weapon.id,
     );
     notifyListeners();
+  }
+
+  Future<String?> replacePlacholderName(
+    BuildContext context,
+    String name,
+  ) async {
+    final RegExpMatch match = placeholderAspectRegex.firstMatch(name)!;
+    final String placeholder = match.group(1) ?? '';
+
+    final String? replacedWith = await showDialog<String>(
+      context: context,
+      builder: (context) => ChangeAspectPlaceholderNameDialog(
+        placeholder: placeholder,
+      ),
+    );
+
+    if (replacedWith == null) {
+      return null;
+    }
+
+    return replacedWith.replaceAll(match.group(0)!, replacedWith);
   }
 }
