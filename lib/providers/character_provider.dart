@@ -6,6 +6,7 @@ import 'package:gurps_character_creation/models/characteristics/attributes.dart'
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/utilities/form_helpers.dart';
 
 class CharacterProvider with ChangeNotifier {
   final Character _character = Character.empty();
@@ -32,6 +33,9 @@ class CharacterProvider with ChangeNotifier {
       case 'Size Modifier':
         _character.sizeModifier =
             int.tryParse(value) ?? _character.sizeModifier;
+        break;
+      case 'points':
+        _character.points = parseInput(value, int.parse) ?? _character.points;
         break;
       case 'Strength':
         _character.strength = _character

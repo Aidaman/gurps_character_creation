@@ -31,27 +31,18 @@ final List<RouteName> routes = [
     destination: '/setup',
     name: 'setup',
     iconName: Icons.abc,
-    pageBuilder: (context) => ChangeNotifierProvider(
-      create: (_) => CharacterProvider(),
-      child: const SetupPage(),
-    ),
+    pageBuilder: (context) => const SetupPage(),
   ),
   RouteName(
     destination: '/compose',
     name: 'compose',
     iconName: Icons.create,
-    pageBuilder: (context) => ChangeNotifierProvider(
-      create: (_) => CharacterProvider(),
-      child: const ComposePage(),
-    ),
+    pageBuilder: (context) => const ComposePage(),
   ),
   RouteName(
     destination: '/settings',
     name: 'settings',
     iconName: Icons.settings,
-    pageBuilder: (context) => ChangeNotifierProvider(
-      create: (_) => CharacterProvider(),
-      child: const SettingsPage(),
-    ),
+    pageBuilder: (context) => const SettingsPage(),
   ),
 ];

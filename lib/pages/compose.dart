@@ -3,7 +3,10 @@ import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
+import 'package:gurps_character_creation/utilities/dialog_size.dart';
+import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/basic_info_fields.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/character_attributes.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/hand_weapons.dart';
@@ -89,11 +92,33 @@ class _ComposePageState extends State<ComposePage> {
       appBar: AppBar(
         toolbarHeight: APP_BAR_HEIGHT,
         title: Text(
-          'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
+          'points ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
           style: Theme.of(context).textTheme.titleMedium,
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: () async {
+              int? newPoints = await showDialog<int?>(
+                context: context,
+                builder: (context) => EditCharacterPointsDialog(
+                  currentPoints: characterProvider.character.points,
+                ),
+              );
+
+              if (newPoints == null) {
+                return;
+              }
+
+              characterProvider.updateCharacterField(
+                'points',
+                newPoints.toString(),
+              );
+            },
+            icon: const Icon(
+              Icons.monetization_on_outlined,
+            ),
+          ),
           IconButton(
             onPressed: () {
               Navigator.pushNamed(
@@ -119,14 +144,16 @@ class _ComposePageState extends State<ComposePage> {
           if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) Container()
         ],
       ),
-      floatingActionButton: Builder(builder: (context) {
-        return FloatingActionButton(
-          child: const Icon(Icons.now_widgets_outlined),
-          onPressed: () {
-            Scaffold.of(context).openEndDrawer();
-          },
-        );
-      }),
+      floatingActionButton: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+          ? null
+          : Builder(builder: (context) {
+              return FloatingActionButton(
+                child: const Icon(Icons.now_widgets_outlined),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }),
       body: ComposePageLayout(
         isSidebarVisible: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
             ? _isSidebarVisible
