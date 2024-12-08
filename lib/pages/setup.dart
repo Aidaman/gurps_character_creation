@@ -36,39 +36,44 @@ class _SetupPageState extends State<SetupPage> {
         ),
         const Gap(16),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error,
+            Expanded(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('return'),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('return'),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error,
-              ),
-              onPressed: () {
-                characterProvider.clearProgress();
+            Expanded(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                ),
+                onPressed: () {
+                  characterProvider.clearProgress();
 
-                Navigator.popAndPushNamed(
-                  context,
-                  getRouteByName(AppRoutes.SETUP).destination,
-                );
-              },
-              child: const Text('proceed'),
+                  Navigator.popAndPushNamed(
+                    context,
+                    getRouteByName(AppRoutes.SETUP).destination,
+                  );
+                },
+                child: const Text('proceed'),
+              ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.popAndPushNamed(
-                  context,
-                  getRouteByName(AppRoutes.COMPOSE).destination,
-                );
-              },
-              child: const Text('save & continue'),
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.popAndPushNamed(
+                    context,
+                    getRouteByName(AppRoutes.COMPOSE).destination,
+                  );
+                },
+                child: const Text('save & continue'),
+              ),
             ),
           ],
         )
