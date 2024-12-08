@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
+import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class Homepage extends StatelessWidget {
@@ -32,8 +33,8 @@ class Homepage extends StatelessWidget {
             SvgPicture.asset(
               'assets/spell_book.svg',
               height: MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH
-                  ? 128
-                  : 200,
+                  ? LOGO_ICON_SIZE_MOBILE
+                  : LOGO_ICON_SIZE_DESKTOP,
             ),
             Text(
               'Welcome to GURPS Composer',

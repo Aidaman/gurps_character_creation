@@ -4,7 +4,7 @@ import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/settings_card.dart';
 import 'package:provider/provider.dart';
 
 class SetupPage extends StatefulWidget {
@@ -156,29 +156,11 @@ class _SetupPageState extends State<SetupPage> {
       body: Form(
         key: _formkey,
         child: Center(
-          child: Container(
-              width: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
-                  ? SETUP_PAGE_FORM_DESKTOP_WIDTH
-                  : SETUP_PAGE_FORM_MOBILE_WIDTH,
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 8.0,
-              ),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 8,
-                    color: Theme.of(context).colorScheme.shadow,
-                    spreadRadius: 1,
-                    offset: const Offset(2, 8),
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: characterProvider.isDirty
-                  ? _buildWarningPrompt(context)
-                  : _buildNewCharacterPrompt(context)),
+          child: SettingsCard(
+            child: characterProvider.isDirty
+                ? _buildWarningPrompt(context)
+                : _buildNewCharacterPrompt(context),
+          ),
         ),
       ),
     );
