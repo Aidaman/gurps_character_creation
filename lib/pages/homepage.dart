@@ -15,11 +15,7 @@ class Homepage extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(
                 context,
-                routes
-                    .singleWhere(
-                      (element) => element.name.toLowerCase() == 'settings',
-                    )
-                    .destination,
+                getRouteByName(AppRoutes.SETTINGS).destination,
               );
             },
             icon: const Icon(
@@ -47,11 +43,7 @@ class Homepage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  routes
-                      .singleWhere(
-                        (element) => element.name.toLowerCase() == 'setup',
-                      )
-                      .destination,
+                  getRouteByName(AppRoutes.SETUP).destination,
                 );
               },
               child: const Text('Click here to Compose a Character Sheet'),

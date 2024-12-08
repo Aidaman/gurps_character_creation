@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
 
 class CharacterProvider with ChangeNotifier {
-  final Character _character = Character.empty();
+  Character _character = Character.empty();
 
   Character get character => _character;
+
+  bool _isDirty = false;
+  bool get isDirty => _isDirty;
+
+  void clearProgress() {
+    _character = Character.empty();
+    _isDirty = false;
+  }
+
+  void updateCharacterMaxPoints(int? newValue) {
+    _character.points = newValue ?? _character.points;
+    notifyListeners();
+  }
 
   void updateCharacterField(String key, String value) {
     switch (key) {
@@ -33,9 +44,6 @@ class CharacterProvider with ChangeNotifier {
       case 'Size Modifier':
         _character.sizeModifier =
             int.tryParse(value) ?? _character.sizeModifier;
-        break;
-      case 'points':
-        _character.points = parseInput(value, int.parse) ?? _character.points;
         break;
       case 'Strength':
         _character.strength = _character
@@ -92,6 +100,8 @@ class CharacterProvider with ChangeNotifier {
       default:
     }
 
+    _isDirty = true;
+
     notifyListeners();
   }
 
@@ -105,6 +115,8 @@ class CharacterProvider with ChangeNotifier {
     }
 
     _character.traits.add(trait);
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -112,6 +124,8 @@ class CharacterProvider with ChangeNotifier {
     _character.traits.removeWhere(
       (t) => t.name == trait.name,
     );
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -121,6 +135,8 @@ class CharacterProvider with ChangeNotifier {
     }
 
     _character.skills.add(Skill.copyWith(skill, investedPoints: 1));
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -138,6 +154,8 @@ class CharacterProvider with ChangeNotifier {
     }
 
     skill.investedPoints += adjustment;
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -145,6 +163,8 @@ class CharacterProvider with ChangeNotifier {
     _character.skills.removeWhere(
       (s) => s.name == skill.name,
     );
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -172,6 +192,7 @@ class CharacterProvider with ChangeNotifier {
 
     _character.spells.add(spell);
 
+    _isDirty = true;
     refreshSpellUnsatisfiedPrereqs();
     notifyListeners();
   }
@@ -180,12 +201,16 @@ class CharacterProvider with ChangeNotifier {
     _character.spells.removeWhere(
       (s) => s.name == spell.name,
     );
+
+    _isDirty = true;
     refreshSpellUnsatisfiedPrereqs();
     notifyListeners();
   }
 
   void addWeapon(Weapon weapon) {
     _character.weapons.add(weapon);
+
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -200,6 +225,7 @@ class CharacterProvider with ChangeNotifier {
 
     _character.weapons[weaponIndex] = newWeapon;
 
+    _isDirty = true;
     notifyListeners();
   }
 
@@ -207,6 +233,8 @@ class CharacterProvider with ChangeNotifier {
     _character.weapons.removeWhere(
       (Weapon wpn) => wpn.id == weapon.id,
     );
+
+    _isDirty = true;
     notifyListeners();
   }
 }

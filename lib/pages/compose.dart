@@ -3,8 +3,6 @@ import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
-import 'package:gurps_character_creation/utilities/dialog_size.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/basic_info_fields.dart';
@@ -110,10 +108,7 @@ class _ComposePageState extends State<ComposePage> {
                 return;
               }
 
-              characterProvider.updateCharacterField(
-                'points',
-                newPoints.toString(),
-              );
+              characterProvider.updateCharacterMaxPoints(newPoints);
             },
             icon: const Icon(
               Icons.monetization_on_outlined,
@@ -123,11 +118,7 @@ class _ComposePageState extends State<ComposePage> {
             onPressed: () {
               Navigator.pushNamed(
                 context,
-                routes
-                    .singleWhere(
-                      (element) => element.name.toLowerCase() == 'settings',
-                    )
-                    .destination,
+                getRouteByName(AppRoutes.SETTINGS).destination,
               );
             },
             icon: const Icon(
