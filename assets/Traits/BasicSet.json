@@ -2,6 +2,7 @@
     {
         "name": "360° Vision",
         "reference": "B34",
+        "type": "Physical, Exotic",
         "base_points": 25,
         "modifiers": [
             {
@@ -33,6 +34,7 @@
     {
         "name": "Absent-Mindedness",
         "reference": "B122",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -42,6 +44,7 @@
     {
         "name": "Absolute Direction",
         "reference": "B34",
+        "type": "Mental/Physical",
         "base_points": 5,
         "modifiers": [
             {
@@ -66,6 +69,7 @@
     {
         "name": "Absolute Timing",
         "reference": "B35",
+        "type": "Mental",
         "base_points": 2,
         "modifiers": [
             {
@@ -83,6 +87,7 @@
     {
         "name": "Acceleration Weakness",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -92,6 +97,7 @@
     {
         "name": "Accessory (@Tool@)",
         "reference": "B100",
+        "type": "Physical, Exotic",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -101,6 +107,7 @@
     {
         "name": "Acrophobia (Heights)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -110,6 +117,7 @@
     {
         "name": "Acute Hearing",
         "reference": "B35",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -119,6 +127,7 @@
     {
         "name": "Acute Sense (@Special Sense@)",
         "reference": "B35",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -128,6 +137,7 @@
     {
         "name": "Acute Taste & Smell",
         "reference": "B35",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -137,6 +147,7 @@
     {
         "name": "Acute Touch",
         "reference": "B35",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -146,6 +157,7 @@
     {
         "name": "Acute Vision",
         "reference": "B35",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -155,6 +167,7 @@
     {
         "name": "Addiction (@Substance@)",
         "reference": "B122",
+        "type": "Mental/Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -228,6 +241,7 @@
     {
         "name": "Affliction",
         "reference": "B35",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -237,6 +251,7 @@
     {
         "name": "Agoraphobia (Open Spaces)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -246,6 +261,7 @@
     {
         "name": "Aichmophobia/TL5- (Sharp Things)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -255,6 +271,7 @@
     {
         "name": "Aichmophobia/TL6+ (Sharp Things)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -264,6 +281,7 @@
     {
         "name": "Ailurophobia (Cats)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -273,6 +291,7 @@
     {
         "name": "Alcohol Intolerance",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -282,6 +301,7 @@
     {
         "name": "Alcohol Tolerance",
         "reference": "B100",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -291,6 +311,7 @@
     {
         "name": "Alcoholism",
         "reference": "B122",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [
             {
@@ -308,6 +329,7 @@
     {
         "name": "Ally (@Who@)",
         "reference": "B36",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -514,6 +536,7 @@
     {
         "name": "Altered Time Rate",
         "reference": "B38",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -538,6 +561,7 @@
     {
         "name": "Alternate Identity",
         "reference": "B39",
+        "type": "Social",
         "base_points": 5,
         "modifiers": [
             {
@@ -555,6 +579,7 @@
     {
         "name": "Ambidexterity",
         "reference": "B39",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -564,6 +589,7 @@
     {
         "name": "Amnesia (Partial)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -573,6 +599,7 @@
     {
         "name": "Amnesia (Total)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -25,
         "modifiers": [],
         "categories": [
@@ -582,6 +609,7 @@
     {
         "name": "Amphibious",
         "reference": "B40",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -591,6 +619,7 @@
     {
         "name": "Animal Empathy",
         "reference": "B40",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [
             {
@@ -643,6 +672,7 @@
     {
         "name": "Appearance",
         "reference": "B21",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -765,6 +795,7 @@
     {
         "name": "Arachnophobia (Spiders)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -774,6 +805,7 @@
     {
         "name": "Arm DX",
         "reference": "B40",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -798,6 +830,7 @@
     {
         "name": "Arm ST",
         "reference": "B40",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -836,6 +869,7 @@
     {
         "name": "Attentive",
         "reference": "B163",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -845,6 +879,7 @@
     {
         "name": "Autophobia (Being Alone)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -854,6 +889,7 @@
     {
         "name": "Autotrance",
         "reference": "B101",
+        "type": "Mental",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -863,6 +899,7 @@
     {
         "name": "Bad Back (Mild)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -872,6 +909,7 @@
     {
         "name": "Bad Back (Severe)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -25,
         "modifiers": [],
         "categories": [
@@ -881,6 +919,7 @@
     {
         "name": "Bad Grip",
         "reference": "B123",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -890,6 +929,7 @@
     {
         "name": "Bad Sight (Farsighted)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -25,
         "modifiers": [
             {
@@ -907,6 +947,7 @@
     {
         "name": "Bad Sight (Nearsighted)",
         "reference": "B123",
+        "type": "Physical",
         "base_points": -25,
         "modifiers": [
             {
@@ -924,6 +965,7 @@
     {
         "name": "Bad Smell",
         "reference": "B128",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -933,6 +975,7 @@
     {
         "name": "Bad Temper",
         "reference": "B124",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -942,6 +985,7 @@
     {
         "name": "Berserk",
         "reference": "B124",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [
             {
@@ -959,6 +1003,7 @@
     {
         "name": "Bestial",
         "reference": "B124",
+        "type": "Mental, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -968,6 +1013,7 @@
     {
         "name": "Binding",
         "reference": "B40",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -1034,6 +1080,7 @@
     {
         "name": "Blessed",
         "reference": "B40",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [
             {
@@ -1051,6 +1098,7 @@
     {
         "name": "Blessed (Heroic Feats)",
         "reference": "B41",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -1060,6 +1108,7 @@
     {
         "name": "Blindness",
         "reference": "B124",
+        "type": "Physical",
         "base_points": -50,
         "modifiers": [],
         "categories": [
@@ -1069,6 +1118,7 @@
     {
         "name": "Bloodlust",
         "reference": "B125",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1078,6 +1128,7 @@
     {
         "name": "Bowlegged",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1087,6 +1138,7 @@
     {
         "name": "Brachiator",
         "reference": "B41",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -1096,6 +1148,7 @@
     {
         "name": "Breath-Holding",
         "reference": "B41",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -1105,6 +1158,7 @@
     {
         "name": "Broad-Minded",
         "reference": "B163",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1114,6 +1168,7 @@
     {
         "name": "Brontophobia (Loud Noises)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1123,6 +1178,7 @@
     {
         "name": "Bully",
         "reference": "B125",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1132,6 +1188,7 @@
     {
         "name": "Callous",
         "reference": "B125",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1141,6 +1198,7 @@
     {
         "name": "Cannot Float",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1150,6 +1208,7 @@
     {
         "name": "Cannot Learn",
         "reference": "B125",
+        "type": "Mental",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -1159,6 +1218,7 @@
     {
         "name": "Cannot Speak",
         "reference": "B125",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1168,6 +1228,7 @@
     {
         "name": "Cannot Speak (Mute)",
         "reference": "B125",
+        "type": "Physical",
         "base_points": -25,
         "modifiers": [],
         "categories": [
@@ -1177,6 +1238,7 @@
     {
         "name": "Careful",
         "reference": "B163",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1186,6 +1248,7 @@
     {
         "name": "Catfall",
         "reference": "B41",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -1210,6 +1273,7 @@
     {
         "name": "Chameleon",
         "reference": "B41",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -1248,6 +1312,7 @@
     {
         "name": "Channeling",
         "reference": "B41",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [
             {
@@ -1272,6 +1337,7 @@
     {
         "name": "Charisma",
         "reference": "B41",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -1281,6 +1347,7 @@
     {
         "name": "Charitable",
         "reference": "B125",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1290,6 +1357,7 @@
     {
         "name": "Chauvinistic",
         "reference": "B163",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1299,6 +1367,7 @@
     {
         "name": "Chronic Depression",
         "reference": "B126",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1308,6 +1377,7 @@
     {
         "name": "Chronic Pain",
         "reference": "B126",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -1395,6 +1465,7 @@
     {
         "name": "Chummy",
         "reference": "B126",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1404,6 +1475,7 @@
     {
         "name": "Chummy (Gregarious)",
         "reference": "B126",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1413,6 +1485,7 @@
     {
         "name": "Claim to Hospitality",
         "reference": "B41",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -1458,6 +1531,7 @@
     {
         "name": "Clairsentience",
         "reference": "B42",
+        "type": "Mental, Supernatural",
         "base_points": 50,
         "modifiers": [
             {
@@ -1524,6 +1598,7 @@
     {
         "name": "Claustrophobia (Enclosed Spaces)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1533,6 +1608,7 @@
     {
         "name": "Claws, Blunt (Feet)",
         "reference": "B42",
+        "type": "Physical",
         "base_points": 3,
         "modifiers": [],
         "categories": [
@@ -1542,6 +1618,7 @@
     {
         "name": "Claws, Blunt (Hands)",
         "reference": "B42",
+        "type": "Physical",
         "base_points": 3,
         "modifiers": [],
         "categories": [
@@ -1551,6 +1628,7 @@
     {
         "name": "Claws, Hooves",
         "reference": "B42",
+        "type": "Physical",
         "base_points": 3,
         "modifiers": [],
         "categories": [
@@ -1560,6 +1638,7 @@
     {
         "name": "Claws, Long Talons (Feet)",
         "reference": "B43",
+        "type": "Physical",
         "base_points": 11,
         "modifiers": [],
         "categories": [
@@ -1569,6 +1648,7 @@
     {
         "name": "Claws, Long Talons (Hands)",
         "reference": "B43",
+        "type": "Physical",
         "base_points": 11,
         "modifiers": [],
         "categories": [
@@ -1578,6 +1658,7 @@
     {
         "name": "Claws, Sharp (Feet)",
         "reference": "B42",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -1587,6 +1668,7 @@
     {
         "name": "Claws, Sharp (Hands)",
         "reference": "B42",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -1596,6 +1678,7 @@
     {
         "name": "Claws, Talons (Feet)",
         "reference": "B43",
+        "type": "Physical",
         "base_points": 8,
         "modifiers": [],
         "categories": [
@@ -1605,6 +1688,7 @@
     {
         "name": "Claws, Talons (Hands)",
         "reference": "B43",
+        "type": "Physical",
         "base_points": 8,
         "modifiers": [],
         "categories": [
@@ -1614,6 +1698,7 @@
     {
         "name": "Clerical Investment",
         "reference": "B43",
+        "type": "Social",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -1623,6 +1708,7 @@
     {
         "name": "Clinging",
         "reference": "B43",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [
             {
@@ -1668,6 +1754,7 @@
     {
         "name": "Clueless",
         "reference": "B126",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1677,6 +1764,7 @@
     {
         "name": "Code of Honor",
         "reference": "B163",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1686,6 +1774,7 @@
     {
         "name": "Code of Honor (Chivalry)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1695,6 +1784,7 @@
     {
         "name": "Code of Honor (Gentleman's)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1704,6 +1794,7 @@
     {
         "name": "Code of Honor (Pirate's)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1713,6 +1804,7 @@
     {
         "name": "Code of Honor (Professional)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1722,6 +1814,7 @@
     {
         "name": "Code of Honor (Soldier's)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1731,6 +1824,7 @@
     {
         "name": "Code of Honor (Theatrical)",
         "reference": "B127",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1740,6 +1834,7 @@
     {
         "name": "Coitophobia (Sex)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1749,6 +1844,7 @@
     {
         "name": "Cold-Blooded",
         "reference": "B127",
+        "type": "Physical, Exotic",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1758,6 +1854,7 @@
     {
         "name": "Cold-Blooded",
         "reference": "B127",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1767,6 +1864,7 @@
     {
         "name": "Colorblindness",
         "reference": "B127",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1776,6 +1874,7 @@
     {
         "name": "Combat Paralysis",
         "reference": "B127",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1785,6 +1884,7 @@
     {
         "name": "Combat Reflexes",
         "reference": "B43",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -1794,6 +1894,7 @@
     {
         "name": "Common Sense",
         "reference": "B43",
+        "type": "Mental",
         "base_points": 10,
         "modifiers": [
             {
@@ -1811,6 +1912,7 @@
     {
         "name": "Compartmentalized Mind",
         "reference": "B43",
+        "type": "Mental, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -1842,6 +1944,7 @@
     {
         "name": "Compulsive Carousing",
         "reference": "B128",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1851,6 +1954,7 @@
     {
         "name": "Compulsive Gambling",
         "reference": "B128",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1860,6 +1964,7 @@
     {
         "name": "Compulsive Generosity",
         "reference": "B128",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1869,6 +1974,7 @@
     {
         "name": "Compulsive Lying",
         "reference": "B128",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -1878,6 +1984,7 @@
     {
         "name": "Compulsive Spending",
         "reference": "B129",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1887,6 +1994,7 @@
     {
         "name": "Compulsive Vowing",
         "reference": "B129",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -1896,6 +2004,7 @@
     {
         "name": "Confused",
         "reference": "B129",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -1905,6 +2014,7 @@
     {
         "name": "Congenial",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -1914,6 +2024,7 @@
     {
         "name": "Constriction Attack",
         "reference": "B43",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -1931,6 +2042,7 @@
     {
         "name": "Contact (@Who@)",
         "reference": "B44",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -2046,6 +2158,7 @@
     {
         "name": "Cowardice",
         "reference": "B129",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -2055,6 +2168,7 @@
     {
         "name": "Cultural Adaptability",
         "reference": "B46",
+        "type": "Mental",
         "base_points": 10,
         "modifiers": [
             {
@@ -2072,6 +2186,7 @@
     {
         "name": "Cultural Familiarity (@Culture@)",
         "reference": "B23",
+        "type": "Mental",
         "base_points": 1,
         "modifiers": [
             {
@@ -2096,6 +2211,7 @@
     {
         "name": "Curious",
         "reference": "B129",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -2105,6 +2221,7 @@
     {
         "name": "Cursed",
         "reference": "B129",
+        "type": "Mental, Supernatural",
         "base_points": -75,
         "modifiers": [],
         "categories": [
@@ -2114,6 +2231,7 @@
     {
         "name": "Cybernetics",
         "reference": "B46",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2123,6 +2241,7 @@
     {
         "name": "Cynophobia (Dogs)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -2132,6 +2251,7 @@
     {
         "name": "Damage Resistance",
         "reference": "B47",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -2289,6 +2409,7 @@
     {
         "name": "Danger Sense",
         "reference": "B47",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -2298,6 +2419,7 @@
     {
         "name": "Daredevil",
         "reference": "B47",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -2307,6 +2429,7 @@
     {
         "name": "Dark Vision",
         "reference": "B47",
+        "type": "Physical, Exotic",
         "base_points": 25,
         "modifiers": [
             {
@@ -2331,6 +2454,7 @@
     {
         "name": "Deafness",
         "reference": "B129",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -2340,6 +2464,7 @@
     {
         "name": "Debt",
         "reference": "B26",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2349,6 +2474,7 @@
     {
         "name": "Decreased Dexterity",
         "reference": "B15",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2359,6 +2485,7 @@
     {
         "name": "Decreased Health",
         "reference": "B14",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2369,6 +2496,7 @@
     {
         "name": "Decreased Intelligence",
         "reference": "B15",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2379,6 +2507,7 @@
     {
         "name": "Decreased Perception",
         "reference": "B16",
+        "type": "Mental/Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2389,6 +2518,7 @@
     {
         "name": "Decreased Speed",
         "reference": "B17",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2399,6 +2529,7 @@
     {
         "name": "Decreased Strength",
         "reference": "B14",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2409,6 +2540,7 @@
     {
         "name": "Decreased Time Rate",
         "reference": "B129",
+        "type": "Mental, Exotic",
         "base_points": -100,
         "modifiers": [],
         "categories": [
@@ -2418,6 +2550,7 @@
     {
         "name": "Decreased Will",
         "reference": "B16",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -2428,6 +2561,7 @@
     {
         "name": "Deep Sleeper",
         "reference": "B101",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -2437,6 +2571,7 @@
     {
         "name": "Delusion (@Belief@)",
         "reference": "B130",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -2468,6 +2603,7 @@
     {
         "name": "Delusions",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -2477,6 +2613,7 @@
     {
         "name": "Demophobia (Crowds)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -2486,6 +2623,7 @@
     {
         "name": "Dependant (@Who@)",
         "reference": "B131",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -2587,6 +2725,7 @@
     {
         "name": "Dependency (@Substance@)",
         "reference": "B130",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -2688,6 +2827,7 @@
     {
         "name": "Destiny (@Advantage@)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -2719,6 +2859,7 @@
     {
         "name": "Destiny (@Disadvantage@)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -2750,6 +2891,7 @@
     {
         "name": "Detect",
         "reference": "B48",
+        "type": "Mental/Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -2816,6 +2958,7 @@
     {
         "name": "Digital Mind",
         "reference": "B49",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -2825,6 +2968,7 @@
     {
         "name": "Disciplines of Faith (Asceticism)",
         "reference": "B132",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -2834,6 +2978,7 @@
     {
         "name": "Disciplines of Faith (Monasticism)",
         "reference": "B132",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -2843,6 +2988,7 @@
     {
         "name": "Disciplines of Faith (Mysticism)",
         "reference": "B132",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -2852,6 +2998,7 @@
     {
         "name": "Disciplines of Faith (Ritualism)",
         "reference": "B132",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -2861,6 +3008,7 @@
     {
         "name": "Discriminatory Hearing",
         "reference": "B49",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -2885,6 +3033,7 @@
     {
         "name": "Discriminatory Smell",
         "reference": "B49",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -2909,6 +3058,7 @@
     {
         "name": "Discriminatory Taste",
         "reference": "B49",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -2926,6 +3076,7 @@
     {
         "name": "Dislikes @Item@",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -2935,6 +3086,7 @@
     {
         "name": "Distinctive Features",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -2944,6 +3096,7 @@
     {
         "name": "Distractible",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -2953,6 +3106,7 @@
     {
         "name": "Disturbing Voice",
         "reference": "B132",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -2962,6 +3116,7 @@
     {
         "name": "Divine Curse (@Curse@)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -2993,6 +3148,7 @@
     {
         "name": "Divine Curse (All children die young)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -3002,6 +3158,7 @@
     {
         "name": "Divine Curse (Never sleep at night)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -3011,6 +3168,7 @@
     {
         "name": "Doesn't Breathe",
         "reference": "B49",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [
             {
@@ -3084,6 +3242,7 @@
     {
         "name": "Doesn't Eat or Drink",
         "reference": "B50",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -3093,6 +3252,7 @@
     {
         "name": "Doesn't Sleep",
         "reference": "B50",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [],
         "categories": [
@@ -3102,6 +3262,7 @@
     {
         "name": "Dominance",
         "reference": "B50",
+        "type": "Mental, Exotic",
         "base_points": 20,
         "modifiers": [],
         "categories": [
@@ -3111,6 +3272,7 @@
     {
         "name": "Draining (@Substance@)",
         "reference": "B132",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [
             {
@@ -3149,6 +3311,7 @@
     {
         "name": "Dread (@Item@)",
         "reference": "B132",
+        "type": "Mental, Supernatural",
         "base_points": -9,
         "modifiers": [
             {
@@ -3201,6 +3364,7 @@
     {
         "name": "Dreamer",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -3210,6 +3374,7 @@
     {
         "name": "Dull",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -3219,6 +3384,7 @@
     {
         "name": "Duplication",
         "reference": "B50",
+        "type": "Mental/Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3278,6 +3444,7 @@
     {
         "name": "Duty (@Duty@)",
         "reference": "B133",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -3337,6 +3504,7 @@
     {
         "name": "Dwarfism",
         "reference": "B19",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -3346,6 +3514,7 @@
     {
         "name": "Dyslexia",
         "reference": "B134",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -3355,6 +3524,7 @@
     {
         "name": "Easy to Kill",
         "reference": "B134",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -3364,6 +3534,7 @@
     {
         "name": "Easy to Read",
         "reference": "B134",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -3373,6 +3544,7 @@
     {
         "name": "Eidetic Memory",
         "reference": "B51",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [
             {
@@ -3390,6 +3562,7 @@
     {
         "name": "Elastic Skin",
         "reference": "B51",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [],
         "categories": [
@@ -3399,6 +3572,7 @@
     {
         "name": "Electrical",
         "reference": "B134",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -3408,6 +3582,7 @@
     {
         "name": "Empathy",
         "reference": "B51",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [
             {
@@ -3425,6 +3600,7 @@
     {
         "name": "Empathy (Sensitive)",
         "reference": "B51",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [
             {
@@ -3442,6 +3618,7 @@
     {
         "name": "Enemy (@Who@)",
         "reference": "B135",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -3578,6 +3755,7 @@
     {
         "name": "Enhanced Block",
         "reference": "B51",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -3587,6 +3765,7 @@
     {
         "name": "Enhanced Dodge",
         "reference": "B51",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -3596,6 +3775,7 @@
     {
         "name": "Enhanced Move (Air: @New Move@)",
         "reference": "B52",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3655,6 +3835,7 @@
     {
         "name": "Enhanced Move (Ground: @New Move@)",
         "reference": "B52",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3714,6 +3895,7 @@
     {
         "name": "Enhanced Move (Space: @New Move@)",
         "reference": "B52",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3773,6 +3955,7 @@
     {
         "name": "Enhanced Move (Water: @New Move@)",
         "reference": "B52",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3832,6 +4015,7 @@
     {
         "name": "Enhanced Parry (@Melee weapon skill@)",
         "reference": "B51",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -3841,6 +4025,7 @@
     {
         "name": "Enhanced Parry (All parries)",
         "reference": "B51",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -3850,6 +4035,7 @@
     {
         "name": "Enhanced Parry (Bare hands)",
         "reference": "B51",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -3859,6 +4045,7 @@
     {
         "name": "Enhanced Time Sense",
         "reference": "B52",
+        "type": "Mental, Exotic",
         "base_points": 45,
         "modifiers": [],
         "categories": [
@@ -3868,6 +4055,7 @@
     {
         "name": "Enhanced Tracking",
         "reference": "B53",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3885,6 +4073,7 @@
     {
         "name": "Entomophobia (Insects)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -3894,6 +4083,7 @@
     {
         "name": "Epilipsy",
         "reference": "B136",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -3903,6 +4093,7 @@
     {
         "name": "Expression",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -3912,6 +4103,7 @@
     {
         "name": "Extended Lifespan",
         "reference": "B53",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -3921,6 +4113,7 @@
     {
         "name": "Extra Arm",
         "reference": "B53",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -3987,6 +4180,7 @@
     {
         "name": "Extra Attack",
         "reference": "B53",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -4011,6 +4205,7 @@
     {
         "name": "Extra Fatigue Points",
         "reference": "B16",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4021,6 +4216,7 @@
     {
         "name": "Extra Fatigue Points",
         "reference": "B16",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -4039,6 +4235,7 @@
     {
         "name": "Extra Head",
         "reference": "B54",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -4056,6 +4253,7 @@
     {
         "name": "Extra Hit Points",
         "reference": "B16",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -4081,6 +4279,7 @@
     {
         "name": "Extra Legs",
         "reference": "B54",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -4126,6 +4325,7 @@
     {
         "name": "Extra Life",
         "reference": "B55",
+        "type": "Mental, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -4157,6 +4357,7 @@
     {
         "name": "Extra Mouth",
         "reference": "B55",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4166,6 +4367,7 @@
     {
         "name": "Extra Sleep",
         "reference": "B136",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4175,6 +4377,7 @@
     {
         "name": "Fanaticism (@Group or ideal@)",
         "reference": "B136",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [
             {
@@ -4192,6 +4395,7 @@
     {
         "name": "Fashion Sense",
         "reference": "B21",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4201,6 +4405,7 @@
     {
         "name": "Fat",
         "reference": "B19",
+        "type": "Physical",
         "base_points": -3,
         "modifiers": [],
         "categories": [
@@ -4210,6 +4415,7 @@
     {
         "name": "Fearfulness",
         "reference": "B136",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4219,6 +4425,7 @@
     {
         "name": "Fearlessness",
         "reference": "B55",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4228,6 +4435,7 @@
     {
         "name": "Fewer Fatigue Points",
         "reference": "B16",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4238,6 +4446,7 @@
     {
         "name": "Fewer Hit Points",
         "reference": "B16",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4248,6 +4457,7 @@
     {
         "name": "Filter Lungs",
         "reference": "B55",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4257,6 +4467,7 @@
     {
         "name": "Fit",
         "reference": "B55",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4266,6 +4477,7 @@
     {
         "name": "Fit, Very",
         "reference": "B55",
+        "type": "Physical",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -4275,6 +4487,7 @@
     {
         "name": "Flashbacks (Crippling, 3D minutes)",
         "reference": "B136",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -4284,6 +4497,7 @@
     {
         "name": "Flashbacks (Mild, -2, 2D seconds)",
         "reference": "B136",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4293,6 +4507,7 @@
     {
         "name": "Flashbacks (Severe, -5, 1D minutes)",
         "reference": "B136",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4302,6 +4517,7 @@
     {
         "name": "Flexibility",
         "reference": "B56",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4311,6 +4527,7 @@
     {
         "name": "Flexibility (Double-Jointed)",
         "reference": "B56",
+        "type": "Physical",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -4320,6 +4537,7 @@
     {
         "name": "Flight",
         "reference": "B56",
+        "type": "Physical, Exotic",
         "base_points": 40,
         "modifiers": [
             {
@@ -4428,6 +4646,7 @@
     {
         "name": "Fragile (Brittle)",
         "reference": "B136",
+        "type": "Physical, Exotic",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -4437,6 +4656,7 @@
     {
         "name": "Fragile (Combustible)",
         "reference": "B136",
+        "type": "Physical, Exotic",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4446,6 +4666,7 @@
     {
         "name": "Fragile (Explosive)",
         "reference": "B137",
+        "type": "Physical, Exotic",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -4455,6 +4676,7 @@
     {
         "name": "Fragile (Flammable)",
         "reference": "B137",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4464,6 +4686,7 @@
     {
         "name": "Fragile (Unnatural)",
         "reference": "B137",
+        "type": "Physical, Exotic",
         "base_points": -50,
         "modifiers": [],
         "categories": [
@@ -4473,6 +4696,7 @@
     {
         "name": "Frightens Animals",
         "reference": "B137",
+        "type": "Mental, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4482,6 +4706,7 @@
     {
         "name": "Fur",
         "reference": "B101",
+        "type": "Physical, Exotic",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -4491,6 +4716,7 @@
     {
         "name": "G-Experience (All)",
         "reference": "B57",
+        "type": "Mental",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -4500,6 +4726,7 @@
     {
         "name": "G-Experience",
         "reference": "B57",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4509,6 +4736,7 @@
     {
         "name": "G-Intolerance (0.1G increment)",
         "reference": "B137",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4518,6 +4746,7 @@
     {
         "name": "G-Intolerance (0.05G increment)",
         "reference": "B137",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -4527,6 +4756,7 @@
     {
         "name": "Gadgeteer",
         "reference": "B57",
+        "type": "Mental",
         "base_points": 25,
         "modifiers": [
             {
@@ -4544,6 +4774,7 @@
     {
         "name": "Gigantism",
         "reference": "B20",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4553,6 +4784,7 @@
     {
         "name": "Gizmo",
         "reference": "B57",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4562,6 +4794,7 @@
     {
         "name": "Gluttony",
         "reference": "B137",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4571,6 +4804,7 @@
     {
         "name": "Greed",
         "reference": "B137",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -4580,6 +4814,7 @@
     {
         "name": "Growth",
         "reference": "B58",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -4597,6 +4832,7 @@
     {
         "name": "Guilt Complex",
         "reference": "B137",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4606,6 +4842,7 @@
     {
         "name": "Gullibility",
         "reference": "B137",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4615,6 +4852,7 @@
     {
         "name": "Gunslinger",
         "reference": "B58",
+        "type": "Mental",
         "base_points": 25,
         "modifiers": [],
         "categories": [
@@ -4624,6 +4862,7 @@
     {
         "name": "Habit",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -4633,6 +4872,7 @@
     {
         "name": "Ham-Fisted",
         "reference": "B138",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4642,6 +4882,7 @@
     {
         "name": "Ham-Fisted (Severe)",
         "reference": "B138",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4651,6 +4892,7 @@
     {
         "name": "Hard of Hearing",
         "reference": "B138",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4660,6 +4902,7 @@
     {
         "name": "Hard to Kill",
         "reference": "B58",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4669,6 +4912,7 @@
     {
         "name": "Hard to Subdue",
         "reference": "B59",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4678,6 +4922,7 @@
     {
         "name": "Healing",
         "reference": "B59",
+        "type": "Mental, Exotic",
         "base_points": 30,
         "modifiers": [
             {
@@ -4821,6 +5066,7 @@
     {
         "name": "Heliophobia (Sun)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -4830,6 +5076,7 @@
     {
         "name": "Hemophilia",
         "reference": "B138",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -4839,6 +5086,7 @@
     {
         "name": "Hemophobia (Blood)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4848,6 +5096,7 @@
     {
         "name": "Hermaphromorph",
         "reference": "B59",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4857,6 +5106,7 @@
     {
         "name": "Herpetophobia (Reptiles)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4866,6 +5116,7 @@
     {
         "name": "Hidebound",
         "reference": "B138",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -4875,6 +5126,7 @@
     {
         "name": "High Manual Dexterity",
         "reference": "B59",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4884,6 +5136,7 @@
     {
         "name": "High Pain Threshold",
         "reference": "B59",
+        "type": "Physical",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -4893,6 +5146,7 @@
     {
         "name": "High TL",
         "reference": "B23",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -4902,6 +5156,7 @@
     {
         "name": "Higher Purpose",
         "reference": "B59",
+        "type": "Mental, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -4911,6 +5166,7 @@
     {
         "name": "Honest Face",
         "reference": "B101",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -4920,6 +5176,7 @@
     {
         "name": "Honesty",
         "reference": "B138",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4929,6 +5186,7 @@
     {
         "name": "Hoplophobia (Weapons)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -4938,6 +5196,7 @@
     {
         "name": "Horizontal",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4947,6 +5206,7 @@
     {
         "name": "Horrible Hangovers",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -4956,6 +5216,7 @@
     {
         "name": "Humble",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -4965,6 +5226,7 @@
     {
         "name": "Hunchback",
         "reference": "B139",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -4974,6 +5236,7 @@
     {
         "name": "Hyperspectral Vision",
         "reference": "B60",
+        "type": "Physical, Exotic",
         "base_points": 25,
         "modifiers": [
             {
@@ -5005,6 +5268,7 @@
     {
         "name": "Illuminated",
         "reference": "B60",
+        "type": "Mental, Supernatural",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -5014,6 +5278,7 @@
     {
         "name": "Imaginative",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -5023,6 +5288,7 @@
     {
         "name": "Improved G-tolerance",
         "reference": "B60",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -5068,6 +5334,7 @@
     {
         "name": "Impulsiveness",
         "reference": "B139",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5077,6 +5344,7 @@
     {
         "name": "Incompetence (@Skill@)",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -5086,6 +5354,7 @@
     {
         "name": "Increased Basic Move",
         "reference": "B17",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5096,6 +5365,7 @@
     {
         "name": "Increased Basic Speed",
         "reference": "B17",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5106,6 +5376,7 @@
     {
         "name": "Increased Consumption",
         "reference": "B139",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -5137,6 +5408,7 @@
     {
         "name": "Increased Dexterity",
         "reference": "B15",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -5155,6 +5427,7 @@
     {
         "name": "Increased Health",
         "reference": "B14",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5165,6 +5438,7 @@
     {
         "name": "Increased Intelligence",
         "reference": "B15",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5175,6 +5449,7 @@
     {
         "name": "Increased Life Support (Extreme Cold, below 0)",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5184,6 +5459,7 @@
     {
         "name": "Increased Life Support (Extreme Heat, above 200)",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5193,6 +5469,7 @@
     {
         "name": "Increased Life Support (Massive)",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5202,6 +5479,7 @@
     {
         "name": "Increased Life Support (Pressurized)",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5211,6 +5489,7 @@
     {
         "name": "Increased Life Support (Radioactive)",
         "reference": "B139",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5220,6 +5499,7 @@
     {
         "name": "Increased Perception",
         "reference": "B16",
+        "type": "Mental/Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5230,6 +5510,7 @@
     {
         "name": "Increased Strength",
         "reference": "B14",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -5262,6 +5543,7 @@
     {
         "name": "Increased Will",
         "reference": "B16",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5272,6 +5554,7 @@
     {
         "name": "Incurious",
         "reference": "B140",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -5281,6 +5564,7 @@
     {
         "name": "Indecisive",
         "reference": "B140",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -5290,6 +5574,7 @@
     {
         "name": "Independent Income",
         "reference": "B26",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -5299,6 +5584,7 @@
     {
         "name": "Indomitable",
         "reference": "B60",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -5308,6 +5594,7 @@
     {
         "name": "Infectious Attack",
         "reference": "B140",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -5317,6 +5604,7 @@
     {
         "name": "Infravision",
         "reference": "B60",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -5334,6 +5622,7 @@
     {
         "name": "Injury Tolerance (Diffuse)",
         "reference": "B60",
+        "type": "Physical, Exotic",
         "base_points": 100,
         "modifiers": [
             {
@@ -5365,6 +5654,7 @@
     {
         "name": "Injury Tolerance (Homogenous)",
         "reference": "B60",
+        "type": "Physical, Exotic",
         "base_points": 40,
         "modifiers": [],
         "categories": [
@@ -5374,6 +5664,7 @@
     {
         "name": "Injury Tolerance (No Blood)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -5383,6 +5674,7 @@
     {
         "name": "Injury Tolerance (No Brain)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -5392,6 +5684,7 @@
     {
         "name": "Injury Tolerance (No Eyes)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -5401,6 +5694,7 @@
     {
         "name": "Injury Tolerance (No Head)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 7,
         "modifiers": [],
         "categories": [
@@ -5410,6 +5704,7 @@
     {
         "name": "Injury Tolerance (No Neck)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -5419,6 +5714,7 @@
     {
         "name": "Injury Tolerance (No Vitals)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -5428,6 +5724,7 @@
     {
         "name": "Injury Tolerance (Unliving)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [],
         "categories": [
@@ -5437,6 +5734,7 @@
     {
         "name": "Innate Attack (Burn)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -5643,6 +5941,7 @@
     {
         "name": "Innate Attack (Corrosion)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -5849,6 +6148,7 @@
     {
         "name": "Innate Attack (Crush)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -5985,6 +6285,7 @@
     {
         "name": "Innate Attack (Cut)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6121,6 +6422,7 @@
     {
         "name": "Innate Attack (Fatigue)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6362,6 +6664,7 @@
     {
         "name": "Innate Attack (Huge Pierce)",
         "reference": "B62",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6491,6 +6794,7 @@
     {
         "name": "Innate Attack (Impaling)",
         "reference": "B61",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6627,6 +6931,7 @@
     {
         "name": "Innate Attack (Large Pierce)",
         "reference": "B62",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6756,6 +7061,7 @@
     {
         "name": "Innate Attack (Piercing)",
         "reference": "B62",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -6885,6 +7191,7 @@
     {
         "name": "Innate Attack (Small Pierce)",
         "reference": "B62",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -7014,6 +7321,7 @@
     {
         "name": "Innate Attack (Toxic)",
         "reference": "B62",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -7227,6 +7535,7 @@
     {
         "name": "Innumerate",
         "reference": "B140",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -7236,6 +7545,7 @@
     {
         "name": "Insomniac (Mild)",
         "reference": "B140",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -7245,6 +7555,7 @@
     {
         "name": "Insomniac (Severe)",
         "reference": "B140",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -7254,6 +7565,7 @@
     {
         "name": "Insubstantiality",
         "reference": "B62",
+        "type": "Mental/Physical, Exotic",
         "base_points": 80,
         "modifiers": [
             {
@@ -7383,6 +7695,7 @@
     {
         "name": "Intolerance (@Class, Ethnicity, Nationality, Religion, Sex, or Species@)",
         "reference": "B140",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -7421,6 +7734,7 @@
     {
         "name": "Intuition",
         "reference": "B63",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [
             {
@@ -7438,6 +7752,7 @@
     {
         "name": "Invertebrate",
         "reference": "B140",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -7447,6 +7762,7 @@
     {
         "name": "Invisibility",
         "reference": "B63",
+        "type": "Mental/Physical, Exotic",
         "base_points": 40,
         "modifiers": [
             {
@@ -7548,6 +7864,7 @@
     {
         "name": "Jealousy",
         "reference": "B140",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -7557,6 +7874,7 @@
     {
         "name": "Jumper (@World/Time/Spirit@)",
         "reference": "B64",
+        "type": "Mental, Supernatural",
         "base_points": 100,
         "modifiers": [
             {
@@ -7742,6 +8060,7 @@
     {
         "name": "Killjoy",
         "reference": "B140",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -7751,6 +8070,7 @@
     {
         "name": "Kleptomania",
         "reference": "B141",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -7760,6 +8080,7 @@
     {
         "name": "Klutz",
         "reference": "B141",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [
             {
@@ -7777,6 +8098,7 @@
     {
         "name": "Lame (Crippled Legs)",
         "reference": "B141",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -7786,6 +8108,7 @@
     {
         "name": "Lame (Legless)",
         "reference": "B141",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -7795,6 +8118,7 @@
     {
         "name": "Lame (Missing Legs)",
         "reference": "B141",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -7804,6 +8128,7 @@
     {
         "name": "Lame (Paraplegic)",
         "reference": "B141",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -7813,6 +8138,7 @@
     {
         "name": "Language Talent",
         "reference": "B65",
+        "type": "Mental",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -7822,6 +8148,7 @@
     {
         "name": "Language: @Language@",
         "reference": "B24",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -7896,6 +8223,7 @@
     {
         "name": "Language: @Language@",
         "reference": "B24",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -7942,6 +8270,7 @@
     {
         "name": "Laziness",
         "reference": "B142",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -7951,6 +8280,7 @@
     {
         "name": "Lecherousness",
         "reference": "B142",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -7960,6 +8290,7 @@
     {
         "name": "Legal Enforcement Powers",
         "reference": "B65",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -7991,6 +8322,7 @@
     {
         "name": "Legal Immunity",
         "reference": "B65",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -8029,6 +8361,7 @@
     {
         "name": "Less Sleep",
         "reference": "B65",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -8038,6 +8371,7 @@
     {
         "name": "Lifebane",
         "reference": "B142",
+        "type": "Mental, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8047,6 +8381,7 @@
     {
         "name": "Lifting ST",
         "reference": "B65",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -8078,6 +8413,7 @@
     {
         "name": "Light Sleeper",
         "reference": "B142",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -8087,6 +8423,7 @@
     {
         "name": "Lightning Calculator",
         "reference": "B66",
+        "type": "Mental",
         "base_points": 2,
         "modifiers": [
             {
@@ -8104,6 +8441,7 @@
     {
         "name": "Like @Item@",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -8113,6 +8451,7 @@
     {
         "name": "Loner",
         "reference": "B142",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -8122,6 +8461,7 @@
     {
         "name": "Longevity",
         "reference": "B66",
+        "type": "Physical",
         "base_points": 2,
         "modifiers": [],
         "categories": [
@@ -8131,6 +8471,7 @@
     {
         "name": "Low Empathy",
         "reference": "B142",
+        "type": "Mental",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -8140,6 +8481,7 @@
     {
         "name": "Low Pain Threshold",
         "reference": "B142",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8149,6 +8491,7 @@
     {
         "name": "Low Self-Image",
         "reference": "B143",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8158,6 +8501,7 @@
     {
         "name": "Low TL",
         "reference": "B22",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -8167,6 +8511,7 @@
     {
         "name": "Luck",
         "reference": "B66",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [
             {
@@ -8205,6 +8550,7 @@
     {
         "name": "Luck, Extraordinary",
         "reference": "B66",
+        "type": "Mental",
         "base_points": 30,
         "modifiers": [
             {
@@ -8243,6 +8589,7 @@
     {
         "name": "Luck, Ridiculous",
         "reference": "B66",
+        "type": "Mental",
         "base_points": 60,
         "modifiers": [
             {
@@ -8281,6 +8628,7 @@
     {
         "name": "Luck, Super",
         "reference": "B89",
+        "type": "Mental, Supernatural",
         "base_points": 100,
         "modifiers": [
             {
@@ -8333,6 +8681,7 @@
     {
         "name": "Lunacy",
         "reference": "B143",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8342,6 +8691,7 @@
     {
         "name": "Magery",
         "reference": "B66",
+        "type": "Mental, Supernatural",
         "base_points": 5,
         "modifiers": [
             {
@@ -8408,6 +8758,7 @@
     {
         "name": "Magery",
         "reference": "B66",
+        "type": "Mental, Supernatural",
         "base_points": 5,
         "modifiers": [
             {
@@ -8474,6 +8825,7 @@
     {
         "name": "Magic Resistance",
         "reference": "B67",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -8491,6 +8843,7 @@
     {
         "name": "Magic Susceptibility",
         "reference": "B143",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -8500,6 +8853,7 @@
     {
         "name": "Maintenance",
         "reference": "B143",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -8671,6 +9025,7 @@
     {
         "name": "Mana Damper",
         "reference": "B67",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -8702,6 +9057,7 @@
     {
         "name": "Mana Enhancer",
         "reference": "B68",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -8733,6 +9089,7 @@
     {
         "name": "Manaphobia (Magic, Common)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -8742,6 +9099,7 @@
     {
         "name": "Manaphobia (Magic, Uncommon)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8751,6 +9109,7 @@
     {
         "name": "Manaphobia (Magic, Unknown)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -8760,6 +9119,7 @@
     {
         "name": "Manic-Depressive",
         "reference": "B143",
+        "type": "Mental",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -8769,6 +9129,7 @@
     {
         "name": "Medium",
         "reference": "B68",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [
             {
@@ -8807,6 +9168,7 @@
     {
         "name": "Megalomania",
         "reference": "B144",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -8816,6 +9178,7 @@
     {
         "name": "Metabolism Control",
         "reference": "B68",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -8840,6 +9203,7 @@
     {
         "name": "Microscopic Vision",
         "reference": "B68",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -8849,6 +9213,7 @@
     {
         "name": "Mimicry",
         "reference": "B68",
+        "type": "Mental, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -8866,6 +9231,7 @@
     {
         "name": "Mind Control",
         "reference": "B68",
+        "type": "Mental, Exotic",
         "base_points": 50,
         "modifiers": [
             {
@@ -8932,6 +9298,7 @@
     {
         "name": "Mind Probe",
         "reference": "B69",
+        "type": "Mental, Exotic",
         "base_points": 20,
         "modifiers": [
             {
@@ -9012,6 +9379,7 @@
     {
         "name": "Mind Reading",
         "reference": "B69",
+        "type": "Mental, Exotic",
         "base_points": 30,
         "modifiers": [
             {
@@ -9078,6 +9446,7 @@
     {
         "name": "Mind Shield",
         "reference": "B70",
+        "type": "Mental, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -9109,6 +9478,7 @@
     {
         "name": "Mindlink",
         "reference": "B70",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -9231,6 +9601,7 @@
     {
         "name": "Minor Addiction",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9240,6 +9611,7 @@
     {
         "name": "Minor Addiction",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9249,6 +9621,7 @@
     {
         "name": "Minor Handicap",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9258,6 +9631,7 @@
     {
         "name": "Miserliness",
         "reference": "B144",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9267,6 +9641,7 @@
     {
         "name": "Missing Digit (Finger)",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -2,
         "modifiers": [],
         "categories": [
@@ -9276,6 +9651,7 @@
     {
         "name": "Missing Digit (Thumb)",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9285,6 +9661,7 @@
     {
         "name": "Mistaken Identity",
         "reference": "B21",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9294,6 +9671,7 @@
     {
         "name": "Modular Abilities (Chip Slots)",
         "reference": "B71",
+        "type": "Mental, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -9303,6 +9681,7 @@
     {
         "name": "Modular Abilities (Computer Brain)",
         "reference": "B71",
+        "type": "Mental, Exotic",
         "base_points": 6,
         "modifiers": [],
         "categories": [
@@ -9312,6 +9691,7 @@
     {
         "name": "Modular Abilities (Cosmic Power)",
         "reference": "B71",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -9350,6 +9730,7 @@
     {
         "name": "Modular Abilities (Super-Memorization)",
         "reference": "B71",
+        "type": "Mental, Exotic",
         "base_points": 5,
         "modifiers": [
             {
@@ -9367,6 +9748,7 @@
     {
         "name": "Motion Sickness",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9376,6 +9758,7 @@
     {
         "name": "Mundane Background",
         "reference": "B144",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9385,6 +9768,7 @@
     {
         "name": "Mysophobia (Dirt)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9394,6 +9778,7 @@
     {
         "name": "Necrophobia (Death)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9403,6 +9788,7 @@
     {
         "name": "Nervous Stomach",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9412,6 +9798,7 @@
     {
         "name": "Neurological Disorder (Crippling)",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -55,
         "modifiers": [],
         "categories": [
@@ -9421,6 +9808,7 @@
     {
         "name": "Neurological Disorder (Mild)",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9430,6 +9818,7 @@
     {
         "name": "Neurological Disorder (Severe)",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -35,
         "modifiers": [],
         "categories": [
@@ -9439,6 +9828,7 @@
     {
         "name": "Neutered",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9448,6 +9838,7 @@
     {
         "name": "Neutralize (Psi)",
         "reference": "B71",
+        "type": "Mental, Exotic",
         "base_points": 50,
         "modifiers": [
             {
@@ -9500,6 +9891,7 @@
     {
         "name": "Nictitating Membrane",
         "reference": "B71",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9509,6 +9901,7 @@
     {
         "name": "Night Blindness",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9518,6 +9911,7 @@
     {
         "name": "Night Vision",
         "reference": "B71",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9527,6 +9921,7 @@
     {
         "name": "Nightmares",
         "reference": "B144",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9536,6 +9931,7 @@
     {
         "name": "No Depth Perception",
         "reference": "B144",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9545,6 +9941,7 @@
     {
         "name": "No Fine Manipulators",
         "reference": "B145",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -9554,6 +9951,7 @@
     {
         "name": "No Hangover",
         "reference": "B101",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -9563,6 +9961,7 @@
     {
         "name": "No Legs (Aerial)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9572,6 +9971,7 @@
     {
         "name": "No Legs (Aquatic)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -9596,6 +9996,7 @@
     {
         "name": "No Legs (Bounces)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9605,6 +10006,7 @@
     {
         "name": "No Legs (Rolls)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9614,6 +10016,7 @@
     {
         "name": "No Legs (Semi-Aquatic)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9623,6 +10026,7 @@
     {
         "name": "No Legs (Sessile)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": -50,
         "modifiers": [],
         "categories": [
@@ -9632,6 +10036,7 @@
     {
         "name": "No Legs (Slithers)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9641,6 +10046,7 @@
     {
         "name": "No Legs (Tracked)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -9650,6 +10056,7 @@
     {
         "name": "No Legs (Wheeled)",
         "reference": "B145",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -9659,6 +10066,7 @@
     {
         "name": "No Manipulators",
         "reference": "B145",
+        "type": "Physical",
         "base_points": -50,
         "modifiers": [],
         "categories": [
@@ -9668,6 +10076,7 @@
     {
         "name": "No Sense of Humor",
         "reference": "B146",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9677,6 +10086,7 @@
     {
         "name": "No Sense of Smell/Taste",
         "reference": "B146",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9686,6 +10096,7 @@
     {
         "name": "Nocturnal",
         "reference": "B146",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [
             {
@@ -9703,6 +10114,7 @@
     {
         "name": "Noisy",
         "reference": "B146",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9712,6 +10124,7 @@
     {
         "name": "Non-Icongraphic",
         "reference": "B146",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9721,6 +10134,7 @@
     {
         "name": "Nosy",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9730,6 +10144,7 @@
     {
         "name": "Numb",
         "reference": "B146",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -9739,6 +10154,7 @@
     {
         "name": "Oblivious",
         "reference": "B146",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9748,6 +10164,7 @@
     {
         "name": "Obscure (@Sense@)",
         "reference": "B72",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -9807,6 +10224,7 @@
     {
         "name": "Obsession",
         "reference": "B146",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -9831,6 +10249,7 @@
     {
         "name": "Obsession",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9840,6 +10259,7 @@
     {
         "name": "Odious Personal Habit",
         "reference": "B22",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -9871,6 +10291,7 @@
     {
         "name": "On the Edge",
         "reference": "B146",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9880,6 +10301,7 @@
     {
         "name": "One Arm",
         "reference": "B147",
+        "type": "Physical",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -9889,6 +10311,7 @@
     {
         "name": "One Eye",
         "reference": "B147",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9898,6 +10321,7 @@
     {
         "name": "One Hand",
         "reference": "B147",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9907,6 +10331,7 @@
     {
         "name": "Oracle",
         "reference": "B72",
+        "type": "Mental, Supernatural",
         "base_points": 15,
         "modifiers": [
             {
@@ -9924,6 +10349,7 @@
     {
         "name": "Overconfidence",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9933,6 +10359,7 @@
     {
         "name": "Overweight",
         "reference": "B19",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -9942,6 +10369,7 @@
     {
         "name": "Pacifism: Cannot Harm Innocents",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -9951,6 +10379,7 @@
     {
         "name": "Pacifism: Cannot Kill",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9960,6 +10389,7 @@
     {
         "name": "Pacifism: Reluctant Killer",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -9969,6 +10399,7 @@
     {
         "name": "Pacifism: Self-Defense Only",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -9978,6 +10409,7 @@
     {
         "name": "Pacifism: Total Nonviolence",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -9987,6 +10419,7 @@
     {
         "name": "Parabolic Hearing",
         "reference": "B72",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -9996,6 +10429,7 @@
     {
         "name": "Paranoia",
         "reference": "B148",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -10005,6 +10439,7 @@
     {
         "name": "Patron",
         "reference": "B72",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -10169,6 +10604,7 @@
     {
         "name": "Payload (@Load@)",
         "reference": "B74",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -10186,6 +10622,7 @@
     {
         "name": "Penetrating Vision",
         "reference": "B74",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -10238,6 +10675,7 @@
     {
         "name": "Penetrating Voice",
         "reference": "B101",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -10247,6 +10685,7 @@
     {
         "name": "Perfect Balance",
         "reference": "B74",
+        "type": "Physical",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -10256,6 +10695,7 @@
     {
         "name": "Peripheral Vision",
         "reference": "B74",
+        "type": "Physical",
         "base_points": 15,
         "modifiers": [
             {
@@ -10273,6 +10713,7 @@
     {
         "name": "Permeation",
         "reference": "B75",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -10360,6 +10801,7 @@
     {
         "name": "Personality Change",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -10369,6 +10811,7 @@
     {
         "name": "Phantom Voices",
         "reference": "B148",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -10400,6 +10843,7 @@
     {
         "name": "Pitiable",
         "reference": "B22",
+        "type": "Physical, Social",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -10409,6 +10853,7 @@
     {
         "name": "Plant Empathy",
         "reference": "B75",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [
             {
@@ -10454,6 +10899,7 @@
     {
         "name": "Possession",
         "reference": "B75",
+        "type": "Mental, Exotic",
         "base_points": 100,
         "modifiers": [
             {
@@ -10597,6 +11043,7 @@
     {
         "name": "Post-Combat Shakes",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -10606,6 +11053,7 @@
     {
         "name": "Power Investiture",
         "reference": "B77",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -10615,6 +11063,7 @@
     {
         "name": "Precognition",
         "reference": "B77",
+        "type": "Mental, Supernatural",
         "base_points": 25,
         "modifiers": [
             {
@@ -10660,6 +11109,7 @@
     {
         "name": "Pressure Support",
         "reference": "B77",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -10669,6 +11119,7 @@
     {
         "name": "Protected Sense (@Sense@)",
         "reference": "B78",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -10678,6 +11129,7 @@
     {
         "name": "Proud",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -10687,6 +11139,7 @@
     {
         "name": "Psionophobia (Psionics, Common)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -10696,6 +11149,7 @@
     {
         "name": "Psionophobia (Psionics, Uncommon)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -10705,6 +11159,7 @@
     {
         "name": "Psionophobia (Psionics, Unknown)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -10714,6 +11169,7 @@
     {
         "name": "Psychometry",
         "reference": "B78",
+        "type": "Mental, Supernatural",
         "base_points": 20,
         "modifiers": [
             {
@@ -10773,6 +11229,7 @@
     {
         "name": "Puppet (@Ally Group@)",
         "reference": "B78",
+        "type": "Mental, Exotic",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -10782,6 +11239,7 @@
     {
         "name": "Puppet (@Ally or Dependant@)",
         "reference": "B78",
+        "type": "Mental, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -10791,6 +11249,7 @@
     {
         "name": "Pyromania",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -10800,6 +11259,7 @@
     {
         "name": "Pyrophobia (Fire)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -10809,6 +11269,7 @@
     {
         "name": "Quadriplegic",
         "reference": "B150",
+        "type": "Physical",
         "base_points": -80,
         "modifiers": [],
         "categories": [
@@ -10818,6 +11279,7 @@
     {
         "name": "Racial Memory",
         "reference": "B78",
+        "type": "Mental, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -10849,6 +11311,7 @@
     {
         "name": "Radiation Tolerance",
         "reference": "B79",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -10929,6 +11392,7 @@
     {
         "name": "Rank",
         "reference": "B29",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -10953,6 +11417,7 @@
     {
         "name": "Rapid Healing",
         "reference": "B79",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -10962,6 +11427,7 @@
     {
         "name": "Rapid Healing, Very",
         "reference": "B79",
+        "type": "Physical",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -10971,6 +11437,7 @@
     {
         "name": "Rapier Wit",
         "reference": "B79",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [
             {
@@ -10988,6 +11455,7 @@
     {
         "name": "Reawakened",
         "reference": "B80",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -10997,6 +11465,7 @@
     {
         "name": "Recovery",
         "reference": "B80",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -11006,6 +11475,7 @@
     {
         "name": "Reduced Consumption",
         "reference": "B80",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -11037,6 +11507,7 @@
     {
         "name": "Regeneration",
         "reference": "B80",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -11138,6 +11609,7 @@
     {
         "name": "Regrowth",
         "reference": "B80",
+        "type": "Physical, Exotic",
         "base_points": 40,
         "modifiers": [
             {
@@ -11204,6 +11676,7 @@
     {
         "name": "Reprogrammable",
         "reference": "B150",
+        "type": "Mental, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -11213,6 +11686,7 @@
     {
         "name": "Reputation",
         "reference": "B26",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -11272,6 +11746,7 @@
     {
         "name": "Reputation",
         "reference": "B26",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -11331,6 +11806,7 @@
     {
         "name": "Resistant",
         "reference": "B81",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -11390,6 +11866,7 @@
     {
         "name": "Responsive",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -11399,6 +11876,7 @@
     {
         "name": "Restricted Diet (@Food@)",
         "reference": "B151",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [
             {
@@ -11444,6 +11922,7 @@
     {
         "name": "Restricted Vision (No Peripheral Vision)",
         "reference": "B151",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -11453,6 +11932,7 @@
     {
         "name": "Restricted Vision (Tunnel Vision)",
         "reference": "B151",
+        "type": "Physical",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -11462,6 +11942,7 @@
     {
         "name": "Revulsion (@Common substance@)",
         "reference": "B151",
+        "type": "Physical, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -11471,6 +11952,7 @@
     {
         "name": "Revulsion (@Occasional substance@)",
         "reference": "B151",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -11480,6 +11962,7 @@
     {
         "name": "Revulsion (@Very Common substance@)",
         "reference": "B151",
+        "type": "Physical, Supernatural",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -11489,6 +11972,7 @@
     {
         "name": "Sadism",
         "reference": "B152",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -11498,6 +11982,7 @@
     {
         "name": "Sanitized Metabolism",
         "reference": "B101",
+        "type": "Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -11507,6 +11992,7 @@
     {
         "name": "Scanning Sense",
         "reference": "B81",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -11643,6 +12129,7 @@
     {
         "name": "Scotophobia (Darkness)",
         "reference": "B149",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -11652,6 +12139,7 @@
     {
         "name": "Sealed",
         "reference": "B82",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -11661,6 +12149,7 @@
     {
         "name": "Secret (@Secret@)",
         "reference": "B152",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -11699,6 +12188,7 @@
     {
         "name": "Secret Identity (@Secret ID@)",
         "reference": "B152",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -11737,6 +12227,7 @@
     {
         "name": "Security Clearance",
         "reference": "B82",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -11782,6 +12273,7 @@
     {
         "name": "See Invisible",
         "reference": "B83",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -11799,6 +12291,7 @@
     {
         "name": "Self-Destruct",
         "reference": "B153",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -11808,6 +12301,7 @@
     {
         "name": "Selfish",
         "reference": "B153",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -11817,6 +12311,7 @@
     {
         "name": "Selfless",
         "reference": "B153",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -11826,6 +12321,7 @@
     {
         "name": "Semi-Upright",
         "reference": "B153",
+        "type": "Physical, Exotic",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -11835,6 +12331,7 @@
     {
         "name": "Sense of Duty",
         "reference": "B153",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -11887,6 +12384,7 @@
     {
         "name": "Sensitive Touch",
         "reference": "B83",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -11911,6 +12409,7 @@
     {
         "name": "Serendipity",
         "reference": "B83",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -11935,6 +12434,7 @@
     {
         "name": "Sexless",
         "reference": "B165",
+        "type": "Physical",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -11944,6 +12444,7 @@
     {
         "name": "Shadow Form",
         "reference": "B83",
+        "type": "Physical, Exotic",
         "base_points": 50,
         "modifiers": [
             {
@@ -12003,6 +12504,7 @@
     {
         "name": "Shadow Form (Can't Turn Off)",
         "reference": "B153",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -12012,6 +12514,7 @@
     {
         "name": "Shapeshifting",
         "reference": "B83",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -12071,6 +12574,7 @@
     {
         "name": "Short Attention Span",
         "reference": "B153",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12080,6 +12584,7 @@
     {
         "name": "Short Lifespan",
         "reference": "B154",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -12089,6 +12594,7 @@
     {
         "name": "Shrinking",
         "reference": "B85",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -12183,6 +12689,7 @@
     {
         "name": "Shtick",
         "reference": "B101, HT250, MA51",
+        "type": "Mental/Physical",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -12192,6 +12699,7 @@
     {
         "name": "Shyness",
         "reference": "B154",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -12223,6 +12731,7 @@
     {
         "name": "Sign Language: @Language@",
         "reference": "B25",
+        "type": "Mental/Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -12262,6 +12771,7 @@
     {
         "name": "Sign Language: @Language@",
         "reference": "B25",
+        "type": "Mental/Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -12294,6 +12804,7 @@
     {
         "name": "Signature Gear",
         "reference": "B85",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -12303,6 +12814,7 @@
     {
         "name": "Silence",
         "reference": "B85",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -12320,6 +12832,7 @@
     {
         "name": "Single-Minded",
         "reference": "B85",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -12329,6 +12842,7 @@
     {
         "name": "Skinny",
         "reference": "B18",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12338,6 +12852,7 @@
     {
         "name": "Slave Mentality",
         "reference": "B154",
+        "type": "Physical",
         "base_points": -40,
         "modifiers": [],
         "categories": [
@@ -12347,6 +12862,7 @@
     {
         "name": "Sleepwalker",
         "reference": "B154",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12356,6 +12872,7 @@
     {
         "name": "Sleepy",
         "reference": "B154",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -12394,6 +12911,7 @@
     {
         "name": "Slippery",
         "reference": "B85",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -12403,6 +12921,7 @@
     {
         "name": "Slow Eater",
         "reference": "B155",
+        "type": "Physical, Exotic",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12412,6 +12931,7 @@
     {
         "name": "Slow Healing",
         "reference": "B155",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -12421,6 +12941,7 @@
     {
         "name": "Slow Riser",
         "reference": "B155",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12430,6 +12951,7 @@
     {
         "name": "Snatcher",
         "reference": "B86",
+        "type": "Mental, Supernatural",
         "base_points": 80,
         "modifiers": [
             {
@@ -12566,6 +13088,7 @@
     {
         "name": "Social Chameleon",
         "reference": "B86",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -12575,6 +13098,7 @@
     {
         "name": "Social Disease",
         "reference": "B155",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12584,6 +13108,7 @@
     {
         "name": "Social Regard",
         "reference": "B87",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -12593,6 +13118,7 @@
     {
         "name": "Social Stigma (Criminal Record)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12602,6 +13128,7 @@
     {
         "name": "Social Stigma (Disowned, Non-heir)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12611,6 +13138,7 @@
     {
         "name": "Social Stigma (Disowned, Outcast)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12620,6 +13148,7 @@
     {
         "name": "Social Stigma (Excommunicated)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12629,6 +13158,7 @@
     {
         "name": "Social Stigma (Excommunicated)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12638,6 +13168,7 @@
     {
         "name": "Social Stigma (Ignorant; @Skill@)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12647,6 +13178,7 @@
     {
         "name": "Social Stigma (Minor)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12656,6 +13188,7 @@
     {
         "name": "Social Stigma (Minority Group)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12665,6 +13198,7 @@
     {
         "name": "Social Stigma (Monster)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -12674,6 +13208,7 @@
     {
         "name": "Social Stigma (Second-Class Citizen)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12683,6 +13218,7 @@
     {
         "name": "Social Stigma (Subjugated)",
         "reference": "B155",
+        "type": "Social",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -12692,6 +13228,7 @@
     {
         "name": "Social Stigma (Uneducated)",
         "reference": "B156",
+        "type": "Social",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -12701,6 +13238,7 @@
     {
         "name": "Social Stigma (Valuable Property)",
         "reference": "B156",
+        "type": "Social",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12710,6 +13248,7 @@
     {
         "name": "Space Sickness",
         "reference": "B156",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12719,6 +13258,7 @@
     {
         "name": "Speak Underwater",
         "reference": "B87",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [
             {
@@ -12736,6 +13276,7 @@
     {
         "name": "Speak With Animals",
         "reference": "B87",
+        "type": "Mental, Exotic",
         "base_points": 25,
         "modifiers": [
             {
@@ -12795,6 +13336,7 @@
     {
         "name": "Speak With Plants",
         "reference": "B87",
+        "type": "Mental, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -12840,6 +13382,7 @@
     {
         "name": "Special Rapport (@Person@)",
         "reference": "B88",
+        "type": "Mental, Supernatural",
         "base_points": 5,
         "modifiers": [
             {
@@ -12892,6 +13435,7 @@
     {
         "name": "Spines, Long",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 3,
         "modifiers": [],
         "categories": [
@@ -12901,6 +13445,7 @@
     {
         "name": "Spines, Short",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -12910,6 +13455,7 @@
     {
         "name": "Spirit Empathy",
         "reference": "B88",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [
             {
@@ -12934,6 +13480,7 @@
     {
         "name": "Split Personality",
         "reference": "B156",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -12943,6 +13490,7 @@
     {
         "name": "Squeamish",
         "reference": "B156",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -12952,6 +13500,7 @@
     {
         "name": "Staid",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -12961,6 +13510,7 @@
     {
         "name": "Static (Psi)",
         "reference": "B78",
+        "type": "Mental, Supernatural",
         "base_points": 30,
         "modifiers": [
             {
@@ -12999,6 +13549,7 @@
     {
         "name": "Status (@Description@)",
         "reference": "B28",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -13008,6 +13559,7 @@
     {
         "name": "Status",
         "reference": "B28",
+        "type": "Social",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -13017,6 +13569,7 @@
     {
         "name": "Stress Atavism",
         "reference": "B156",
+        "type": "Mental, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -13048,6 +13601,7 @@
     {
         "name": "Stretching",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -13093,6 +13647,7 @@
     {
         "name": "Striker, Crushing (@Body Part@)",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -13102,6 +13657,7 @@
     {
         "name": "Striker, Cutting (@Body Part@)",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 7,
         "modifiers": [],
         "categories": [
@@ -13111,6 +13667,7 @@
     {
         "name": "Striker, Impaling (@Body Part@)",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 8,
         "modifiers": [],
         "categories": [
@@ -13120,6 +13677,7 @@
     {
         "name": "Striker, Large Piercing (@Body Part@)",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 6,
         "modifiers": [],
         "categories": [
@@ -13129,6 +13687,7 @@
     {
         "name": "Striker, Piercing (@Body Part@)",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -13138,6 +13697,7 @@
     {
         "name": "Striking ST",
         "reference": "B88",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -13176,6 +13736,7 @@
     {
         "name": "Stubbornness",
         "reference": "B157",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -13185,6 +13746,7 @@
     {
         "name": "Stuttering",
         "reference": "B157",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -13194,6 +13756,7 @@
     {
         "name": "Subsonic Hearing",
         "reference": "B89",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [
             {
@@ -13211,6 +13774,7 @@
     {
         "name": "Subsonic Speech",
         "reference": "B89",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -13228,6 +13792,7 @@
     {
         "name": "Super Climbing",
         "reference": "B89",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -13266,6 +13831,7 @@
     {
         "name": "Super Jump",
         "reference": "B89",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -13339,6 +13905,7 @@
     {
         "name": "Supernatural Durability",
         "reference": "B89",
+        "type": "Physical, Supernatural",
         "base_points": 150,
         "modifiers": [],
         "categories": [
@@ -13348,6 +13915,7 @@
     {
         "name": "Supernatural Features (No Body Heat)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -13357,6 +13925,7 @@
     {
         "name": "Supernatural Features (No Body Heat; Temporary)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -13366,6 +13935,7 @@
     {
         "name": "Supernatural Features (No Pulse)",
         "reference": "H26",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -13375,6 +13945,7 @@
     {
         "name": "Supernatural Features (No Reflection)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -13384,6 +13955,7 @@
     {
         "name": "Supernatural Features (No Shadow)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -13393,6 +13965,7 @@
     {
         "name": "Supernatural Features (Pallor)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -13402,6 +13975,7 @@
     {
         "name": "Supernatural Features (Pallor; Temporary)",
         "reference": "B157",
+        "type": "Physical, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -13411,6 +13985,7 @@
     {
         "name": "Supersensitive",
         "reference": "B158",
+        "type": "Mental, Supernatural",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -13420,6 +13995,7 @@
     {
         "name": "Susceptible (@Substance@)",
         "reference": "B158",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -13451,6 +14027,7 @@
     {
         "name": "Talent (@Large@)",
         "reference": "B89",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13483,6 +14060,7 @@
     {
         "name": "Talent (@Medium@)",
         "reference": "B89",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13515,6 +14093,7 @@
     {
         "name": "Talent (@Small@)",
         "reference": "B89",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13547,6 +14126,7 @@
     {
         "name": "Talent (Animal Friend)",
         "reference": "B90,PU3:6",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13572,6 +14152,7 @@
     {
         "name": "Talent (Gifted Artist)",
         "reference": "B90,PU3:10",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13590,6 +14171,7 @@
     {
         "name": "Talent (Green Thumb)",
         "reference": "B90,PU3:11",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13615,6 +14197,7 @@
     {
         "name": "Talent (Healer)",
         "reference": "B90,PU3:11",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13647,6 +14230,7 @@
     {
         "name": "Talent (Healer)",
         "reference": "B90,PU3:11",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13679,6 +14263,7 @@
     {
         "name": "Talent (Mathematical Ability)",
         "reference": "B90,PU3:12",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13711,6 +14296,7 @@
     {
         "name": "Talent (Musical Ability)",
         "reference": "B90,PU3:13",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13736,6 +14322,7 @@
     {
         "name": "Talent (Outdoorsman)",
         "reference": "B90,PU3:14",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13768,6 +14355,7 @@
     {
         "name": "Talent (Smooth Operator)",
         "reference": "B90,PU3:15",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -13800,6 +14388,7 @@
     {
         "name": "Technophobia/TL4- (Machinery)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -13809,6 +14398,7 @@
     {
         "name": "Technophobia/TL5+ (Machinery)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -13818,6 +14408,7 @@
     {
         "name": "Teeth, Blunt",
         "reference": "B91",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -13827,6 +14418,7 @@
     {
         "name": "Teeth, Fangs",
         "reference": "B91",
+        "type": "Physical, Exotic",
         "base_points": 2,
         "modifiers": [],
         "categories": [
@@ -13836,6 +14428,7 @@
     {
         "name": "Teeth, Sharp",
         "reference": "B91",
+        "type": "Physical, Exotic",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -13845,6 +14438,7 @@
     {
         "name": "Teeth, Sharp Beak",
         "reference": "B91",
+        "type": "Physical, Exotic",
         "base_points": 1,
         "modifiers": [],
         "categories": [
@@ -13854,6 +14448,7 @@
     {
         "name": "Telecommunication",
         "reference": "B91",
+        "type": "Mental/Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -14004,6 +14599,7 @@
     {
         "name": "Telekinesis",
         "reference": "B92",
+        "type": "Mental/Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -14105,6 +14701,7 @@
     {
         "name": "Telescopic Vision",
         "reference": "B92",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -14122,6 +14719,7 @@
     {
         "name": "Temperature Control",
         "reference": "B92",
+        "type": "Mental/Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -14146,6 +14744,7 @@
     {
         "name": "Temperature Tolerance",
         "reference": "B93",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -14155,6 +14754,7 @@
     {
         "name": "Temporal Inertia",
         "reference": "B93",
+        "type": "Mental, Supernatural",
         "base_points": 15,
         "modifiers": [],
         "categories": [
@@ -14164,6 +14764,7 @@
     {
         "name": "Tenure",
         "reference": "B93",
+        "type": "Social",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -14173,6 +14774,7 @@
     {
         "name": "Teratophobia (Monsters)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -14182,6 +14784,7 @@
     {
         "name": "Terminally Ill",
         "reference": "B158",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -14213,6 +14816,7 @@
     {
         "name": "Terrain Adaptation (@Terrain Type@)",
         "reference": "B93",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [
             {
@@ -14237,6 +14841,7 @@
     {
         "name": "Terror",
         "reference": "B93",
+        "type": "Mental, Supernatural",
         "base_points": 30,
         "modifiers": [
             {
@@ -14268,6 +14873,7 @@
     {
         "name": "Thalassophobia (Oceans)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -14277,6 +14883,7 @@
     {
         "name": "Timesickness",
         "reference": "B158",
+        "type": "Physical",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -14286,6 +14893,7 @@
     {
         "name": "Trademark",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -14295,6 +14903,7 @@
     {
         "name": "Trademark (@Complex@)",
         "reference": "B159",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -14304,6 +14913,7 @@
     {
         "name": "Trademark (@Elaborate@)",
         "reference": "B159",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -14313,6 +14923,7 @@
     {
         "name": "Trademark (@Simple@)",
         "reference": "B159",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14322,6 +14933,7 @@
     {
         "name": "Trained by a Master",
         "reference": "B93",
+        "type": "Mental",
         "base_points": 30,
         "modifiers": [],
         "categories": [
@@ -14331,6 +14943,7 @@
     {
         "name": "Trickster",
         "reference": "B159",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -14340,6 +14953,7 @@
     {
         "name": "True Faith",
         "reference": "B94",
+        "type": "Mental, Supernatural",
         "base_points": 15,
         "modifiers": [
             {
@@ -14364,6 +14978,7 @@
     {
         "name": "Truthfulness",
         "reference": "B159",
+        "type": "Mental",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14373,6 +14988,7 @@
     {
         "name": "Tunneling (@Tunnel Move@)",
         "reference": "B94",
+        "type": "Physical, Exotic",
         "base_points": 30,
         "modifiers": [
             {
@@ -14390,6 +15006,7 @@
     {
         "name": "Ultrahearing",
         "reference": "B94",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [
             {
@@ -14407,6 +15024,7 @@
     {
         "name": "Ultrasonic Speech",
         "reference": "B94",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -14424,6 +15042,7 @@
     {
         "name": "Ultravision",
         "reference": "B94",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -14441,6 +15060,7 @@
     {
         "name": "Unaging",
         "reference": "B95",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -14458,6 +15078,7 @@
     {
         "name": "Uncongenial",
         "reference": "B164",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -14467,6 +15088,7 @@
     {
         "name": "Uncontrollable Appetite (@Craving@)",
         "reference": "B159",
+        "type": "Mental, Supernatural",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -14476,6 +15098,7 @@
     {
         "name": "Unfazeable",
         "reference": "B95",
+        "type": "Mental",
         "base_points": 15,
         "modifiers": [
             {
@@ -14493,6 +15116,7 @@
     {
         "name": "Unfit",
         "reference": "B160",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14502,6 +15126,7 @@
     {
         "name": "Unfit (Very)",
         "reference": "B160",
+        "type": "Physical",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -14511,6 +15136,7 @@
     {
         "name": "Unhealing (Partial)",
         "reference": "B160",
+        "type": "Physical, Exotic",
         "base_points": -20,
         "modifiers": [],
         "categories": [
@@ -14520,6 +15146,7 @@
     {
         "name": "Unhealing (Total)",
         "reference": "B160",
+        "type": "Physical, Exotic",
         "base_points": -30,
         "modifiers": [],
         "categories": [
@@ -14529,6 +15156,7 @@
     {
         "name": "Unique",
         "reference": "B160",
+        "type": "Mental, Supernatural",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14538,6 +15166,7 @@
     {
         "name": "Universal Digestion",
         "reference": "B95",
+        "type": "Physical",
         "base_points": 5,
         "modifiers": [
             {
@@ -14555,6 +15184,7 @@
     {
         "name": "Unkillable",
         "reference": "B95",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -14635,6 +15265,7 @@
     {
         "name": "Unluckiness",
         "reference": "B160",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -14644,6 +15275,7 @@
     {
         "name": "Unnatural Features (@Description@)",
         "reference": "B22",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -14653,6 +15285,7 @@
     {
         "name": "Unusual Background",
         "reference": "B96",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [],
         "categories": [
@@ -14662,6 +15295,7 @@
     {
         "name": "Unusual Biochemistry",
         "reference": "B160",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14671,6 +15305,7 @@
     {
         "name": "Vacuum Support",
         "reference": "B96",
+        "type": "Physical, Exotic",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -14680,6 +15315,7 @@
     {
         "name": "Vampiric Bite",
         "reference": "B96",
+        "type": "Physical, Exotic",
         "base_points": 30,
         "modifiers": [],
         "categories": [
@@ -14689,6 +15325,7 @@
     {
         "name": "Versatile",
         "reference": "B96",
+        "type": "Mental",
         "base_points": 5,
         "modifiers": [],
         "categories": [
@@ -14698,6 +15335,7 @@
     {
         "name": "Very Fat",
         "reference": "B19",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -14707,6 +15345,7 @@
     {
         "name": "Vibration Sense",
         "reference": "B96",
+        "type": "Physical, Exotic",
         "base_points": 10,
         "modifiers": [
             {
@@ -14738,6 +15377,7 @@
     {
         "name": "Visualization",
         "reference": "B96",
+        "type": "Mental, Supernatural",
         "base_points": 10,
         "modifiers": [
             {
@@ -14769,6 +15409,7 @@
     {
         "name": "Voice",
         "reference": "B97",
+        "type": "Physical",
         "base_points": 10,
         "modifiers": [],
         "categories": [
@@ -14778,6 +15419,7 @@
     {
         "name": "Vow",
         "reference": "B165",
+        "type": "Mental",
         "base_points": -1,
         "modifiers": [],
         "categories": [
@@ -14787,6 +15429,7 @@
     {
         "name": "Vow (@Subject@)",
         "reference": "B161",
+        "type": "Physical",
         "base_points": null,
         "modifiers": [
             {
@@ -14818,6 +15461,7 @@
     {
         "name": "Vulnerability",
         "reference": "B161",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -14884,6 +15528,7 @@
     {
         "name": "Walk On Air",
         "reference": "B97",
+        "type": "Physical, Exotic",
         "base_points": 20,
         "modifiers": [
             {
@@ -14936,6 +15581,7 @@
     {
         "name": "Walk On Liquid",
         "reference": "B97",
+        "type": "Physical, Exotic",
         "base_points": 15,
         "modifiers": [
             {
@@ -14960,6 +15606,7 @@
     {
         "name": "Warp",
         "reference": "B97",
+        "type": "Mental, Supernatural",
         "base_points": 100,
         "modifiers": [
             {
@@ -15229,6 +15876,7 @@
     {
         "name": "Weak Bite",
         "reference": "B161",
+        "type": "Physical, Exotic",
         "base_points": -2,
         "modifiers": [],
         "categories": [
@@ -15238,6 +15886,7 @@
     {
         "name": "Weakness",
         "reference": "B161",
+        "type": "Physical, Exotic",
         "base_points": null,
         "modifiers": [
             {
@@ -15311,6 +15960,7 @@
     {
         "name": "Wealth",
         "reference": "B25",
+        "type": "Social",
         "base_points": null,
         "modifiers": [
             {
@@ -15378,6 +16028,7 @@
     {
         "name": "Wealth, Multimillionaire",
         "reference": "B25",
+        "type": "Social",
         "base_points": 50,
         "modifiers": [],
         "categories": [
@@ -15387,6 +16038,7 @@
     {
         "name": "Weapon Master (@Specialty@)",
         "reference": "B99",
+        "type": "Mental",
         "base_points": null,
         "modifiers": [
             {
@@ -15432,6 +16084,7 @@
     {
         "name": "Weapon Master (All weapons)",
         "reference": "B99",
+        "type": "Mental",
         "base_points": 45,
         "modifiers": [],
         "categories": [
@@ -15441,6 +16094,7 @@
     {
         "name": "Weirdness Magnet",
         "reference": "B161",
+        "type": "Mental, Supernatural",
         "base_points": -15,
         "modifiers": [
             {
@@ -15458,6 +16112,7 @@
     {
         "name": "Wild Talent",
         "reference": "B99",
+        "type": "Mental, Supernatural",
         "base_points": null,
         "modifiers": [
             {
@@ -15503,6 +16158,7 @@
     {
         "name": "Workaholic",
         "reference": "B162",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -15512,6 +16168,7 @@
     {
         "name": "Wounded",
         "reference": "B162",
+        "type": "Physical",
         "base_points": -5,
         "modifiers": [],
         "categories": [
@@ -15521,6 +16178,7 @@
     {
         "name": "Xenophilia",
         "reference": "B162",
+        "type": "Mental",
         "base_points": -10,
         "modifiers": [],
         "categories": [
@@ -15530,6 +16188,7 @@
     {
         "name": "Xenophobia (Strange and Unknown Things)",
         "reference": "B150",
+        "type": "Mental",
         "base_points": -15,
         "modifiers": [],
         "categories": [
@@ -15539,6 +16198,7 @@
     {
         "name": "Zeroed",
         "reference": "B100",
+        "type": "Social",
         "base_points": 10,
         "modifiers": [],
         "categories": [
