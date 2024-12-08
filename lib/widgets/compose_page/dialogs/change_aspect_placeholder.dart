@@ -44,12 +44,6 @@ class ChangeAspectPlaceholderNameDialogState
 
   List<Widget> _buildActions(BuildContext context) {
     return [
-      TextButton.icon(
-        onPressed: () {
-          Navigator.pop(context, null);
-        },
-        label: const Text('cancel'),
-      ),
       FilledButton.icon(
         onPressed: () {
           Navigator.pop(
