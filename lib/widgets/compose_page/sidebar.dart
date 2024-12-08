@@ -62,13 +62,6 @@ class _SidebarContentState extends State<SidebarContent> {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-            ),
             margin: const EdgeInsets.only(
               bottom: 8,
             ),
@@ -271,28 +264,13 @@ class _SidebarContentState extends State<SidebarContent> {
     );
   }
 
-  Future<String?> _replacePlacholderName(String name) async {
-    final RegExpMatch match = placeholderAspectRegex.firstMatch(name)!;
-    final String placeholder = match.group(1) ?? '';
-
-    final String? replacedWith = await showDialog<String>(
-      context: context,
-      builder: (context) => ChangeAspectPlaceholderNameDialog(
-        placeholder: placeholder,
-      ),
-    );
-
-    if (replacedWith == null) {
-      return null;
-    }
-
-    return replacedWith.replaceAll(match.group(0)!, replacedWith);
-  }
-
   void _addAspect(Aspect aspect, CharacterProvider characterProvider) async {
     String? newName;
     if (placeholderAspectRegex.hasMatch(aspect.name)) {
-      newName = await _replacePlacholderName(aspect.name);
+      newName = await characterProvider.replacePlacholderName(
+        context,
+        aspect.name,
+      );
     }
 
     if (aspect is Trait) {

@@ -8,6 +8,8 @@ class TraitView extends StatelessWidget {
   final void Function()? onAddClick;
   final void Function()? onRemoveClick;
   final void Function()? onInfoClick;
+  final void Function()? onChangeModifiersClick;
+  final void Function()? onChangePlaceholderClick;
 
   const TraitView({
     super.key,
@@ -15,6 +17,8 @@ class TraitView extends StatelessWidget {
     this.onAddClick,
     this.onRemoveClick,
     this.onInfoClick,
+    this.onChangeModifiersClick,
+    this.onChangePlaceholderClick,
   });
 
   @override
@@ -29,10 +33,12 @@ class TraitView extends StatelessWidget {
     );
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
       decoration: BoxDecoration(
         border: Border(
-          top: const BorderSide(color: Color(0x64000000), width: 1.0),
+          top: BorderSide(
+            color: Theme.of(context).colorScheme.secondary,
+            width: 1.0,
+          ),
           left: BorderSide(
             color: trait.categories.first.colorValue,
             width: 8.0,
@@ -40,39 +46,49 @@ class TraitView extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              trait.title,
-              style: const TextStyle(fontSize: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${trait.title}',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    '${trait.type} ${trait.categories.map((e) => e.stringValue).join(', ')}',
+                  ),
+                )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'base points: ${trait.basePoints}',
+                  ),
+                ),
+                Expanded(
+                  child: Text('cost: ${trait.cost}'),
+                )
+              ],
             ),
             if (trait.selectedModifiers != null &&
                 trait.selectedModifiers!.isNotEmpty)
-              Text(
-                trait.selectedModifiers!
-                    .map((TraitModifier mod) => mod.name)
-                    .join(', '),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  trait.selectedModifiers!
+                      .map((TraitModifier mod) => mod.name)
+                      .join(', '),
+                ),
               ),
-            Row(
-              children: [
-                Text(
-                  trait.categories.map((e) => e.stringValue).join(', '),
-                  style: const TextStyle(fontSize: 14),
-                ),
-                const Text(' | '),
-                Text(
-                  trait.type,
-                  style: const TextStyle(fontSize: 12),
-                ),
-              ],
-            ),
-            Text(
-              'points: ${trait.cost}',
-              style: const TextStyle(fontSize: 12),
-            ),
             Row(
               children: [
                 if (onAddClick != null)
@@ -88,6 +104,20 @@ class TraitView extends StatelessWidget {
                     style: iconButtonStyle,
                     constraints: iconButtonConstraints,
                     icon: const Icon(Icons.remove),
+                  ),
+                if (onChangeModifiersClick != null)
+                  IconButton(
+                    onPressed: onChangeModifiersClick,
+                    style: iconButtonStyle,
+                    constraints: iconButtonConstraints,
+                    icon: const Icon(Icons.category_outlined),
+                  ),
+                if (onChangePlaceholderClick != null)
+                  IconButton(
+                    onPressed: onChangePlaceholderClick,
+                    style: iconButtonStyle,
+                    constraints: iconButtonConstraints,
+                    icon: const Icon(Icons.edit_outlined),
                   ),
                 if (onInfoClick != null)
                   IconButton(
