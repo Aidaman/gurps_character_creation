@@ -23,7 +23,7 @@ class Homepage extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Navigator.popAndPushNamed(
+            Navigator.pushNamed(
               context,
               routes
                   .singleWhere(
@@ -41,14 +41,8 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveScaffold(
-      selectedIndex: 0,
-      appBar: AppBar(
-        toolbarHeight:
-            MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH ? null : 0,
-      ),
-      body: MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH
-          ? Center(child: _buildBody(context))
-          : Expanded(child: _buildBody(context)),
-    );
+        selectedIndex: 0,
+        appBar: AppBar(),
+        body: Center(child: _buildBody(context)));
   }
 }

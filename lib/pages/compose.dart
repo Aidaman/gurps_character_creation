@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
-import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
@@ -89,19 +88,13 @@ class _ComposePageState extends State<ComposePage> {
     return ResponsiveScaffold(
       selectedIndex: 1,
       appBar: AppBar(
-        title: Text(characterProvider.character.name),
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        elevation: COMMON_ELLEVATION,
+        toolbarHeight: APP_BAR_HEIGHT,
+        title: Text(
+          'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
         centerTitle: true,
-        // shadowColor: Theme.of(context).colorScheme.secondary,
         actions: [
-          Text(
-            'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
-          ),
-          const SizedBox(
-            width: 32,
-          ),
           if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
             Builder(builder: (context) {
               return IconButton(
@@ -109,6 +102,7 @@ class _ComposePageState extends State<ComposePage> {
                 onPressed: () => _toggleSidebar(context),
               );
             }),
+          if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) Container()
         ],
       ),
       floatingActionButton: Builder(builder: (context) {

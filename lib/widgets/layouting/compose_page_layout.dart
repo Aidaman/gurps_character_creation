@@ -27,10 +27,7 @@ class ComposePageLayout extends StatelessWidget {
           child: bodyContent,
         ),
         AnimatedContainer(
-          duration: const Duration(milliseconds: 256),
-          decoration: const BoxDecoration(
-            border: Border(left: BorderSide(color: Color(0x64eeeeee))),
-          ),
+          duration: const Duration(milliseconds: 512),
           curve: Curves.easeInOut,
           width: isSidebarVisible &&
                   MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH

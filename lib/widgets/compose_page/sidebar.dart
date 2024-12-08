@@ -9,9 +9,9 @@ import 'package:gurps_character_creation/models/characteristics/spells/spell.dar
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/utilities/dialog_size.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
@@ -160,24 +160,14 @@ class _SidebarContentState extends State<SidebarContent> {
         },
         decoration: InputDecoration(
           labelText: 'Filter',
-          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-          enabledBorder: UnderlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
-            ),
-            borderSide: BorderSide(
-              width: 0.5,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.75),
-            ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide.none,
           ),
-          focusedBorder: UnderlineInputBorder(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(16),
-            ),
+          enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              width: 0.5,
-              color: Theme.of(context).colorScheme.primary.withOpacity(1),
+              color: Theme.of(context).colorScheme.secondary,
             ),
+            borderRadius: BorderRadius.circular(16),
           ),
           prefixIcon: const Icon(Icons.search),
         ),
@@ -244,6 +234,9 @@ class _SidebarContentState extends State<SidebarContent> {
                       onPressed: () =>
                           widget.onTraitFilterButtonPressed(category),
                       label: category.stringValue,
+                      backgroundColor: widget.selectedCategory == category
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                     ),
                   ),
             ),
@@ -327,66 +320,5 @@ class _SidebarContentState extends State<SidebarContent> {
     if (aspect is Spell) {
       characterProvider.addSpell(aspect);
     }
-  }
-}
-
-class ChangeAspectPlaceholderNameDialog extends StatefulWidget {
-  final String placeholder;
-
-  const ChangeAspectPlaceholderNameDialog({
-    super.key,
-    required this.placeholder,
-  });
-
-  @override
-  State<ChangeAspectPlaceholderNameDialog> createState() =>
-      ChangeAspectPlaceholderNameDialogState();
-}
-
-class ChangeAspectPlaceholderNameDialogState
-    extends State<ChangeAspectPlaceholderNameDialog> {
-  String? updatedPlaceholder;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog.adaptive(
-      title: Text(
-        widget.placeholder,
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
-      actions: _buildActions(context),
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: Expanded(
-            child: buildTextFormField(
-          label: widget.placeholder,
-          validator: validateText,
-          onChanged: (String? value) => setState(() {
-            updatedPlaceholder = value;
-          }),
-          context: context,
-        )),
-      ),
-    );
-  }
-
-  List<Widget> _buildActions(BuildContext context) {
-    return [
-      TextButton.icon(
-        onPressed: () {
-          Navigator.pop(context, null);
-        },
-        label: const Text('cancel'),
-      ),
-      FilledButton.icon(
-        onPressed: () {
-          Navigator.pop(
-            context,
-            updatedPlaceholder,
-          );
-        },
-        label: const Text('add'),
-      ),
-    ];
   }
 }

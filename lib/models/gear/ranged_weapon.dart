@@ -1,8 +1,6 @@
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
-import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 
 enum RangedWeaponLegalityClass {
   BANNED,

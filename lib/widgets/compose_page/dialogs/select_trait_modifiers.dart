@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
 import 'package:gurps_character_creation/utilities/dialog_size.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_modifier_view.dart';
 
 class SelectTraitModifiersDialog extends StatefulWidget {
@@ -19,8 +16,6 @@ class SelectTraitModifiersDialog extends StatefulWidget {
 
 class _SelectTraitModifiersDialogState
     extends State<SelectTraitModifiersDialog> {
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
   final List<TraitModifier> _selectedTraitModifiers = [];
 
   @override
@@ -49,7 +44,7 @@ class _SelectTraitModifiersDialogState
         onPressed: () {
           Navigator.pop(context, null);
         },
-        label: const Text('cancel'),
+        label: const Text('add with none'),
       ),
       FilledButton.icon(
         onPressed: () {

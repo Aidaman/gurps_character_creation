@@ -2,7 +2,6 @@ import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/models/gear/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';

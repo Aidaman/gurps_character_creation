@@ -125,6 +125,19 @@ Widget buildFormDropdownMenu<T>({
       hint,
       style: Theme.of(context).textTheme.labelMedium,
     ),
+    decoration: InputDecoration(
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    ),
     validator: validateDropdown,
     items: items,
     onChanged: onChanged,
@@ -150,6 +163,14 @@ Widget buildTextFormField({
     decoration: InputDecoration(
       labelText: label,
       labelStyle: Theme.of(context).textTheme.labelMedium,
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide.none,
+      ),
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
     ),
     initialValue: defaultValue,
     onChanged: onChanged,
