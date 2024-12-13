@@ -6,6 +6,7 @@ import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/settings_card.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SetupPage extends StatefulWidget {
   const SetupPage({super.key});
@@ -26,12 +27,12 @@ class _SetupPageState extends State<SetupPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Warning',
+          AppLocalizations.of(context)!.setup_warning_title,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const Gap(32),
         Text(
-          'It seems you have an unfinished work. Would you want start anew without saving?',
+          AppLocalizations.of(context)!.setup_warning_body_text,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         const Gap(16),
@@ -45,7 +46,9 @@ class _SetupPageState extends State<SetupPage> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('return'),
+                child: Text(
+                  AppLocalizations.of(context)!.setup_warning_return_button,
+                ),
               ),
             ),
             Expanded(
@@ -59,16 +62,18 @@ class _SetupPageState extends State<SetupPage> {
                   Navigator.popAndPushNamed(
                       context, AppRoutes.SETUP.destination);
                 },
-                child: const Text('proceed'),
+                child: Text(
+                  AppLocalizations.of(context)!.setup_warning_proceed_button,
+                ),
               ),
             ),
             Expanded(
               child: TextButton(
-                onPressed: () => Navigator.popAndPushNamed(
-                  context,
-                  AppRoutes.COMPOSE.destination,
+                // TODO: implement saving logic and actually save things
+                onPressed: () => characterProvider.DEBUG_setIsDirtyToFalse(),
+                child: Text(
+                  AppLocalizations.of(context)!.setup_warning_save_continue,
                 ),
-                child: const Text('save & continue'),
               ),
             ),
           ],
@@ -86,13 +91,13 @@ class _SetupPageState extends State<SetupPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'Presetup',
+          AppLocalizations.of(context)!.setup_title,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const Gap(32),
         buildTextFormField(
           context: context,
-          label: 'Max Points',
+          label: AppLocalizations.of(context)!.max_point,
           validator: validateNumber,
           allowsDecimal: false,
           defaultValue: '',
@@ -108,7 +113,7 @@ class _SetupPageState extends State<SetupPage> {
           },
         ),
         Text(
-          'Define amount of points you can invest in your character',
+          AppLocalizations.of(context)!.max_points_input_description,
           style: Theme.of(context).textTheme.labelSmall,
         ),
         const Gap(32),
@@ -121,7 +126,7 @@ class _SetupPageState extends State<SetupPage> {
               );
             }
           },
-          child: const Text('continue'),
+          child: Text(AppLocalizations.of(context)!.setup_continue_button),
         )
       ],
     );

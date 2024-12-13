@@ -5,6 +5,7 @@ import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/providers/theme_provider.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(
@@ -39,7 +40,20 @@ class _MyAppState extends State<MyApp> {
     final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-      title: 'GURPS Character Sheet',
+      title: 'GURPS Composer',
+
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: const [
+      //   AppLocalizations.delegate,
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      // supportedLocales: const [
+      //   Locale('en'), // English
+      //   Locale('uk', 'UA'), // Ukrainian
+      // ],
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,

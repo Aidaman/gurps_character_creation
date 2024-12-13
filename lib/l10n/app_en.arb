@@ -1,0 +1,29 @@
+{
+    "@@locale": "en",
+    "empty_homepage_greetings": "Welcome to GURPS Composer",
+    "@empty_homepage_greetings": {
+        "description": "A homepage typically would be filled with characters. However when ffirst launched or clear there should be an Icon with some text"
+    },
+    "empty_homepage_button_text": "Click to Compose a Character Sheet",
+    "@empty_homepage_button_text": {
+        "description": "A text to tell user where to click in order to start the work"
+    },
+    "setup_title": "Presetup",
+    "@setup_title": {},
+    "max_point": "Max Points",
+    "@max_point": {},
+    "max_points_input_description": "Define amount of points upi can invest in your character",
+    "@max_points_input_description": {},
+    "setup_continue_button": "continue",
+    "@setup_continue_button": {},
+    "setup_warning_title": "Warning",
+    "@setup_warning_title": {},
+    "setup_warning_body_text": "It seems you have an unfinished work. Would you want start anew without saving?",
+    "@setup_warning_body_text": {},
+    "setup_warning_return_button": "return",
+    "@setup_warning_return_button": {},
+    "setup_warning_proceed_button": "continue",
+    "@setup_warning_proceed_button": {},
+    "setup_warning_save_continue": "save",
+    "@setup_warning_save_continue": {}
+}

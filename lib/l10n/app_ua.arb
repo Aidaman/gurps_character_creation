@@ -1,0 +1,29 @@
+{
+    "@@locale": "uk",
+    "empty_homepage_greetings": "Вас вітає GURPS Composer",
+    "@empty_homepage_greetings": {
+        "description": "За задумом домашня сторінка має бути заповнена листами персонажа. Однак коли додадок вперше було запущено або всі листи прибрано то користувача має зустрічати бодай якийсь текст та картинка"
+    },
+    "empty_homepage_button_text": "Створіть новий Лист Персонажа",
+    "@empty_homepage_button_text": {
+        "description": "Текст який закликає користувача клікнути на кніпку яка розпочне роботу додатку"
+    },
+    "setup_title": "Передналаштування",
+    "@setup_title": {},
+    "max_point": "Максимально Очків",
+    "@max_point": {},
+    "max_points_input_description": "Визначте скільки очків ви зможете витратити на персонажа",
+    "@max_points_input_description": {},
+    "setup_continue_button": "продовжити",
+    "@setup_continue_button": {},
+    "setup_warning_title": "Увага",
+    "@setup_warning_title": {},
+    "setup_warning_body_text": "Схоже, що у вас залишився незакінчений лист. Чи хочете ви продовжити без збереження?",
+    "@setup_warning_body_text": {},
+    "setup_warning_return_button": "назад",
+    "@setup_warning_return_button": {},
+    "setup_warning_proceed_button": "далі",
+    "@setup_warning_proceed_button": {},
+    "setup_warning_save_continue": "зберегти",
+    "@setup_warning_save_continue": {}
+}

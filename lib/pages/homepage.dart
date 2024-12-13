@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -34,14 +35,16 @@ class Homepage extends StatelessWidget {
                   : LOGO_ICON_SIZE_DESKTOP,
             ),
             Text(
-              'Welcome to GURPS Composer',
+              AppLocalizations.of(context)!.empty_homepage_greetings,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, AppRoutes.SETUP.destination);
               },
-              child: const Text('Click here to Compose a Character Sheet'),
+              child: Text(
+                AppLocalizations.of(context)!.empty_homepage_button_text,
+              ),
             ),
           ],
         ),

@@ -237,4 +237,9 @@ class CharacterProvider with ChangeNotifier {
     _isDirty = true;
     notifyListeners();
   }
+
+  void DEBUG_setIsDirtyToFalse() {
+    _isDirty = false;
+    notifyListeners();
+  }
 }
