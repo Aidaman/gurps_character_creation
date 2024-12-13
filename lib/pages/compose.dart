@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
+import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/basic_info_fields.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/character_attributes.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/hand_weapons.dart';
@@ -12,7 +14,6 @@ import 'package:gurps_character_creation/widgets/compose_page/sections/traits_vi
 import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
-import 'package:gurps_character_creation/widgets/layouting/responsive_scaffold.dart';
 import 'package:provider/provider.dart';
 
 class ComposePage extends StatefulWidget {
@@ -85,16 +86,42 @@ class _ComposePageState extends State<ComposePage> {
       ),
     );
 
-    return ResponsiveScaffold(
-      selectedIndex: 1,
+    return Scaffold(
       appBar: AppBar(
         toolbarHeight: APP_BAR_HEIGHT,
         title: Text(
-          'points: ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
+          'points ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
           style: Theme.of(context).textTheme.titleMedium,
         ),
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: () async {
+              int? newPoints = await showDialog<int?>(
+                context: context,
+                builder: (context) => EditCharacterPointsDialog(
+                  currentPoints: characterProvider.character.points,
+                ),
+              );
+
+              if (newPoints == null) {
+                return;
+              }
+
+              characterProvider.updateCharacterMaxPoints(newPoints);
+            },
+            icon: const Icon(
+              Icons.monetization_on_outlined,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
+            },
+            icon: const Icon(
+              Icons.settings_outlined,
+            ),
+          ),
           if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
             Builder(builder: (context) {
               return IconButton(
@@ -105,14 +132,16 @@ class _ComposePageState extends State<ComposePage> {
           if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) Container()
         ],
       ),
-      floatingActionButton: Builder(builder: (context) {
-        return FloatingActionButton(
-          child: const Icon(Icons.now_widgets_outlined),
-          onPressed: () {
-            Scaffold.of(context).openEndDrawer();
-          },
-        );
-      }),
+      floatingActionButton: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+          ? null
+          : Builder(builder: (context) {
+              return FloatingActionButton(
+                child: const Icon(Icons.now_widgets_outlined),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              );
+            }),
       body: ComposePageLayout(
         isSidebarVisible: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
             ? _isSidebarVisible
@@ -134,7 +163,9 @@ class _ComposePageState extends State<ComposePage> {
       ),
       endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
           ? null
-          : sidebar,
+          : Drawer(
+              child: sidebar,
+            ),
     );
   }
 

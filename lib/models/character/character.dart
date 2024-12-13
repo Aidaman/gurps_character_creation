@@ -185,7 +185,7 @@ class Character {
         appearanceDetails: 'appearance details',
         height: 0,
         age: 0,
-        points: 256,
+        points: 100,
         sizeModifier: 0,
         strength: 10,
         iq: 10,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
+import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/theme_provider.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AspectsProvider()),
+        ChangeNotifierProvider(create: (_) => CharacterProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     ),
@@ -32,6 +36,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'GURPS Character Sheet',
       theme: ThemeData(
@@ -45,6 +51,7 @@ class _MyAppState extends State<MyApp> {
           onError: Color(0xFFeeeeee),
           surface: Color(0xFFeeeeee),
           onSurface: Color(0xFF363636),
+          shadow: Color(0x64222222),
         ),
         useMaterial3: true,
       ),
@@ -59,13 +66,14 @@ class _MyAppState extends State<MyApp> {
           onError: Color(0xFEFEFEFF),
           surface: Color(0xFF282b30),
           onSurface: Color(0xFFDCDCDC),
+          shadow: Color(0x64222222),
         ),
         useMaterial3: true,
       ),
-      themeMode: ThemeMode.system,
+      themeMode: themeProvider.currentTheme,
       routes: Map.fromEntries(
-        routes.map(
-          (route) => MapEntry(
+        AppRoutes.values.map(
+          (AppRoutes route) => MapEntry(
             route.destination,
             route.pageBuilder,
           ),

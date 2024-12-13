@@ -1,3 +1,8 @@
 const double COMMON_ELLEVATION = 8;
 
 const double APP_BAR_HEIGHT = 48;
+
+const double LOGO_ICON_SIZE_DESKTOP = 200;
+const double LOGO_ICON_SIZE_MOBILE = 128;
+const double LOGO_ICON_SIZE_ABOUT_DIALOG_DESKTOP = 86;
+const double LOGO_ICON_SIZE_ABOUT_DIALOG_MOBILE = 64;
