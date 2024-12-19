@@ -3,22 +3,14 @@ import 'package:gurps_character_creation/models/gear/gear.dart';
 enum BodyPart {
   HEAD,
   SKULL,
+  EYES,
   FACE,
-  NECK,
   TORSO,
-  CHEST,
-  ABDOMEN,
+  NECK,
   GROIN,
   ARMS,
-  SHOULDERS,
-  UPPER_ARMS,
-  ELBOWS,
-  FOREARMS,
   HANDS,
   LEGS,
-  THIGS,
-  KNEES,
-  SHINS,
   FEET,
   NONE,
 }
@@ -28,21 +20,13 @@ extension BodyPartString on BodyPart {
         BodyPart.HEAD => 'Head',
         BodyPart.SKULL => 'Skull',
         BodyPart.FACE => 'Face',
+        BodyPart.EYES => 'Eyes',
         BodyPart.NECK => 'Neck',
         BodyPart.TORSO => 'Torso',
-        BodyPart.CHEST => 'Chest',
-        BodyPart.ABDOMEN => 'Abdomen',
         BodyPart.GROIN => 'Groin',
         BodyPart.ARMS => 'Arms',
-        BodyPart.SHOULDERS => 'Shoulders',
-        BodyPart.UPPER_ARMS => 'Upper Arms',
-        BodyPart.ELBOWS => 'Elbows',
-        BodyPart.FOREARMS => 'Forearms',
         BodyPart.HANDS => 'Hands',
         BodyPart.LEGS => 'Legs',
-        BodyPart.THIGS => 'Thigs',
-        BodyPart.KNEES => 'Knees',
-        BodyPart.SHINS => 'Shins',
         BodyPart.FEET => 'Fees',
         BodyPart.NONE => 'NONE',
       };
@@ -52,73 +36,92 @@ extension BodyPartString on BodyPart {
         'head' => BodyPart.HEAD,
         'skull' => BodyPart.SKULL,
         'face' => BodyPart.FACE,
+        'eyes' => BodyPart.EYES,
         'neck' => BodyPart.NECK,
         'torso' => BodyPart.TORSO,
-        'chest' => BodyPart.CHEST,
-        'abdomen' => BodyPart.ABDOMEN,
         'groin' => BodyPart.GROIN,
         'arms' => BodyPart.ARMS,
-        'shoulders' => BodyPart.SHOULDERS,
-        'upper arms' => BodyPart.UPPER_ARMS,
-        'elbows' => BodyPart.ELBOWS,
-        'forearms' => BodyPart.FOREARMS,
         'hands' => BodyPart.HANDS,
         'legs' => BodyPart.LEGS,
-        'thigs' => BodyPart.THIGS,
-        'knees' => BodyPart.KNEES,
-        'shins' => BodyPart.SHINS,
         'fees' => BodyPart.FEET,
         String() => BodyPart.NONE
       };
 }
 
-class ArmorLocation {
-  final BodyPart bodyPart;
-  double _covearage;
+class DamageResistance {
+  final int damageResistance;
+  final int? denominatorResistance;
+  final bool isFlexible;
+  final bool isFrontOnly;
 
-  ArmorLocation({required this.bodyPart, required double covearage})
-      : _covearage = covearage;
+  DamageResistance({
+    required int resistance,
+    this.denominatorResistance,
+    bool? isFlexible,
+    bool? isFrontOnly,
+  })  : damageResistance = resistance >= 0 ? resistance : 1,
+        isFlexible = isFlexible ?? false,
+        isFrontOnly = isFrontOnly ?? false;
 
-  double get covearage => _covearage;
-  set covearage(double value) {
-    if (value > 100 || value < 0) {
-      return;
+  factory DamageResistance.fromGURPSNotation(String notation) {
+    String normalized = notation.toLowerCase();
+
+    bool isFlexible = normalized.contains('*');
+
+    bool isFrontOnly = normalized.contains('f');
+
+    normalized = normalized.replaceAll('*', '').replaceAll('f', '');
+
+    int resistance = 0;
+    int? denominatorResistance;
+
+    try {
+      if (normalized.contains('/')) {
+        List<String> fractions = normalized.split('/');
+        resistance = int.parse(fractions[0]);
+        denominatorResistance = int.parse(fractions[1]);
+      } else {
+        resistance = int.parse(normalized);
+      }
+    } catch (e) {
+      throw FormatException('Incorrect GURPS notation: $notation');
     }
 
-    _covearage = value;
+    return DamageResistance(
+      resistance: resistance,
+      denominatorResistance: denominatorResistance,
+      isFlexible: isFlexible,
+      isFrontOnly: isFrontOnly,
+    );
   }
 
-  @override
-  String toString() {
-    if (covearage == 100) {
-      return '$bodyPart';
+  String get GURPSNotation {
+    String notation = '';
+
+    if (denominatorResistance != null) {
+      notation += '$damageResistance/$denominatorResistance';
+    } else {
+      notation += '$damageResistance';
     }
 
-    return '$bodyPart $covearage%';
+    if (isFrontOnly) {
+      notation += 'f';
+    }
+
+    if (isFlexible) {
+      notation += '*';
+    }
+
+    return notation;
   }
 }
 
 class Armor extends Gear {
-  final ArmorLocation armorLocation;
+  final BodyPart armorLocation;
   final bool? flexibility;
   final bool? isLayerable;
-  int _passiveDefense;
-  int _damageResistance;
-  String? notes;
-
-  int get passiveDefense => _passiveDefense;
-  set passiveDefense(int value) {
-    if (value > 0) {
-      _passiveDefense = value;
-    }
-  }
-
-  int get damageResistance => _damageResistance;
-  set damageResistance(int value) {
-    if (value >= 0) {
-      _damageResistance = value;
-    }
-  }
+  final String? notes;
+  final DamageResistance damageResistance;
 
   Armor({
     required super.name,
@@ -127,9 +130,7 @@ class Armor extends Gear {
     required this.armorLocation,
     required this.flexibility,
     required this.isLayerable,
-    required int passiveDefense,
-    required int damageResistance,
+    required this.damageResistance,
     this.notes,
-  })  : _passiveDefense = passiveDefense,
-        _damageResistance = damageResistance;
+  });
 }
