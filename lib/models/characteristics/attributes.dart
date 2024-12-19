@@ -1,4 +1,3 @@
-// ignore: constant_identifier_names
 enum Attributes {
   ST,
   DX,

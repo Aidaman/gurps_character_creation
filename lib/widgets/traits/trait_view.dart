@@ -33,6 +33,7 @@ class TraitView extends StatelessWidget {
     );
 
     return Container(
+      margin: const EdgeInsets.only(bottom: 4.0),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
@@ -45,91 +46,93 @@ class TraitView extends StatelessWidget {
           ),
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: Text(
-                    '${trait.title}',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    '${trait.type} ${trait.categories.map((e) => e.stringValue).join(', ')}',
-                  ),
-                )
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'base points: ${trait.basePoints}',
-                  ),
-                ),
-                Expanded(
-                  child: Text('cost: ${trait.cost}'),
-                )
-              ],
-            ),
-            if (trait.selectedModifiers != null &&
-                trait.selectedModifiers!.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
                 child: Text(
-                  trait.selectedModifiers!
-                      .map((TraitModifier mod) => mod.name)
-                      .join(', '),
+                  trait.title,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-            Row(
-              children: [
-                if (onAddClick != null)
-                  IconButton(
-                    onPressed: onAddClick,
-                    style: iconButtonStyle,
-                    constraints: iconButtonConstraints,
-                    icon: const Icon(Icons.add),
-                  ),
-                if (onRemoveClick != null)
-                  IconButton(
-                    onPressed: onRemoveClick,
-                    style: iconButtonStyle,
-                    constraints: iconButtonConstraints,
-                    icon: const Icon(Icons.remove),
-                  ),
-                if (onChangeModifiersClick != null)
-                  IconButton(
-                    onPressed: onChangeModifiersClick,
-                    style: iconButtonStyle,
-                    constraints: iconButtonConstraints,
-                    icon: const Icon(Icons.category_outlined),
-                  ),
-                if (onChangePlaceholderClick != null)
-                  IconButton(
-                    onPressed: onChangePlaceholderClick,
-                    style: iconButtonStyle,
-                    constraints: iconButtonConstraints,
-                    icon: const Icon(Icons.edit_outlined),
-                  ),
-                if (onInfoClick != null)
-                  IconButton(
-                    onPressed: onInfoClick,
-                    style: iconButtonStyle,
-                    constraints: iconButtonConstraints,
-                    icon: const Icon(Icons.info),
-                  ),
-              ],
-            )
-          ],
-        ),
+              Expanded(
+                child: Text(
+                  'base points: ${trait.basePoints}',
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  '${trait.type} ${trait.categories.map((e) => e.stringValue).join(', ')}',
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'cost: ${trait.cost}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              )
+            ],
+          ),
+          if (trait.selectedModifiers != null &&
+              trait.selectedModifiers!.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                trait.selectedModifiers!
+                    .map((TraitModifier mod) => mod.name)
+                    .join(', '),
+              ),
+            ),
+          Row(
+            children: [
+              if (onAddClick != null)
+                IconButton(
+                  onPressed: onAddClick,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.add),
+                ),
+              if (onRemoveClick != null)
+                IconButton(
+                  onPressed: onRemoveClick,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.remove),
+                ),
+              if (onChangeModifiersClick != null)
+                IconButton(
+                  onPressed: onChangeModifiersClick,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.category_outlined),
+                ),
+              if (onChangePlaceholderClick != null)
+                IconButton(
+                  onPressed: onChangePlaceholderClick,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.edit_outlined),
+                ),
+              if (onInfoClick != null)
+                IconButton(
+                  onPressed: onInfoClick,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.info),
+                ),
+            ],
+          )
+        ],
       ),
     );
   }

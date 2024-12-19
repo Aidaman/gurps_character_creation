@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
@@ -33,22 +34,24 @@ class SkillView extends StatelessWidget {
       maxWidth: 32,
     );
 
-    Widget body = Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Theme.of(context).colorScheme.onSurface,
             width: 1.0,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+          left: BorderSide(
+            color: skill.difficulty.colorValue,
+            width: 8.0,
           ),
         ),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Text(
@@ -57,16 +60,16 @@ class SkillView extends StatelessWidget {
                 ),
               ),
               if (skill.investedPoints < 1)
-                Text(
-                  'cost: ${skill.basePoints} (${skill.associatedAttribute.abbreviatedStringValue}/${skill.difficulty.stringValue})',
+                Expanded(
+                  child: Text(
+                    'cost: ${skill.basePoints} (${skill.associatedAttribute.abbreviatedStringValue}/${skill.difficulty.stringValue})',
+                  ),
                 )
               else
                 _generateSkillCostText(context),
             ],
           ),
-          const SizedBox(
-            height: 4.0,
-          ),
+          const Gap(4.0),
           Row(
             children: [
               Expanded(
@@ -83,7 +86,7 @@ class SkillView extends StatelessWidget {
           ),
           Row(
             children: [
-              _generateAddRemoveButtons(
+              _generateActions(
                 iconButtonStyle,
                 iconButtonConstraints,
               ),
@@ -97,11 +100,9 @@ class SkillView extends StatelessWidget {
         ],
       ),
     );
-
-    return body;
   }
 
-  Expanded _generateAddRemoveButtons(
+  Expanded _generateActions(
     ButtonStyle iconButtonStyle,
     BoxConstraints iconButtonConstraints,
   ) {

@@ -1,4 +1,3 @@
-// ignore: constant_identifier_names
 import 'package:flutter/material.dart';
 
 enum SkillDifficulty {
@@ -32,6 +31,14 @@ extension SkillDifficultyExtension on SkillDifficulty {
         SkillDifficulty.HARD => Icons.star_rounded,
         SkillDifficulty.VERY_HARD => Icons.warning_amber_rounded,
         SkillDifficulty.NONE => Icons.abc,
+      };
+
+  Color get colorValue => switch (this) {
+        SkillDifficulty.EASY => Colors.green,
+        SkillDifficulty.AVERAGE => Colors.blue,
+        SkillDifficulty.HARD => Colors.red,
+        SkillDifficulty.VERY_HARD => Colors.amber,
+        SkillDifficulty.NONE => Colors.grey,
       };
 
   static SkillDifficulty? fromString(String difficulty) {

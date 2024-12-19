@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
+import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:provider/provider.dart';
 
 class SpellView extends StatelessWidget {
   final Spell spell;
@@ -17,20 +20,118 @@ class SpellView extends StatelessWidget {
 
   bool isAllPrerequisitesSatisfiedOrNull() {
     bool prerequisitesIsNull = spell.unsatisfitedPrerequisitesList == null;
+
     return prerequisitesIsNull ||
         !prerequisitesIsNull && spell.unsatisfitedPrerequisitesList!.isEmpty;
   }
 
-  Color determineBottomBorderColor(BuildContext context) {
-    if (isAllPrerequisitesSatisfiedOrNull()) {
-      return Theme.of(context).colorScheme.onSurface;
-    }
-
-    return Theme.of(context).colorScheme.error;
-  }
-
   @override
   Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Theme.of(context).colorScheme.secondary,
+            width: 1.0,
+          ),
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  spell.name,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+              Expanded(
+                child: Text(spell.college.join(', ')),
+              ),
+            ],
+          ),
+          const Gap(4),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: Text('Casting Time: ${spell.castingTime}')),
+              Expanded(child: Text('Casting Cost: ${spell.castingCost}')),
+            ],
+          ),
+          const Gap(4),
+          Row(
+            children: [
+              Expanded(
+                child: Text('Duration: ${spell.duration}'),
+              ),
+              Expanded(
+                child: Text('Maintanence cost: ${spell.maintenanceCost}'),
+              ),
+            ],
+          ),
+          const Gap(4),
+          Row(
+            children: [Text('Class: ${spell.spellClass}')],
+          ),
+          const Gap(4),
+          if (!isAllPrerequisitesSatisfiedOrNull())
+            Row(
+              children: [
+                Expanded(child: _buildPrerequisitesView(context)),
+              ],
+            ),
+          const Gap(4),
+          if (onAddClick != null || onRemoveClick != null) _buildActions()
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPrerequisitesView(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 8.0),
+      decoration: BoxDecoration(
+        border: Border(
+          left: BorderSide(
+            width: 2,
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+      ),
+      child: Column(
+        children: [
+          const Text('This spell requires to also include:'),
+          ...spell.unsatisfitedPrerequisitesList!.map(
+            (String spellName) => _buildAddPrereqButton(spellName, context),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAddPrereqButton(String spellName, BuildContext context) {
+    final CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: TextButton(
+            onPressed: () {
+              characterProvider.addSpellByName(spellName, context);
+            },
+            child: Text(spellName),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActions() {
     final ButtonStyle iconButtonStyle = IconButton.styleFrom(
       iconSize: 16,
       padding: const EdgeInsets.all(4),
@@ -40,128 +141,22 @@ class SpellView extends StatelessWidget {
       maxWidth: 32,
     );
 
-    Widget body = Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: determineBottomBorderColor(context),
-            width: isAllPrerequisitesSatisfiedOrNull() ? 1.0 : 2.0,
-          ),
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 4, bottom: 12),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    spell.name,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-                Expanded(
-                  child: Text(spell.college.join(', ')),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: Text('Casting Time: ${spell.castingTime}')),
-                Expanded(child: Text('Casting Cost: ${spell.castingCost}')),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text('Duration: ${spell.duration}'),
-                ),
-                Expanded(
-                  child: Text('Maintanence cost: ${spell.maintenanceCost}'),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 4,
-            ),
-            Row(
-              children: [Text('Class: ${spell.spellClass}')],
-            ),
-            if (onAddClick != null || onRemoveClick != null)
-              Column(
-                children: [
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  _generateIncludeButtons(
-                    iconButtonStyle,
-                    iconButtonConstraints,
-                  ),
-                ],
-              )
-          ],
-        ),
-      ),
-    );
-
-    if (isAllPrerequisitesSatisfiedOrNull()) {
-      return body;
-    }
-
-    return Column(
-      children: [
-        body,
-        Text('The \'${spell.name}\' requires you to include these spells:'),
-        ...spell.unsatisfitedPrerequisitesList!.map(
-          (e) {
-            return Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    e,
-                    style: const TextStyle(
-                        fontSize: 14, fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ],
-            );
-          },
-        )
-      ],
-    );
-  }
-
-  Row _generateIncludeButtons(
-      ButtonStyle iconButtonStyle, BoxConstraints iconButtonConstraints) {
     return Row(
       children: [
-        Expanded(
-          child: Row(
-            children: [
-              if (onAddClick != null)
-                IconButton(
-                  onPressed: onAddClick,
-                  style: iconButtonStyle,
-                  constraints: iconButtonConstraints,
-                  icon: const Icon(Icons.add),
-                ),
-              if (onRemoveClick != null)
-                IconButton(
-                  onPressed: onRemoveClick,
-                  style: iconButtonStyle,
-                  constraints: iconButtonConstraints,
-                  icon: const Icon(Icons.remove),
-                ),
-            ],
+        if (onAddClick != null)
+          IconButton(
+            onPressed: onAddClick,
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.add),
           ),
-        )
+        if (onRemoveClick != null)
+          IconButton(
+            onPressed: onRemoveClick,
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.remove),
+          ),
       ],
     );
   }
