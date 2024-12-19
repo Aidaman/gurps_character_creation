@@ -5,8 +5,10 @@ import 'package:gurps_character_creation/models/characteristics/attributes.dart'
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
+import 'package:provider/provider.dart';
 
 class CharacterProvider with ChangeNotifier {
   Character _character = Character.empty();
@@ -209,6 +211,25 @@ class CharacterProvider with ChangeNotifier {
 
     _isDirty = true;
     refreshSpellUnsatisfiedPrereqs();
+    notifyListeners();
+  }
+
+  void addSpellByName(String spellName, BuildContext context) {
+    if (_character.spells.any((s) => s.name == spellName)) {
+      return;
+    }
+
+    final AspectsProvider aspectsProvider =
+        Provider.of<AspectsProvider>(context, listen: false);
+
+    if (!aspectsProvider.spells.any((s) => s.name.toLowerCase() == spellName)) {
+      return;
+    }
+
+    addSpell(aspectsProvider.spells.singleWhere(
+      (s) => s.name.toLowerCase() == spellName,
+    ));
+
     notifyListeners();
   }
 

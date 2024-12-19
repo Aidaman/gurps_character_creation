@@ -1,12 +1,12 @@
+import 'package:gurps_character_creation/models/characteristics/attributes.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
+import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/models/gear/weapon.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
-import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,7 +38,7 @@ class Character {
   List<Armor> armor;
   List<Posession> possessions;
 
-  static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 3;
+  static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 1;
   static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
   static const int DEFAULT_PRIMARY_ATTRIBUTE_VALUE = 10;
 
@@ -68,7 +68,8 @@ class Character {
   int pointsSpentOnFP = 0;
 
   int get remainingPoints {
-    int traitsTotalCount = traits
+    int total = 0;
+    total += traits
         .map(
           (Trait t) => t.cost,
         )
@@ -76,7 +77,7 @@ class Character {
           0,
           (sum, cost) => sum + cost,
         );
-    int skillsTotalCount = skills
+    total += skills
         .map(
           (Skill s) => s.investedPoints,
         )
@@ -84,7 +85,7 @@ class Character {
           0,
           (sum, cost) => sum + cost,
         );
-    int magicTotalCount = spells
+    total += spells
         .map(
           (Spell s) => s.investedPoints,
         )
@@ -93,17 +94,12 @@ class Character {
           (sum, cost) => sum + cost,
         );
 
-    int pointsSpentOnAttributes = 0;
+    total += Attributes.values.fold(
+      0,
+      (sum, attr) => sum + getPointsSpentOnAttribute(attr),
+    );
 
-    for (Attributes attribute in Attributes.values) {
-      pointsSpentOnAttributes += getPointsSpentOnAttribute(attribute);
-    }
-
-    return points -
-        (traitsTotalCount +
-            skillsTotalCount +
-            magicTotalCount +
-            pointsSpentOnAttributes);
+    return points - total;
   }
 
   Character({
@@ -307,19 +303,19 @@ class Character {
     return newValue;
   }
 
-  int getPointsSpentOnAttribute(Attributes stat) {
-    switch (stat) {
+  int getPointsSpentOnAttribute(Attributes attribute) {
+    switch (attribute) {
       case Attributes.ST:
-        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
             Attributes.ST.adjustPriceOf;
       case Attributes.DX:
-        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
             Attributes.DX.adjustPriceOf;
       case Attributes.IQ:
-        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
             Attributes.IQ.adjustPriceOf;
       case Attributes.HT:
-        return (getAttribute(stat) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
+        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
             Attributes.HT.adjustPriceOf;
       case Attributes.Per:
         return pointsSpentOnPer;

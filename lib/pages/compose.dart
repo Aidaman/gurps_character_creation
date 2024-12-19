@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/characteristics/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
@@ -28,7 +29,8 @@ class _ComposePageState extends State<ComposePage> {
 
   bool _isSidebarVisible = true;
 
-  TraitCategories selectedCategory = TraitCategories.NONE;
+  TraitCategories selectedTraitCategory = TraitCategories.NONE;
+  SkillDifficulty selectedSkillDifficulty = SkillDifficulty.NONE;
   SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
 
   void _toggleSidebar(
@@ -58,25 +60,16 @@ class _ComposePageState extends State<ComposePage> {
 
     final Widget sidebar = SafeArea(
       child: SidebarContent(
-        selectedCategory: selectedCategory,
+        selectedSkillDifficulty: selectedSkillDifficulty,
+        selectedTraitCategory: selectedTraitCategory,
         sidebarContent: sidebarContent,
-        onTraitFilterButtonPressed: (TraitCategories category) {
-          setState(() {
-            sidebarContent = SidebarFutureTypes.TRAITS;
-
-            if (selectedCategory == category) {
-              selectedCategory = TraitCategories.NONE;
-              return;
-            }
-
-            selectedCategory = category;
-          });
-        },
+        onTraitFilterButtonPressed: onTraitFilterPressed,
+        onSkillFilterButtonPressed: onSkillFilterPressed,
         onSidebarFutureChange: (SidebarFutureTypes type) {
           setState(() {
             if (type == SidebarFutureTypes.TRAITS &&
                 sidebarContent == SidebarFutureTypes.TRAITS) {
-              selectedCategory = TraitCategories.NONE;
+              selectedTraitCategory = TraitCategories.NONE;
               return;
             }
 
@@ -167,6 +160,32 @@ class _ComposePageState extends State<ComposePage> {
               child: sidebar,
             ),
     );
+  }
+
+  void onTraitFilterPressed(TraitCategories category) {
+    setState(() {
+      sidebarContent = SidebarFutureTypes.TRAITS;
+
+      if (selectedTraitCategory == category) {
+        selectedTraitCategory = TraitCategories.NONE;
+        return;
+      }
+
+      selectedTraitCategory = category;
+    });
+  }
+
+  void onSkillFilterPressed(SkillDifficulty category) {
+    setState(() {
+      sidebarContent = SidebarFutureTypes.SKILLS;
+
+      if (selectedSkillDifficulty == category) {
+        selectedSkillDifficulty = SkillDifficulty.NONE;
+        return;
+      }
+
+      selectedSkillDifficulty = category;
+    });
   }
 
   Widget _generateEmptyTraitOrSkillView(List<String> categories) {
