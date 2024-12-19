@@ -3,11 +3,11 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill.dar
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
-import 'package:gurps_character_creation/models/gear/damage_type.dart';
-import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
+import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/models/gear/weapon.dart';
-import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:uuid/uuid.dart';
 
 class Character {

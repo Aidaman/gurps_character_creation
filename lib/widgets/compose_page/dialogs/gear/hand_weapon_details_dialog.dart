@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/utilities/dialog_size.dart';
 
 class HandWeaponDetailsDialog extends StatelessWidget {

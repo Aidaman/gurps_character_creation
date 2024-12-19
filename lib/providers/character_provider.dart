@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/models/gear/weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';

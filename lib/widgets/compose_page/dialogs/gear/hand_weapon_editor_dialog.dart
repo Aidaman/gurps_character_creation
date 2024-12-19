@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/models/gear/damage_type.dart';
-import 'package:gurps_character_creation/models/gear/hand_weapon.dart';
-import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
+import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
+import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/dialog_size.dart';

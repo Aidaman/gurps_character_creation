@@ -1,6 +1,6 @@
-import 'package:gurps_character_creation/models/gear/damage_type.dart';
-import 'package:gurps_character_creation/models/gear/weapon.dart';
-import 'package:gurps_character_creation/models/gear/weapon_damage.dart';
+import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
+import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 
 class HandWeaponReach {
   final int minimalRange;

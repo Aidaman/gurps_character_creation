@@ -1,4 +1,4 @@
-import 'package:gurps_character_creation/models/gear/damage_type.dart';
+import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 
 enum AttackTypes { THRUST, SWING, NONE }
 
