@@ -34,10 +34,10 @@ extension SkillDifficultyExtension on SkillDifficulty {
       };
 
   Color get colorValue => switch (this) {
-        SkillDifficulty.EASY => Colors.green,
-        SkillDifficulty.AVERAGE => Colors.blue,
-        SkillDifficulty.HARD => Colors.red,
-        SkillDifficulty.VERY_HARD => Colors.amber,
+        SkillDifficulty.EASY => Colors.green.shade300,
+        SkillDifficulty.AVERAGE => Colors.blue.shade300,
+        SkillDifficulty.HARD => Colors.red.shade300,
+        SkillDifficulty.VERY_HARD => Colors.orange.shade300,
         SkillDifficulty.NONE => Colors.grey,
       };
 

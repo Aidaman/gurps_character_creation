@@ -19,10 +19,10 @@ extension TraitCategoriesExtension on TraitCategories {
 
   Color get colorValue => switch (this) {
         TraitCategories.NONE => Colors.white,
-        TraitCategories.ADVANTAGE => Colors.amber[400]!,
-        TraitCategories.DISADVANTAGE => Colors.pink[400]!,
-        TraitCategories.QUIRK => Colors.purple[400]!,
-        TraitCategories.PERK => Colors.cyan[400]!,
+        TraitCategories.ADVANTAGE => Colors.green.shade300,
+        TraitCategories.DISADVANTAGE => Colors.red.shade300,
+        TraitCategories.QUIRK => Colors.purple.shade300,
+        TraitCategories.PERK => Colors.blue.shade300,
       };
 
   IconData get iconValue => switch (this) {
