@@ -230,7 +230,7 @@ class ComposePageHandWeaponsSection extends StatelessWidget {
     );
 
     if (newWeapon != null) {
-      characterProvider.updateWeapon(hw.id, newWeapon);
+      characterProvider.updateWeapon(newWeapon);
     }
   }
 }

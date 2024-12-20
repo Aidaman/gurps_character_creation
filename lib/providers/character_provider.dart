@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
+import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
@@ -250,16 +251,12 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateWeapon(String oldWeaponId, Weapon newWeapon) {
-    int weaponIndex = _character.weapons.indexWhere(
-      (Weapon wpn) => wpn.id == oldWeaponId,
-    );
-
-    if (weaponIndex == -1) {
-      return;
-    }
-
-    _character.weapons[weaponIndex] = newWeapon;
+  void updateWeapon(Weapon newWeapon) {
+    _character.weapons = _character.weapons
+        .map(
+          (Weapon wpn) => wpn.id == newWeapon.id ? newWeapon : wpn,
+        )
+        .toList();
 
     _isDirty = true;
     notifyListeners();
@@ -268,6 +265,33 @@ class CharacterProvider with ChangeNotifier {
   void removeWeapon(Weapon weapon) {
     _character.weapons.removeWhere(
       (Weapon wpn) => wpn.id == weapon.id,
+    );
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void addArmor(Armor armor) {
+    _character.armor.add(armor);
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void updateArmor(Armor newArmor) {
+    _character.armor = _character.armor
+        .map(
+          (Armor armor) => armor.id == newArmor.id ? newArmor : armor,
+        )
+        .toList();
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void removeArmor(Armor armorToRemove) {
+    _character.armor.removeWhere(
+      (Armor armor) => armor.id == armorToRemove.id,
     );
 
     _isDirty = true;

@@ -175,7 +175,7 @@ class ComposePageRangedWeaponsSection extends StatelessWidget {
     );
 
     if (newWeapon != null) {
-      characterProvider.updateWeapon(rw.id, newWeapon);
+      characterProvider.updateWeapon(newWeapon);
     }
   }
 }
