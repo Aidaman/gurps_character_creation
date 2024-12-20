@@ -1,45 +1,7 @@
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
-
-enum RangedWeaponLegalityClass {
-  BANNED,
-  MILITARY,
-  RESTRICTED,
-  LICENSED,
-  OPEN,
-  NONE
-}
-
-extension RangedWeaponLegalityClassExtention on RangedWeaponLegalityClass {
-  String get stringValue => switch (this) {
-        RangedWeaponLegalityClass.BANNED => 'Banned',
-        RangedWeaponLegalityClass.MILITARY => 'Military',
-        RangedWeaponLegalityClass.RESTRICTED => 'Restricted',
-        RangedWeaponLegalityClass.LICENSED => 'Licensed',
-        RangedWeaponLegalityClass.OPEN => 'Open',
-        RangedWeaponLegalityClass.NONE => 'NONE',
-      };
-
-  String get abbreviatedStringValue => switch (this) {
-        RangedWeaponLegalityClass.BANNED => 'LC0',
-        RangedWeaponLegalityClass.MILITARY => 'LC1',
-        RangedWeaponLegalityClass.RESTRICTED => 'LC2',
-        RangedWeaponLegalityClass.LICENSED => 'LC3',
-        RangedWeaponLegalityClass.OPEN => 'LC4',
-        RangedWeaponLegalityClass.NONE => 'NONE',
-      };
-
-  static RangedWeaponLegalityClass fromString(String string) =>
-      switch (string.toLowerCase()) {
-        'banned' => RangedWeaponLegalityClass.BANNED,
-        'military' => RangedWeaponLegalityClass.MILITARY,
-        'restricted' => RangedWeaponLegalityClass.RESTRICTED,
-        'licensed' => RangedWeaponLegalityClass.LICENSED,
-        'open' => RangedWeaponLegalityClass.OPEN,
-        String() => RangedWeaponLegalityClass.NONE,
-      };
-}
 
 class RangeWeaponShots {
   final int shotsAvailable;
@@ -118,30 +80,50 @@ class WeaponStrengths {
 }
 
 class Range {
-  final int shortRange;
-  final int? longRange;
+  int? _minRange;
+  int? get minRange => _minRange;
+  set minRange(int? value) {
+    if (value == null) {
+      return;
+    }
 
-  const Range({required this.shortRange, this.longRange});
+    if (maxRange == 0) {
+      maxRange = value;
+      return;
+    }
+
+    if (maxRange < value) {
+      _minRange = maxRange;
+      maxRange = value;
+      return;
+    }
+
+    _minRange = value;
+  }
+
+  int maxRange;
+
+  Range({int? minRange, required this.maxRange}) : _minRange = minRange;
 
   factory Range.fromJson(Map<String, dynamic> json) => Range(
-        shortRange: json['short_range'],
-        longRange: json['long_range'],
+        minRange: json['min_range'],
+        maxRange: json['max_range'],
       );
 
-  static isRange(Map<String, dynamic> json) => json.containsKey('short_range');
+  static isRange(Map<String, dynamic> json) => json.containsKey('min_range');
 
   Map<String, dynamic> toJson() => {
-        'short_range': shortRange,
-        'long_range': longRange,
+        'min_range': minRange,
+        'max_range': maxRange,
       };
 
   @override
   String toString() {
-    if (longRange != null) {
-      return '$shortRange/$longRange';
+    if (minRange != null) {
+      return '$minRange/$maxRange';
     }
 
-    return '$shortRange';
+    return '$maxRange';
   }
 }
 
@@ -153,7 +135,6 @@ class RangedWeapon extends Weapon {
   final int bulk;
   final int recoil;
   final WeaponStrengths st;
-  final RangedWeaponLegalityClass lc;
 
   RangedWeapon({
     required super.damage,
@@ -169,7 +150,7 @@ class RangedWeapon extends Weapon {
     required this.bulk,
     required this.recoil,
     required this.st,
-    required this.lc,
+    required super.lc,
     required super.minimumSt,
   });
 
@@ -188,7 +169,7 @@ class RangedWeapon extends Weapon {
     required this.bulk,
     required this.recoil,
     required this.st,
-    required this.lc,
+    required super.lc,
     required super.id,
   }) : super.withId();
 
@@ -208,7 +189,7 @@ class RangedWeapon extends Weapon {
     int? bulk,
     int? recoil,
     WeaponStrengths? st,
-    RangedWeaponLegalityClass? lc,
+    LegalityClass? lc,
   }) {
     return RangedWeapon(
       damage: damage ?? rw.damage,
@@ -239,7 +220,7 @@ class RangedWeapon extends Weapon {
         name: '',
         price: 0,
         weight: 0,
-        range: const Range(shortRange: 0, longRange: 0),
+        range: Range(minRange: 0, maxRange: 0),
         accuracy: 0,
         rateOfFire: 0,
         shots: const RangeWeaponShots(
@@ -253,7 +234,7 @@ class RangedWeapon extends Weapon {
           hasBonusForHigherStrength: false,
           isTwoHanded: false,
         ),
-        lc: RangedWeaponLegalityClass.NONE,
+        lc: LegalityClass.NONE,
         associatedSkillName: '',
         minimumSt: 10,
       );

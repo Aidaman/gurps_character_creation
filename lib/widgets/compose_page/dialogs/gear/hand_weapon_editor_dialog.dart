@@ -7,9 +7,8 @@ import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/utilities/dialog_size.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {
@@ -139,106 +138,59 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
   @override
   void initState() {
-    if (widget.oldHandWeapon == null) {
-      super.initState();
-      return;
-    }
-
-    _handWeapon = widget.oldHandWeapon!;
+    _handWeapon = widget.oldHandWeapon ?? HandWeapon.empty();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double maxHeight = MediaQuery.of(context).size.height / 1.5;
-    final bool isMobile = screenWidth <= MAX_MOBILE_WIDTH;
+    return GearEditorDialog(
+      formKey: _formkey,
+      oldGear: _handWeapon,
+      actions: [
+        TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context, null);
+          },
+          label: const Text('cancel'),
+        ),
+        FilledButton.icon(
+          onPressed: () {
+            if (_formkey.currentState!.validate()) {
+              Navigator.pop(context, _handWeapon);
+            }
+          },
+          label: const Text('add'),
+        ),
+      ],
+      additionalChildren: [
+        ..._ordinaryFields,
+        _buildReachSection(),
+        const Gap(16),
+        _buildDamageSection(),
+        const Gap(16),
+        buildTextFormField(
+          maxLines: null,
+          defaultValue: widget.oldHandWeapon?.notes,
+          label: 'Notes for this Weapon',
+          keyboardType: TextInputType.multiline,
+          validator: (String? value) {
+            return null;
+          },
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
 
-    Widget body = AlertDialog.adaptive(
-      title: _buildTitle(),
-      shape: dialogShape,
-      actions: _buildActions(context),
-      scrollable: true,
-      content: SingleChildScrollView(
-        child: _buildForm(),
-      ),
-    );
-
-    if (isMobile) {
-      return body;
-    }
-
-    return Center(
-      child: SizedBox(
-        width: min(screenWidth / 1.5, MAX_DESKTOP_CONTENT_WIDTH / 1.5),
-        height: maxHeight,
-        child: body,
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    if (_handWeapon.name == '') {
-      return const Text('New Weapon');
-    }
-
-    return Text(_handWeapon.name);
-  }
-
-  List<Widget> _buildActions(BuildContext context) {
-    return [
-      TextButton.icon(
-        onPressed: () {
-          Navigator.pop(context, null);
-        },
-        label: const Text('cancel'),
-      ),
-      FilledButton.icon(
-        onPressed: () {
-          if (_formkey.currentState!.validate()) {
-            Navigator.pop(context, _handWeapon);
-          }
-        },
-        label: const Text('add'),
-      ),
-    ];
-  }
-
-  Form _buildForm() {
-    return Form(
-      key: _formkey,
-      child: Column(
-        children: <Widget>[
-          ..._buildBaseInfoSection(),
-          _buildReachSection(),
-          const Gap(16),
-          _buildDamageSection(),
-          const Gap(16),
-          buildTextFormField(
-            maxLines: null,
-            defaultValue: widget.oldHandWeapon?.notes,
-            label: 'Notes for this Weapon',
-            keyboardType: TextInputType.multiline,
-            validator: (String? value) {
-              return null;
-            },
-            onChanged: (value) {
-              if (value == null) {
-                return;
-              }
-
-              _handWeapon = HandWeapon.copyWith(_handWeapon, notes: value);
-            },
-            context: context,
-          )
-        ],
-      ),
+            _handWeapon = HandWeapon.copyWith(_handWeapon, notes: value);
+          },
+          context: context,
+        )
+      ],
     );
   }
 
-  List<Widget> _buildBaseInfoSection() {
-    const String MIN_ST_EXPLANATION =
-        'All Handweapons in GURPS have a minimum Strength required to wield them\nIf your character ST is lower than this parametre — they will receive a penalty to any check for the weapon equal to: Character ST - Minimum ST';
+  List<Widget> get _ordinaryFields {
     final List<DropdownMenuItem<String>> assosiatedSkillsItems =
         Provider.of<AspectsProvider>(context)
             .skills
@@ -254,60 +206,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
     return [
       buildTextFormField(
-        label: 'Name of the weapon',
-        defaultValue: widget.oldHandWeapon?.name,
-        validator: validateText,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-          setState(() {
-            _handWeapon = HandWeapon.copyWith(_handWeapon, name: value);
-          });
-        },
-        context: context,
-      ),
-      const Gap(12),
-      buildTextFormField(
-        keyboardType: TextInputType.number,
-        allowsDecimal: true,
-        defaultValue: widget.oldHandWeapon?.weight.toString(),
-        label: 'Weight of the weapon',
-        validator: validateNumber,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-
-          _handWeapon = HandWeapon.copyWith(
-            _handWeapon,
-            weight: parseInput<double>(value, double.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(12),
-      buildTextFormField(
-        keyboardType: TextInputType.number,
-        allowsDecimal: true,
-        defaultValue: widget.oldHandWeapon?.price.toString(),
-        label: 'Price of the weapon',
-        validator: validateNumber,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-
-          _handWeapon = HandWeapon.copyWith(
-            _handWeapon,
-            price: parseInput<double>(value, double.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Minimum Strengths required to wield this weapon',
+        label: 'Minimum Strengths ',
         defaultValue: widget.oldHandWeapon?.minimumSt.toString(),
         keyboardType: const TextInputType.numberWithOptions(
           decimal: false,
@@ -328,7 +227,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
       ),
       const Gap(8),
       Text(
-        MIN_ST_EXPLANATION,
+        'In GURPS all martial weapons require some ST value for effective use',
         style: Theme.of(context).textTheme.labelSmall,
       ),
       const Gap(24),
@@ -346,7 +245,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
       ),
       const Gap(8),
       Text(
-        'Any weapon has a skill attached that determines how successfull you parry and hit with a given weapon',
+        'In GURPS all weapons require some Skill for effectuve usage, parry, etc.',
         style: Theme.of(context).textTheme.labelSmall,
       ),
       const Gap(16),
@@ -356,8 +255,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
   Widget _buildReachSection() {
     return markAsGroup(
       title: 'Reach',
-      description:
-          'Any weapon in GURPS has an effective distance that is measured in Hexes. Hex is a 0.9 meters (1yard) hexagon area',
+      description: 'In GURPS all weapons have effective range of usage',
       child: Row(
         children: [
           Expanded(
@@ -447,7 +345,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
     return markAsGroup(
       title: 'Damage',
       description:
-          'Any weapon has an attack type (Thrust or Swing). The Swing damage is higher since the weapon functions as a lever in that case\n\nAny weapon has some modifier on top of the basic throw. For example Thr+2 means you pick a Thrusting throw from the table and add 2\n\nAnd damage type is self explainatory',
+          'In GURPS weapons can inflict either Thrust or Swing damage\nAlso you can clarify some bonus to damage with this weapon',
       child: Column(
         children: [
           buildFormDropdownMenu(

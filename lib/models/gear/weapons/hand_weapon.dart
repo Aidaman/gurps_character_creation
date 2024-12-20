@@ -1,3 +1,4 @@
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
@@ -47,6 +48,7 @@ class HandWeapon extends Weapon {
     required super.weight,
     required super.associatedSkillName,
     required super.minimumSt,
+    required super.lc,
   });
 
   HandWeapon.withId({
@@ -58,6 +60,7 @@ class HandWeapon extends Weapon {
     required super.weight,
     required super.associatedSkillName,
     required super.minimumSt,
+    required super.lc,
     required super.id,
   }) : super.withId();
 
@@ -71,6 +74,7 @@ class HandWeapon extends Weapon {
     double? weight,
     String? associatedSkillName,
     int? minimumSt,
+    LegalityClass? lc,
   }) {
     return HandWeapon(
       reach: reach ?? hw.reach,
@@ -81,6 +85,7 @@ class HandWeapon extends Weapon {
       weight: weight ?? hw.weight,
       associatedSkillName: associatedSkillName ?? hw.associatedSkillName,
       minimumSt: minimumSt ?? hw.minimumSt,
+      lc: lc ?? hw.lc,
     );
   }
 
@@ -100,6 +105,7 @@ class HandWeapon extends Weapon {
         weight: 0,
         associatedSkillName: '',
         minimumSt: 0,
+        lc: LegalityClass.OPEN,
       );
 
   factory HandWeapon.fromJson(Map<String, dynamic> json) => HandWeapon(
@@ -111,6 +117,7 @@ class HandWeapon extends Weapon {
         reach: HandWeaponReach.fromJson(json['reach']),
         associatedSkillName: json['associated_skill_name'],
         minimumSt: json['minimum_st'],
+        lc: LegalityClassExtention.fromString(json['lc']),
       );
 
   static double calculateParry(int skillLevel) {
@@ -129,6 +136,7 @@ class HandWeapon extends Weapon {
         'damage': damage.toJson(),
         'reach': reach.toJson(),
         'associated_skill_name': associatedSkillName,
+        'lc': associatedSkillName,
       };
 
   Map<String, dynamic> get dataTableColumns => {
@@ -139,5 +147,6 @@ class HandWeapon extends Weapon {
         'reach': reach.toJson(),
         'parry': 0,
         'skill': associatedSkillName,
+        'lc': associatedSkillName,
       };
 }

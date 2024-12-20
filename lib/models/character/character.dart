@@ -3,6 +3,7 @@ import 'package:gurps_character_creation/models/characteristics/skills/skill.dar
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
@@ -209,6 +210,7 @@ class Character {
               maximumRange: 0,
             ),
             notes: 'A plain bite, anybody can do it, unless they have no teeth',
+            lc: LegalityClass.OPEN,
           ),
           HandWeapon(
             name: 'Punch',
@@ -227,6 +229,7 @@ class Character {
             ),
             notes:
                 'A punch with a bare hand, when there is no weapon what else you left but your own limbs?',
+            lc: LegalityClass.OPEN,
           ),
           HandWeapon(
             name: 'Kick',
@@ -245,6 +248,7 @@ class Character {
             ),
             notes:
                 'A kick with a leg, be carefull and do not fall in the process though',
+            lc: LegalityClass.OPEN,
           ),
         ],
         possessions: [],

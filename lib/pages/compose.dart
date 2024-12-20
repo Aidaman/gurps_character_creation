@@ -6,6 +6,7 @@ import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/armor.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/basic_info_fields.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/character_attributes.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/hand_weapons.dart';
@@ -151,6 +152,7 @@ class _ComposePageState extends State<ComposePage> {
           ),
           handWeapons: const ComposePageHandWeaponsSection(),
           rangedWeapons: const ComposePageRangedWeaponsSection(),
+          armor: const ComposePageArmorSection(),
           // restOfTheBody: const [],
         ),
       ),

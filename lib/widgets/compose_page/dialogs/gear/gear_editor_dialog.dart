@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/models/gear/gear.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/utilities/form_helpers.dart';
+
+class GearEditorDialog extends StatefulWidget {
+  final GlobalKey<FormState> formKey;
+  final List<Widget> actions;
+  final Gear? oldGear;
+  final List<Widget> additionalChildren;
+
+  const GearEditorDialog({
+    super.key,
+    this.oldGear,
+    required this.formKey,
+    required this.actions,
+    required this.additionalChildren,
+  });
+
+  @override
+  State<GearEditorDialog> createState() => _GearEditorDialogState();
+}
+
+class _GearEditorDialogState extends State<GearEditorDialog> {
+  late Gear _gear;
+
+  @override
+  void initState() {
+    _gear = widget.oldGear ?? Gear.empty();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog.adaptive(
+      title: _buildTitle(),
+      shape: dialogShape,
+      actions: widget.actions,
+      scrollable: true,
+      content: ConstrainedBox(
+        constraints: defineDialogConstraints(context),
+        child: Form(
+          key: widget.formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ..._formFields,
+                const Gap(12),
+                ...widget.additionalChildren,
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTitle() {
+    if (_gear.name.isEmpty) {
+      return const Text('New Item');
+    }
+
+    return Text(_gear.name);
+  }
+
+  List<Widget> get _formFields => [
+        buildTextFormField(
+          label: 'Name of the Item',
+          defaultValue: _gear.name,
+          validator: validateText,
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
+
+            setState(() {
+              _gear = Gear.copyWith(_gear, name: value);
+            });
+          },
+          context: context,
+        ),
+        const Gap(12),
+        buildTextFormField(
+          keyboardType: TextInputType.number,
+          allowsDecimal: true,
+          defaultValue: _gear.weight.toString(),
+          label: 'Weight of the Item',
+          validator: validateNumber,
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
+
+            _gear = Gear.copyWith(
+              _gear,
+              weight: parseInput<double>(value, double.parse),
+            );
+          },
+          context: context,
+        ),
+        const Gap(12),
+        buildTextFormField(
+          keyboardType: TextInputType.number,
+          allowsDecimal: true,
+          defaultValue: _gear.price.toString(),
+          label: 'Price of the Item',
+          validator: validateNumber,
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
+
+            _gear = Gear.copyWith(
+              _gear,
+              price: parseInput<double>(value, double.parse),
+            );
+          },
+          context: context,
+        ),
+      ];
+}

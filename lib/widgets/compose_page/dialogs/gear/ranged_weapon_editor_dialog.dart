@@ -1,15 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/utilities/dialog_size.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 class RangedWeaponEditorDialog extends StatefulWidget {
@@ -29,365 +27,297 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
 
   @override
   void initState() {
-    if (widget.oldRangedWeapon == null) {
-      super.initState();
-      return;
-    }
-
-    _rangedWeapon = widget.oldRangedWeapon!;
+    _rangedWeapon = widget.oldRangedWeapon ?? RangedWeapon.empty();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double maxHeight = MediaQuery.of(context).size.height / 1.5;
-    final bool isMobile = screenWidth <= MAX_MOBILE_WIDTH;
-
-    Widget body = AlertDialog.adaptive(
-      title: _buildTitle(),
-      shape: dialogShape,
-      actions: _buildActions(context),
-      scrollable: true,
-      content: SingleChildScrollView(
-        child: _buildForm(),
-      ),
-    );
-
-    if (isMobile) {
-      return body;
-    }
-
-    return Center(
-      child: SizedBox(
-        width: min(screenWidth / 1.5, MAX_DESKTOP_CONTENT_WIDTH / 1.5),
-        height: maxHeight,
-        child: body,
-      ),
-    );
-  }
-
-  Widget _buildTitle() {
-    if (_rangedWeapon.name == '') {
-      return const Text('New Weapon');
-    }
-
-    return Text(_rangedWeapon.name);
-  }
-
-  List<Widget> _buildActions(BuildContext context) {
-    return [
-      TextButton.icon(
-        onPressed: () {
-          Navigator.pop(context, null);
-        },
-        label: const Text('cancel'),
-      ),
-      FilledButton.icon(
-        onPressed: () {
-          if (_formkey.currentState!.validate()) {
-            Navigator.pop(context, _rangedWeapon);
-          }
-        },
-        label: const Text('add'),
-      ),
-    ];
-  }
-
-  Widget _buildForm() {
-    return Form(
-      key: _formkey,
-      child: Column(
-        children: [
-          ..._buildBaseInfoSection(),
-          const Gap(16),
-          _buildDamageSection(),
-          const Gap(16),
-          _buildStSection(),
-          const Gap(16),
-          _buildRangeSection(),
-          const Gap(16),
-          _buildShotsSection(),
-        ],
-      ),
+    return GearEditorDialog(
+      formKey: _formkey,
+      actions: [
+        TextButton.icon(
+          onPressed: () {
+            Navigator.pop(context, null);
+          },
+          label: const Text('cancel'),
+        ),
+        FilledButton.icon(
+          onPressed: () {
+            if (_formkey.currentState!.validate()) {
+              Navigator.pop(context, _rangedWeapon);
+            }
+          },
+          label: const Text('add'),
+        ),
+      ],
+      additionalChildren: [
+        ..._ordinaryFields,
+        const Gap(16),
+        _buildDamageSection(),
+        const Gap(16),
+        _buildStSection(),
+        const Gap(16),
+        _buildRangeSection(),
+        const Gap(16),
+        _buildShotsSection(),
+      ],
     );
   }
 
-  List<Widget> _buildBaseInfoSection() {
-    const String MIN_ST_EXPLANATION =
-        'All RangedWeapons in GURPS have a minimum Strength required to wield them\nIf your character ST is lower than this parametre — they will receive a penalty to any check for the weapon equal to: Character ST - Minimum ST';
+  List<Widget> get _ordinaryFields => [
+        buildTextFormField(
+          label: 'Minimum Strengths required to wield this weapon',
+          defaultValue: widget.oldRangedWeapon?.minimumSt.toString(),
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: false,
+          ),
+          allowsDecimal: false,
+          validator: validatePositiveNumber,
+          onChanged: (String? value) {
+            if (value == null) {
+              return;
+            }
 
-    final List<DropdownMenuItem<String>> assosiatedSkillsItems =
-        Provider.of<AspectsProvider>(context)
-            .skills
-            .map(
-              (Skill skl) => DropdownMenuItem(
-                value: skl.name,
-                child: Text(skl.name),
-              ),
-            )
-            .toList();
-
-    return [
-      buildTextFormField(
-        label: 'Name of the weapon',
-        defaultValue: widget.oldRangedWeapon?.name,
-        validator: validateText,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-          setState(() {
-            _rangedWeapon = RangedWeapon.copyWith(_rangedWeapon, name: value);
-          });
-        },
-        context: context,
-      ),
-      const Gap(12),
-      buildTextFormField(
-        keyboardType: TextInputType.number,
-        allowsDecimal: true,
-        defaultValue: widget.oldRangedWeapon?.weight.toString(),
-        label: 'Weight of the weapon',
-        validator: validateNumber,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            weight: parseInput<double>(value, double.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(12),
-      buildTextFormField(
-        keyboardType: TextInputType.number,
-        allowsDecimal: true,
-        defaultValue: widget.oldRangedWeapon?.price.toString(),
-        label: 'Price of the weapon',
-        validator: validateNumber,
-        onChanged: (value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            price: parseInput<double>(value, double.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Minimum Strengths required to wield this weapon',
-        defaultValue: widget.oldRangedWeapon?.minimumSt.toString(),
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: false,
+            _rangedWeapon = RangedWeapon.copyWith(
+              _rangedWeapon,
+              minimumSt: parseInput<int>(value, int.parse),
+            );
+          },
+          context: context,
         ),
-        allowsDecimal: false,
-        validator: validatePositiveNumber,
-        onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            minimumSt: parseInput<int>(value, int.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(8),
-      Text(
-        MIN_ST_EXPLANATION,
-        style: Theme.of(context).textTheme.labelSmall,
-      ),
-      const Gap(24),
-      buildFormDropdownMenu<String>(
-        hint: 'Associated skill',
-        initialValue: widget.oldRangedWeapon?.associatedSkillName,
-        items: assosiatedSkillsItems,
-        onChanged: (String? value) {
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            associatedSkillName: value,
-          );
-        },
-        context: context,
-      ),
-      const Gap(8),
-      Text(
-        'Any weapon has a skill attached that determines how successfull you parry and hit with a given weapon',
-        style: Theme.of(context).textTheme.labelSmall,
-      ),
-      const Gap(16),
-      buildFormDropdownMenu<RangedWeaponLegalityClass>(
-        hint: 'Legality Class',
-        initialValue: widget.oldRangedWeapon?.lc,
-        items: RangedWeaponLegalityClass.values
-            .where(
-              (lc) => lc != RangedWeaponLegalityClass.NONE,
-            )
-            .map(
-              (RangedWeaponLegalityClass lc) => DropdownMenuItem(
-                value: lc,
-                child: Text(lc.stringValue),
-              ),
-            )
-            .toList(),
-        onChanged: (RangedWeaponLegalityClass? value) {
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            lc: value,
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Accuracy',
-        defaultValue: widget.oldRangedWeapon?.accuracy.toString(),
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: false,
+        const Gap(4),
+        Text(
+          'In GURPS all martial weapons require some ST value for effective use',
+          style: Theme.of(context).textTheme.labelSmall,
         ),
-        allowsDecimal: false,
-        validator: validatePositiveNumber,
-        onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            accuracy: parseInput<int>(value, int.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Rate Of Fire',
-        defaultValue: widget.oldRangedWeapon?.rateOfFire.toString(),
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: false,
+        const Gap(24),
+        buildFormDropdownMenu<String>(
+          hint: 'Associated skill',
+          initialValue: widget.oldRangedWeapon?.associatedSkillName,
+          items: Provider.of<AspectsProvider>(context)
+              .skills
+              .map(
+                (Skill skl) => DropdownMenuItem(
+                  value: skl.name,
+                  child: Text(skl.name),
+                ),
+              )
+              .toList(),
+          onChanged: (String? value) {
+            _rangedWeapon = RangedWeapon.copyWith(
+              _rangedWeapon,
+              associatedSkillName: value,
+            );
+          },
+          context: context,
         ),
-        allowsDecimal: false,
-        validator: validatePositiveNumber,
-        onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            rateOfFire: parseInput<int>(value, int.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Bulk',
-        defaultValue: widget.oldRangedWeapon?.bulk.toString(),
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: false,
+        const Gap(4),
+        Text(
+          'In GURPS all weapons require some Skill for effectuve usage, parry, etc.',
+          style: Theme.of(context).textTheme.labelSmall,
         ),
-        allowsDecimal: false,
-        validator: validatePositiveNumber,
-        onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
-
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            bulk: parseInput<int>(value, int.parse),
-          );
-        },
-        context: context,
-      ),
-      const Gap(24),
-      buildTextFormField(
-        label: 'Recoil',
-        defaultValue: widget.oldRangedWeapon?.recoil.toString(),
-        keyboardType: const TextInputType.numberWithOptions(
-          decimal: false,
+        const Gap(16),
+        buildFormDropdownMenu<LegalityClass>(
+          hint: 'Legality Class',
+          initialValue: _rangedWeapon.lc != LegalityClass.NONE
+              ? _rangedWeapon.lc
+              : LegalityClass.OPEN,
+          items: LegalityClass.values
+              .where(
+                (lc) => lc != LegalityClass.NONE,
+              )
+              .map(
+                (LegalityClass lc) => DropdownMenuItem(
+                  value: lc,
+                  child: Text(lc.stringValue),
+                ),
+              )
+              .toList(),
+          onChanged: (LegalityClass? value) {
+            setState(() {
+              _rangedWeapon = RangedWeapon.copyWith(
+                _rangedWeapon,
+                lc: value,
+              );
+            });
+          },
+          context: context,
         ),
-        allowsDecimal: false,
-        validator: validatePositiveNumber,
-        onChanged: (String? value) {
-          if (value == null) {
-            return;
-          }
+        const Gap(4),
+        Text(
+          'In GURPS ranged weapons may be illegal, that influence NPCs reaction on PC',
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        const Gap(24),
+        buildTextFormField(
+          label: 'Accuracy',
+          defaultValue: widget.oldRangedWeapon?.accuracy.toString(),
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: false,
+          ),
+          allowsDecimal: false,
+          validator: validatePositiveNumber,
+          onChanged: (String? value) {
+            if (value == null) {
+              return;
+            }
 
-          _rangedWeapon = RangedWeapon.copyWith(
-            _rangedWeapon,
-            recoil: parseInput<int>(value, int.parse),
-          );
-        },
-        context: context,
-      ),
-    ];
-  }
+            setState(() {
+              _rangedWeapon = RangedWeapon.copyWith(
+                _rangedWeapon,
+                accuracy: parseInput<int>(value, int.parse),
+              );
+            });
+          },
+          context: context,
+        ),
+        const Gap(4),
+        Text(
+          'In GURPS aiming in your turn grants +Accuracy advantage to next skill check',
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        const Gap(24),
+        buildTextFormField(
+          label: 'Rate Of Fire',
+          defaultValue: widget.oldRangedWeapon?.rateOfFire.toString(),
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: false,
+          ),
+          allowsDecimal: false,
+          validator: validatePositiveNumber,
+          onChanged: (String? value) {
+            if (value == null) {
+              return;
+            }
+
+            setState(() {
+              _rangedWeapon = RangedWeapon.copyWith(
+                _rangedWeapon,
+                rateOfFire: parseInput<int>(value, int.parse),
+              );
+            });
+          },
+          context: context,
+        ),
+        const Gap(4),
+        Text(
+          'Amount of shots per second',
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        const Gap(24),
+        buildTextFormField(
+          label: 'Bulk',
+          defaultValue: widget.oldRangedWeapon?.bulk.toString(),
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: false,
+          ),
+          allowsDecimal: false,
+          validator: validatePositiveNumber,
+          onChanged: (String? value) {
+            if (value == null) {
+              return;
+            }
+
+            setState(() {
+              _rangedWeapon = RangedWeapon.copyWith(
+                _rangedWeapon,
+                bulk: parseInput<int>(value, int.parse),
+              );
+            });
+          },
+          context: context,
+        ),
+        const Gap(4),
+        Text(
+          'A measure of the weapon\'s size and handines',
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+        const Gap(24),
+        buildTextFormField(
+          label: 'Recoil',
+          defaultValue: widget.oldRangedWeapon?.recoil.toString(),
+          keyboardType: const TextInputType.numberWithOptions(
+            decimal: false,
+          ),
+          allowsDecimal: false,
+          validator: validatePositiveNumber,
+          onChanged: (String? value) {
+            if (value == null) {
+              return;
+            }
+
+            setState(() {
+              _rangedWeapon = RangedWeapon.copyWith(
+                _rangedWeapon,
+                recoil: parseInput<int>(value, int.parse),
+              );
+            });
+          },
+          context: context,
+        ),
+        const Gap(4),
+        Text(
+          'A measure of how easy the weapon is to control when firing rapidly\n1 means no recoil',
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.labelSmall,
+        ),
+      ];
 
   Widget _buildRangeSection() {
     return markAsGroup(
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: buildTextFormField(
-              label: 'Short Range',
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: false,
-              ),
-              allowsDecimal: false,
-              defaultValue: widget.oldRangedWeapon?.range.shortRange.toString(),
-              validator: validatePositiveNumber,
-              onChanged: (String? value) {
-                if (value == null) {
-                  return;
-                }
+          buildTextFormField(
+            label: 'Min Range',
+            keyboardType: const TextInputType.numberWithOptions(
+              decimal: false,
+            ),
+            allowsDecimal: false,
+            defaultValue: widget.oldRangedWeapon?.range.minRange.toString(),
+            validator: validatePositiveNumber,
+            onChanged: (String? value) {
+              if (value == null) {
+                return;
+              }
 
+              setState(() {
                 _rangedWeapon = RangedWeapon.copyWith(
                   _rangedWeapon,
                   range: Range(
-                    shortRange: parseInput<int>(value, int.parse) ?? 0,
+                    minRange: parseInput<int>(value, int.parse) ?? 0,
+                    maxRange: _rangedWeapon.range.maxRange,
                   ),
                 );
-              },
-              context: context,
-            ),
+              });
+            },
+            context: context,
           ),
           const Gap(16),
-          Expanded(
-            child: buildTextFormField(
-              label: 'Long Range',
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: false,
-              ),
-              allowsDecimal: false,
-              defaultValue: widget.oldRangedWeapon?.range.longRange.toString(),
-              validator: validatePositiveNumber,
-              onChanged: (String? value) {
-                if (value == null) {
-                  return;
-                }
+          buildTextFormField(
+            label: 'Max Range',
+            keyboardType: const TextInputType.numberWithOptions(
+              decimal: false,
+            ),
+            allowsDecimal: false,
+            defaultValue: widget.oldRangedWeapon?.range.maxRange.toString(),
+            validator: validatePositiveNumber,
+            onChanged: (String? value) {
+              if (value == null) {
+                return;
+              }
 
+              setState(() {
                 _rangedWeapon = RangedWeapon.copyWith(
                   _rangedWeapon,
                   range: Range(
-                    shortRange: _rangedWeapon.range.shortRange,
-                    longRange: parseInput<int>(value, int.parse) ?? 0,
+                    minRange: _rangedWeapon.range.minRange,
+                    maxRange: parseInput<int>(value, int.parse) ?? 0,
                   ),
                 );
-              },
-              context: context,
-            ),
+              });
+            },
+            context: context,
           ),
         ],
       ),
@@ -407,7 +337,7 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
                 decimal: false,
               ),
               allowsDecimal: false,
-              defaultValue: widget.oldRangedWeapon?.range.shortRange.toString(),
+              defaultValue: widget.oldRangedWeapon?.range.minRange.toString(),
               validator: validatePositiveNumber,
               onChanged: (String? value) {
                 if (value == null) {
@@ -432,7 +362,7 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
                 decimal: false,
               ),
               allowsDecimal: false,
-              defaultValue: widget.oldRangedWeapon?.range.longRange.toString(),
+              defaultValue: widget.oldRangedWeapon?.range.maxRange.toString(),
               validator: validatePositiveNumber,
               onChanged: (String? value) {
                 if (value == null) {
@@ -461,7 +391,6 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
   Widget _buildStSection() {
     return markAsGroup(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           buildTextFormField(
             label: 'Strength value',
@@ -469,7 +398,7 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
               decimal: false,
             ),
             allowsDecimal: false,
-            defaultValue: widget.oldRangedWeapon?.range.longRange.toString(),
+            defaultValue: widget.oldRangedWeapon?.range.maxRange.toString(),
             validator: validatePositiveNumber,
             onChanged: (String? value) {
               if (value == null) {
@@ -486,52 +415,55 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
             context: context,
           ),
           const Gap(8),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text(
-                'Is Two Handed',
-                style: Theme.of(context).textTheme.labelMedium,
+              Column(
+                children: [
+                  Text(
+                    'Is Two Handed',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Switch.adaptive(
+                    value: _rangedWeapon.st.isTwoHanded ?? false,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _rangedWeapon = RangedWeapon.copyWith(
+                          _rangedWeapon,
+                          st: WeaponStrengths(
+                            strengthValue: _rangedWeapon.st.strengthValue,
+                            hasBonusForHigherStrength:
+                                _rangedWeapon.st.hasBonusForHigherStrength,
+                            isTwoHanded: value,
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                ],
               ),
-              Switch.adaptive(
-                value: _rangedWeapon.st.isTwoHanded ?? false,
-                onChanged: (bool value) {
-                  setState(() {
-                    _rangedWeapon = RangedWeapon.copyWith(
-                      _rangedWeapon,
-                      st: WeaponStrengths(
-                        strengthValue: _rangedWeapon.st.strengthValue,
-                        hasBonusForHigherStrength:
-                            _rangedWeapon.st.hasBonusForHigherStrength,
-                        isTwoHanded: value,
-                      ),
-                    );
-                  });
-                },
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Has bonus for higher ST',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
-              Switch.adaptive(
-                value: _rangedWeapon.st.hasBonusForHigherStrength ?? false,
-                onChanged: (bool value) {
-                  setState(() {
-                    _rangedWeapon = RangedWeapon.copyWith(
-                      _rangedWeapon,
-                      st: WeaponStrengths(
-                        strengthValue: _rangedWeapon.st.strengthValue,
-                        isTwoHanded: _rangedWeapon.st.isTwoHanded,
-                        hasBonusForHigherStrength: value,
-                      ),
-                    );
-                  });
-                },
+              Column(
+                children: [
+                  Text(
+                    'Has bonus for higher ST',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Switch.adaptive(
+                    value: _rangedWeapon.st.hasBonusForHigherStrength ?? false,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _rangedWeapon = RangedWeapon.copyWith(
+                          _rangedWeapon,
+                          st: WeaponStrengths(
+                            strengthValue: _rangedWeapon.st.strengthValue,
+                            isTwoHanded: _rangedWeapon.st.isTwoHanded,
+                            hasBonusForHigherStrength: value,
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -602,7 +534,7 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
     return markAsGroup(
       title: 'Damage',
       description:
-          'Any weapon has an attack type (Thrust or Swing). The Swing damage is higher since the weapon functions as a lever in that case\n\nAny weapon has some modifier on top of the basic throw. For example Thr+2 means you pick a Thrusting throw from the table and add 2\n\nAnd damage type is self explainatory',
+          'In GURPS weapons can inflict either Thrust or Swing damage\nAlso you can clarify some bonus to damage with this weapon',
       child: Column(
         children: [
           buildFormDropdownMenu(

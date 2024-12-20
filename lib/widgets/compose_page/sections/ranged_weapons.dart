@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_details_dialog.dart';
@@ -47,10 +48,10 @@ class ComposePageRangedWeaponsSection extends StatelessWidget {
         }
 
         if (e.value is String) {
-          final RangedWeaponLegalityClass legalityClass =
-              RangedWeaponLegalityClassExtention.fromString(e.value);
+          final LegalityClass legalityClass =
+              LegalityClassExtention.fromString(e.value);
 
-          if (legalityClass != RangedWeaponLegalityClass.NONE) {
+          if (legalityClass != LegalityClass.NONE) {
             return DataCell(Text(legalityClass.stringValue));
           }
         }

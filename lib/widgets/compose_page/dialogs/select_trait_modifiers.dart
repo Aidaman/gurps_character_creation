@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
 import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
-import 'package:gurps_character_creation/utilities/dialog_size.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/widgets/traits/trait_modifier_view.dart';
 
 class SelectTraitModifiersDialog extends StatefulWidget {
