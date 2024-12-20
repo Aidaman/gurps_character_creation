@@ -63,6 +63,14 @@ class DamageResistance {
         isFlexible = isFlexible ?? false,
         isFrontOnly = isFrontOnly ?? false;
 
+  factory DamageResistance.fromJson(Map<String, dynamic> json) =>
+      DamageResistance(
+        resistance: int.parse(json['damage_resistance']),
+        denominatorResistance: int.parse(json['denominator_resistance']),
+        isFlexible: bool.parse(json['is_flexible']),
+        isFrontOnly: bool.parse(json['is_front_only']),
+      );
+
   factory DamageResistance.fromGURPSNotation(String notation) {
     String normalized = notation.toLowerCase();
 
@@ -95,6 +103,13 @@ class DamageResistance {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+        'damage_resistance': damageResistance,
+        'denominator_resistance': denominatorResistance,
+        'is_flexible': isFlexible,
+        'is_front_only': isFrontOnly,
+      };
+
   String get GURPSNotation {
     String notation = '';
 
@@ -118,8 +133,6 @@ class DamageResistance {
 
 class Armor extends Gear {
   final BodyPart armorLocation;
-  final bool? flexibility;
-  final bool? isLayerable;
   final String? notes;
   final DamageResistance damageResistance;
 
@@ -128,9 +141,59 @@ class Armor extends Gear {
     required super.price,
     required super.weight,
     required this.armorLocation,
-    required this.flexibility,
-    required this.isLayerable,
     required this.damageResistance,
     this.notes,
   });
+
+  Armor.withId({
+    required super.name,
+    required super.price,
+    required super.weight,
+    required super.id,
+    required this.armorLocation,
+    required this.damageResistance,
+    this.notes,
+  }) : super.withId();
+
+  factory Armor.copyWith(
+    Armor armor, {
+    String? name,
+    double? price,
+    double? weight,
+    String? id,
+    BodyPart? armorLocation,
+    DamageResistance? damageResistance,
+    String? notes,
+  }) =>
+      Armor(
+        name: name ?? armor.name,
+        price: price ?? armor.price,
+        weight: weight ?? armor.weight,
+        armorLocation: armorLocation ?? armor.armorLocation,
+        damageResistance: damageResistance ?? armor.damageResistance,
+      );
+
+  factory Armor.empty() => Armor(
+        name: '',
+        price: 0,
+        weight: 0,
+        armorLocation: BodyPart.NONE,
+        damageResistance: DamageResistance(resistance: 0),
+      );
+
+  factory Armor.fromJson(Map<String, dynamic> json) => Armor(
+        name: json['name'],
+        price: json['price'],
+        weight: json['weight'],
+        armorLocation: BodyPartString.fromString(json['armor_location']),
+        damageResistance: DamageResistance.fromJson(json['damage_resistance']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'price': price,
+        'weight': weight,
+        'armor_location': armorLocation.stringValue,
+        'damage_resistance': damageResistance.toJson(),
+      };
 }
