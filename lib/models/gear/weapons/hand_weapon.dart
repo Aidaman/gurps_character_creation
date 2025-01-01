@@ -1,38 +1,63 @@
+import 'dart:math';
+
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 
 class HandWeaponReach {
-  final int minimalRange;
-  final int? maximumRange;
+  int? _minReach;
 
-  const HandWeaponReach({
-    required this.minimalRange,
-    this.maximumRange,
-  });
+  int? get minReach => _minReach;
+  set minReach(int? value) {
+    if (value == null) {
+      return;
+    }
+
+    if (maxReach == 0) {
+      _maxReach = value;
+      return;
+    }
+
+    _minReach = min(_maxReach, value);
+    _maxReach = max(_maxReach, value);
+  }
+
+  int _maxReach;
+
+  int get maxReach => _maxReach;
+  set maxReach(int value) {
+    _minReach = min(_maxReach, value);
+    _maxReach = max(_maxReach, value);
+  }
+
+  HandWeaponReach({
+    int? minReach,
+    required int maxReach,
+  })  : _minReach = minReach,
+        _maxReach = maxReach;
 
   factory HandWeaponReach.fromJson(Map<String, dynamic> json) =>
       HandWeaponReach(
-        minimalRange: json['minimal_range'],
-        maximumRange: json['maximum_range'],
+        minReach: json['min_reach'],
+        maxReach: json['max_reach'],
       );
 
   static bool isReach(Map<String, dynamic> json) =>
-      json.containsKey('minimal_range');
+      json.containsKey('min_reach');
 
   Map<String, dynamic> toJson() => {
-        'minimal_range': minimalRange,
-        'maximum_range': maximumRange,
+        'min_reach': minReach,
+        'max_reach': maxReach,
       };
 
   @override
   String toString() {
-    if (maximumRange is int) {
-      return '$minimalRange-$maximumRange';
+    if (minReach != null && minReach != 0) {
+      return '$minReach-$maxReach';
     }
 
-    return '$minimalRange';
+    return '$maxReach';
   }
 }
 
@@ -90,9 +115,9 @@ class HandWeapon extends Weapon {
   }
 
   factory HandWeapon.empty() => HandWeapon(
-        reach: const HandWeaponReach(
-          minimalRange: 0,
-          maximumRange: 1,
+        reach: HandWeaponReach(
+          minReach: 0,
+          maxReach: 1,
         ),
         damage: WeaponDamage(
           attackType: AttackTypes.THRUST,
@@ -136,7 +161,7 @@ class HandWeapon extends Weapon {
         'damage': damage.toJson(),
         'reach': reach.toJson(),
         'associated_skill_name': associatedSkillName,
-        'lc': associatedSkillName,
+        'lc': lc,
       };
 
   Map<String, dynamic> get dataTableColumns => {
@@ -147,6 +172,6 @@ class HandWeapon extends Weapon {
         'reach': reach.toJson(),
         'parry': 0,
         'skill': associatedSkillName,
-        'lc': associatedSkillName,
+        'lc': lc,
       };
 }

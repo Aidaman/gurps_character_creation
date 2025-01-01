@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
@@ -40,6 +41,16 @@ class ComposePageHandWeaponsSection extends StatelessWidget {
     return const DataCell(Text(''));
   }
 
+  DataCell _getLegalityClassCell(MapEntry<String, dynamic> e) {
+    return DataCell(
+      Center(
+        child: Text(
+          (e.value as LegalityClass).stringValue,
+        ),
+      ),
+    );
+  }
+
   DataRow _buildHandWeaponDataCell(
     BuildContext context,
     HandWeapon hw,
@@ -55,6 +66,10 @@ class ComposePageHandWeaponsSection extends StatelessWidget {
 
         if (e.key == 'parry') {
           return _getParryCell(characterProvider, hw);
+        }
+
+        if (e.key == 'lc' && e.value is LegalityClass) {
+          return _getLegalityClassCell(e);
         }
 
         return DataCell(

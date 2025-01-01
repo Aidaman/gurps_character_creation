@@ -205,9 +205,8 @@ class Character {
             minimumSt: 10,
             price: 0,
             weight: 0,
-            reach: const HandWeaponReach(
-              minimalRange: 0,
-              maximumRange: 0,
+            reach: HandWeaponReach(
+              maxReach: 1,
             ),
             notes: 'A plain bite, anybody can do it, unless they have no teeth',
             lc: LegalityClass.OPEN,
@@ -223,9 +222,8 @@ class Character {
             minimumSt: 10,
             price: 0,
             weight: 0,
-            reach: const HandWeaponReach(
-              minimalRange: 0,
-              maximumRange: 0,
+            reach: HandWeaponReach(
+              maxReach: 1,
             ),
             notes:
                 'A punch with a bare hand, when there is no weapon what else you left but your own limbs?',
@@ -242,9 +240,8 @@ class Character {
             minimumSt: 10,
             price: 0,
             weight: 0,
-            reach: const HandWeaponReach(
-              minimalRange: 0,
-              maximumRange: 0,
+            reach: HandWeaponReach(
+              maxReach: 1,
             ),
             notes:
                 'A kick with a leg, be carefull and do not fall in the process though',

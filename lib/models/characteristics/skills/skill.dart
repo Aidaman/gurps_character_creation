@@ -109,6 +109,17 @@ class Skill extends Aspect {
     );
   }
 
+  factory Skill.empty() => Skill(
+        name: '',
+        reference: '',
+        difficulty: SkillDifficulty.NONE,
+        basePoints: 0,
+        categories: [],
+        modifiers: [],
+        associatedAttribute: Attributes.NONE,
+        investedPoints: 0,
+      );
+
   Map<String, dynamic> toJson() => {
         'name': name,
         'reference': reference,

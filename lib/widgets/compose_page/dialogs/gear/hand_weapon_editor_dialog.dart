@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {
   DAMAGE_MODIFIER,
-  MINIMUM_REACH_DISTANCE,
-  MAXIMUM_REACH_DISTANCE,
+  MINIMUM_REACH,
+  MAXIMUM_REACH,
   ATTACK_TYPE,
   DAMAGE_TYPE,
 }
@@ -71,17 +71,17 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
         _handWeapon = HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
         break;
-      case _HandWeaponEditorFields.MINIMUM_REACH_DISTANCE:
+      case _HandWeaponEditorFields.MINIMUM_REACH:
         int? newMinimalRange = parseInput<int>(value, int.parse);
         if (newMinimalRange != null) {
-          _updateMinimalRange(newMinimalRange);
+          _updateReach(_handWeapon.reach.maxReach, newMinimalRange);
         }
 
         break;
-      case _HandWeaponEditorFields.MAXIMUM_REACH_DISTANCE:
+      case _HandWeaponEditorFields.MAXIMUM_REACH:
         int? newMaxRange = parseInput<int>(value, int.parse);
         if (newMaxRange != null) {
-          _updateMaximalRange(newMaxRange);
+          _updateReach(newMaxRange, _handWeapon.reach.minReach);
         }
 
         break;
@@ -90,45 +90,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
     }
   }
 
-  void _updateMaximalRange(int newMaxRange) {
-    bool maximumRangeIsNull = _handWeapon.reach.maximumRange == null;
-    bool minIsMoreThanMax = _handWeapon.reach.minimalRange > newMaxRange;
-
-    if (!maximumRangeIsNull && minIsMoreThanMax) {
-      _handWeapon = HandWeapon.copyWith(
-        _handWeapon,
-        reach: HandWeaponReach(
-          minimalRange: newMaxRange,
-          maximumRange: _handWeapon.reach.minimalRange,
-        ),
-      );
-    }
-
+  void _updateReach(int newMaxReach, int? newMinReach) {
     HandWeaponReach newHandweaponReach = HandWeaponReach(
-      minimalRange: _handWeapon.reach.minimalRange,
-      maximumRange: newMaxRange,
+      minReach: newMinReach,
+      maxReach: newMaxReach,
     );
-
-    _handWeapon = HandWeapon.copyWith(
-      _handWeapon,
-      reach: newHandweaponReach,
-    );
-  }
-
-  void _updateMinimalRange(int newMinimalRange) {
-    HandWeaponReach newHandweaponReach = HandWeaponReach(
-      minimalRange: newMinimalRange,
-    );
-
-    bool maximumRangeIsNull = _handWeapon.reach.maximumRange == null;
-    bool maxIsLessThanMin = _handWeapon.reach.maximumRange! < newMinimalRange;
-
-    if (!maximumRangeIsNull && maxIsLessThanMin) {
-      newHandweaponReach = HandWeaponReach(
-        minimalRange: _handWeapon.reach.maximumRange!,
-        maximumRange: newMinimalRange,
-      );
-    }
 
     _handWeapon = HandWeapon.copyWith(
       _handWeapon,
@@ -265,11 +231,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
                 decimal: false,
               ),
               allowsDecimal: false,
-              defaultValue: widget.oldHandWeapon?.reach.minimalRange.toString(),
+              defaultValue: widget.oldHandWeapon?.reach.minReach.toString(),
               validator: validatePositiveNumber,
               onChanged: (String? value) => updateHandWeaponFields(
                 value,
-                _HandWeaponEditorFields.MINIMUM_REACH_DISTANCE,
+                _HandWeaponEditorFields.MINIMUM_REACH,
               ),
               context: context,
             ),
@@ -278,7 +244,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           Expanded(
             child: buildTextFormField(
               label: 'Max Reach',
-              defaultValue: widget.oldHandWeapon?.reach.maximumRange.toString(),
+              defaultValue: widget.oldHandWeapon?.reach.maxReach.toString(),
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: false,
               ),
@@ -286,7 +252,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
               validator: validatePositiveNumber,
               onChanged: (String? value) => updateHandWeaponFields(
                 value,
-                _HandWeaponEditorFields.MAXIMUM_REACH_DISTANCE,
+                _HandWeaponEditorFields.MAXIMUM_REACH,
               ),
               context: context,
             ),
