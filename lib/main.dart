@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
 
     return MaterialApp(
-      title: 'GURPS Character Sheet',
+      title: 'GURPS Composer',
       theme: ThemeData(
         colorScheme: const ColorScheme(
           brightness: Brightness.light,
