@@ -41,7 +41,7 @@ class TraitView extends StatelessWidget {
             width: 1.0,
           ),
           left: BorderSide(
-            color: trait.categories.first.colorValue,
+            color: trait.category.colorValue,
             width: 8.0,
           ),
         ),

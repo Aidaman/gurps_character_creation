@@ -42,9 +42,7 @@ class ComposePageTraitsView extends StatelessWidget {
     CharacterProvider characterProvider,
   ) {
     final Iterable<Trait> traits = characterProvider.character.traits.where(
-      (trait) => trait.categories.any(
-        (category) => categories.contains(category),
-      ),
+      (Trait trait) => categories.contains(trait.category),
     );
 
     if (traits.isEmpty) {

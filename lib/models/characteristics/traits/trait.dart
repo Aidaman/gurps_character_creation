@@ -53,6 +53,19 @@ class Trait extends Aspect {
     _title = value;
   }
 
+  TraitCategories get category {
+    if (categories.first == TraitCategories.PERK ||
+        categories.first == TraitCategories.QUIRK) {
+      return categories.first;
+    }
+
+    if (cost < 0) {
+      return TraitCategories.DISADVANTAGE;
+    }
+
+    return TraitCategories.ADVANTAGE;
+  }
+
   Trait({
     required super.name,
     required this.type,
