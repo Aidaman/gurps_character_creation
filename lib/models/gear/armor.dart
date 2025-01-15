@@ -63,12 +63,17 @@ class DamageResistance {
         isFlexible = isFlexible ?? false,
         isFrontOnly = isFrontOnly ?? false;
 
+  static bool isDamageResistance(Map<String, dynamic> map) =>
+      map.containsKey('damage_resistance');
+
   factory DamageResistance.fromJson(Map<String, dynamic> json) =>
       DamageResistance(
-        resistance: int.parse(json['damage_resistance']),
-        denominatorResistance: int.parse(json['denominator_resistance']),
-        isFlexible: bool.parse(json['is_flexible']),
-        isFrontOnly: bool.parse(json['is_front_only']),
+        resistance: int.parse(json['damage_resistance'].toString()),
+        denominatorResistance: json['denominator_resistance'] != null
+            ? int.parse(json['denominator_resistance'].toString())
+            : null,
+        isFlexible: bool.parse(json['is_flexible'].toString()),
+        isFrontOnly: bool.parse(json['is_front_only'].toString()),
       );
 
   factory DamageResistance.fromGURPSNotation(String notation) {
@@ -177,7 +182,7 @@ class Armor extends Gear {
         name: '',
         price: 0,
         weight: 0,
-        armorLocation: BodyPart.NONE,
+        armorLocation: BodyPart.TORSO,
         damageResistance: DamageResistance(resistance: 0),
       );
 
@@ -190,6 +195,14 @@ class Armor extends Gear {
       );
 
   Map<String, dynamic> toJson() => {
+        'name': name,
+        'price': price,
+        'weight': weight,
+        'armor_location': armorLocation.stringValue,
+        'damage_resistance': damageResistance.toJson(),
+      };
+
+  Map<String, dynamic> get dataTableColumns => {
         'name': name,
         'price': price,
         'weight': weight,

@@ -10,7 +10,7 @@ class ComposePageResponsiveGrid extends StatelessWidget {
   final Widget skillsAndMagic;
   final Widget handWeapons;
   final Widget rangedWeapons;
-  final Widget? armor;
+  final Widget armor;
   final Widget? posessions;
   final Widget? restOfTheBody;
 
@@ -25,8 +25,8 @@ class ComposePageResponsiveGrid extends StatelessWidget {
     required this.skillsAndMagic,
     required this.handWeapons,
     required this.rangedWeapons,
+    required this.armor,
     this.restOfTheBody,
-    this.armor,
     this.posessions,
   });
 
@@ -39,6 +39,7 @@ class ComposePageResponsiveGrid extends StatelessWidget {
       skillsAndMagic,
       handWeapons,
       rangedWeapons,
+      armor,
       // restOfTheBody,
     ];
 

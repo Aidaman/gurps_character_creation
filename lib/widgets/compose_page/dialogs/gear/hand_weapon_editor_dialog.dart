@@ -1,7 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/models/gear/gear.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
@@ -153,6 +152,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           context: context,
         )
       ],
+      onGearUpdated: (Gear updatedGear) {
+        setState(() {
+          _handWeapon = updatedGear as HandWeapon;
+        });
+      },
     );
   }
 

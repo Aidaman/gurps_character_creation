@@ -7,15 +7,17 @@ import 'package:gurps_character_creation/utilities/form_helpers.dart';
 class GearEditorDialog extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final List<Widget> actions;
-  final Gear? oldGear;
+  final Gear oldGear;
   final List<Widget> additionalChildren;
+  final ValueChanged<Gear> onGearUpdated;
 
   const GearEditorDialog({
     super.key,
-    this.oldGear,
+    required this.oldGear,
     required this.formKey,
     required this.actions,
     required this.additionalChildren,
+    required this.onGearUpdated,
   });
 
   @override
@@ -27,7 +29,7 @@ class _GearEditorDialogState extends State<GearEditorDialog> {
 
   @override
   void initState() {
-    _gear = widget.oldGear ?? Gear.empty();
+    _gear = widget.oldGear;
 
     super.initState();
   }
@@ -76,8 +78,9 @@ class _GearEditorDialogState extends State<GearEditorDialog> {
             }
 
             setState(() {
-              _gear = Gear.copyWith(_gear, name: value);
+              _gear.name = value;
             });
+            widget.onGearUpdated(_gear);
           },
           context: context,
         ),
@@ -93,10 +96,10 @@ class _GearEditorDialogState extends State<GearEditorDialog> {
               return;
             }
 
-            _gear = Gear.copyWith(
-              _gear,
-              weight: parseInput<double>(value, double.parse),
-            );
+            setState(() {
+              _gear.weight = parseInput<double>(value, double.parse) ?? 0;
+            });
+            widget.onGearUpdated(_gear);
           },
           context: context,
         ),
@@ -112,10 +115,10 @@ class _GearEditorDialogState extends State<GearEditorDialog> {
               return;
             }
 
-            _gear = Gear.copyWith(
-              _gear,
-              price: parseInput<double>(value, double.parse),
-            );
+            setState(() {
+              _gear.price = parseInput<double>(value, double.parse) ?? 0;
+            });
+            widget.onGearUpdated(_gear);
           },
           context: context,
         ),

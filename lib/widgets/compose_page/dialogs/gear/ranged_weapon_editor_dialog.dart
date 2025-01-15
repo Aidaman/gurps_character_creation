@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/gear/gear.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
@@ -35,6 +36,7 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
   Widget build(BuildContext context) {
     return GearEditorDialog(
       formKey: _formkey,
+      oldGear: _rangedWeapon,
       actions: [
         TextButton.icon(
           onPressed: () {
@@ -62,6 +64,11 @@ class _RangedWeaponEditorDialogState extends State<RangedWeaponEditorDialog> {
         const Gap(16),
         _buildShotsSection(),
       ],
+      onGearUpdated: (Gear updatedGear) {
+        setState(() {
+          _rangedWeapon = updatedGear as RangedWeapon;
+        });
+      },
     );
   }
 
