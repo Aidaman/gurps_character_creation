@@ -191,7 +191,8 @@ class RangedWeapon extends Weapon {
     WeaponStrengths? st,
     LegalityClass? lc,
   }) {
-    return RangedWeapon(
+    return RangedWeapon.withId(
+      id: rw.id,
       damage: damage ?? rw.damage,
       notes: notes ?? rw.notes,
       name: name ?? rw.name,

@@ -101,7 +101,8 @@ class HandWeapon extends Weapon {
     int? minimumSt,
     LegalityClass? lc,
   }) {
-    return HandWeapon(
+    return HandWeapon.withId(
+      id: hw.id,
       reach: reach ?? hw.reach,
       damage: damage ?? hw.damage,
       notes: notes ?? hw.notes,

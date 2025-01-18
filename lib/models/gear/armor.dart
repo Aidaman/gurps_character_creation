@@ -170,7 +170,8 @@ class Armor extends Gear {
     DamageResistance? damageResistance,
     String? notes,
   }) =>
-      Armor(
+      Armor.withId(
+        id: armor.id,
         name: name ?? armor.name,
         price: price ?? armor.price,
         weight: weight ?? armor.weight,
