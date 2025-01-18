@@ -6,13 +6,14 @@ import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/armor.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/basic_info_fields.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/character_attributes.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/hand_weapons.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/ranged_weapons.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/skills_and_magic.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/traits_view.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/armor_section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/personal_info_Section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/attributes_section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/melee_weapons.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/possessions_section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/ranged_weapons_section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/skills_section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/traits_section.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
@@ -142,17 +143,20 @@ class _ComposePageState extends State<ComposePage> {
             : false,
         sidebarContent: sidebar,
         bodyContent: ComposePageResponsiveGrid(
-          basicInfoFields: const ComposePageBasicInfoFields(),
-          characterStats: const ComposePageCharacterAttributesSection(),
-          traits: ComposePageTraitsView(
-            emptyListBuilder: _generateEmptyTraitOrSkillView,
-          ),
-          skillsAndMagic: ComposePageSkillAndMagicSection(
-            emptyListBuilder: _generateEmptyTraitOrSkillView,
-          ),
-          handWeapons: const ComposePageHandWeaponsSection(),
-          rangedWeapons: const ComposePageRangedWeaponsSection(),
-          armor: const ComposePageArmorSection(),
+          children: [
+            const PersonalInfoSection(),
+            const AttributesSection(),
+            TraitsSection(
+              emptyListBuilder: _generateEmptyTraitOrSkillView,
+            ),
+            SkillsSection(
+              emptyListBuilder: _generateEmptyTraitOrSkillView,
+            ),
+            const MeleeWeaponsSection(),
+            const RangedWeaponsSection(),
+            const ArmorSection(),
+            const PosessionsSection(),
+          ],
           // restOfTheBody: const [],
         ),
       ),

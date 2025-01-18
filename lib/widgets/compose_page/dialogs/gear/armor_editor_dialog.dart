@@ -85,6 +85,8 @@ class _ArmorEditorDialogState extends State<ArmorEditorDialog> {
                 context: context,
                 label: 'Damage Resistance',
                 validator: validateNumber,
+                defaultValue:
+                    _armor.damageResistance.damageResistance.toString(),
                 onChanged: (String? value) {
                   if (value == null) {
                     return;

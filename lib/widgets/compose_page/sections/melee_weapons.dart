@@ -9,10 +9,10 @@ import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageHandWeaponsSection extends StatelessWidget {
+class MeleeWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
 
-  const ComposePageHandWeaponsSection({super.key});
+  const MeleeWeaponsSection({super.key});
 
   DataCell _buildMapValueCell(
     Map<String, dynamic> json,

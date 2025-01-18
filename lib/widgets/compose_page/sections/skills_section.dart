@@ -7,11 +7,10 @@ import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageSkillAndMagicSection extends StatelessWidget {
+class SkillsSection extends StatelessWidget {
   final Widget Function(List<String> categories) emptyListBuilder;
 
-  const ComposePageSkillAndMagicSection(
-      {super.key, required this.emptyListBuilder});
+  const SkillsSection({super.key, required this.emptyListBuilder});
 
   Widget _buildSpellList(BuildContext context) {
     final CharacterProvider characterProvider =

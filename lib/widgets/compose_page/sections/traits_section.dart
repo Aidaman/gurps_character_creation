@@ -7,10 +7,10 @@ import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_tra
 import 'package:gurps_character_creation/widgets/traits/trait_view.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageTraitsView extends StatelessWidget {
+class TraitsSection extends StatelessWidget {
   final Widget Function(List<String> categories) emptyListBuilder;
 
-  const ComposePageTraitsView({super.key, required this.emptyListBuilder});
+  const TraitsSection({super.key, required this.emptyListBuilder});
 
   void Function()? _generateChangeModifiers(
     BuildContext context,

@@ -4,45 +4,17 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class ComposePageResponsiveGrid extends StatelessWidget {
-  final Widget basicInfoFields;
-  final Widget characterStats;
-  final Widget traits;
-  final Widget skillsAndMagic;
-  final Widget handWeapons;
-  final Widget rangedWeapons;
-  final Widget armor;
-  final Widget? posessions;
-  final Widget? restOfTheBody;
-
+  final List<Widget> children;
   // static const double _SEPARATOR_HEIGHT = 1;
   // static const double _SEPARATOR_INDENT = 16;
 
   const ComposePageResponsiveGrid({
     super.key,
-    required this.basicInfoFields,
-    required this.characterStats,
-    required this.traits,
-    required this.skillsAndMagic,
-    required this.handWeapons,
-    required this.rangedWeapons,
-    required this.armor,
-    this.restOfTheBody,
-    this.posessions,
+    required this.children,
   });
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> children = [
-      basicInfoFields,
-      characterStats,
-      traits,
-      skillsAndMagic,
-      handWeapons,
-      rangedWeapons,
-      armor,
-      // restOfTheBody,
-    ];
-
     if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH) {
       return Center(
         child: Container(

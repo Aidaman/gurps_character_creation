@@ -5,10 +5,10 @@ import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageArmorSection extends StatelessWidget {
+class ArmorSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
 
-  const ComposePageArmorSection({super.key});
+  const ArmorSection({super.key});
 
   Future<void> _openCreateDialog(
     BuildContext context,
@@ -21,6 +21,23 @@ class ComposePageArmorSection extends StatelessWidget {
 
     if (armor != null) {
       characterProvider.addArmor(armor);
+    }
+  }
+
+  void _openEditDialog(
+    Armor armor,
+    BuildContext context,
+    CharacterProvider characterProvider,
+  ) async {
+    Armor? newArmor = await showDialog<Armor?>(
+      context: context,
+      builder: (context) => ArmorEditorDialog(
+        oldArmor: armor,
+      ),
+    );
+
+    if (newArmor != null) {
+      characterProvider.updateArmor(newArmor);
     }
   }
 
@@ -152,7 +169,7 @@ class ComposePageArmorSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => _openEditDialog(armor, context, characterProvider),
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(

@@ -6,10 +6,10 @@ import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/range
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageRangedWeaponsSection extends StatelessWidget {
+class RangedWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
 
-  const ComposePageRangedWeaponsSection({super.key});
+  const RangedWeaponsSection({super.key});
 
   DataRow _buildRangedWeaponDataCell(
     RangedWeapon rw,

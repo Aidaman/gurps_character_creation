@@ -45,7 +45,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           damageType: _handWeapon.damage.damageType,
         );
 
-        _handWeapon = HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        setState(() {
+          _handWeapon =
+              HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        });
         break;
       case _HandWeaponEditorFields.DAMAGE_MODIFIER:
         int? newModifier = parseInput<int>(value, int.parse);
@@ -59,7 +62,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           damageType: _handWeapon.damage.damageType,
         );
 
-        _handWeapon = HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        setState(() {
+          _handWeapon =
+              HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        });
         break;
       case _HandWeaponEditorFields.DAMAGE_TYPE:
         final WeaponDamage newWeaponDamage = WeaponDamage(
@@ -68,7 +74,10 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           damageType: DamageTypeString.fromString(value),
         );
 
-        _handWeapon = HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        setState(() {
+          _handWeapon =
+              HandWeapon.copyWith(_handWeapon, damage: newWeaponDamage);
+        });
         break;
       case _HandWeaponEditorFields.MINIMUM_REACH:
         int? newMinimalRange = parseInput<int>(value, int.parse);
@@ -79,9 +88,11 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
         break;
       case _HandWeaponEditorFields.MAXIMUM_REACH:
         int? newMaxRange = parseInput<int>(value, int.parse);
-        if (newMaxRange != null) {
-          _updateReach(newMaxRange, _handWeapon.reach.minReach);
-        }
+        setState(() {
+          if (newMaxRange != null) {
+            _updateReach(newMaxRange, _handWeapon.reach.minReach);
+          }
+        });
 
         break;
       default:
@@ -95,10 +106,12 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
       maxReach: newMaxReach,
     );
 
-    _handWeapon = HandWeapon.copyWith(
-      _handWeapon,
-      reach: newHandweaponReach,
-    );
+    setState(() {
+      _handWeapon = HandWeapon.copyWith(
+        _handWeapon,
+        reach: newHandweaponReach,
+      );
+    });
   }
 
   @override
@@ -147,7 +160,9 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
               return;
             }
 
-            _handWeapon = HandWeapon.copyWith(_handWeapon, notes: value);
+            setState(() {
+              _handWeapon = HandWeapon.copyWith(_handWeapon, notes: value);
+            });
           },
           context: context,
         )
@@ -188,10 +203,12 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             return;
           }
 
-          _handWeapon = HandWeapon.copyWith(
-            _handWeapon,
-            minimumSt: parseInput<int>(value, int.parse),
-          );
+          setState(() {
+            _handWeapon = HandWeapon.copyWith(
+              _handWeapon,
+              minimumSt: parseInput<int>(value, int.parse),
+            );
+          });
         },
         context: context,
       ),
@@ -205,12 +222,13 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
         hint: 'Associated skill',
         initialValue: widget.oldHandWeapon?.associatedSkillName,
         items: assosiatedSkillsItems,
-        onChanged: (String? value) {
+        onChanged: (String? value) => setState(() {
           _handWeapon = HandWeapon.copyWith(
             _handWeapon,
             associatedSkillName: value,
           );
-        },
+          print(_handWeapon.associatedSkillName);
+        }),
         context: context,
       ),
       const Gap(8),

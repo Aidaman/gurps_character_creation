@@ -5,17 +5,10 @@ import 'package:gurps_character_creation/utilities/responsive_layouting_constant
 import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
 import 'package:provider/provider.dart';
 
-class ComposePageCharacterAttributesSection extends StatefulWidget {
-  const ComposePageCharacterAttributesSection({super.key});
+class AttributesSection extends StatelessWidget {
+  const AttributesSection({super.key});
 
-  @override
-  State<ComposePageCharacterAttributesSection> createState() =>
-      _ComposePageCharacterAttributesSectionState();
-}
-
-class _ComposePageCharacterAttributesSectionState
-    extends State<ComposePageCharacterAttributesSection> {
-  Widget _primaryAttributesView(Attributes attribute) {
+  Widget _primaryAttributesView(Attributes attribute, BuildContext context) {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
@@ -42,7 +35,7 @@ class _ComposePageCharacterAttributesSectionState
     );
   }
 
-  Widget _derivedAttributesView(Attributes attribute) {
+  Widget _derivedAttributesView(Attributes attribute, BuildContext context) {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
@@ -75,13 +68,13 @@ class _ComposePageCharacterAttributesSectionState
 
     final List<Widget> primaryAttributes = List.from(
       AttributesExtension.primaryAttributes.map(
-        _primaryAttributesView,
+        (Attributes attribute) => _primaryAttributesView(attribute, context),
       ),
     );
 
     final List<Widget> derivedAttributes = List.from(
       AttributesExtension.derivedAttributes.map(
-        _derivedAttributesView,
+        (Attributes attribute) => _derivedAttributesView(attribute, context),
       ),
     );
 

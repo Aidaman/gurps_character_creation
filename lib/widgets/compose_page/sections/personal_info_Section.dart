@@ -15,16 +15,14 @@ class _BasicInfoField {
   });
 }
 
-class ComposePageBasicInfoFields extends StatefulWidget {
-  const ComposePageBasicInfoFields({super.key});
+class PersonalInfoSection extends StatefulWidget {
+  const PersonalInfoSection({super.key});
 
   @override
-  State<ComposePageBasicInfoFields> createState() =>
-      _ComposePageBasicInfoFieldsState();
+  State<PersonalInfoSection> createState() => _PersonalInfoSectionState();
 }
 
-class _ComposePageBasicInfoFieldsState
-    extends State<ComposePageBasicInfoFields> {
+class _PersonalInfoSectionState extends State<PersonalInfoSection> {
   final List<Map<String, _BasicInfoField>> _basicInfoControllers = [
     {
       'Players Name': _BasicInfoField(
