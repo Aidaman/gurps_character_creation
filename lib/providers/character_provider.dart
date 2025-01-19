@@ -35,16 +35,19 @@ class CharacterProvider with ChangeNotifier {
         _character.playerName = value;
         break;
       case 'Character Name':
-        _character.name = value;
+        _character.personalInfo.name = value;
         break;
       case 'Age':
-        _character.age = int.tryParse(value) ?? _character.age;
+        _character.personalInfo.age =
+            int.tryParse(value) ?? _character.personalInfo.age;
         break;
       case 'Height':
-        _character.height = int.tryParse(value) ?? _character.height;
+        _character.personalInfo.height =
+            int.tryParse(value) ?? _character.personalInfo.height;
         break;
       case 'Weight':
-        _character.weight = int.tryParse(value) ?? _character.weight;
+        _character.personalInfo.weight =
+            int.tryParse(value) ?? _character.personalInfo.weight;
         break;
       case 'Size Modifier':
         _character.sizeModifier =

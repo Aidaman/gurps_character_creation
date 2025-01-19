@@ -91,25 +91,32 @@ class RangedWeaponsSection extends StatelessWidget {
     ]);
   }
 
+  Widget _buildAddNewItem(
+    BuildContext context,
+    CharacterProvider characterProvider,
+  ) {
+    return Column(
+      children: [
+        const Divider(
+          endIndent: _DIVIDER_INDENT,
+          indent: _DIVIDER_INDENT,
+        ),
+        const Text('Click to add a Ranged Weapon'),
+        IconButton.filled(
+          onPressed: () => _openCreateDialog(context, characterProvider),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
     if (characterProvider.character.weapons.whereType<RangedWeapon>().isEmpty) {
-      return Column(
-        children: [
-          const Divider(
-            endIndent: _DIVIDER_INDENT,
-            indent: _DIVIDER_INDENT,
-          ),
-          const Text('Click to add a Ranged Weapon'),
-          IconButton.filled(
-            onPressed: () => _openCreateDialog(context, characterProvider),
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      );
+      return _buildAddNewItem(context, characterProvider);
     }
 
     return Column(
@@ -139,12 +146,7 @@ class RangedWeaponsSection extends StatelessWidget {
             ),
           ),
         ),
-        IconButton.filled(
-          onPressed: () {
-            characterProvider.addWeapon(RangedWeapon.empty());
-          },
-          icon: const Icon(Icons.add),
-        ),
+        _buildAddNewItem(context, characterProvider),
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:gurps_character_creation/models/character/personal_info.dart';
 import 'package:gurps_character_creation/models/characteristics/attributes.dart';
 import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
 import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
@@ -15,17 +16,10 @@ class Character {
   String id;
   String gameId;
   int points;
-
-  String name;
-  String avatarURL;
   String playerName;
-  String appearanceDetails;
+  PersonalInfo personalInfo;
 
-  int height;
-  int weight;
-  int age;
   int sizeModifier;
-
   int strength;
   int iq;
   int dexterity;
@@ -105,14 +99,9 @@ class Character {
 
   Character({
     required this.gameId,
-    required this.name,
-    required this.avatarURL,
-    required this.playerName,
-    required this.appearanceDetails,
-    required this.height,
-    required this.weight,
-    required this.age,
     required this.points,
+    required this.playerName,
+    required this.personalInfo,
     required this.sizeModifier,
     required this.strength,
     required this.iq,
@@ -129,14 +118,9 @@ class Character {
   Character.withId({
     required this.id,
     required this.gameId,
-    required this.name,
-    required this.avatarURL,
-    required this.playerName,
-    required this.appearanceDetails,
-    required this.height,
-    required this.weight,
-    required this.age,
     required this.points,
+    required this.playerName,
+    required this.personalInfo,
     required this.sizeModifier,
     required this.strength,
     required this.iq,
@@ -153,19 +137,14 @@ class Character {
   factory Character.fromJson(Map<String, dynamic> json) => Character.withId(
         id: json['id'],
         gameId: json['gameId'],
+        playerName: json['player_name'],
+        personalInfo: PersonalInfo.fromJson(json['personal_info']),
         strength: json['strength'],
         dexterity: json['dexterity'],
         iq: json['iq'],
         health: json['health'],
-        height: json['height'],
-        weight: json['weight'],
-        age: json['age'],
         points: json['po  ints'],
         sizeModifier: json['sizeModifier'],
-        name: json['name'],
-        avatarURL: json['avatarURL'],
-        playerName: json['playerName'],
-        appearanceDetails: json['appearanceDetails'],
         skills: List<Skill>.from(json['skills'].map((x) => x)),
         traits: List<Trait>.from(json['traits'].map((x) => x)),
         spells: List<Spell>.from(json['spells'].map((x) => x)),
@@ -176,14 +155,10 @@ class Character {
 
   factory Character.empty() => Character(
         gameId: 'random',
-        name: 'name',
-        avatarURL: '',
-        playerName: 'player\'s name',
-        appearanceDetails: 'appearance details',
-        height: 0,
-        age: 0,
         points: 100,
+        personalInfo: PersonalInfo(),
         sizeModifier: 0,
+        playerName: '',
         strength: 10,
         iq: 10,
         dexterity: 10,
@@ -191,7 +166,6 @@ class Character {
         skills: [],
         traits: [],
         spells: [],
-        weight: 0,
         armor: [],
         weapons: [
           HandWeapon(
@@ -258,15 +232,8 @@ class Character {
         'dexterity': dexterity,
         'iq': iq,
         'health': health,
-        'height': height,
-        'weight': weight,
-        'age': age,
         'points': points,
         'sizeModifier': sizeModifier,
-        'name': name,
-        'avatarURL': avatarURL,
-        'playerName': playerName,
-        'appearanceDetails': appearanceDetails,
         'skills': List<dynamic>.from(skills.map((x) => x)),
         'traits': List<dynamic>.from(traits.map((x) => x)),
         'spells': List<dynamic>.from(spells.map((x) => x)),

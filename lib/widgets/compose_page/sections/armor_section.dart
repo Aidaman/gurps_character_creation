@@ -132,10 +132,7 @@ class ArmorSection extends StatelessWidget {
               rows: dataRows,
             ),
           ),
-          IconButton.filled(
-            onPressed: () => _openCreateDialog(context, characterProvider),
-            icon: const Icon(Icons.add),
-          ),
+          _buildAddNewItem(context, characterProvider),
         ],
       ),
     );
