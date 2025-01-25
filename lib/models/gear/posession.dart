@@ -1,13 +1,13 @@
 import 'package:gurps_character_creation/models/gear/gear.dart';
 
 class Posession extends Gear {
-  final String? description;
+  final String description;
 
   Posession({
     required super.name,
     required super.price,
     required super.weight,
-    this.description,
+    this.description = '',
   });
 
   Posession.withId({
@@ -15,7 +15,7 @@ class Posession extends Gear {
     required super.name,
     required super.price,
     required super.weight,
-    this.description,
+    this.description = '',
   }) : super.withId();
 
   factory Posession.copyWith(

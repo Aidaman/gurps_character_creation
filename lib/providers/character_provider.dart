@@ -331,6 +331,7 @@ class CharacterProvider with ChangeNotifier {
   }
 
   void addPossession(Posession poss) {
+    print(poss.description);
     _character.possessions.add(poss);
 
     _isDirty = true;
