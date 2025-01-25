@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
+import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
@@ -323,6 +324,34 @@ class CharacterProvider with ChangeNotifier {
   void removeArmor(Armor armorToRemove) {
     _character.armor.removeWhere(
       (Armor armor) => armor.id == armorToRemove.id,
+    );
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void addPossession(Posession poss) {
+    _character.possessions.add(poss);
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void updatePossession(Posession newPossession) {
+    _character.possessions = _character.possessions
+        .map(
+          (Posession poss) =>
+              poss.id == newPossession.id ? newPossession : poss,
+        )
+        .toList();
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void removePossession(Posession possessonToRemove) {
+    _character.possessions.removeWhere(
+      (Posession poss) => poss.id == possessonToRemove.id,
     );
 
     _isDirty = true;
