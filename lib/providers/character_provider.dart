@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
+import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
@@ -50,61 +50,89 @@ class CharacterProvider with ChangeNotifier {
             int.tryParse(value) ?? _character.personalInfo.weight;
         break;
       case 'Size Modifier':
-        _character.sizeModifier =
-            int.tryParse(value) ?? _character.sizeModifier;
+        _character.attributes.sizeModifier =
+            int.tryParse(value) ?? _character.attributes.sizeModifier;
         break;
       case 'Strength':
-        _character.strength = _character
+        _character.attributes.pointsInvestedInST = _character.attributes
             .adjustPrimaryAttribute(
               Attributes.ST,
               double.parse(value),
+              _character.remainingPoints,
             )
             .toInt();
       case 'Dexterity':
-        _character.dexterity = _character
+        _character.attributes.pointsInvestedInDX = _character.attributes
             .adjustPrimaryAttribute(
               Attributes.DX,
               double.parse(value),
+              _character.remainingPoints,
             )
             .toInt();
       case 'IQ':
-        _character.iq = _character
+        _character.attributes.pointsInvestedInIQ = _character.attributes
             .adjustPrimaryAttribute(
               Attributes.IQ,
               double.parse(value),
+              _character.remainingPoints,
             )
             .toInt();
       case 'Health':
-        _character.health = _character
+        _character.attributes.pointsInvestedInHT = _character.attributes
             .adjustPrimaryAttribute(
               Attributes.HT,
               double.parse(value),
+              _character.remainingPoints,
             )
             .toInt();
       case 'Perception':
-        if (_character.remainingPoints > Attributes.Per.adjustPriceOf) {
-          _character.pointsSpentOnPer += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInPer = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.Per,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       case 'Will':
-        if (_character.remainingPoints > Attributes.Will.adjustPriceOf) {
-          _character.pointsSpentOnWill += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInWill = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.Will,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       case 'Hit Points':
-        if (_character.remainingPoints > Attributes.HP.adjustPriceOf) {
-          _character.pointsSpentOnHP += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInHP = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.HP,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       case 'Fatigue Points':
-        if (_character.remainingPoints > Attributes.FP.adjustPriceOf) {
-          _character.pointsSpentOnFP += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInFP = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.FP,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       case 'Basic Speed':
-        if (_character.remainingPoints > Attributes.BASIC_SPEED.adjustPriceOf) {
-          _character.pointsSpentOnBS += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInBS = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.BASIC_SPEED,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       case 'Basic Move':
-        if (_character.remainingPoints > Attributes.BASIC_MOVE.adjustPriceOf) {
-          _character.pointsSpentOnBM += int.parse(value);
-        }
+        _character.attributes.pointsInvestedInBM = _character.attributes
+            .adjustDerivedAttribute(
+              Attributes.BASIC_MOVE,
+              double.parse(value),
+              _character.remainingPoints,
+            )
+            .toInt();
       default:
     }
 

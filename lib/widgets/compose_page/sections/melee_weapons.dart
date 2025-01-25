@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
+import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
@@ -31,7 +31,7 @@ class MeleeWeaponsSection extends StatelessWidget {
           WeaponDamage.fromJson(
             json,
           ).calculateDamage(
-            characterProvider.character.getAttribute(Attributes.ST),
+            characterProvider.character.attributes.getAttribute(Attributes.ST),
             hw.minimumSt,
           ),
         ),
@@ -139,7 +139,8 @@ class MeleeWeaponsSection extends StatelessWidget {
     Skill skill = characterProvider.character.skills.elementAt(skillIndex);
 
     int skillLevel = skill.skillLevel(
-      characterProvider.character.getAttribute(skill.associatedAttribute),
+      characterProvider.character.attributes
+          .getAttribute(skill.associatedAttribute),
     );
 
     return DataCell(

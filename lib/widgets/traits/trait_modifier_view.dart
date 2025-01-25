@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
 
 class TraitModifierView extends StatelessWidget {
   final TraitModifier traitModifier;

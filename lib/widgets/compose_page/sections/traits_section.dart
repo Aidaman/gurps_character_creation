@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';

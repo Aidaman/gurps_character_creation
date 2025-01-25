@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/characteristics/aspect.dart';
+import 'package:gurps_character_creation/models/aspects/aspect.dart';
 
 Future<List<Spell>> loadSpells() async {
   final jsonString = await rootBundle.loadString('assets/Spells/magic.json');

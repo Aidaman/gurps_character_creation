@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/aspect.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/aspects/aspect.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
+import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 
 class AspectsProvider extends ChangeNotifier {
   List<Trait> _traits = [];

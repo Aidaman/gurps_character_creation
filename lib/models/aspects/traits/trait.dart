@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/models/characteristics/aspect.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill_bonus.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_categories.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait_modifier.dart';
+import 'package:gurps_character_creation/models/aspects/aspect.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill_bonus.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 
 List<Trait> traitFromJson(String str) =>

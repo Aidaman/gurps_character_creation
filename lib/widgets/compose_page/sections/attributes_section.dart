@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
+import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
@@ -13,23 +13,23 @@ class AttributesSection extends StatelessWidget {
         Provider.of<CharacterProvider>(context);
 
     final int primaryAttributeValue =
-        characterProvider.character.getAttribute(attribute);
+        characterProvider.character.attributes.getAttribute(attribute);
 
     return AttributeView(
       attribute: attribute,
       stat: primaryAttributeValue,
       pointsSpent:
-          characterProvider.character.getPointsSpentOnAttribute(attribute),
+          characterProvider.character.attributes.getPointsInvestedIn(attribute),
       onIncrement: () {
         characterProvider.updateCharacterField(
           attribute.stringValue,
-          (primaryAttributeValue + attribute.adjustValueOf).toString(),
+          attribute.adjustPriceOf.toString(),
         );
       },
       onDecrement: () {
         characterProvider.updateCharacterField(
           attribute.stringValue,
-          (primaryAttributeValue - attribute.adjustValueOf).toString(),
+          (attribute.adjustPriceOf * -1).toString(),
         );
       },
     );
@@ -40,13 +40,13 @@ class AttributesSection extends StatelessWidget {
         Provider.of<CharacterProvider>(context);
 
     final int derivedAttributesValue =
-        characterProvider.character.getAttribute(attribute);
+        characterProvider.character.attributes.getAttribute(attribute);
 
     return AttributeView(
       attribute: attribute,
       stat: derivedAttributesValue,
       pointsSpent:
-          characterProvider.character.getPointsSpentOnAttribute(attribute),
+          characterProvider.character.attributes.getPointsInvestedIn(attribute),
       onIncrement: () {
         characterProvider.updateCharacterField(
           attribute.stringValue,

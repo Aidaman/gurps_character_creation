@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
+import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';

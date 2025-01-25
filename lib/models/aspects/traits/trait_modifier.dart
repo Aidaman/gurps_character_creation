@@ -1,4 +1,4 @@
-import 'package:gurps_character_creation/models/characteristics/skills/skill_bonus.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill_bonus.dart';
 
 class TraitModifier {
   final String name;

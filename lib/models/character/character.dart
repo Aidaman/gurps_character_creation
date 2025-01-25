@@ -1,8 +1,9 @@
+import 'package:gurps_character_creation/models/character/attributes_scores.dart';
 import 'package:gurps_character_creation/models/character/personal_info.dart';
-import 'package:gurps_character_creation/models/characteristics/attributes.dart';
-import 'package:gurps_character_creation/models/characteristics/skills/skill.dart';
-import 'package:gurps_character_creation/models/characteristics/spells/spell.dart';
-import 'package:gurps_character_creation/models/characteristics/traits/trait.dart';
+import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
+import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
+import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
@@ -17,13 +18,9 @@ class Character {
   String gameId;
   int points;
   String playerName;
-  PersonalInfo personalInfo;
 
-  int sizeModifier;
-  int strength;
-  int iq;
-  int dexterity;
-  int health;
+  PersonalInfo personalInfo;
+  AttributesScores attributes;
 
   List<Skill> skills;
   List<Trait> traits;
@@ -32,35 +29,6 @@ class Character {
   List<Weapon> weapons;
   List<Armor> armor;
   List<Posession> possessions;
-
-  static const int MIN_PRIMARY_ATTRIBUTE_VALUE = 1;
-  static const int MAX_PRIMARY_ATTRIBUTE_VALUE = 20;
-  static const int DEFAULT_PRIMARY_ATTRIBUTE_VALUE = 10;
-
-  // Calculated characteristics
-  int get hitPoints =>
-      strength + sizeModifier + pointsSpentOnHP ~/ Attributes.HP.adjustPriceOf;
-  int pointsSpentOnHP = 0;
-
-  int get will => iq + pointsSpentOnWill ~/ Attributes.Will.adjustPriceOf;
-  int pointsSpentOnWill = 0;
-
-  int get perception => iq + pointsSpentOnPer ~/ Attributes.Per.adjustPriceOf;
-  int pointsSpentOnPer = 0;
-
-  double get basicSpeed =>
-      ((health + dexterity) / 4) +
-      (pointsSpentOnBS / Attributes.BASIC_SPEED.adjustPriceOf);
-  int pointsSpentOnBS = 0;
-
-  int get basicMove =>
-      ((basicSpeed - (basicSpeed % 1)).toInt()) +
-      pointsSpentOnBM ~/ Attributes.BASIC_MOVE.adjustPriceOf;
-  int pointsSpentOnBM = 0;
-
-  int get fatiguePoints =>
-      health + pointsSpentOnFP ~/ Attributes.FP.adjustPriceOf;
-  int pointsSpentOnFP = 0;
 
   int get remainingPoints {
     int total = 0;
@@ -91,7 +59,7 @@ class Character {
 
     total += Attributes.values.fold(
       0,
-      (sum, attr) => sum + getPointsSpentOnAttribute(attr),
+      (sum, attr) => sum + attributes.getPointsInvestedIn(attr),
     );
 
     return points - total;
@@ -102,11 +70,7 @@ class Character {
     required this.points,
     required this.playerName,
     required this.personalInfo,
-    required this.sizeModifier,
-    required this.strength,
-    required this.iq,
-    required this.dexterity,
-    required this.health,
+    required this.attributes,
     required this.skills,
     required this.traits,
     required this.spells,
@@ -121,11 +85,7 @@ class Character {
     required this.points,
     required this.playerName,
     required this.personalInfo,
-    required this.sizeModifier,
-    required this.strength,
-    required this.iq,
-    required this.dexterity,
-    required this.health,
+    required this.attributes,
     required this.skills,
     required this.traits,
     required this.spells,
@@ -139,12 +99,8 @@ class Character {
         gameId: json['gameId'],
         playerName: json['player_name'],
         personalInfo: PersonalInfo.fromJson(json['personal_info']),
-        strength: json['strength'],
-        dexterity: json['dexterity'],
-        iq: json['iq'],
-        health: json['health'],
+        attributes: AttributesScores.fromJson(json['attributes']),
         points: json['po  ints'],
-        sizeModifier: json['sizeModifier'],
         skills: List<Skill>.from(json['skills'].map((x) => x)),
         traits: List<Trait>.from(json['traits'].map((x) => x)),
         spells: List<Spell>.from(json['spells'].map((x) => x)),
@@ -157,12 +113,8 @@ class Character {
         gameId: 'random',
         points: 100,
         personalInfo: PersonalInfo(),
-        sizeModifier: 0,
+        attributes: AttributesScores(),
         playerName: '',
-        strength: 10,
-        iq: 10,
-        dexterity: 10,
-        health: 10,
         skills: [],
         traits: [],
         spells: [],
@@ -228,104 +180,11 @@ class Character {
   Map<String, dynamic> toJson() => {
         'id': id,
         'gameId': gameId,
-        'strength': strength,
-        'dexterity': dexterity,
-        'iq': iq,
-        'health': health,
         'points': points,
-        'sizeModifier': sizeModifier,
+        'personal_info': personalInfo.toJson,
+        'attributes': attributes.toJson,
         'skills': List<dynamic>.from(skills.map((x) => x)),
         'traits': List<dynamic>.from(traits.map((x) => x)),
         'spells': List<dynamic>.from(spells.map((x) => x)),
       };
-
-  double adjustPrimaryAttribute(Attributes stat, double newValue) {
-    int attributeValue = getAttribute(stat);
-
-    if (newValue <= MIN_PRIMARY_ATTRIBUTE_VALUE) {
-      return MIN_PRIMARY_ATTRIBUTE_VALUE.toDouble();
-    }
-
-    if (newValue >= MAX_PRIMARY_ATTRIBUTE_VALUE) {
-      return MAX_PRIMARY_ATTRIBUTE_VALUE.toDouble();
-    }
-
-    if (attributeValue > newValue) {
-      return newValue;
-    }
-
-    if (remainingPoints < stat.adjustPriceOf) {
-      return attributeValue.toDouble();
-    }
-
-    return newValue;
-  }
-
-  double adjustDerivedAttribute(Attributes stat, double newValue) {
-    int attributeValue = getPointsSpentOnAttribute(stat);
-
-    if (remainingPoints < stat.adjustPriceOf) {
-      return attributeValue.toDouble();
-    }
-
-    return newValue;
-  }
-
-  int getPointsSpentOnAttribute(Attributes attribute) {
-    switch (attribute) {
-      case Attributes.ST:
-        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-            Attributes.ST.adjustPriceOf;
-      case Attributes.DX:
-        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-            Attributes.DX.adjustPriceOf;
-      case Attributes.IQ:
-        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-            Attributes.IQ.adjustPriceOf;
-      case Attributes.HT:
-        return (getAttribute(attribute) - DEFAULT_PRIMARY_ATTRIBUTE_VALUE) *
-            Attributes.HT.adjustPriceOf;
-      case Attributes.Per:
-        return pointsSpentOnPer;
-      case Attributes.Will:
-        return pointsSpentOnWill;
-      case Attributes.HP:
-        return pointsSpentOnHP;
-      case Attributes.FP:
-        return pointsSpentOnFP;
-      case Attributes.BASIC_SPEED:
-        return pointsSpentOnBS;
-      case Attributes.BASIC_MOVE:
-        return pointsSpentOnBM;
-      case Attributes.NONE:
-        return 0;
-    }
-  }
-
-  int getAttribute(Attributes attribute) {
-    switch (attribute) {
-      case Attributes.ST:
-        return strength;
-      case Attributes.DX:
-        return dexterity;
-      case Attributes.IQ:
-        return iq;
-      case Attributes.HT:
-        return health;
-      case Attributes.Per:
-        return perception;
-      case Attributes.Will:
-        return will;
-      case Attributes.HP:
-        return hitPoints;
-      case Attributes.FP:
-        return fatiguePoints;
-      case Attributes.BASIC_SPEED:
-        return basicSpeed.toInt();
-      case Attributes.BASIC_MOVE:
-        return basicMove;
-      case Attributes.NONE:
-        return -1;
-    }
-  }
 }
