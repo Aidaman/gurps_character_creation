@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
@@ -90,19 +93,36 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection> {
   }
 
   // For now it only serves a rather decorative function, later on it will be able to pick an image
-  Container _buildCharacterAvatar() {
-    return Container(
-      constraints: const BoxConstraints(
-        maxHeight: 128,
-        maxWidth: 128,
-        minHeight: 86,
-        minWidth: 86,
-      ),
-      child: const Placeholder(
-        child: Icon(
-          Icons.person_4_outlined,
-          size: 48,
+  Widget _buildCharacterAvatar(CharacterProvider characterProvider) {
+    return GestureDetector(
+      onTap: () async {
+        FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+        if (result == null) {
+          return;
+        }
+
+        setState(() {
+          characterProvider.setProfilePicture(result.files.first.path!);
+        });
+      },
+      child: Container(
+        constraints: const BoxConstraints(
+          maxHeight: 128,
+          maxWidth: 128,
+          minHeight: 86,
+          minWidth: 86,
         ),
+        child: characterProvider.character.personalInfo.avatarURL.isEmpty
+            ? const Placeholder(
+                child: Icon(
+                  Icons.person_4_outlined,
+                  size: 48,
+                ),
+              )
+            : Image.file(
+                File(characterProvider.character.personalInfo.avatarURL),
+              ),
       ),
     );
   }
@@ -138,13 +158,16 @@ class _PersonalInfoSectionState extends State<PersonalInfoSection> {
 
   @override
   Widget build(BuildContext context) {
+    CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     final bool isMobile = MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH;
 
     final double spacing =
         isMobile ? DESKTOP_COLUMNS_SPACING : MOBILE_ROWS_SPACING;
 
     final List<Widget> children = [
-      _buildCharacterAvatar(),
+      _buildCharacterAvatar(characterProvider),
       Gap(spacing),
       ..._basicInfoControllers.map(_visualiseFields),
     ];

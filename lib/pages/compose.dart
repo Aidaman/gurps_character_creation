@@ -7,7 +7,7 @@ import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/edit_character_points_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/armor_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/personal_info_Section.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sections/personal_info_section.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/attributes_section.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/melee_weapons.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/possessions_section.dart';

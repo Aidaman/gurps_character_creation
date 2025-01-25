@@ -379,4 +379,11 @@ class CharacterProvider with ChangeNotifier {
 
     return replacedWith.replaceAll(match.group(0)!, replacedWith);
   }
+
+  void setProfilePicture(String path) {
+    _character.personalInfo.avatarURL = path;
+
+    _isDirty = true;
+    notifyListeners();
+  }
 }
