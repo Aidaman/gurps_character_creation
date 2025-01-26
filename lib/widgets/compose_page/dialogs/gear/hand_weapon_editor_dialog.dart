@@ -227,7 +227,6 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
             _handWeapon,
             associatedSkillName: value,
           );
-          print(_handWeapon.associatedSkillName);
         }),
         context: context,
       ),

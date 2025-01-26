@@ -48,7 +48,6 @@ class PossessionDetailsDialog extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    print('the description is: ${possession.description}');
     return Column(
       children: [
         Row(

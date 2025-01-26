@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,18 @@ class SpellView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ButtonStyle iconButtonStyle = IconButton.styleFrom(
+      iconSize: 16,
+      padding: const EdgeInsets.all(4),
+    );
+    const BoxConstraints iconButtonConstraints = BoxConstraints(
+      maxHeight: 32,
+      maxWidth: 32,
+    );
+
+    CharacterProvider characterProvider =
+        Provider.of<CharacterProvider>(context);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 4.0),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -75,7 +88,11 @@ class SpellView extends StatelessWidget {
           ),
           const Gap(4),
           Row(
-            children: [Text('Class: ${spell.spellClass}')],
+            children: [
+              Expanded(child: Text('Class: ${spell.spellClass}')),
+              Expanded(
+                  child: _generateSkillCostText(context, characterProvider)),
+            ],
           ),
           const Gap(4),
           if (!isAllPrerequisitesSatisfiedOrNull())
@@ -85,7 +102,23 @@ class SpellView extends StatelessWidget {
               ],
             ),
           const Gap(4),
-          if (onAddClick != null || onRemoveClick != null) _buildActions()
+          Row(
+            children: [
+              Expanded(
+                child: _buildActions(
+                  iconButtonStyle,
+                  iconButtonConstraints,
+                ),
+              ),
+              Expanded(
+                child: _generateAdjustmentButtons(
+                  characterProvider,
+                  iconButtonStyle,
+                  iconButtonConstraints,
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -131,16 +164,10 @@ class SpellView extends StatelessWidget {
     );
   }
 
-  Widget _buildActions() {
-    final ButtonStyle iconButtonStyle = IconButton.styleFrom(
-      iconSize: 16,
-      padding: const EdgeInsets.all(4),
-    );
-    const BoxConstraints iconButtonConstraints = BoxConstraints(
-      maxHeight: 32,
-      maxWidth: 32,
-    );
-
+  Widget _buildActions(
+    ButtonStyle iconButtonStyle,
+    BoxConstraints iconButtonConstraints,
+  ) {
     return Row(
       children: [
         if (onAddClick != null)
@@ -158,6 +185,81 @@ class SpellView extends StatelessWidget {
             icon: const Icon(Icons.remove),
           ),
       ],
+    );
+  }
+
+  Widget _generateAdjustmentButtons(
+    CharacterProvider characterProvider,
+    ButtonStyle iconButtonStyle,
+    BoxConstraints iconButtonConstraints,
+  ) {
+    return Row(
+      children: [
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSpellInvestedPoints(spell, 1);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.arrow_upward),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSpellInvestedPoints(spell, 4);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.keyboard_double_arrow_up_outlined),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSpellInvestedPoints(spell, -1);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.arrow_downward),
+          ),
+        if (isIncluded == true)
+          IconButton(
+            onPressed: () {
+              characterProvider.adjustSpellInvestedPoints(spell, -4);
+            },
+            style: iconButtonStyle,
+            constraints: iconButtonConstraints,
+            icon: const Icon(Icons.keyboard_double_arrow_down_outlined),
+          ),
+      ],
+    );
+  }
+
+  Text _generateSkillCostText(
+      BuildContext context, CharacterProvider characterProvider) {
+    final int effectiveSkill = spell.spellEfficiency(
+      magery: characterProvider.character.traits.indexWhere(
+                (element) => element.name.toLowerCase() == 'magery',
+              ) ==
+              -1
+          ? 0
+          : 1,
+    );
+
+    if (effectiveSkill < 0) {
+      return Text(
+        'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}$effectiveSkill)',
+      );
+    }
+
+    if (effectiveSkill == 0) {
+      return Text(
+        'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue})',
+      );
+    }
+
+    return Text(
+      'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}+$effectiveSkill)',
     );
   }
 }

@@ -59,7 +59,6 @@ class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
             }
 
             setState(() {
-              print('Shit has been updated');
               _posession = Posession.copyWith(_posession, description: value);
             });
           },

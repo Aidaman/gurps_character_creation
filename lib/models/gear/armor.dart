@@ -115,6 +115,7 @@ class DamageResistance {
         'is_front_only': isFrontOnly,
       };
 
+  // ignore: non_constant_identifier_names
   String get GURPSNotation {
     String notation = '';
 

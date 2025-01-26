@@ -209,6 +209,25 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void adjustSpellInvestedPoints(Spell spell, int adjustment) {
+    if (adjustment <= 0 && spell.investedPoints == 1) {
+      return;
+    }
+
+    if (character.remainingPoints - adjustment > character.points) {
+      return;
+    }
+
+    if (character.remainingPoints - adjustment < 0) {
+      return;
+    }
+
+    spell.investedPoints += adjustment;
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
   void removeSkill(Skill skill) {
     _character.skills.removeWhere(
       (s) => s.name == skill.name,
@@ -331,7 +350,6 @@ class CharacterProvider with ChangeNotifier {
   }
 
   void addPossession(Posession poss) {
-    print(poss.description);
     _character.possessions.add(poss);
 
     _isDirty = true;

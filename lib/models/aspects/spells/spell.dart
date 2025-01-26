@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/models/aspects/aspect.dart';
+import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 
 Future<List<Spell>> loadSpells() async {
   final jsonString = await rootBundle.loadString('assets/Spells/magic.json');
@@ -25,8 +26,9 @@ class Spell extends Aspect {
   final List<String> categories;
   final List<String> prereqList;
 
-  final int investedPoints;
+  int investedPoints;
   final List<String>? unsatisfitedPrerequisitesList;
+  final SkillDifficulty difficulty;
 
   Spell({
     required super.name,
@@ -41,6 +43,7 @@ class Spell extends Aspect {
     required this.categories,
     required this.prereqList,
     this.unsatisfitedPrerequisitesList,
+    this.difficulty = SkillDifficulty.HARD,
     int? investedPoints,
   }) : investedPoints = investedPoints ?? 0;
 
@@ -56,6 +59,7 @@ class Spell extends Aspect {
         castingTime: json['casting_time'],
         duration: json['duration'],
         reference: json['reference'],
+        difficulty: json['difficulty'] ?? SkillDifficulty.HARD,
         categories: List<String>.from(json['categories'].map((x) => x)),
         prereqList: List<String>.from(json['prereq_list'].map((x) => x)),
       );
@@ -70,6 +74,7 @@ class Spell extends Aspect {
         'casting_time': castingTime,
         'duration': duration,
         'reference': reference,
+        'difficulty': difficulty,
         'categories': List<String>.from(categories.map((x) => x)),
         'prereq_list': List<String>.from(prereqList.map((x) => x)),
       };
@@ -106,5 +111,28 @@ class Spell extends Aspect {
       unsatisfitedPrerequisitesList:
           unsatisfitedPrerequisitesList ?? spl.unsatisfitedPrerequisitesList,
     );
+  }
+
+  int spellEfficiency({required int magery}) {
+    int efficiency = magery;
+
+    switch (difficulty) {
+      case SkillDifficulty.HARD:
+        efficiency -= 2;
+        efficiency += investedPoints;
+        break;
+
+      case SkillDifficulty.VERY_HARD:
+        efficiency -= 3;
+        efficiency += (investedPoints / 2).floor();
+        break;
+
+      default:
+        throw ArgumentError(
+          'Invalid spell difficulty: $difficulty. Must be "Hard" or "Very Hard".',
+        );
+    }
+
+    return efficiency;
   }
 }
