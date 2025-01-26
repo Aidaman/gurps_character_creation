@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
+import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
-import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_editor_dialog.dart';
-import 'package:provider/provider.dart';
 
 class MeleeWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
+  final Character character;
+  final CharacterWeaponProvider weaponProvider;
 
-  const MeleeWeaponsSection({super.key});
+  const MeleeWeaponsSection({
+    super.key,
+    required this.character,
+    required this.weaponProvider,
+  });
 
   DataCell _buildMapValueCell(
     Map<String, dynamic> json,
-    CharacterProvider characterProvider,
     HandWeapon hw,
   ) {
     if (HandWeaponReach.isReach(json)) {
@@ -26,15 +31,13 @@ class MeleeWeaponsSection extends StatelessWidget {
     }
 
     if (WeaponDamage.isDamage(json)) {
+      WeaponDamage damage = WeaponDamage.fromJson(json);
+
       return DataCell(
-        Text(
-          WeaponDamage.fromJson(
-            json,
-          ).calculateDamage(
-            characterProvider.character.attributes.getAttribute(Attributes.ST),
-            hw.minimumSt,
-          ),
-        ),
+        Text(damage.calculateDamage(
+          character.attributes.getAttribute(Attributes.ST),
+          hw.minimumSt,
+        )),
       );
     }
 
@@ -51,21 +54,17 @@ class MeleeWeaponsSection extends StatelessWidget {
     );
   }
 
-  DataRow _buildHandWeaponDataCell(
-    BuildContext context,
-    HandWeapon hw,
-    CharacterProvider characterProvider,
-  ) {
+  DataRow _buildHandWeaponDataCell(BuildContext context, HandWeapon hw) {
     Iterable<DataCell> cells = hw.dataTableColumns.entries.map(
       (MapEntry<String, dynamic> e) {
         final bool valueIsMap = e.value is Map;
 
         if (valueIsMap) {
-          return _buildMapValueCell(e.value, characterProvider, hw);
+          return _buildMapValueCell(e.value, hw);
         }
 
         if (e.key == 'parry') {
-          return _getParryCell(characterProvider, hw);
+          return _getParryCell(hw);
         }
 
         if (e.key == 'lc' && e.value is LegalityClass) {
@@ -88,26 +87,21 @@ class MeleeWeaponsSection extends StatelessWidget {
         _buildHandWeaponActions(
           context,
           hw,
-          characterProvider,
         ),
       )
     ]);
   }
 
-  Widget _buildHandWeaponActions(
-    BuildContext context,
-    HandWeapon hw,
-    CharacterProvider characterProvider,
-  ) {
+  Widget _buildHandWeaponActions(BuildContext context, HandWeapon hw) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () => _openEditDialog(hw, context, characterProvider),
+          onPressed: () => _openEditDialog(hw, context),
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
-          onPressed: () => characterProvider.removeWeapon(hw),
+          onPressed: () => weaponProvider.delete(hw.id),
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(
@@ -121,8 +115,8 @@ class MeleeWeaponsSection extends StatelessWidget {
     );
   }
 
-  DataCell _getParryCell(CharacterProvider characterProvider, HandWeapon hw) {
-    int skillIndex = characterProvider.character.skills.indexWhere(
+  DataCell _getParryCell(HandWeapon hw) {
+    int skillIndex = character.skills.indexWhere(
       (Skill skl) => skl.name == hw.associatedSkillName,
     );
 
@@ -136,11 +130,10 @@ class MeleeWeaponsSection extends StatelessWidget {
       );
     }
 
-    Skill skill = characterProvider.character.skills.elementAt(skillIndex);
+    Skill skill = character.skills.elementAt(skillIndex);
 
     int skillLevel = skill.skillLevel(
-      characterProvider.character.attributes
-          .getAttribute(skill.associatedAttribute),
+      character.attributes.getAttribute(skill.associatedAttribute),
     );
 
     return DataCell(
@@ -154,11 +147,8 @@ class MeleeWeaponsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
-    if (characterProvider.character.weapons.whereType<HandWeapon>().isEmpty) {
-      return _buildAddNewItem(context, characterProvider);
+    if (character.weapons.whereType<HandWeapon>().isEmpty) {
+      return _buildAddNewItem(context);
     }
 
     final List<DataColumn> dataColumns = [
@@ -170,13 +160,12 @@ class MeleeWeaponsSection extends StatelessWidget {
       const DataColumn(label: Text('Actions')),
     ];
 
-    final List<DataRow> dataRows = characterProvider.character.weapons
+    final List<DataRow> dataRows = character.weapons
         .whereType<HandWeapon>()
         .map(
           (HandWeapon hw) => _buildHandWeaponDataCell(
             context,
             hw,
-            characterProvider,
           ),
         )
         .toList();
@@ -191,16 +180,13 @@ class MeleeWeaponsSection extends StatelessWidget {
               rows: dataRows,
             ),
           ),
-          _buildAddNewItem(context, characterProvider),
+          _buildAddNewItem(context),
         ],
       ),
     );
   }
 
-  Column _buildAddNewItem(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) {
+  Column _buildAddNewItem(BuildContext context) {
     return Column(
       children: [
         const Divider(
@@ -209,32 +195,25 @@ class MeleeWeaponsSection extends StatelessWidget {
         ),
         const Text('Click to add a Weapon'),
         IconButton.filled(
-          onPressed: () => _openCreateDialog(context, characterProvider),
+          onPressed: () => _openCreateDialog(context),
           icon: const Icon(Icons.add),
         ),
       ],
     );
   }
 
-  void _openCreateDialog(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
+  void _openCreateDialog(BuildContext context) async {
     HandWeapon? hw = await showDialog<HandWeapon?>(
       context: context,
       builder: (context) => const HandWeaponEditorDialog(),
     );
 
     if (hw != null) {
-      characterProvider.addWeapon(hw);
+      weaponProvider.create(hw);
     }
   }
 
-  void _openEditDialog(
-    HandWeapon hw,
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
+  void _openEditDialog(HandWeapon hw, BuildContext context) async {
     HandWeapon? newWeapon = await showDialog<HandWeapon?>(
       context: context,
       builder: (context) => HandWeaponEditorDialog(
@@ -243,7 +222,7 @@ class MeleeWeaponsSection extends StatelessWidget {
     );
 
     if (newWeapon != null) {
-      characterProvider.updateWeapon(newWeapon);
+      weaponProvider.update(newWeapon);
     }
   }
 }

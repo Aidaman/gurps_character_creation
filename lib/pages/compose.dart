@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
+import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
+import 'package:gurps_character_creation/services/gear/weapon_service.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
@@ -81,90 +83,109 @@ class _ComposePageState extends State<ComposePage> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: APP_BAR_HEIGHT,
-        title: Text(
-          'points ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
-          style: Theme.of(context).textTheme.titleMedium,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CharacterWeaponProvider>(
+          create: (_) => CharacterWeaponProvider(
+            characterProvider,
+            WeaponService(),
+          ),
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () async {
-              int? newPoints = await showDialog<int?>(
-                context: context,
-                builder: (context) => EditCharacterPointsDialog(
-                  currentPoints: characterProvider.character.points,
-                ),
-              );
-
-              if (newPoints == null) {
-                return;
-              }
-
-              characterProvider.updateCharacterMaxPoints(newPoints);
-            },
-            icon: const Icon(
-              Icons.monetization_on_outlined,
-            ),
+      ],
+      builder: (context, child) => Scaffold(
+        appBar: AppBar(
+          toolbarHeight: APP_BAR_HEIGHT,
+          title: Text(
+            'points ${characterProvider.character.remainingPoints}/${characterProvider.character.points}',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
-            },
-            icon: const Icon(
-              Icons.settings_outlined,
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () async {
+                int? newPoints = await showDialog<int?>(
+                  context: context,
+                  builder: (context) => EditCharacterPointsDialog(
+                    currentPoints: characterProvider.character.points,
+                  ),
+                );
+
+                if (newPoints == null) {
+                  return;
+                }
+
+                characterProvider.updateCharacterMaxPoints(newPoints);
+              },
+              icon: const Icon(
+                Icons.monetization_on_outlined,
+              ),
             ),
-          ),
-          if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
-            Builder(builder: (context) {
-              return IconButton(
-                icon: const Icon(Icons.now_widgets_outlined),
-                onPressed: () => _toggleSidebar(context),
-              );
-            }),
-          if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH) Container()
-        ],
-      ),
-      floatingActionButton: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
-          ? null
-          : Builder(builder: (context) {
-              return FloatingActionButton(
-                child: const Icon(Icons.now_widgets_outlined),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              );
-            }),
-      body: ComposePageLayout(
-        isSidebarVisible: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
-            ? _isSidebarVisible
-            : false,
-        sidebarContent: sidebar,
-        bodyContent: ComposePageResponsiveGrid(
-          children: [
-            const PersonalInfoSection(),
-            const AttributesSection(),
-            TraitsSection(
-              emptyListBuilder: _generateEmptyTraitOrSkillView,
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
+              },
+              icon: const Icon(
+                Icons.settings_outlined,
+              ),
             ),
-            SkillsSection(
-              emptyListBuilder: _generateEmptyTraitOrSkillView,
-            ),
-            const MeleeWeaponsSection(),
-            const RangedWeaponsSection(),
-            const ArmorSection(),
-            const PosessionsSection(),
+            if (MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH)
+              Builder(builder: (context) {
+                return IconButton(
+                  icon: const Icon(Icons.now_widgets_outlined),
+                  onPressed: () => _toggleSidebar(context),
+                );
+              }),
+            if (MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH)
+              Container()
           ],
-          // restOfTheBody: const [],
         ),
+        floatingActionButton:
+            MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+                ? null
+                : Builder(builder: (context) {
+                    return FloatingActionButton(
+                      child: const Icon(Icons.now_widgets_outlined),
+                      onPressed: () {
+                        Scaffold.of(context).openEndDrawer();
+                      },
+                    );
+                  }),
+        body: ComposePageLayout(
+          isSidebarVisible:
+              MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
+                  ? _isSidebarVisible
+                  : false,
+          sidebarContent: sidebar,
+          bodyContent: ComposePageResponsiveGrid(
+            children: [
+              const PersonalInfoSection(),
+              const AttributesSection(),
+              TraitsSection(
+                emptyListBuilder: _generateEmptyTraitOrSkillView,
+              ),
+              SkillsSection(
+                emptyListBuilder: _generateEmptyTraitOrSkillView,
+              ),
+              MeleeWeaponsSection(
+                character: characterProvider.character,
+                weaponProvider: Provider.of<CharacterWeaponProvider>(context),
+              ),
+              RangedWeaponsSection(
+                character: characterProvider.character,
+                weaponProvider: Provider.of<CharacterWeaponProvider>(context),
+              ),
+              const ArmorSection(),
+              const PosessionsSection(),
+            ],
+            // restOfTheBody: const [],
+          ),
+        ),
+        endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
+            ? null
+            : Drawer(
+                child: sidebar,
+              ),
       ),
-      endDrawer: MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH
-          ? null
-          : Drawer(
-              child: sidebar,
-            ),
     );
   }
 

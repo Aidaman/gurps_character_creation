@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 class RangedWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
+  final Character character;
+  final CharacterWeaponProvider weaponProvider;
 
-  const RangedWeaponsSection({super.key});
+  const RangedWeaponsSection({
+    super.key,
+    required this.character,
+    required this.weaponProvider,
+  });
 
-  DataRow _buildRangedWeaponDataCell(
-    RangedWeapon rw,
-    CharacterProvider characterProvider,
-    BuildContext context,
-  ) {
+  DataRow _buildRangedWeaponDataCell(RangedWeapon rw, BuildContext context) {
     Iterable<DataCell> cells = rw.toDataTableColumns().entries.map(
       (MapEntry<String, dynamic> e) {
         final bool valueIsMap = e.value is Map;
@@ -71,11 +75,11 @@ class RangedWeaponsSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () => _openEditDialog(rw, context, characterProvider),
+              onPressed: () => _openEditDialog(rw, context),
               icon: const Icon(Icons.edit_outlined),
             ),
             IconButton(
-              onPressed: () => characterProvider.removeWeapon(rw),
+              onPressed: () => weaponProvider.delete(rw.id),
               icon: const Icon(Icons.remove_outlined),
             ),
             IconButton(
@@ -103,7 +107,7 @@ class RangedWeaponsSection extends StatelessWidget {
         ),
         const Text('Click to add a Ranged Weapon'),
         IconButton.filled(
-          onPressed: () => _openCreateDialog(context, characterProvider),
+          onPressed: () => _openCreateDialog(context),
           icon: const Icon(Icons.add),
         ),
       ],
@@ -138,7 +142,6 @@ class RangedWeaponsSection extends StatelessWidget {
                   .map(
                     (RangedWeapon rw) => _buildRangedWeaponDataCell(
                       rw,
-                      characterProvider,
                       context,
                     ),
                   )
@@ -151,25 +154,18 @@ class RangedWeaponsSection extends StatelessWidget {
     );
   }
 
-  void _openCreateDialog(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
+  void _openCreateDialog(BuildContext context) async {
     RangedWeapon? rw = await showDialog<RangedWeapon?>(
       context: context,
       builder: (context) => const RangedWeaponEditorDialog(),
     );
 
     if (rw != null) {
-      characterProvider.addWeapon(rw);
+      weaponProvider.create(rw);
     }
   }
 
-  void _openEditDialog(
-    RangedWeapon rw,
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
+  void _openEditDialog(RangedWeapon rw, BuildContext context) async {
     RangedWeapon? newWeapon = await showDialog<RangedWeapon?>(
       context: context,
       builder: (context) => RangedWeaponEditorDialog(
@@ -178,7 +174,7 @@ class RangedWeaponsSection extends StatelessWidget {
     );
 
     if (newWeapon != null) {
-      characterProvider.updateWeapon(newWeapon);
+      weaponProvider.update(newWeapon);
     }
   }
 }

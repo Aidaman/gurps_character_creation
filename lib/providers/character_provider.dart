@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
@@ -295,33 +294,6 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addWeapon(Weapon weapon) {
-    _character.weapons.add(weapon);
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void updateWeapon(Weapon newWeapon) {
-    _character.weapons = _character.weapons
-        .map(
-          (Weapon wpn) => wpn.id == newWeapon.id ? newWeapon : wpn,
-        )
-        .toList();
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void removeWeapon(Weapon weapon) {
-    _character.weapons.removeWhere(
-      (Weapon wpn) => wpn.id == weapon.id,
-    );
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
   void addArmor(Armor armor) {
     _character.armor.add(armor);
 
@@ -403,5 +375,9 @@ class CharacterProvider with ChangeNotifier {
 
     _isDirty = true;
     notifyListeners();
+  }
+
+  void markDirty() {
+    _isDirty = true;
   }
 }
