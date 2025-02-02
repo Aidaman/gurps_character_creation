@@ -2,7 +2,7 @@ import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/services/character_crud_service.dart';
 
-class WeaponService extends CharacterGearCRUDService<Weapon> {
+class WeaponService extends CharacterCRUDService<Weapon> {
   @override
   void create(Character character, Weapon item) {
     character.weapons.add(item);

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
-import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_editor_dialog.dart';

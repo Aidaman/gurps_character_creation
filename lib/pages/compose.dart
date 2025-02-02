@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
+import 'package:gurps_character_creation/providers/character/personal_info_provider.dart';
 import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
+import 'package:gurps_character_creation/services/character/personal_info_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_service.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
@@ -91,6 +93,12 @@ class _ComposePageState extends State<ComposePage> {
             WeaponService(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PersonalInfoProvider(
+            characterProvider: characterProvider,
+            personalInfoService: CharacterPersonalInfoService(),
+          ),
+        )
       ],
       builder: (context, child) => Scaffold(
         appBar: AppBar(
@@ -158,7 +166,11 @@ class _ComposePageState extends State<ComposePage> {
           sidebarContent: sidebar,
           bodyContent: ComposePageResponsiveGrid(
             children: [
-              const PersonalInfoSection(),
+              PersonalInfoSection(
+                character: characterProvider.character,
+                personalInfoProvider:
+                    Provider.of<PersonalInfoProvider>(context),
+              ),
               const AttributesSection(),
               TraitsSection(
                 emptyListBuilder: _generateEmptyTraitOrSkillView,

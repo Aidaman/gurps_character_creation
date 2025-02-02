@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
-import 'package:gurps_character_creation/providers/character_provider.dart';
+import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
