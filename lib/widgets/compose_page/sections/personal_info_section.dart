@@ -67,129 +67,155 @@ class PersonalInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildFields(Set<_PersonalInfoField> fields, BuildContext context) {
+  Widget _buildField(
+    BuildContext context, {
+    required _PersonalInfoField field,
+    BoxConstraints? constraints,
+  }) {
     final bool isMobile = MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH;
 
-    final double spacing = MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
-        ? DESKTOP_COLUMNS_SPACING
-        : MOBILE_ROWS_SPACING;
-    final bool isSingleElement = fields.length == 1;
-
-    if (isSingleElement) {
-      Widget child = buildTextFormField(
-        label: fields.first.label,
-        validator: fields.first.validator,
-        onChanged: fields.first.onChanged,
+    if (isMobile) {
+      return buildTextFormField(
+        label: field.label,
+        validator: field.validator,
+        onChanged: field.onChanged,
         context: context,
       );
+    }
+    const double HORIZONTAL_SPACING = 8;
 
-      if (isMobile) {
-        return child;
-      }
-
+    if (isMobile || constraints == null) {
       return Expanded(
         child: Padding(
-          padding: EdgeInsets.only(bottom: spacing, left: 8, right: 8),
-          child: child,
-        ),
-      );
-    }
-
-    List<Widget> children = fields
-        .map(
-          (_PersonalInfoField field) => buildTextFormField(
+          padding: const EdgeInsets.only(
+            bottom: MOBILE_ROWS_SPACING,
+            left: HORIZONTAL_SPACING,
+            right: HORIZONTAL_SPACING,
+          ),
+          child: buildTextFormField(
             label: field.label,
             validator: field.validator,
             onChanged: field.onChanged,
             context: context,
           ),
-        )
-        .toList();
-
-    if (isMobile) {
-      return Column(children: children);
+        ),
+      );
     }
 
+    return Container(
+      constraints: BoxConstraints(
+        maxWidth: constraints.maxWidth / 3 - (HORIZONTAL_SPACING * 2),
+      ),
+      padding: const EdgeInsets.only(
+        left: HORIZONTAL_SPACING,
+        right: HORIZONTAL_SPACING,
+      ),
+      child: buildTextFormField(
+        label: field.label,
+        validator: field.validator,
+        onChanged: field.onChanged,
+        context: context,
+      ),
+    );
+  }
+
+  Widget _buildDesktopBody(List<_PersonalInfoField> personalInfoFields) {
     return Expanded(
-      child: Padding(
-        padding: EdgeInsets.only(bottom: spacing, left: 8, right: 8),
-        child: Column(children: children),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Wrap(
+            alignment: WrapAlignment.start,
+            runSpacing: 0,
+            children: personalInfoFields
+                .map(
+                  (_PersonalInfoField entry) => _buildField(
+                    context,
+                    field: entry,
+                    constraints: constraints,
+                  ),
+                )
+                .toList(),
+          );
+        },
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Set<_PersonalInfoField>> basicInfoControllers = [
-      {
-        _PersonalInfoField(
-          label: 'Players Name',
-          validator: validateText,
-          onChanged: (String? value) => personalInfoProvider.update(
-            field: 'Players Name',
-            value: value,
-          ),
+    final List<_PersonalInfoField> personalInfoFields = [
+      _PersonalInfoField(
+        label: 'Players Name',
+        validator: validateText,
+        onChanged: (String? value) => personalInfoProvider.update(
+          field: 'Players Name',
+          value: value,
         ),
-        _PersonalInfoField(
-          label: 'Character Name',
-          validator: validateText,
-          onChanged: (String? value) => personalInfoProvider.update(
-            field: 'Character Name',
-            value: value,
-          ),
+      ),
+      _PersonalInfoField(
+        label: 'Character Name',
+        validator: validateText,
+        onChanged: (String? value) => personalInfoProvider.update(
+          field: 'Character Name',
+          value: value,
         ),
-      },
-      {
-        _PersonalInfoField(
-          label: 'Age',
-          validator: validatePositiveNumber,
-          onChanged: (String? value) => personalInfoProvider.update(
-            field: 'Age',
-            value: value,
-          ),
+      ),
+      _PersonalInfoField(
+        label: 'Age',
+        validator: validatePositiveNumber,
+        onChanged: (String? value) => personalInfoProvider.update(
+          field: 'Age',
+          value: value,
         ),
-        _PersonalInfoField(
-          label: 'Height',
-          validator: validatePositiveNumber,
-          onChanged: (String? value) => personalInfoProvider.update(
-            field: 'Height',
-            value: value,
-          ),
+      ),
+      _PersonalInfoField(
+        label: 'Height',
+        validator: validatePositiveNumber,
+        onChanged: (String? value) => personalInfoProvider.update(
+          field: 'Height',
+          value: value,
         ),
-      },
-      {
-        _PersonalInfoField(
-          label: 'Weight',
-          validator: validatePositiveNumber,
-          onChanged: (value) => personalInfoProvider.update(
-            field: 'Weight',
-            value: value,
-          ),
+      ),
+      _PersonalInfoField(
+        label: 'Weight',
+        validator: validatePositiveNumber,
+        onChanged: (value) => personalInfoProvider.update(
+          field: 'Weight',
+          value: value,
         ),
-      },
+      ),
     ];
 
     final bool isMobile = MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH;
     final double spacing =
         isMobile ? MOBILE_ROWS_SPACING : DESKTOP_COLUMNS_SPACING;
 
-    final List<Widget> body = [
+    final List<Widget> base = [
       _buildCharacterAvatar(),
       Gap(spacing),
-      ...basicInfoControllers.map(
-        (Set<_PersonalInfoField> entry) => _buildFields(entry, context),
-      ),
-      if (isMobile) Gap(spacing),
     ];
 
     if (isMobile) {
       return Form(
-        child: Column(children: body),
+        child: Column(
+          children: [
+            ...base,
+            ...personalInfoFields.map(
+              (_PersonalInfoField entry) => _buildField(context, field: entry),
+            ),
+            Gap(spacing),
+          ],
+        ),
       );
     }
 
     return Form(
-      child: Row(children: body),
+      child: Row(
+        children: [
+          ...base,
+          _buildDesktopBody(personalInfoFields),
+        ],
+      ),
     );
   }
 }
