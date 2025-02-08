@@ -66,23 +66,26 @@ class Skill extends Aspect {
   });
 
   factory Skill.fromJson(Map<String, dynamic> json) {
+    String difficulty = json['difficulty'];
+    Attributes? associatedAttribute = AttributesExtension.fromString(
+      difficulty.substring(0, difficulty.indexOf('/')),
+    );
+    SkillDifficulty? skillDifficulty = SkillDifficultyExtension.fromString(
+      difficulty.substring(difficulty.indexOf('/')),
+    );
+
     return Skill(
       id: json['id'] ?? const Uuid().v4(),
       name: json['name'],
       reference: json['reference'],
-      basePoints: json['base_points'],
+      basePoints: int.parse(json['base_points']),
       categories: List<String>.from(json['categories'].map((x) => x)),
       modifiers: List<SkillModifier>.from(
           json['modifiers'].map((x) => SkillModifier.fromJson(x))),
       specialization: json['specialization'] ?? '',
       investedPoints: json['invested_points'] ?? 0,
-      associatedAttribute:
-          AttributesExtension.fromString(json['assosiated_attribute']) ??
-              Attributes.NONE,
-      difficulty: SkillDifficultyExtension.fromString(
-            json['difficulty'],
-          ) ??
-          SkillDifficulty.NONE,
+      associatedAttribute: associatedAttribute ?? Attributes.NONE,
+      difficulty: skillDifficulty ?? SkillDifficulty.NONE,
     );
   }
 

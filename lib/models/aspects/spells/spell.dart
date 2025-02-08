@@ -62,10 +62,7 @@ class Spell extends Aspect {
         castingTime: json['casting_time'],
         duration: json['duration'],
         reference: json['reference'],
-        difficulty: SkillDifficultyExtension.fromString(
-              json['difficulty'],
-            ) ??
-            SkillDifficulty.HARD,
+        difficulty: SkillDifficulty.HARD,
         categories: List<String>.from(json['categories'].map((x) => x)),
         prereqList: List<String>.from(json['prereq_list'].map((x) => x)),
       );
