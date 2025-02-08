@@ -11,7 +11,7 @@ enum AppRoutes {
   SETTINGS,
 }
 
-extension AppRoutesStrings on AppRoutes {
+extension Routes on AppRoutes {
   String get name => switch (this) {
         AppRoutes.HOMEPAGE => 'home',
         AppRoutes.SETUP => 'setup',

@@ -6,10 +6,10 @@ class PersonalInfoProvider extends ChangeNotifier {
   final CharacterProvider _characterProvider;
   final CharacterPersonalInfoService _personalInfoService;
 
-  PersonalInfoProvider({
-    required CharacterProvider characterProvider,
-    required CharacterPersonalInfoService personalInfoService,
-  })  : _characterProvider = characterProvider,
+  PersonalInfoProvider(
+    CharacterProvider characterProvider,
+    CharacterPersonalInfoService personalInfoService,
+  )   : _characterProvider = characterProvider,
         _personalInfoService = personalInfoService;
 
   void update({
