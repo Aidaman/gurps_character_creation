@@ -107,12 +107,12 @@ class AttributesScores {
   ) {
     int investedPoints = getPointsInvestedIn(stat);
 
-    if (remainingPoints < stat.adjustPriceOf) {
-      return investedPoints.toDouble();
-    }
-
     if (investedPoints + newValue <= MIN_PRIMARY_ATTRIBUTE_INVESTED_POINTS) {
       return MIN_PRIMARY_ATTRIBUTE_INVESTED_POINTS.toDouble();
+    }
+
+    if (remainingPoints < newValue) {
+      return investedPoints.toDouble();
     }
 
     return investedPoints + newValue;
@@ -125,7 +125,7 @@ class AttributesScores {
   ) {
     int attributeValue = getPointsInvestedIn(stat);
 
-    if (remainingPoints < stat.adjustPriceOf) {
+    if (remainingPoints < newValue) {
       return attributeValue.toDouble();
     }
 
