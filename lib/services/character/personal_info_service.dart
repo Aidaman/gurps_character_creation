@@ -25,6 +25,9 @@ class CharacterPersonalInfoService {
       case 'weight':
         character.personalInfo.weight = int.parse(value);
         break;
+      case 'size modifier':
+        character.personalInfo.sizeModifier = int.parse(value);
+        break;
       default:
         throw ArgumentError('Invalid field: $field');
     }

@@ -4,6 +4,7 @@ class PersonalInfo {
   String name;
   String playerName;
 
+  int sizeModifier;
   int height;
   int weight;
   int age;
@@ -18,6 +19,7 @@ class PersonalInfo {
     this.height = 0,
     this.weight = 0,
     this.age = 0,
+    this.sizeModifier = 0,
   });
 
   factory PersonalInfo.copyWith(
@@ -28,6 +30,7 @@ class PersonalInfo {
     int? height,
     int? weight,
     int? age,
+    int? sizeModifier,
   }) {
     return PersonalInfo(
       name: name ?? info.name,
@@ -36,6 +39,7 @@ class PersonalInfo {
       height: height ?? info.height,
       weight: weight ?? info.weight,
       age: age ?? info.age,
+      sizeModifier: sizeModifier ?? info.sizeModifier,
     );
   }
 
@@ -46,6 +50,7 @@ class PersonalInfo {
         height: json['height'],
         weight: json['weight'],
         age: json['age'],
+        sizeModifier: json['size_modifier'],
       );
 
   Map<String, dynamic> get toJson => {
@@ -55,5 +60,6 @@ class PersonalInfo {
         'height': height,
         'weight': weight,
         'age': age,
+        'size_modifier': sizeModifier,
       };
 }

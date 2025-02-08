@@ -184,6 +184,14 @@ class PersonalInfoSection extends StatelessWidget {
           value: value,
         ),
       ),
+      _PersonalInfoField(
+        label: 'Size Modifier',
+        validator: validatePositiveNumber,
+        onChanged: (value) => personalInfoProvider.update(
+          field: 'Size Modifier',
+          value: value,
+        ),
+      ),
     ];
 
     final bool isMobile = MediaQuery.of(context).size.width <= MAX_MOBILE_WIDTH;
