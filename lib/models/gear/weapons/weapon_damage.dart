@@ -192,15 +192,15 @@ class WeaponDamage {
   }
 
   factory WeaponDamage.fromJson(Map<String, dynamic> json) => WeaponDamage(
-        attackType: json['attack_type'],
+        attackType: AttackTypesString.fromString(json['attack_type']),
         modifier: json['modifier'],
-        damageType: json['damage_type'],
+        damageType: DamageTypeString.fromString(json['damage_type']),
       );
 
   Map<String, dynamic> toJson() => {
-        'attack_type': attackType,
+        'attack_type': attackType.stringValue,
         'modifier': modifier,
-        'damage_type': damageType,
+        'damage_type': damageType.stringValue,
       };
 
   // Use character's ST to calculate the actual damage

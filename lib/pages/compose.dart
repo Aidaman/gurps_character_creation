@@ -17,9 +17,10 @@ import 'package:gurps_character_creation/widgets/compose_page/sections/possessio
 import 'package:gurps_character_creation/widgets/compose_page/sections/ranged_weapons_section.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/skills_section.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sections/traits_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar_aspects_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar_settings.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_aspects_tab.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_save_load_tab.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_settings.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/layouting/compose_page_responsive_grid.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +65,7 @@ class _ComposePageState extends State<ComposePage> {
       child: Sidebar(
         actions: const [
           Icons.widgets_outlined,
+          Icons.save,
           Icons.settings_outlined,
         ],
         tabs: [
@@ -85,6 +87,7 @@ class _ComposePageState extends State<ComposePage> {
               });
             },
           ),
+          const SidebarSaveLoadTab(),
           const SidebarSettingsTab(),
         ],
       ),
@@ -140,7 +143,6 @@ class _ComposePageState extends State<ComposePage> {
             bodyContent: ComposePageResponsiveGrid(
               children: [
                 PersonalInfoSection(
-                  character: characterProvider.character,
                   personalInfoProvider:
                       Provider.of<PersonalInfoProvider>(context),
                 ),

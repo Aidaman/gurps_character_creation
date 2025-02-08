@@ -3,18 +3,19 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/providers/character/personal_info_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 
 class _PersonalInfoField {
   final String label;
+  final String? defaultValue;
   final String? Function(String? str) validator;
   final void Function(String? value) onChanged;
 
   _PersonalInfoField({
     required this.label,
+    required this.defaultValue,
     required this.onChanged,
     required this.validator,
   });
@@ -23,12 +24,10 @@ class _PersonalInfoField {
 class PersonalInfoSection extends StatelessWidget {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  final Character character;
   final PersonalInfoProvider personalInfoProvider;
 
   PersonalInfoSection({
     super.key,
-    required this.character,
     required this.personalInfoProvider,
   });
 
@@ -53,7 +52,7 @@ class PersonalInfoSection extends StatelessWidget {
           minHeight: 86,
           minWidth: 86,
         ),
-        child: character.personalInfo.avatarURL.isEmpty
+        child: personalInfoProvider.personalInfo.avatarURL.isEmpty
             ? const Placeholder(
                 child: Icon(
                   Icons.person_4_outlined,
@@ -61,7 +60,7 @@ class PersonalInfoSection extends StatelessWidget {
                 ),
               )
             : Image.file(
-                File(character.personalInfo.avatarURL),
+                File(personalInfoProvider.personalInfo.avatarURL),
               ),
       ),
     );
@@ -79,6 +78,7 @@ class PersonalInfoSection extends StatelessWidget {
         label: field.label,
         validator: field.validator,
         onChanged: field.onChanged,
+        defaultValue: field.defaultValue,
         context: context,
       );
     }
@@ -96,6 +96,7 @@ class PersonalInfoSection extends StatelessWidget {
             label: field.label,
             validator: field.validator,
             onChanged: field.onChanged,
+            defaultValue: field.defaultValue,
             context: context,
           ),
         ),
@@ -114,6 +115,7 @@ class PersonalInfoSection extends StatelessWidget {
         label: field.label,
         validator: field.validator,
         onChanged: field.onChanged,
+        defaultValue: field.defaultValue,
         context: context,
       ),
     );
@@ -146,6 +148,7 @@ class PersonalInfoSection extends StatelessWidget {
     final List<_PersonalInfoField> personalInfoFields = [
       _PersonalInfoField(
         label: 'Players Name',
+        defaultValue: personalInfoProvider.getField('Players Name'),
         validator: validateText,
         onChanged: (String? value) => personalInfoProvider.update(
           field: 'Players Name',
@@ -154,6 +157,7 @@ class PersonalInfoSection extends StatelessWidget {
       ),
       _PersonalInfoField(
         label: 'Character Name',
+        defaultValue: personalInfoProvider.getField('Character Name'),
         validator: validateText,
         onChanged: (String? value) => personalInfoProvider.update(
           field: 'Character Name',
@@ -162,6 +166,7 @@ class PersonalInfoSection extends StatelessWidget {
       ),
       _PersonalInfoField(
         label: 'Age',
+        defaultValue: personalInfoProvider.getField('Age'),
         validator: validatePositiveNumber,
         onChanged: (String? value) => personalInfoProvider.update(
           field: 'Age',
@@ -170,6 +175,7 @@ class PersonalInfoSection extends StatelessWidget {
       ),
       _PersonalInfoField(
         label: 'Height',
+        defaultValue: personalInfoProvider.getField('Height'),
         validator: validatePositiveNumber,
         onChanged: (String? value) => personalInfoProvider.update(
           field: 'Height',
@@ -178,6 +184,7 @@ class PersonalInfoSection extends StatelessWidget {
       ),
       _PersonalInfoField(
         label: 'Weight',
+        defaultValue: personalInfoProvider.getField('Weight'),
         validator: validatePositiveNumber,
         onChanged: (value) => personalInfoProvider.update(
           field: 'Weight',
@@ -186,6 +193,7 @@ class PersonalInfoSection extends StatelessWidget {
       ),
       _PersonalInfoField(
         label: 'Size Modifier',
+        defaultValue: personalInfoProvider.getField('Size Modifier'),
         validator: validatePositiveNumber,
         onChanged: (value) => personalInfoProvider.update(
           field: 'Size Modifier',
@@ -209,7 +217,10 @@ class PersonalInfoSection extends StatelessWidget {
           children: [
             ...base,
             ...personalInfoFields.map(
-              (_PersonalInfoField entry) => _buildField(context, field: entry),
+              (_PersonalInfoField entry) => _buildField(
+                context,
+                field: entry,
+              ),
             ),
             Gap(spacing),
           ],

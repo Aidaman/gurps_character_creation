@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/models/aspects/attributes.dart';
-import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
-import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
-import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/providers/theme_provider.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';

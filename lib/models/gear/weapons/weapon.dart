@@ -31,4 +31,6 @@ abstract class Weapon extends Gear {
     required super.weight,
     required super.id,
   }) : super.withId();
+
+  Map<String, dynamic> toJson();
 }

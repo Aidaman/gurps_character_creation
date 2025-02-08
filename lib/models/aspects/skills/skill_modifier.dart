@@ -12,10 +12,10 @@ class SkillModifier {
   });
 
   factory SkillModifier.fromJson(Map<String, dynamic> json) => SkillModifier(
-        type: json['type'],
-        modifier: json['modifier'],
-        name: json['name'],
-        specialization: json['specialization'],
+        type: json['type'] ?? '',
+        modifier: json['modifier'] ?? '',
+        name: json['name'] ?? '',
+        specialization: json['specialization'] ?? '',
       );
 
   Map<String, dynamic> toJson() => {

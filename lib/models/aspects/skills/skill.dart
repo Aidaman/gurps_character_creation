@@ -70,18 +70,17 @@ class Skill extends Aspect {
       id: json['id'] ?? const Uuid().v4(),
       name: json['name'],
       reference: json['reference'],
-      basePoints: int.parse(json['base_points']),
+      basePoints: json['base_points'],
       categories: List<String>.from(json['categories'].map((x) => x)),
       modifiers: List<SkillModifier>.from(
           json['modifiers'].map((x) => SkillModifier.fromJson(x))),
-      specialization: json['specialization'],
+      specialization: json['specialization'] ?? '',
       investedPoints: json['invested_points'] ?? 0,
-      associatedAttribute: AttributesExtension.fromString(
-            json['difficulty'].toString().split('/').first,
-          ) ??
-          Attributes.NONE,
+      associatedAttribute:
+          AttributesExtension.fromString(json['assosiated_attribute']) ??
+              Attributes.NONE,
       difficulty: SkillDifficultyExtension.fromString(
-            json['difficulty'].toString().split('/').last,
+            json['difficulty'],
           ) ??
           SkillDifficulty.NONE,
     );
@@ -129,7 +128,8 @@ class Skill extends Aspect {
         'id': id,
         'name': name,
         'reference': reference,
-        'difficulty': difficulty,
+        'difficulty': difficulty.stringValue,
+        'assosiated_attribute': associatedAttribute.stringValue,
         'base_points': basePoints,
         'categories': List<dynamic>.from(categories.map((x) => x)),
         'modifiers': List<dynamic>.from(modifiers.map((x) => x.toJson())),

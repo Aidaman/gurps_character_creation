@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/widgets/compose_page/attribute_view.dart';
+import 'package:gurps_character_creation/widgets/compose_page/sidebar/attribute_view.dart';
 import 'package:provider/provider.dart';
 
 class AttributesSection extends StatelessWidget {

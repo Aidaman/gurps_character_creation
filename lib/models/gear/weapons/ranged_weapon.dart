@@ -23,7 +23,7 @@ class RangeWeaponShots {
 
   Map<String, dynamic> toJson() => {
         'shots_available': shotsAvailable,
-        'reloads_before_complete_reload': reloadsBeforeCompleteReload
+        'reloads_before_complete_reload': reloadsBeforeCompleteReload ?? 0
       };
 
   @override
@@ -50,8 +50,9 @@ class WeaponStrengths {
   factory WeaponStrengths.fromJson(Map<String, dynamic> json) =>
       WeaponStrengths(
         strengthValue: json['strength_value'],
-        hasBonusForHigherStrength: json['has_bonus_for_higher_strength'],
-        isTwoHanded: json['is_two_handed'],
+        hasBonusForHigherStrength:
+            json['has_bonus_for_higher_strength'] ?? false,
+        isTwoHanded: json['is_two_handed'] ?? false,
       );
 
   static bool isWeaponStrengths(Map<String, dynamic> json) =>
@@ -59,8 +60,8 @@ class WeaponStrengths {
 
   Map<String, dynamic> toJson() => {
         'strength_value': strengthValue,
-        'has_bonus_for_higher_strength': hasBonusForHigherStrength,
-        'is_two_handed': isTwoHanded,
+        'has_bonus_for_higher_strength': hasBonusForHigherStrength ?? false,
+        'is_two_handed': isTwoHanded ?? false,
       };
 
   @override
@@ -106,14 +107,14 @@ class Range {
   Range({int? minRange, required this.maxRange}) : _minRange = minRange;
 
   factory Range.fromJson(Map<String, dynamic> json) => Range(
-        minRange: json['min_range'],
+        minRange: json['min_range'] ?? 0,
         maxRange: json['max_range'],
       );
 
   static isRange(Map<String, dynamic> json) => json.containsKey('min_range');
 
   Map<String, dynamic> toJson() => {
-        'min_range': minRange,
+        'min_range': minRange ?? 0,
         'max_range': maxRange,
       };
 
@@ -240,8 +241,25 @@ class RangedWeapon extends Weapon {
         minimumSt: 10,
       );
 
-  // factory RangedWeapon.fromJson() => {};
+  factory RangedWeapon.fromJson(Map<String, dynamic> json) => RangedWeapon(
+        damage: WeaponDamage.fromJson(json['damage']),
+        notes: json['notes'],
+        name: json['name'],
+        price: json['price'],
+        weight: json['weight'],
+        associatedSkillName: json['associatedSkillName'],
+        range: json['range'],
+        accuracy: json['accuracy'],
+        rateOfFire: json['rateOfFire'],
+        shots: RangeWeaponShots.fromJson(json['shots']),
+        bulk: json['bulk'],
+        recoil: json['recoil'],
+        st: WeaponStrengths.fromJson(json['st']),
+        lc: LegalityClassExtention.fromString(json['lc']),
+        minimumSt: json['minimumSt'],
+      );
 
+  @override
   Map<String, dynamic> toJson() => {
         'name': name,
         'price': price,

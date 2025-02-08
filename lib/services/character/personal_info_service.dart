@@ -6,9 +6,12 @@ class CharacterPersonalInfoService {
     required String field,
     required dynamic value,
   }) {
-    switch (field) {
-      case 'name':
+    switch (field.toLowerCase()) {
+      case 'character name':
         character.personalInfo.name = value.toString();
+        break;
+      case 'players name':
+        character.personalInfo.playerName = value.toString();
         break;
       case 'avatarURL':
         character.personalInfo.avatarURL = value.toString();
@@ -31,5 +34,19 @@ class CharacterPersonalInfoService {
       default:
         throw ArgumentError('Invalid field: $field');
     }
+  }
+
+  String getField(Character character, String field) {
+    return switch (field.toLowerCase()) {
+      'character name' => character.personalInfo.name,
+      'players name' => character.personalInfo.playerName,
+      'avatarURL' => character.personalInfo.avatarURL,
+      'appearanceDetails' => character.personalInfo.appearanceDetails,
+      'age' => character.personalInfo.age.toString(),
+      'height' => character.personalInfo.height.toString(),
+      'weight' => character.personalInfo.weight.toString(),
+      'size modifier' => character.personalInfo.sizeModifier.toString(),
+      String() => throw ArgumentError('Invalid field: $field'),
+    };
   }
 }

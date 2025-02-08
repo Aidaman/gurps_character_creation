@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/personal_info.dart';
 import 'package:gurps_character_creation/providers/character/character_provider.dart';
 import 'package:gurps_character_creation/services/character/personal_info_service.dart';
 
@@ -11,6 +12,15 @@ class PersonalInfoProvider extends ChangeNotifier {
     CharacterPersonalInfoService personalInfoService,
   )   : _characterProvider = characterProvider,
         _personalInfoService = personalInfoService;
+
+  PersonalInfo get personalInfo => _characterProvider.character.personalInfo;
+
+  String getField(String fieldName) {
+    return _personalInfoService.getField(
+      _characterProvider.character,
+      fieldName,
+    );
+  }
 
   void update({
     required String field,

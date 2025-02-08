@@ -32,7 +32,7 @@ class CharacterProvider with ChangeNotifier {
   void updateCharacterField(String key, String value) {
     switch (key) {
       case 'Players Name':
-        _character.playerName = value;
+        _character.personalInfo.playerName = value;
         break;
       case 'Character Name':
         _character.personalInfo.name = value;
@@ -408,6 +408,12 @@ class CharacterProvider with ChangeNotifier {
     t.investedPoints -= t.pointsPerLevel;
 
     _isDirty = true;
+    notifyListeners();
+  }
+
+  void loadCharacterFromJson(Map<String, dynamic> jsonData) {
+    _character = Character.fromJson(jsonData);
+
     notifyListeners();
   }
 }

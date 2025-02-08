@@ -45,6 +45,7 @@ class PersonalInfo {
 
   factory PersonalInfo.fromJson(Map<String, dynamic> json) => PersonalInfo(
         name: json['name'],
+        playerName: json['players_name'],
         avatarURL: json['avatar_url'],
         appearanceDetails: json['appearance_details'],
         height: json['height'],
@@ -55,6 +56,7 @@ class PersonalInfo {
 
   Map<String, dynamic> get toJson => {
         'name': name,
+        'players_name': playerName,
         'avatar_url': avatarURL,
         'appearance_details': appearanceDetails,
         'height': height,

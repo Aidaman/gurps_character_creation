@@ -39,7 +39,7 @@ class HandWeaponReach {
 
   factory HandWeaponReach.fromJson(Map<String, dynamic> json) =>
       HandWeaponReach(
-        minReach: json['min_reach'],
+        minReach: json['min_reach'] ?? 0,
         maxReach: json['max_reach'],
       );
 
@@ -136,13 +136,13 @@ class HandWeapon extends Weapon {
 
   factory HandWeapon.fromJson(Map<String, dynamic> json) => HandWeapon(
         name: json['name'],
-        price: json['price'],
-        weight: json['weight'],
+        price: json['price'] ?? 0,
+        weight: json['weight'] ?? 0,
         notes: json['notes'],
-        damage: json['damage'],
+        damage: WeaponDamage.fromJson(json['damage']),
         reach: HandWeaponReach.fromJson(json['reach']),
-        associatedSkillName: json['associated_skill_name'],
-        minimumSt: json['minimum_st'],
+        associatedSkillName: json['associated_skill_name'] ?? '',
+        minimumSt: json['minimum_st'] ?? 0,
         lc: LegalityClassExtention.fromString(json['lc']),
       );
 
@@ -154,6 +154,7 @@ class HandWeapon extends Weapon {
     return (skillLevel ~/ 2) + 3;
   }
 
+  @override
   Map<String, dynamic> toJson() => {
         'name': name,
         'price': price,
@@ -162,7 +163,7 @@ class HandWeapon extends Weapon {
         'damage': damage.toJson(),
         'reach': reach.toJson(),
         'associated_skill_name': associatedSkillName,
-        'lc': lc,
+        'lc': lc.stringValue,
       };
 
   Map<String, dynamic> get dataTableColumns => {

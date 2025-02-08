@@ -12,7 +12,7 @@ class SkillBonus {
   factory SkillBonus.fromJson(Map<String, dynamic> json) => SkillBonus(
         name: json['name'] ?? '',
         specialization: json['specialization'] ?? '',
-        amount: json['amount'],
+        amount: json['amount'] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

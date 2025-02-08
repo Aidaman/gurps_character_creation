@@ -9,6 +9,7 @@ import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
+import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:uuid/uuid.dart';
@@ -17,7 +18,6 @@ class Character {
   String id;
   String gameId;
   int points;
-  String playerName;
 
   PersonalInfo personalInfo;
   AttributesScores attributes;
@@ -68,7 +68,6 @@ class Character {
   Character({
     required this.gameId,
     required this.points,
-    required this.playerName,
     required this.personalInfo,
     required this.attributes,
     required this.skills,
@@ -83,7 +82,6 @@ class Character {
     required this.id,
     required this.gameId,
     required this.points,
-    required this.playerName,
     required this.personalInfo,
     required this.attributes,
     required this.skills,
@@ -97,16 +95,25 @@ class Character {
   factory Character.fromJson(Map<String, dynamic> json) => Character.withId(
         id: json['id'],
         gameId: json['gameId'],
-        playerName: json['player_name'],
         personalInfo: PersonalInfo.fromJson(json['personal_info']),
         attributes: AttributesScores.fromJson(json['attributes']),
-        points: json['po  ints'],
-        skills: List<Skill>.from(json['skills'].map((x) => x)),
-        traits: List<Trait>.from(json['traits'].map((x) => x)),
-        spells: List<Spell>.from(json['spells'].map((x) => x)),
-        weapons: List<Weapon>.from(json['weapons'].map((x) => x)),
-        armor: List<Armor>.from(json['armor'].map((x) => x)),
-        possessions: List<Posession>.from(json['possessions'].map((x) => x)),
+        points: json['points'],
+        skills: List<Skill>.from(json['skills'].map((x) => Skill.fromJson(x))),
+        traits: List<Trait>.from(json['traits'].map((x) => Trait.fromJson(x))),
+        spells: List<Spell>.from(json['spells'].map((x) => Spell.fromJson(x))),
+        weapons: List<Weapon>.from(json['weapons'].map((x) {
+          if (x['reach'] != null) {
+            return HandWeapon.fromJson(x);
+          }
+
+          if (x['range'] != null) {
+            return RangedWeapon.fromJson(x);
+          }
+        })),
+        armor: List<Armor>.from(json['armor'].map((x) => Armor.fromJson(x))),
+        possessions: List<Posession>.from(json['possessions'].map(
+          (x) => Posession.fromJson(x),
+        )),
       );
 
   factory Character.empty() => Character(
@@ -114,7 +121,6 @@ class Character {
         points: 100,
         personalInfo: PersonalInfo(),
         attributes: AttributesScores(),
-        playerName: '',
         skills: [],
         traits: [],
         spells: [],
@@ -178,13 +184,28 @@ class Character {
       );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'gameId': gameId,
+        'id': id.toString(),
+        'gameId': gameId.toString(),
         'points': points,
         'personal_info': personalInfo.toJson,
         'attributes': attributes.toJson,
-        'skills': List<dynamic>.from(skills.map((x) => x)),
-        'traits': List<dynamic>.from(traits.map((x) => x)),
-        'spells': List<dynamic>.from(spells.map((x) => x)),
+        'skills': List<dynamic>.from(skills.map(
+          (x) => x.toJson(),
+        )),
+        'traits': List<dynamic>.from(traits.map(
+          (x) => x.toJson(),
+        )),
+        'spells': List<dynamic>.from(spells.map(
+          (x) => x.toJson(),
+        )),
+        'weapons': List<dynamic>.from(weapons.map(
+          (e) => e.toJson(),
+        )),
+        'armor': List<dynamic>.from(armor.map(
+          (e) => e.toJson(),
+        )),
+        'possessions': List<dynamic>.from(possessions.map(
+          (e) => e.toJson(),
+        )),
       };
 }

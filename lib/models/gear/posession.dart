@@ -46,6 +46,13 @@ class Posession extends Gear {
         description: json['description'],
       );
 
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'price': price,
+        'weight': weight,
+        'description': description,
+      };
+
   Map<String, dynamic> get dataTableColumns => {
         'name': name,
         'price': price,
