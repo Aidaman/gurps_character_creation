@@ -68,6 +68,10 @@ class TraitsSection extends StatelessWidget {
             t,
             await characterProvider.replacePlacholderName(context, t.name),
           ),
+          onIncreaseLevel:
+              t.canLevel ? () => characterProvider.increaseTraitLevel(t) : null,
+          onReduceLevel:
+              t.canLevel ? () => characterProvider.reduceTraitLevel(t) : null,
         ),
       )),
     );

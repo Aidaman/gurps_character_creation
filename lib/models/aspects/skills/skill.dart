@@ -5,6 +5,7 @@ import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_modifier.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:uuid/uuid.dart';
 
 Future<List<Skill>> loadSkills() async {
   final jsonString = await rootBundle.loadString(
@@ -61,10 +62,12 @@ class Skill extends Aspect {
     required this.associatedAttribute,
     required this.investedPoints,
     this.specialization,
+    required super.id,
   });
 
   factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
+      id: json['id'] ?? const Uuid().v4(),
       name: json['name'],
       reference: json['reference'],
       basePoints: int.parse(json['base_points']),
@@ -97,6 +100,7 @@ class Skill extends Aspect {
     SkillDifficulty? difficulty,
   }) {
     return Skill(
+      id: skill.id,
       name: name ?? skill.name,
       reference: reference ?? skill.reference,
       basePoints: basePoints ?? skill.basePoints,
@@ -110,6 +114,7 @@ class Skill extends Aspect {
   }
 
   factory Skill.empty() => Skill(
+        id: const Uuid().v4(),
         name: '',
         reference: '',
         difficulty: SkillDifficulty.NONE,
@@ -121,6 +126,7 @@ class Skill extends Aspect {
       );
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'name': name,
         'reference': reference,
         'difficulty': difficulty,

@@ -237,14 +237,15 @@ class SpellView extends StatelessWidget {
 
   Text _generateSkillCostText(
       BuildContext context, CharacterProvider characterProvider) {
-    final int effectiveSkill = spell.spellEfficiency(
-      magery: characterProvider.character.traits.indexWhere(
-                (element) => element.name.toLowerCase() == 'magery',
-              ) ==
-              -1
-          ? 0
-          : 1,
+    final int mageryIndex = characterProvider.character.traits.indexWhere(
+      (element) => element.name.toLowerCase() == 'magery',
     );
+
+    int effectiveSkill = mageryIndex == -1
+        ? spell.spellEfficiency(mageryLevel: 0)
+        : spell.spellEfficiency(
+            mageryLevel: characterProvider.character.traits[mageryIndex].level,
+          );
 
     if (effectiveSkill < 0) {
       return Text(

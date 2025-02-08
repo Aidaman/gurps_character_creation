@@ -10,6 +10,8 @@ class TraitView extends StatelessWidget {
   final void Function()? onInfoClick;
   final void Function()? onChangeModifiersClick;
   final void Function()? onChangePlaceholderClick;
+  final void Function()? onIncreaseLevel;
+  final void Function()? onReduceLevel;
 
   const TraitView({
     super.key,
@@ -19,6 +21,8 @@ class TraitView extends StatelessWidget {
     this.onInfoClick,
     this.onChangeModifiersClick,
     this.onChangePlaceholderClick,
+    this.onIncreaseLevel,
+    this.onReduceLevel,
   });
 
   @override
@@ -56,7 +60,7 @@ class TraitView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  trait.title,
+                  trait.placeholder,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -72,7 +76,15 @@ class TraitView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '${trait.type} ${trait.categories.map((e) => e.stringValue).join(', ')}',
+                  trait.tags
+                      .where(
+                        (tag) => !TraitCategories.values.any(
+                          (category) =>
+                              category.stringValue.toLowerCase() ==
+                              tag.toLowerCase(),
+                        ),
+                      )
+                      .join(', '),
                 ),
               ),
               Expanded(
@@ -83,6 +95,21 @@ class TraitView extends StatelessWidget {
               )
             ],
           ),
+          if (trait.canLevel)
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Points Per Level: ${trait.pointsPerLevel}',
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    'Levels: ${trait.level}',
+                  ),
+                ),
+              ],
+            ),
           if (trait.selectedModifiers != null &&
               trait.selectedModifiers!.isNotEmpty)
             Padding(
@@ -129,6 +156,24 @@ class TraitView extends StatelessWidget {
                   style: iconButtonStyle,
                   constraints: iconButtonConstraints,
                   icon: const Icon(Icons.info),
+                ),
+              if (trait.canLevel)
+                Expanded(
+                  child: Container(),
+                ),
+              if (onIncreaseLevel != null)
+                IconButton(
+                  onPressed: onIncreaseLevel,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.arrow_upward),
+                ),
+              if (onReduceLevel != null)
+                IconButton(
+                  onPressed: onReduceLevel,
+                  style: iconButtonStyle,
+                  constraints: iconButtonConstraints,
+                  icon: const Icon(Icons.arrow_downward),
                 ),
             ],
           )

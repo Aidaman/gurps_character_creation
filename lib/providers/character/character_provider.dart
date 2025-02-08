@@ -163,7 +163,7 @@ class CharacterProvider with ChangeNotifier {
 
     removeTrait(trait);
 
-    trait.title = newTitle;
+    trait.placeholder = newTitle;
     addTrait(trait);
 
     notifyListeners();
@@ -379,5 +379,35 @@ class CharacterProvider with ChangeNotifier {
 
   void markDirty() {
     _isDirty = true;
+  }
+
+  void increaseTraitLevel(Trait t) {
+    if (!t.canLevel) {
+      return;
+    }
+
+    if (character.remainingPoints < t.pointsPerLevel) {
+      return;
+    }
+
+    t.investedPoints += t.pointsPerLevel;
+
+    _isDirty = true;
+    notifyListeners();
+  }
+
+  void reduceTraitLevel(Trait t) {
+    if (!t.canLevel) {
+      return;
+    }
+
+    if (t.investedPoints == 0) {
+      return;
+    }
+
+    t.investedPoints -= t.pointsPerLevel;
+
+    _isDirty = true;
+    notifyListeners();
   }
 }

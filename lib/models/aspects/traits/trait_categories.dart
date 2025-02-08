@@ -33,6 +33,17 @@ extension TraitCategoriesExtension on TraitCategories {
         TraitCategories.PERK => Icons.circle_outlined,
       };
 
+  static TraitCategories fromPrice(int basePoints) {
+    return switch (basePoints) {
+      -1 => TraitCategories.QUIRK,
+      1 => TraitCategories.PERK,
+      0 => TraitCategories.NONE,
+      int() => basePoints < 0
+          ? TraitCategories.DISADVANTAGE
+          : TraitCategories.ADVANTAGE,
+    };
+  }
+
   static TraitCategories? fromString(String category) {
     return switch (category.toLowerCase()) {
       'advantage' => TraitCategories.ADVANTAGE,

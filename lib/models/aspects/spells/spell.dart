@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
+import 'package:uuid/uuid.dart';
 
 Future<List<Spell>> loadSpells() async {
   final jsonString = await rootBundle.loadString('assets/Spells/magic.json');
@@ -31,6 +32,7 @@ class Spell extends Aspect {
   final SkillDifficulty difficulty;
 
   Spell({
+    required super.id,
     required super.name,
     required this.college,
     required this.powerSource,
@@ -48,6 +50,7 @@ class Spell extends Aspect {
   }) : investedPoints = investedPoints ?? 0;
 
   factory Spell.fromJson(Map<String, dynamic> json) => Spell(
+        id: json['id'] ?? const Uuid().v4(),
         name: json['name'],
         college: json['college'].toString().contains('/')
             ? json['college'].toString().split('/')
@@ -65,6 +68,7 @@ class Spell extends Aspect {
       );
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'name': name,
         'college': college.length > 1 ? college.join('/') : college.first,
         'power_source': powerSource,
@@ -81,6 +85,7 @@ class Spell extends Aspect {
 
   factory Spell.copyWith(
     Spell spl, {
+    String? id,
     String? name,
     List<String>? college,
     String? powerSource,
@@ -96,6 +101,7 @@ class Spell extends Aspect {
     List<String>? unsatisfitedPrerequisitesList,
   }) {
     return Spell(
+      id: id ?? spl.id,
       name: name ?? spl.name,
       college: college ?? spl.college,
       powerSource: powerSource ?? spl.powerSource,
@@ -113,8 +119,8 @@ class Spell extends Aspect {
     );
   }
 
-  int spellEfficiency({required int magery}) {
-    int efficiency = magery;
+  int spellEfficiency({required int mageryLevel}) {
+    int efficiency = mageryLevel;
 
     switch (difficulty) {
       case SkillDifficulty.HARD:

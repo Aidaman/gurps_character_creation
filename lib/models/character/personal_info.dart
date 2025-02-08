@@ -1,12 +1,14 @@
 class PersonalInfo {
+  String avatarURL;
+
   String name;
   String playerName;
-  String avatarURL;
-  String appearanceDetails;
 
   int height;
   int weight;
   int age;
+
+  String appearanceDetails;
 
   PersonalInfo({
     this.name = '',

@@ -6,9 +6,13 @@ import 'package:gurps_character_creation/models/aspects/skills/skill_bonus.dart'
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
+import 'package:uuid/uuid.dart';
 
-List<Trait> traitFromJson(String str) =>
-    List<Trait>.from(json.decode(str).map((x) => Trait.fromJson(x)));
+List<Trait> traitFromJson(String str) => List<Trait>.from(
+      json.decode(str).map(
+            (dynamic x) => Trait.fromJson(x),
+          ),
+    );
 
 String traitToJson(List<Trait> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -21,14 +25,21 @@ Future<List<Trait>> loadTraits() async {
 }
 
 class Trait extends Aspect {
-  final String type;
   final int basePoints;
+  final List<String> tags;
+  final String? notes;
   final List<TraitModifier>? modifiers;
   final List<TraitModifier>? selectedModifiers;
-  final List<TraitCategories> categories;
+  final TraitCategories _category;
   final SkillBonus? skillBonus;
 
-  String? _title;
+  final bool canLevel;
+  int pointsPerLevel;
+  int investedPoints;
+
+  String? _placeholder;
+
+  int get level => investedPoints ~/ pointsPerLevel;
 
   int get cost {
     if (selectedModifiers == null || selectedModifiers!.isEmpty) {
@@ -37,26 +48,27 @@ class Trait extends Aspect {
 
     return selectedModifiers!.fold(
       basePoints,
-      (int sum, TraitModifier currentModifier) => sum + currentModifier.cost,
+      (int sum, TraitModifier currentModifier) =>
+          sum + currentModifier.cost.toInt(),
     );
   }
 
-  String get title {
-    if (placeholderAspectRegex.hasMatch(name) && _title != null) {
-      return _title!;
+  String get placeholder {
+    if (placeholderAspectRegex.hasMatch(name) && _placeholder != null) {
+      return name.replaceFirst(placeholderAspectRegex, _placeholder!);
     }
 
     return name;
   }
 
-  set title(String? value) {
-    _title = value;
+  set placeholder(String? value) {
+    _placeholder = value;
   }
 
   TraitCategories get category {
-    if (categories.first == TraitCategories.PERK ||
-        categories.first == TraitCategories.QUIRK) {
-      return categories.first;
+    if (_category == TraitCategories.PERK ||
+        _category == TraitCategories.QUIRK) {
+      return _category;
     }
 
     if (cost < 0) {
@@ -67,66 +79,88 @@ class Trait extends Aspect {
   }
 
   Trait({
+    required super.id,
+    required this.tags,
+    required this.notes,
     required super.name,
-    required this.type,
     required this.basePoints,
     this.modifiers,
     required super.reference,
-    required this.categories,
+    required TraitCategories category,
     this.skillBonus,
     this.selectedModifiers,
-  });
+    required this.canLevel,
+    this.pointsPerLevel = 0,
+    this.investedPoints = 0,
+  }) : _category = category;
 
   factory Trait.fromJson(Map<String, dynamic> json) {
-    final List<String> categories =
-        List<String>.from(json['categories'].map((x) => x));
-    final List<Map<String, dynamic>> modifiers =
-        List<Map<String, dynamic>>.from(json['modifiers'].map((x) => x));
+    List<Map<String, dynamic>> modifiers = [];
+    if (json['modifiers'] != null) {
+      modifiers = List.from(json['modifiers'].map((x) => x));
+    }
 
     return Trait(
+      id: json['id'] ?? const Uuid().v4(),
       name: json['name'] ?? '',
-      type: json['type'] ?? '',
+      notes: json['notes'] ?? '',
+      tags: List<String>.from(json['tags'].map((x) => x)),
       basePoints: json['base_points'] ?? 0,
-      modifiers: json['modifiers'] == null
-          ? null
-          : _modifiersFromStringList(modifiers),
+      modifiers:
+          json['modifiers'] == null ? null : modifiersFromStringList(modifiers),
       reference: json['reference'] ?? '',
-      categories: _categoriesFromStringList(categories),
+      category: TraitCategoriesExtension.fromPrice(json['base_points'] ?? 0),
       skillBonus: json['skill_bonus'] == null
           ? null
           : SkillBonus.fromJson(json['skill_bonus']),
       selectedModifiers: json['selected_modifiers'] == null
           ? null
-          : _modifiersFromStringList(modifiers),
+          : modifiersFromStringList(modifiers),
+      canLevel: json['can_level'] ?? false,
+      pointsPerLevel: json['points_per_level'] ?? 0,
+      investedPoints: json['invested_points'] ?? 0,
     );
   }
 
   factory Trait.copyWIth(
     Trait trait, {
+    String? id,
     String? name,
     String? type,
+    String? notes,
     int? basePoints,
+    List<String>? tags,
     List<TraitModifier>? modifiers,
     List<TraitModifier>? selectedModifiers,
-    List<TraitCategories>? categories,
+    TraitCategories? category,
     SkillBonus? skillBonus,
     String? reference,
+    bool? canLevel,
+    int? pointsPerLevel,
+    int? investedPoints,
   }) {
     return Trait(
       name: name ?? trait.name,
-      type: type ?? trait.type,
+      notes: notes ?? trait.notes,
       basePoints: basePoints ?? trait.basePoints,
       modifiers: modifiers ?? trait.modifiers,
       selectedModifiers: selectedModifiers ?? trait.selectedModifiers,
-      categories: categories ?? trait.categories,
+      category: category ?? trait.category,
       skillBonus: skillBonus ?? trait.skillBonus,
       reference: reference ?? trait.reference,
+      tags: tags ?? trait.tags,
+      id: id ?? trait.id,
+      canLevel: canLevel ?? trait.canLevel,
+      pointsPerLevel: pointsPerLevel ?? trait.pointsPerLevel,
+      investedPoints: investedPoints ?? trait.investedPoints,
     );
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'name': name,
-        'type': type,
+        'tags': List<dynamic>.from(tags.map((x) => x)),
+        'notes': notes,
         'base_points': basePoints,
         'modifier': modifiers == null
             ? null
@@ -135,25 +169,11 @@ class Trait extends Aspect {
             ? null
             : List<dynamic>.from(modifiers!.map((e) => e.toJson())),
         'reference': reference,
-        'categories': List<dynamic>.from(categories.map((x) => x)),
+        'categories': category.stringValue,
         'skill_bonus': skillBonus?.toJson(),
       };
 
-  static List<TraitCategories> _categoriesFromStringList(
-    List<String> categoriesStringList,
-  ) {
-    return List<TraitCategories>.from(
-      categoriesStringList
-          .map(
-            (e) => TraitCategoriesExtension.fromString(e),
-          )
-          .where(
-            (element) => element != TraitCategories.NONE,
-          ),
-    );
-  }
-
-  static List<TraitModifier> _modifiersFromStringList(
+  static List<TraitModifier> modifiersFromStringList(
     List<Map<String, dynamic>> modifiers,
   ) {
     return List<TraitModifier>.from(

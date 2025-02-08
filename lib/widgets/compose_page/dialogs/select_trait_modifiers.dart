@@ -57,7 +57,7 @@ class _SelectTraitModifiersDialogState
 
   Widget _buildForm() {
     widget.trait.modifiers!.sort(
-      (TraitModifier a, TraitModifier b) => a.cost - b.cost,
+      (TraitModifier a, TraitModifier b) => a.cost.toInt() - b.cost.toInt(),
     );
 
     return Column(

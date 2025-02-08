@@ -34,7 +34,7 @@ class Character {
     int total = 0;
     total += traits
         .map(
-          (Trait t) => t.cost,
+          (Trait t) => t.cost + t.investedPoints,
         )
         .fold(
           0,

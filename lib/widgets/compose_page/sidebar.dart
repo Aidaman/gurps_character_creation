@@ -93,8 +93,7 @@ class _SidebarContentState extends State<SidebarContent> {
                         ) &&
                     (widget.selectedTraitCategory == TraitCategories.NONE
                         ? true
-                        : trt.categories
-                            .contains(widget.selectedTraitCategory)),
+                        : trt.category == widget.selectedTraitCategory),
                 itemBuilder: (Trait trt) => TraitView(
                   trait: trt,
                   onAddClick: () => _addAspect(trt, characterProvider),
@@ -333,7 +332,7 @@ class _SidebarContentState extends State<SidebarContent> {
       }
 
       Trait newTrait = Trait.copyWIth(aspect, selectedModifiers: modifiers);
-      newTrait.title = newName;
+      newTrait.placeholder = newName;
 
       characterProvider.addTrait(newTrait);
     }
