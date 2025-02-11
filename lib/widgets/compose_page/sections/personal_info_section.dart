@@ -60,7 +60,7 @@ class PersonalInfoSection extends StatelessWidget {
                 ),
               )
             : Image.file(
-                File(personalInfoProvider.personalInfo.avatarURL),
+                File(personalInfoProvider.getField('avatarURL')),
               ),
       ),
     );

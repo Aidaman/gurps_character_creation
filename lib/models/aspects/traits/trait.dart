@@ -27,9 +27,9 @@ Future<List<Trait>> loadTraits() async {
 class Trait extends Aspect {
   final int basePoints;
   final List<String> tags;
-  final String? notes;
-  final List<TraitModifier>? modifiers;
-  final List<TraitModifier>? selectedModifiers;
+  final String notes;
+  final List<TraitModifier> modifiers;
+  final List<TraitModifier> selectedModifiers;
   final TraitCategories _category;
   final SkillBonus? skillBonus;
 
@@ -42,11 +42,11 @@ class Trait extends Aspect {
   int get level => investedPoints ~/ pointsPerLevel;
 
   int get cost {
-    if (selectedModifiers == null || selectedModifiers!.isEmpty) {
+    if (selectedModifiers.isNotEmpty) {
       return basePoints;
     }
 
-    return selectedModifiers!.fold(
+    return selectedModifiers.fold(
       basePoints,
       (int sum, TraitModifier currentModifier) =>
           sum + currentModifier.cost.toInt(),
@@ -80,16 +80,16 @@ class Trait extends Aspect {
 
   Trait({
     required super.id,
-    required this.tags,
-    required this.notes,
     required super.name,
+    required this.tags,
+    this.notes = '',
     required this.basePoints,
-    this.modifiers,
+    required this.modifiers,
     required super.reference,
     required TraitCategories category,
     this.skillBonus,
-    this.selectedModifiers,
-    required this.canLevel,
+    required this.selectedModifiers,
+    this.canLevel = false,
     this.pointsPerLevel = 0,
     this.investedPoints = 0,
   }) : _category = category;
@@ -106,16 +106,14 @@ class Trait extends Aspect {
       notes: json['notes'] ?? '',
       tags: List<String>.from(json['tags'].map((x) => x)),
       basePoints: json['base_points'] ?? 0,
-      modifiers:
-          json['modifiers'] == null ? null : modifiersFromStringList(modifiers),
+      modifiers: json['modifiers'] ?? modifiersFromStringList(modifiers),
       reference: json['reference'] ?? '',
       category: TraitCategoriesExtension.fromPrice(json['base_points'] ?? 0),
       skillBonus: json['skill_bonus'] == null
           ? null
           : SkillBonus.fromJson(json['skill_bonus']),
-      selectedModifiers: json['selected_modifiers'] == null
-          ? null
-          : modifiersFromStringList(modifiers),
+      selectedModifiers:
+          json['selected_modifiers'] ?? modifiersFromStringList(modifiers),
       canLevel: json['can_level'] ?? false,
       pointsPerLevel: json['points_per_level'] ?? 0,
       investedPoints: json['invested_points'] ?? 0,
@@ -159,15 +157,11 @@ class Trait extends Aspect {
   Map<String, dynamic> toJson() => {
         'id': id,
         'name': name,
-        'tags': List<dynamic>.from(tags.map((x) => x)),
+        'tags': List.from(tags.map((x) => x)),
         'notes': notes,
         'base_points': basePoints,
-        'modifier': modifiers == null
-            ? null
-            : List<dynamic>.from(modifiers!.map((e) => e.toJson())),
-        'selected_modifier': modifiers == null
-            ? null
-            : List<dynamic>.from(modifiers!.map((e) => e.toJson())),
+        'modifier': List.from(modifiers.map((e) => e.toJson())),
+        'selected_modifier': List.from(modifiers.map((e) => e.toJson())),
         'reference': reference,
         'categories': category.stringValue,
         'skill_bonus': skillBonus?.toJson(),

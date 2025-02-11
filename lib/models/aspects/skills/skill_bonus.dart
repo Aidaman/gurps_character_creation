@@ -1,12 +1,12 @@
 class SkillBonus {
-  final String? name;
-  final String? specialization;
+  final String name;
+  final String specialization;
   final int amount;
 
   SkillBonus({
     required this.amount,
-    this.name,
-    this.specialization,
+    required this.name,
+    required this.specialization,
   });
 
   factory SkillBonus.fromJson(Map<String, dynamic> json) => SkillBonus(

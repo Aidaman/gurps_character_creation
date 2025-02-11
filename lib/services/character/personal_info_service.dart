@@ -13,7 +13,7 @@ class CharacterPersonalInfoService {
       case 'players name':
         character.personalInfo.playerName = value.toString();
         break;
-      case 'avatarURL':
+      case 'avatarurl':
         character.personalInfo.avatarURL = value.toString();
         break;
       case 'appearanceDetails':
@@ -40,7 +40,7 @@ class CharacterPersonalInfoService {
     return switch (field.toLowerCase()) {
       'character name' => character.personalInfo.name,
       'players name' => character.personalInfo.playerName,
-      'avatarURL' => character.personalInfo.avatarURL,
+      'avatarurl' => character.personalInfo.avatarURL,
       'appearanceDetails' => character.personalInfo.appearanceDetails,
       'age' => character.personalInfo.age.toString(),
       'height' => character.personalInfo.height.toString(),

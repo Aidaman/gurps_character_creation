@@ -7,8 +7,8 @@ class TraitModifier {
   final num cost;
   final String affects;
   final String reference;
-  final String? notes;
-  final SkillBonus? skillBonus;
+  final String notes;
+  final SkillBonus skillBonus;
   final bool disabled;
 
   TraitModifier({
@@ -17,8 +17,8 @@ class TraitModifier {
     required this.cost,
     required this.affects,
     required this.reference,
-    this.skillBonus,
-    this.notes,
+    required this.skillBonus,
+    this.notes = '',
     this.disabled = false,
   });
 
@@ -28,10 +28,9 @@ class TraitModifier {
         cost: json['cost'] ?? 0,
         affects: json['affects'] ?? 'total',
         reference: json['reference'] ?? '',
-        skillBonus: json['skill_bonus'] == null
-            ? null
-            : SkillBonus.fromJson(json['skill_bonus']),
-        notes: json['notes'],
+        skillBonus:
+            json['skill_bonus'] ?? SkillBonus.fromJson(json['skill_bonus']),
+        notes: json['notes'] ?? '',
         disabled: json['disabled'] ?? false,
       );
 
@@ -41,7 +40,7 @@ class TraitModifier {
         'cost': cost,
         'affects': affects,
         'reference': reference,
-        'skill_bonus': skillBonus?.toJson(),
+        'skill_bonus': skillBonus.toJson(),
         'notes': notes,
         'disabled': disabled,
       };

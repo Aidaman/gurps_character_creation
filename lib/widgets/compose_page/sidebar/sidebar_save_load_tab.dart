@@ -72,6 +72,8 @@ class SidebarSaveLoadTab extends StatelessWidget {
           content: Text('Failed to save your character: $e'),
         ),
       );
+
+      rethrow;
     }
   }
 
@@ -102,6 +104,8 @@ class SidebarSaveLoadTab extends StatelessWidget {
           content: Text('Failed to save your character: $e'),
         ),
       );
+
+      rethrow;
     }
   }
 
@@ -132,6 +136,8 @@ class SidebarSaveLoadTab extends StatelessWidget {
           content: Text('Failed to load your character: $e'),
         ),
       );
+
+      rethrow;
     }
   }
 }

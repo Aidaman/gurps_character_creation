@@ -242,21 +242,26 @@ class RangedWeapon extends Weapon {
       );
 
   factory RangedWeapon.fromJson(Map<String, dynamic> json) => RangedWeapon(
-        damage: WeaponDamage.fromJson(json['damage']),
+        damage: json['damage'] == null
+            ? WeaponDamage(
+                attackType: AttackTypes.THRUST,
+                damageType: DamageType.BURNING,
+                modifier: 0)
+            : WeaponDamage.fromJson(json['damage']),
         notes: json['notes'],
         name: json['name'],
         price: json['price'],
         weight: json['weight'],
-        associatedSkillName: json['associatedSkillName'],
-        range: json['range'],
+        associatedSkillName: json['associatedSkillName'] ?? '',
+        range: Range.fromJson(json['range']),
         accuracy: json['accuracy'],
-        rateOfFire: json['rateOfFire'],
+        rateOfFire: json['rate_of_fire'],
         shots: RangeWeaponShots.fromJson(json['shots']),
         bulk: json['bulk'],
         recoil: json['recoil'],
         st: WeaponStrengths.fromJson(json['st']),
         lc: LegalityClassExtention.fromString(json['lc']),
-        minimumSt: json['minimumSt'],
+        minimumSt: json['min_st'] ?? 10,
       );
 
   @override
@@ -267,11 +272,14 @@ class RangedWeapon extends Weapon {
         'notes': notes,
         'accuracy': accuracy,
         'rate_of_fire': rateOfFire,
+        'damage': damage.toJson(),
+        'skill_name': associatedSkillName,
         'bulk': bulk,
         'recoil': recoil,
         'range': range.toJson(),
         'shots': shots.toJson(),
         'st': st.toJson(),
+        'min_st': minimumSt,
         'lc': lc.stringValue,
       };
 

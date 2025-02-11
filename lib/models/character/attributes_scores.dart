@@ -57,7 +57,7 @@ class AttributesScores {
 
   int pointsInvestedInFP;
   int get fatiguePoints =>
-      pointsInvestedInHT + pointsInvestedInFP ~/ Attributes.FP.adjustPriceOf;
+      health + pointsInvestedInFP ~/ Attributes.FP.adjustPriceOf;
 
   AttributesScores({
     this.sizeModifier = 0,
