@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
-import 'package:gurps_character_creation/providers/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
-import 'package:gurps_character_creation/providers/character/personal_info_provider.dart';
-import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
-import 'package:gurps_character_creation/providers/gear/weapon_provider.dart';
+import 'package:gurps_character_creation/services/character/personal_info_provider.dart';
+import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/services/character/personal_info_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_service.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';

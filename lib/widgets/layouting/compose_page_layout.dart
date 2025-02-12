@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:provider/provider.dart';
 

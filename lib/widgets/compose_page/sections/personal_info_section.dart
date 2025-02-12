@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/providers/character/personal_info_provider.dart';
+import 'package:gurps_character_creation/services/character/personal_info_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/services/character/aspects_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
-import 'package:gurps_character_creation/providers/character/character_provider.dart';
-import 'package:gurps_character_creation/providers/theme_provider.dart';
+import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/theme_provider.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:provider/provider.dart';
 
