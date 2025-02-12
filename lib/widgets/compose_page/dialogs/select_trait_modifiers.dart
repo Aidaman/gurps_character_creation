@@ -56,13 +56,13 @@ class _SelectTraitModifiersDialogState
   }
 
   Widget _buildForm() {
-    widget.trait.modifiers!.sort(
+    widget.trait.modifiers.sort(
       (TraitModifier a, TraitModifier b) => a.cost.toInt() - b.cost.toInt(),
     );
 
     return Column(
       children: List.from(
-        widget.trait.modifiers!.map(
+        widget.trait.modifiers.map(
           (TraitModifier trtModifier) => TraitModifierView(
             traitModifier: trtModifier,
             isSelected: _selectedTraitModifiers

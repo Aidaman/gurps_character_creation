@@ -110,12 +110,11 @@ class TraitView extends StatelessWidget {
                 ),
               ],
             ),
-          if (trait.selectedModifiers != null &&
-              trait.selectedModifiers!.isNotEmpty)
+          if (trait.selectedModifiers.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text(
-                trait.selectedModifiers!
+                trait.selectedModifiers
                     .map((TraitModifier mod) => mod.name)
                     .join(', '),
               ),

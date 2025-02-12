@@ -320,7 +320,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
     if (aspect is Trait) {
       List<TraitModifier>? modifiers;
 
-      if (aspect.modifiers != null && aspect.modifiers!.isNotEmpty) {
+      if (aspect.modifiers.isNotEmpty) {
         modifiers = await showDialog<List<TraitModifier>>(
           context: context,
           builder: (context) => SelectTraitModifiersDialog(

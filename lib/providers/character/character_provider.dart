@@ -31,28 +31,6 @@ class CharacterProvider with ChangeNotifier {
 
   void updateCharacterField(String key, String value) {
     switch (key) {
-      case 'Players Name':
-        _character.personalInfo.playerName = value;
-        break;
-      case 'Character Name':
-        _character.personalInfo.name = value;
-        break;
-      case 'Age':
-        _character.personalInfo.age =
-            int.tryParse(value) ?? _character.personalInfo.age;
-        break;
-      case 'Height':
-        _character.personalInfo.height =
-            int.tryParse(value) ?? _character.personalInfo.height;
-        break;
-      case 'Weight':
-        _character.personalInfo.weight =
-            int.tryParse(value) ?? _character.personalInfo.weight;
-        break;
-      case 'Size Modifier':
-        _character.attributes.sizeModifier =
-            int.tryParse(value) ?? _character.attributes.sizeModifier;
-        break;
       case 'Strength':
         _character.attributes.pointsInvestedInST = _character.attributes
             .adjustPrimaryAttribute(

@@ -17,8 +17,7 @@ class TraitsSection extends StatelessWidget {
     Trait trt,
     CharacterProvider characterProvider,
   ) {
-    final bool modifiersAreNull = trt.modifiers == null;
-    if (modifiersAreNull || (!modifiersAreNull && trt.modifiers!.isEmpty)) {
+    if (trt.modifiers.isEmpty) {
       return null;
     }
 
