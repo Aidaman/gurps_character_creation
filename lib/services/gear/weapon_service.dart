@@ -4,7 +4,7 @@ import 'package:gurps_character_creation/services/character_crud_service.dart';
 
 class WeaponService extends CharacterCRUDService<Weapon> {
   @override
-  void create(Character character, Weapon item) {
+  void add(Character character, Weapon item) {
     character.weapons.add(item);
   }
 

@@ -18,7 +18,7 @@ class CharacterWeaponProvider with ChangeNotifier {
   }
 
   void create(Weapon weapon) {
-    weaponService.create(characterProvider.character, weapon);
+    weaponService.add(characterProvider.character, weapon);
 
     characterProvider.markDirty();
     notifyListeners();

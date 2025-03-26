@@ -106,14 +106,16 @@ class Trait extends Aspect {
       notes: json['notes'] ?? '',
       tags: List<String>.from(json['tags'].map((x) => x)),
       basePoints: json['base_points'] ?? 0,
-      modifiers: json['modifiers'] ?? modifiersFromStringList(modifiers),
+      modifiers:
+          json['modifiers'] == null ? [] : modifiersFromStringList(modifiers),
       reference: json['reference'] ?? '',
       category: TraitCategoriesExtension.fromPrice(json['base_points'] ?? 0),
       skillBonus: json['skill_bonus'] == null
           ? null
           : SkillBonus.fromJson(json['skill_bonus']),
-      selectedModifiers:
-          json['selected_modifiers'] ?? modifiersFromStringList(modifiers),
+      selectedModifiers: json['selected_modifiers'] == null
+          ? []
+          : modifiersFromStringList(modifiers),
       canLevel: json['can_level'] ?? false,
       pointsPerLevel: json['points_per_level'] ?? 0,
       investedPoints: json['invested_points'] ?? 0,

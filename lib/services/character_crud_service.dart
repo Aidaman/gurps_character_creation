@@ -1,7 +1,7 @@
 import 'package:gurps_character_creation/models/character/character.dart';
 
 abstract class CharacterCRUDService<T> {
-  void create(Character character, T item);
+  void add(Character character, T item);
 
   List<T> readAll(Character character);
 

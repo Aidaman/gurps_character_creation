@@ -1,4 +1,3 @@
-import 'package:gurps_character_creation/models/aspects/skills/skill_bonus.dart';
 import 'package:uuid/uuid.dart';
 
 class TraitModifier {
@@ -8,7 +7,6 @@ class TraitModifier {
   final String affects;
   final String reference;
   final String notes;
-  final SkillBonus skillBonus;
   final bool disabled;
 
   TraitModifier({
@@ -17,7 +15,6 @@ class TraitModifier {
     required this.cost,
     required this.affects,
     required this.reference,
-    required this.skillBonus,
     this.notes = '',
     this.disabled = false,
   });
@@ -28,8 +25,6 @@ class TraitModifier {
         cost: json['cost'] ?? 0,
         affects: json['affects'] ?? 'total',
         reference: json['reference'] ?? '',
-        skillBonus:
-            json['skill_bonus'] ?? SkillBonus.fromJson(json['skill_bonus']),
         notes: json['notes'] ?? '',
         disabled: json['disabled'] ?? false,
       );
@@ -40,7 +35,6 @@ class TraitModifier {
         'cost': cost,
         'affects': affects,
         'reference': reference,
-        'skill_bonus': skillBonus.toJson(),
         'notes': notes,
         'disabled': disabled,
       };

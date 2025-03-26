@@ -89,7 +89,7 @@ class Skill extends Aspect {
       name: json['name'],
       reference: json['reference'],
       basePoints: json['base_points'] is String
-          ? int.parse(json['base_string'])
+          ? int.parse(json['base_points'])
           : json['base_points'],
       categories: List<String>.from(json['categories'].map((x) => x)),
       modifiers: List<SkillModifier>.from(

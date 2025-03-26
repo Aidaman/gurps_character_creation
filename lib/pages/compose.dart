@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/services/character/attributes_provider.dart';
+import 'package:gurps_character_creation/services/character/attributes_service.dart';
 import 'package:gurps_character_creation/services/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/services/character/personal_info_provider.dart';
+import 'package:gurps_character_creation/services/character/traits_provider.dart';
+import 'package:gurps_character_creation/services/character/traits_service.dart';
 import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
 import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/services/character/personal_info_service.dart';
@@ -109,7 +113,19 @@ class _ComposePageState extends State<ComposePage> {
             characterProvider,
             CharacterPersonalInfoService(),
           ),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AttributesProvider(
+            characterProvider,
+            CharacterAttributesService(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => TraitsProvider(
+            characterProvider,
+            CharacterTraitsService(),
+          ),
+        ),
       ],
       builder: (context, child) {
         final ComposePageSidebarProvider sidebarProvider =
@@ -146,13 +162,16 @@ class _ComposePageState extends State<ComposePage> {
                   personalInfoProvider:
                       Provider.of<PersonalInfoProvider>(context),
                 ),
-                const AttributesSection(),
+                AttributesSection(
+                  attributesProvider: Provider.of<AttributesProvider>(context),
+                ),
                 TraitsSection(
                   emptyListBuilder: (categories) =>
                       _generateEmptyTraitOrSkillView(
                     categories,
                     sidebarProvider,
                   ),
+                  traitsProvider: Provider.of<TraitsProvider>(context),
                 ),
                 SkillsSection(
                   emptyListBuilder: (categories) =>

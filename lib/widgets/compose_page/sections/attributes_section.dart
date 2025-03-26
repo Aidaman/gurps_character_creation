@@ -1,62 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/attributes_provider.dart';
 import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/widgets/compose_page/sidebar/attribute_view.dart';
-import 'package:provider/provider.dart';
 
 class AttributesSection extends StatelessWidget {
-  const AttributesSection({super.key});
+  final AttributesProvider attributesProvider;
+
+  const AttributesSection({super.key, required this.attributesProvider});
 
   Widget _primaryAttributesView(Attributes attribute, BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
-    final int primaryAttributeValue =
-        characterProvider.character.attributes.getAttribute(attribute);
-
     return AttributeView(
       attribute: attribute,
-      stat: primaryAttributeValue,
-      pointsSpent:
-          characterProvider.character.attributes.getPointsInvestedIn(attribute),
+      stat: attributesProvider.getField(attribute),
+      pointsSpent: attributesProvider.getPointsInvested(attribute),
       onIncrement: () {
-        characterProvider.updateCharacterField(
-          attribute.stringValue,
-          attribute.adjustPriceOf.toString(),
+        attributesProvider.update(
+          attribute: attribute,
+          value: attribute.adjustPriceOf,
         );
       },
       onDecrement: () {
-        characterProvider.updateCharacterField(
-          attribute.stringValue,
-          (attribute.adjustPriceOf * -1).toString(),
+        attributesProvider.update(
+          attribute: attribute,
+          value: (attribute.adjustPriceOf * -1),
         );
       },
     );
   }
 
   Widget _derivedAttributesView(Attributes attribute, BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
-    final int derivedAttributesValue =
-        characterProvider.character.attributes.getAttribute(attribute);
+    final int derivedAttributesValue = attributesProvider.getField(attribute);
 
     return AttributeView(
       attribute: attribute,
       stat: derivedAttributesValue,
-      pointsSpent:
-          characterProvider.character.attributes.getPointsInvestedIn(attribute),
+      pointsSpent: attributesProvider.getPointsInvested(attribute),
       onIncrement: () {
-        characterProvider.updateCharacterField(
-          attribute.stringValue,
-          (attribute.adjustPriceOf).toString(),
+        attributesProvider.update(
+          attribute: attribute,
+          value: attribute.adjustPriceOf,
         );
       },
       onDecrement: () {
-        characterProvider.updateCharacterField(
-          attribute.stringValue,
-          (attribute.adjustPriceOf * -1).toString(),
+        attributesProvider.update(
+          attribute: attribute,
+          value: attribute.adjustPriceOf * -1,
         );
       },
     );

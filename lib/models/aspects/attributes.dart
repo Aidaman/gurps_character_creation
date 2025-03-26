@@ -13,7 +13,7 @@ enum Attributes {
 }
 
 extension AttributeAdjustments on Attributes {
-  int get adjustPriceOf => switch (this) {
+  double get adjustPriceOf => switch (this) {
         Attributes.ST => 10,
         Attributes.DX => 20,
         Attributes.IQ => 20,
