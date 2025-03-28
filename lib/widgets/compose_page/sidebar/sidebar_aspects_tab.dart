@@ -11,6 +11,7 @@ import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/services/character/aspects_provider.dart';
+import 'package:gurps_character_creation/services/character/traits_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';
@@ -98,7 +99,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                   trait: trt,
                   onAddClick: () => _addAspect(trt, characterProvider),
                   onRemoveClick: () {
-                    characterProvider.removeTrait(trt);
+                    Provider.of<TraitsProvider>(context).delete(trt);
                   },
                 ),
               ),
@@ -332,7 +333,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
       Trait newTrait = Trait.copyWIth(aspect, selectedModifiers: modifiers);
       newTrait.placeholder = newName;
 
-      characterProvider.addTrait(newTrait);
+      Provider.of<TraitsProvider>(context).add(newTrait);
     }
 
     if (aspect is Skill) {

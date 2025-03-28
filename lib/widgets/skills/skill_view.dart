@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:gurps_character_creation/services/character/skill_provider.dart';
 import 'package:provider/provider.dart';
 
 class SkillView extends StatelessWidget {
@@ -22,9 +22,6 @@ class SkillView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     final ButtonStyle iconButtonStyle = IconButton.styleFrom(
       iconSize: 16,
       padding: const EdgeInsets.all(4),
@@ -91,7 +88,7 @@ class SkillView extends StatelessWidget {
                 iconButtonConstraints,
               ),
               _generateAdjustmentButtons(
-                characterProvider,
+                Provider.of<SkillsProvider>(context),
                 iconButtonStyle,
                 iconButtonConstraints,
               ),
@@ -129,7 +126,7 @@ class SkillView extends StatelessWidget {
   }
 
   Widget _generateAdjustmentButtons(
-    CharacterProvider characterProvider,
+    SkillsProvider skillsProvider,
     ButtonStyle iconButtonStyle,
     BoxConstraints iconButtonConstraints,
   ) {
@@ -137,36 +134,28 @@ class SkillView extends StatelessWidget {
       children: [
         if (isIncluded == true)
           IconButton(
-            onPressed: () {
-              characterProvider.adjustSkillInvestedPoints(skill, 1);
-            },
+            onPressed: () => skillsProvider.updateSkillLevel(skill, 1),
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.arrow_upward),
           ),
         if (isIncluded == true)
           IconButton(
-            onPressed: () {
-              characterProvider.adjustSkillInvestedPoints(skill, 4);
-            },
+            onPressed: () => skillsProvider.updateSkillLevel(skill, 4),
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.keyboard_double_arrow_up_outlined),
           ),
         if (isIncluded == true)
           IconButton(
-            onPressed: () {
-              characterProvider.adjustSkillInvestedPoints(skill, -1);
-            },
+            onPressed: () => skillsProvider.updateSkillLevel(skill, -1),
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.arrow_downward),
           ),
         if (isIncluded == true)
           IconButton(
-            onPressed: () {
-              characterProvider.adjustSkillInvestedPoints(skill, -4);
-            },
+            onPressed: () => skillsProvider.updateSkillLevel(skill, -4),
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.keyboard_double_arrow_down_outlined),

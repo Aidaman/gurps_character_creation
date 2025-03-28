@@ -5,6 +5,10 @@ import 'package:gurps_character_creation/services/character/attributes_service.d
 import 'package:gurps_character_creation/services/character/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/services/character/personal_info_provider.dart';
+import 'package:gurps_character_creation/services/character/skill_provider.dart';
+import 'package:gurps_character_creation/services/character/skill_service.dart';
+import 'package:gurps_character_creation/services/character/spells_provider.dart';
+import 'package:gurps_character_creation/services/character/spells_serivce.dart';
 import 'package:gurps_character_creation/services/character/traits_provider.dart';
 import 'package:gurps_character_creation/services/character/traits_service.dart';
 import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
@@ -126,6 +130,18 @@ class _ComposePageState extends State<ComposePage> {
             CharacterTraitsService(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => SkillsProvider(
+            characterProvider,
+            CharacterSkillsService(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SpellsProvider(
+            characterProvider,
+            CharacterSpellsSerivce(),
+          ),
+        ),
       ],
       builder: (context, child) {
         final ComposePageSidebarProvider sidebarProvider =
@@ -179,6 +195,8 @@ class _ComposePageState extends State<ComposePage> {
                     categories,
                     sidebarProvider,
                   ),
+                  skillsProvider: Provider.of<SkillsProvider>(context),
+                  spellsProvider: Provider.of<SpellsProvider>(context),
                 ),
                 MeleeWeaponsSection(
                   character: characterProvider.character,

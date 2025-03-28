@@ -119,43 +119,6 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addTrait(Trait trait) {
-    final bool isEnoughPoints = trait.basePoints < character.remainingPoints;
-    final bool isTraitPresent =
-        _character.traits.any((t) => t.name == trait.name);
-
-    if (isTraitPresent || !isEnoughPoints) {
-      return;
-    }
-
-    _character.traits.add(trait);
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void updateTraitTitle(Trait trait, String? newTitle) {
-    if (newTitle == null) {
-      return;
-    }
-
-    removeTrait(trait);
-
-    trait.placeholder = newTitle;
-    addTrait(trait);
-
-    notifyListeners();
-  }
-
-  void removeTrait(Trait trait) {
-    _character.traits.removeWhere(
-      (t) => t.name == trait.name,
-    );
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
   void addSkill(Skill skill) {
     if (_character.skills.any((s) => s.name == skill.name)) {
       return;
