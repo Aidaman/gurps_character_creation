@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
+import 'package:gurps_character_creation/services/character/aspects_provider.dart';
 import 'package:gurps_character_creation/services/character/character_provider.dart';
 import 'package:gurps_character_creation/services/character/traits_service.dart';
+import 'package:provider/provider.dart';
 
 class TraitsProvider extends ChangeNotifier {
   final CharacterProvider _characterProvider;
@@ -56,7 +58,10 @@ class TraitsProvider extends ChangeNotifier {
   }
 
   Future<void> updateTraitTitle(Trait t, BuildContext context) async {
-    String? newTitle = await _characterProvider.replacePlacholderName(
+    String? newTitle = await Provider.of<AspectsProvider>(
+      context,
+      listen: false,
+    ).replacePlacholderName(
       context,
       t.name,
     );

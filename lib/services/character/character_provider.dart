@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
-import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/services/character/aspects_provider.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
 import 'package:provider/provider.dart';
 
 class CharacterProvider with ChangeNotifier {
@@ -26,96 +22,6 @@ class CharacterProvider with ChangeNotifier {
 
   void updateCharacterMaxPoints(int? newValue) {
     _character.points = newValue ?? _character.points;
-    notifyListeners();
-  }
-
-  void updateCharacterField(String key, String value) {
-    switch (key) {
-      case 'Strength':
-        _character.attributes.pointsInvestedInST = _character.attributes
-            .adjustPrimaryAttribute(
-              Attributes.ST,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Dexterity':
-        _character.attributes.pointsInvestedInDX = _character.attributes
-            .adjustPrimaryAttribute(
-              Attributes.DX,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'IQ':
-        _character.attributes.pointsInvestedInIQ = _character.attributes
-            .adjustPrimaryAttribute(
-              Attributes.IQ,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Health':
-        _character.attributes.pointsInvestedInHT = _character.attributes
-            .adjustPrimaryAttribute(
-              Attributes.HT,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Perception':
-        _character.attributes.pointsInvestedInPer = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.Per,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Will':
-        _character.attributes.pointsInvestedInWill = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.Will,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Hit Points':
-        _character.attributes.pointsInvestedInHP = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.HP,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Fatigue Points':
-        _character.attributes.pointsInvestedInFP = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.FP,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Basic Speed':
-        _character.attributes.pointsInvestedInBS = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.BASIC_SPEED,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      case 'Basic Move':
-        _character.attributes.pointsInvestedInBM = _character.attributes
-            .adjustDerivedAttribute(
-              Attributes.BASIC_MOVE,
-              double.parse(value),
-              _character.remainingPoints,
-            )
-            .toInt();
-      default:
-    }
-
-    _isDirty = true;
-
     notifyListeners();
   }
 
@@ -290,27 +196,6 @@ class CharacterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String?> replacePlacholderName(
-    BuildContext context,
-    String name,
-  ) async {
-    final RegExpMatch match = placeholderAspectRegex.firstMatch(name)!;
-    final String placeholder = match.group(1) ?? '';
-
-    final String? replacedWith = await showDialog<String>(
-      context: context,
-      builder: (context) => ChangeAspectPlaceholderNameDialog(
-        placeholder: placeholder,
-      ),
-    );
-
-    if (replacedWith == null) {
-      return null;
-    }
-
-    return replacedWith.replaceAll(match.group(0)!, replacedWith);
-  }
-
   void setProfilePicture(String path) {
     _character.personalInfo.avatarURL = path;
 
@@ -320,36 +205,6 @@ class CharacterProvider with ChangeNotifier {
 
   void markDirty() {
     _isDirty = true;
-  }
-
-  void increaseTraitLevel(Trait t) {
-    if (!t.canLevel) {
-      return;
-    }
-
-    if (character.remainingPoints < t.pointsPerLevel) {
-      return;
-    }
-
-    t.investedPoints += t.pointsPerLevel;
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void reduceTraitLevel(Trait t) {
-    if (!t.canLevel) {
-      return;
-    }
-
-    if (t.investedPoints == 0) {
-      return;
-    }
-
-    t.investedPoints -= t.pointsPerLevel;
-
-    _isDirty = true;
-    notifyListeners();
   }
 
   void loadCharacterFromJson(Map<String, dynamic> jsonData) {

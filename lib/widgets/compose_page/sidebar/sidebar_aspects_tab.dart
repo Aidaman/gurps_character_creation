@@ -97,7 +97,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                         : trt.category == widget.selectedTraitCategory),
                 itemBuilder: (Trait trt) => TraitView(
                   trait: trt,
-                  onAddClick: () => _addAspect(trt, characterProvider),
+                  onAddClick: () => _addAspect(trt),
                   onRemoveClick: () {
                     Provider.of<TraitsProvider>(context).delete(trt);
                   },
@@ -115,7 +115,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                         : skl.difficulty == widget.selectedSkillDifficulty),
                 itemBuilder: (skl) => SkillView(
                   skill: skl,
-                  onAddClick: () => _addAspect(skl, characterProvider),
+                  onAddClick: () => _addAspect(skl),
                   onRemoveClick: () {
                     characterProvider.removeSkill(skl);
                   },
@@ -129,7 +129,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                     ),
                 itemBuilder: (spl) => SpellView(
                   spell: spl,
-                  onAddClick: () => _addAspect(spl, characterProvider),
+                  onAddClick: () => _addAspect(spl),
                   onRemoveClick: () {
                     characterProvider.removeSpell(spl);
                   },
@@ -309,10 +309,14 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
     );
   }
 
-  void _addAspect(Aspect aspect, CharacterProvider characterProvider) async {
+  void _addAspect(Aspect aspect) async {
     String? newName;
+
     if (placeholderAspectRegex.hasMatch(aspect.name)) {
-      newName = await characterProvider.replacePlacholderName(
+      newName = await Provider.of<AspectsProvider>(
+        context,
+        listen: false,
+      ).replacePlacholderName(
         context,
         aspect.name,
       );
@@ -333,15 +337,15 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
       Trait newTrait = Trait.copyWIth(aspect, selectedModifiers: modifiers);
       newTrait.placeholder = newName;
 
-      Provider.of<TraitsProvider>(context).add(newTrait);
+      Provider.of<TraitsProvider>(context, listen: false).add(newTrait);
     }
 
     if (aspect is Skill) {
-      characterProvider.addSkill(aspect);
+      Provider.of<CharacterProvider>(context, listen: false).addSkill(aspect);
     }
 
     if (aspect is Spell) {
-      characterProvider.addSpell(aspect);
+      Provider.of<CharacterProvider>(context, listen: false).addSpell(aspect);
     }
   }
 }

@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/services/character_crud_service.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
 
 class CharacterTraitsService extends CharacterCRUDService<Trait> {
   @override
@@ -64,27 +61,6 @@ class CharacterTraitsService extends CharacterCRUDService<Trait> {
 
     trait.placeholder = newTitle;
     add(character, trait);
-  }
-
-  Future<String?> replacePlacholderName(
-    BuildContext context,
-    String name,
-  ) async {
-    final RegExpMatch match = placeholderAspectRegex.firstMatch(name)!;
-    final String placeholder = match.group(1) ?? '';
-
-    final String? replacedWith = await showDialog<String>(
-      context: context,
-      builder: (context) => ChangeAspectPlaceholderNameDialog(
-        placeholder: placeholder,
-      ),
-    );
-
-    if (replacedWith == null) {
-      return null;
-    }
-
-    return replacedWith.replaceAll(match.group(0)!, replacedWith);
   }
 
   void increaseTraitLevel(Character character, Trait t) {
