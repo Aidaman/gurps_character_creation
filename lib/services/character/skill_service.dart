@@ -59,7 +59,7 @@ class CharacterSkillsService extends CharacterCRUDService<Skill> {
       return;
     }
 
-    if (character.remainingPoints - points > character.points) {
+    if (character.remainingPoints - points >= character.points) {
       return;
     }
 
