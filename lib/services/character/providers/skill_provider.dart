@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/services/character/skill_service.dart';
 
 class SkillsProvider extends ChangeNotifier {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/services/theme_provider.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';

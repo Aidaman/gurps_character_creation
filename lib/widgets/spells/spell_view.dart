@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:provider/provider.dart';
 
 class SpellView extends StatelessWidget {

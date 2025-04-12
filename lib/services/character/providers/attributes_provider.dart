@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/services/character/attributes_service.dart';
-import 'package:gurps_character_creation/services/character/character_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 
 class AttributesProvider extends ChangeNotifier {
   final CharacterProvider _characterProvider;

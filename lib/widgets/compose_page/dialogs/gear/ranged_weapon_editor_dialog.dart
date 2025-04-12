@@ -6,7 +6,7 @@ import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
-import 'package:gurps_character_creation/services/character/aspects_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
 import 'package:provider/provider.dart';
