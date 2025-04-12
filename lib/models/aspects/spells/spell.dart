@@ -44,7 +44,7 @@ class Spell extends Aspect {
     required super.reference,
     required this.categories,
     required this.prereqList,
-    this.unsatisfitedPrerequisitesList,
+    this.unsatisfitedPrerequisitesList = const [],
     this.difficulty = SkillDifficulty.HARD,
     int? investedPoints,
   }) : investedPoints = investedPoints ?? 0;
@@ -62,9 +62,12 @@ class Spell extends Aspect {
         castingTime: json['casting_time'],
         duration: json['duration'],
         reference: json['reference'],
-        difficulty: SkillDifficulty.HARD,
+        difficulty: json['difficulty'] == null
+            ? SkillDifficulty.HARD
+            : SkillDifficultyExtension.fromString(json['difficulty']),
         categories: List<String>.from(json['categories'].map((x) => x)),
         prereqList: List<String>.from(json['prereq_list'].map((x) => x)),
+        investedPoints: json['invested_points'] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -81,6 +84,7 @@ class Spell extends Aspect {
         'difficulty': difficulty.stringValue,
         'categories': List<String>.from(categories.map((x) => x)),
         'prereq_list': List<String>.from(prereqList.map((x) => x)),
+        'invested_points': investedPoints,
       };
 
   factory Spell.copyWith(

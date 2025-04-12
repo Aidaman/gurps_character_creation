@@ -41,7 +41,7 @@ extension SkillDifficultyExtension on SkillDifficulty {
         SkillDifficulty.NONE => Colors.grey,
       };
 
-  static SkillDifficulty? fromString(String difficulty) {
+  static SkillDifficulty fromString(String difficulty) {
     return switch (difficulty.toLowerCase()) {
       'e' => SkillDifficulty.EASY,
       'easy' => SkillDifficulty.EASY,
