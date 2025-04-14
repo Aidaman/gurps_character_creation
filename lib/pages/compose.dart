@@ -12,6 +12,8 @@ import 'package:gurps_character_creation/services/character/spells_serivce.dart'
 import 'package:gurps_character_creation/services/character/providers/traits_provider.dart';
 import 'package:gurps_character_creation/services/character/traits_service.dart';
 import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/services/gear/armor_provider.dart';
+import 'package:gurps_character_creation/services/gear/armor_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/services/character/personal_info_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_service.dart';
@@ -142,6 +144,12 @@ class _ComposePageState extends State<ComposePage> {
             CharacterSpellsSerivce(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ArmorProvider(
+            characterProvider,
+            ArmorService(),
+          ),
+        ),
       ],
       builder: (context, child) {
         final ComposePageSidebarProvider sidebarProvider =
@@ -206,7 +214,10 @@ class _ComposePageState extends State<ComposePage> {
                   character: characterProvider.character,
                   weaponProvider: Provider.of<CharacterWeaponProvider>(context),
                 ),
-                const ArmorSection(),
+                ArmorSection(
+                  character: characterProvider.character,
+                  armorProvider: Provider.of<ArmorProvider>(context),
+                ),
                 const PosessionsSection(),
               ],
             ),

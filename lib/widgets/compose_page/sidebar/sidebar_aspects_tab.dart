@@ -5,12 +5,13 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
-import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/services/character/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/skill_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/spells_provider.dart';
 import 'package:gurps_character_creation/services/character/providers/traits_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
@@ -60,9 +61,6 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     return Column(
       children: [
         Container(
@@ -99,7 +97,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                   trait: trt,
                   onAddClick: () => _addAspect(trt),
                   onRemoveClick: () {
-                    Provider.of<TraitsProvider>(context).delete(trt);
+                    context.read<TraitsProvider>().delete(trt);
                   },
                 ),
               ),
@@ -117,7 +115,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                   skill: skl,
                   onAddClick: () => _addAspect(skl),
                   onRemoveClick: () {
-                    characterProvider.removeSkill(skl);
+                    context.read<SkillsProvider>().delete(skl);
                   },
                 ),
               ),
@@ -131,7 +129,7 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
                   spell: spl,
                   onAddClick: () => _addAspect(spl),
                   onRemoveClick: () {
-                    characterProvider.removeSpell(spl);
+                    context.read<SpellsProvider>().delete(spl);
                   },
                 ),
               ),
@@ -337,15 +335,15 @@ class _SidebarAspectsTabState extends State<SidebarAspectsTab> {
       Trait newTrait = Trait.copyWIth(aspect, selectedModifiers: modifiers);
       newTrait.placeholder = newName;
 
-      Provider.of<TraitsProvider>(context, listen: false).add(newTrait);
+      context.read<TraitsProvider>().add(aspect);
     }
 
     if (aspect is Skill) {
-      Provider.of<CharacterProvider>(context, listen: false).addSkill(aspect);
+      context.read<SkillsProvider>().add(aspect);
     }
 
     if (aspect is Spell) {
-      Provider.of<CharacterProvider>(context, listen: false).addSpell(aspect);
+      context.read<SpellsProvider>().add(aspect);
     }
   }
 }

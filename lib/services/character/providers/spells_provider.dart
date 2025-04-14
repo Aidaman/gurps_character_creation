@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
+import 'package:gurps_character_creation/services/character/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/services/character/spells_serivce.dart';
 
@@ -15,6 +16,21 @@ class SpellsProvider extends ChangeNotifier {
 
   void add(Spell s) {
     _spellsService.add(_characterProvider.character, s);
+
+    notifyListeners();
+  }
+
+  void addByName(String spellName, AspectsProvider aspectsProvider) {
+    if (!aspectsProvider.spells.any((s) => s.name.toLowerCase() == spellName)) {
+      return;
+    }
+
+    _spellsService.add(
+      _characterProvider.character,
+      aspectsProvider.spells.singleWhere(
+        (s) => s.name.toLowerCase() == spellName,
+      ),
+    );
 
     notifyListeners();
   }

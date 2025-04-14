@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/models/aspects/attributes.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
+import 'package:gurps_character_creation/services/character/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
+import 'package:gurps_character_creation/services/character/providers/spells_provider.dart';
 import 'package:provider/provider.dart';
 
 class SpellView extends StatelessWidget {
@@ -115,6 +117,7 @@ class SpellView extends StatelessWidget {
                   characterProvider,
                   iconButtonStyle,
                   iconButtonConstraints,
+                  context,
                 ),
               ),
             ],
@@ -147,15 +150,15 @@ class SpellView extends StatelessWidget {
   }
 
   Widget _buildAddPrereqButton(String spellName, BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     return Row(
       children: [
         Expanded(
           child: TextButton(
             onPressed: () {
-              characterProvider.addSpellByName(spellName, context);
+              context.read<SpellsProvider>().addByName(
+                    spellName,
+                    context.read<AspectsProvider>(),
+                  );
             },
             child: Text(spellName),
           ),
@@ -192,13 +195,18 @@ class SpellView extends StatelessWidget {
     CharacterProvider characterProvider,
     ButtonStyle iconButtonStyle,
     BoxConstraints iconButtonConstraints,
+    BuildContext context,
   ) {
     return Row(
       children: [
         if (isIncluded == true)
           IconButton(
             onPressed: () {
-              characterProvider.adjustSpellInvestedPoints(spell, 1);
+              context.read<SpellsProvider>().updateSpellLevel(
+                    spell,
+                    doIncrease: true,
+                    points: 1,
+                  );
             },
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
@@ -207,7 +215,11 @@ class SpellView extends StatelessWidget {
         if (isIncluded == true)
           IconButton(
             onPressed: () {
-              characterProvider.adjustSpellInvestedPoints(spell, 4);
+              context.read<SpellsProvider>().updateSpellLevel(
+                    spell,
+                    doIncrease: true,
+                    points: 4,
+                  );
             },
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
@@ -216,7 +228,11 @@ class SpellView extends StatelessWidget {
         if (isIncluded == true)
           IconButton(
             onPressed: () {
-              characterProvider.adjustSpellInvestedPoints(spell, -1);
+              context.read<SpellsProvider>().updateSpellLevel(
+                    spell,
+                    doIncrease: false,
+                    points: 1,
+                  );
             },
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
@@ -225,7 +241,11 @@ class SpellView extends StatelessWidget {
         if (isIncluded == true)
           IconButton(
             onPressed: () {
-              characterProvider.adjustSpellInvestedPoints(spell, -4);
+              context.read<SpellsProvider>().updateSpellLevel(
+                    spell,
+                    doIncrease: false,
+                    points: 4,
+                  );
             },
             style: iconButtonStyle,
             constraints: iconButtonConstraints,

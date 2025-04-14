@@ -97,7 +97,7 @@ class Skill extends Aspect {
       specialization: json['specialization'] ?? '',
       investedPoints: json['invested_points'] ?? 0,
       associatedAttribute: associatedAttribute ?? Attributes.NONE,
-      difficulty: skillDifficulty ?? SkillDifficulty.NONE,
+      difficulty: skillDifficulty,
     );
   }
 

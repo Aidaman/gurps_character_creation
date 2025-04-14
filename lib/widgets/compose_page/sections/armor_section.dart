@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
-import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
+import 'package:gurps_character_creation/services/gear/armor_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_editor_dialog.dart';
-import 'package:provider/provider.dart';
 
 class ArmorSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
+  final ArmorProvider armorProvider;
+  final Character character;
 
-  const ArmorSection({super.key});
+  const ArmorSection({
+    super.key,
+    required this.character,
+    required this.armorProvider,
+  });
 
-  Future<void> _openCreateDialog(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
+  Future<void> _openCreateDialog(BuildContext context) async {
     Armor? armor = await showDialog(
       context: context,
       builder: (context) => const ArmorEditorDialog(),
     );
 
     if (armor != null) {
-      characterProvider.addArmor(armor);
+      armorProvider.create(armor);
     }
   }
 
   void _openEditDialog(
     Armor armor,
     BuildContext context,
-    CharacterProvider characterProvider,
   ) async {
     Armor? newArmor = await showDialog<Armor?>(
       context: context,
@@ -37,12 +39,11 @@ class ArmorSection extends StatelessWidget {
     );
 
     if (newArmor != null) {
-      characterProvider.updateArmor(newArmor);
+      armorProvider.update(newArmor);
     }
   }
 
-  DataCell _buildMapValueCell(Map<String, dynamic> value,
-      CharacterProvider characterProvider, Armor armor) {
+  DataCell _buildMapValueCell(Map<String, dynamic> value, Armor armor) {
     if (DamageResistance.isDamageResistance(value)) {
       return DataCell(
         Text(DamageResistance.fromJson(value).GURPSNotation),
@@ -52,17 +53,13 @@ class ArmorSection extends StatelessWidget {
     return const DataCell(Text(''));
   }
 
-  DataRow _buildArmorDataCell(
-    BuildContext context,
-    Armor armor,
-    CharacterProvider characterProvider,
-  ) {
+  DataRow _buildArmorDataCell(BuildContext context, Armor armor) {
     Iterable<DataCell> cells = armor.dataTableColumns.entries.map(
       (MapEntry<String, dynamic> e) {
         final bool valueIsMap = e.value is Map;
 
         if (valueIsMap) {
-          return _buildMapValueCell(e.value, characterProvider, armor);
+          return _buildMapValueCell(e.value, armor);
         }
 
         if (BodyPartString.fromString(e.value.toString()) != BodyPart.NONE) {
@@ -85,22 +82,15 @@ class ArmorSection extends StatelessWidget {
     return DataRow(cells: [
       ...cells,
       DataCell(
-        _buildArmorActions(
-          context,
-          armor,
-          characterProvider,
-        ),
+        _buildArmorActions(context, armor),
       )
     ]);
   }
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
-    if (characterProvider.character.armor.isEmpty) {
-      return _buildAddNewItem(context, characterProvider);
+    if (armorProvider.readAll().isEmpty) {
+      return _buildAddNewItem(context);
     }
 
     final List<DataColumn> dataColumns = [
@@ -112,13 +102,10 @@ class ArmorSection extends StatelessWidget {
       const DataColumn(label: Text('Actions')),
     ];
 
-    final List<DataRow> dataRows = characterProvider.character.armor
+    final List<DataRow> dataRows = armorProvider
+        .readAll()
         .map(
-          (Armor armor) => _buildArmorDataCell(
-            context,
-            armor,
-            characterProvider,
-          ),
+          (Armor armor) => _buildArmorDataCell(context, armor),
         )
         .toList();
 
@@ -132,16 +119,13 @@ class ArmorSection extends StatelessWidget {
               rows: dataRows,
             ),
           ),
-          _buildAddNewItem(context, characterProvider),
+          _buildAddNewItem(context),
         ],
       ),
     );
   }
 
-  Widget _buildAddNewItem(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) {
+  Widget _buildAddNewItem(BuildContext context) {
     return Column(
       children: [
         const Divider(
@@ -150,27 +134,23 @@ class ArmorSection extends StatelessWidget {
         ),
         const Text('Click to add an Armor'),
         IconButton.filled(
-          onPressed: () => _openCreateDialog(context, characterProvider),
+          onPressed: () => _openCreateDialog(context),
           icon: const Icon(Icons.add),
         ),
       ],
     );
   }
 
-  Widget _buildArmorActions(
-    BuildContext context,
-    Armor armor,
-    CharacterProvider characterProvider,
-  ) {
+  Widget _buildArmorActions(BuildContext context, Armor armor) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () => _openEditDialog(armor, context, characterProvider),
+          onPressed: () => _openEditDialog(armor, context),
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
-          onPressed: () => characterProvider.removeArmor(armor),
+          onPressed: () => armorProvider.delete(armor.id),
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(
