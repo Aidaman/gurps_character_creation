@@ -5,7 +5,7 @@ import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
 
 class PossessionEditorDialog extends StatefulWidget {
-  final Posession? oldPossession;
+  final Possession? oldPossession;
   const PossessionEditorDialog({super.key, this.oldPossession});
 
   @override
@@ -15,11 +15,11 @@ class PossessionEditorDialog extends StatefulWidget {
 class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
-  late Posession _posession;
+  late Possession _posession;
 
   @override
   void initState() {
-    _posession = widget.oldPossession ?? Posession.empty();
+    _posession = widget.oldPossession ?? Possession.empty();
     super.initState();
   }
 
@@ -59,7 +59,7 @@ class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
             }
 
             setState(() {
-              _posession = Posession.copyWith(_posession, description: value);
+              _posession = Possession.copyWith(_posession, description: value);
             });
           },
           context: context,
@@ -67,7 +67,7 @@ class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
       ],
       onGearUpdated: (Gear updatedGear) {
         setState(() {
-          _posession = updatedGear as Posession;
+          _posession = updatedGear as Possession;
         });
       },
     );

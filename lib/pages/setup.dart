@@ -18,9 +18,6 @@ class _SetupPageState extends State<SetupPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   Widget _buildWarningPrompt(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +51,7 @@ class _SetupPageState extends State<SetupPage> {
                   foregroundColor: Theme.of(context).colorScheme.error,
                 ),
                 onPressed: () {
-                  characterProvider.clearProgress();
+                  context.watch<CharacterProvider>().clearProgress();
 
                   Navigator.popAndPushNamed(
                       context, AppRoutes.SETUP.destination);
@@ -78,9 +75,6 @@ class _SetupPageState extends State<SetupPage> {
   }
 
   Widget _buildNewCharacterPrompt(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -102,9 +96,9 @@ class _SetupPageState extends State<SetupPage> {
               return;
             }
 
-            characterProvider.updateCharacterMaxPoints(
-              parseInput(value, int.parse),
-            );
+            context.watch<CharacterProvider>().updateCharacterMaxPoints(
+                  parseInput(value, int.parse),
+                );
           },
         ),
         Text(
@@ -129,9 +123,6 @@ class _SetupPageState extends State<SetupPage> {
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: APP_BAR_HEIGHT,
@@ -151,7 +142,7 @@ class _SetupPageState extends State<SetupPage> {
         key: _formkey,
         child: Center(
           child: SettingsCard(
-            child: characterProvider.isDirty
+            child: context.watch<CharacterProvider>().isDirty
                 ? _buildWarningPrompt(context)
                 : _buildNewCharacterPrompt(context),
           ),

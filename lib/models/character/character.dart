@@ -28,7 +28,7 @@ class Character {
 
   List<Weapon> weapons;
   List<Armor> armor;
-  List<Posession> possessions;
+  List<Possession> possessions;
 
   int get remainingPoints {
     int total = 0;
@@ -111,8 +111,8 @@ class Character {
           }
         })),
         armor: List<Armor>.from(json['armor'].map((x) => Armor.fromJson(x))),
-        possessions: List<Posession>.from(json['possessions'].map(
-          (x) => Posession.fromJson(x),
+        possessions: List<Possession>.from(json['possessions'].map(
+          (x) => Possession.fromJson(x),
         )),
       );
 

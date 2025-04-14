@@ -1,16 +1,16 @@
 import 'package:gurps_character_creation/models/gear/gear.dart';
 
-class Posession extends Gear {
+class Possession extends Gear {
   final String description;
 
-  Posession({
+  Possession({
     required super.name,
     required super.price,
     required super.weight,
     this.description = '',
   });
 
-  Posession.withId({
+  Possession.withId({
     required super.id,
     required super.name,
     required super.price,
@@ -18,14 +18,14 @@ class Posession extends Gear {
     this.description = '',
   }) : super.withId();
 
-  factory Posession.copyWith(
-    Posession poss, {
+  factory Possession.copyWith(
+    Possession poss, {
     String? name,
     double? price,
     double? weight,
     String? description,
   }) {
-    return Posession.withId(
+    return Possession.withId(
       id: poss.id,
       name: name ?? poss.name,
       price: price ?? poss.price,
@@ -33,13 +33,13 @@ class Posession extends Gear {
     );
   }
 
-  factory Posession.empty() => Posession(
+  factory Possession.empty() => Possession(
         name: '',
         price: 0,
         weight: 0,
       );
 
-  factory Posession.fromJson(Map<String, dynamic> json) => Posession(
+  factory Possession.fromJson(Map<String, dynamic> json) => Possession(
         name: json['name'],
         price: json['price'],
         weight: json['weight'],

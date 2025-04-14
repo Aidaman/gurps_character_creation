@@ -4,7 +4,7 @@ import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 
 class PossessionDetailsDialog extends StatelessWidget {
-  final Posession possession;
+  final Possession possession;
   const PossessionDetailsDialog({super.key, required this.possession});
 
   @override

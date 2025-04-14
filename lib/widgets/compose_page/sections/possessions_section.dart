@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
+import 'package:gurps_character_creation/services/gear/possessions_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_detail_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_editor_dialog.dart';
 import 'package:provider/provider.dart';
@@ -8,15 +9,20 @@ import 'package:provider/provider.dart';
 class PosessionsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
 
-  const PosessionsSection({super.key});
+  final Character _character;
+  final PossessionsProvider _possessionsProvider;
+
+  const PosessionsSection({
+    super.key,
+    required Character character,
+    required PossessionsProvider possessionsProvider,
+  })  : _character = character,
+        _possessionsProvider = possessionsProvider;
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
-
     final List<DataColumn> dataColumns = [
-      ...Posession.empty().dataTableColumns.keys.map(
+      ...Possession.empty().dataTableColumns.keys.map(
             (String key) => DataColumn(
               label: Text(key),
             ),
@@ -24,18 +30,16 @@ class PosessionsSection extends StatelessWidget {
       const DataColumn(label: Text('Actions')),
     ];
 
-    final List<DataRow> dataRows = characterProvider.character.possessions
+    final List<DataRow> dataRows = context
+        .read<PossessionsProvider>()
+        .readAll()
         .map(
-          (Posession poss) => _buildPossessionDataCell(
-            context,
-            poss,
-            characterProvider,
-          ),
+          (Possession poss) => _buildPossessionDataCell(context, poss),
         )
         .toList();
 
     if (dataRows.isEmpty) {
-      return _buildAddNewItem(context, characterProvider);
+      return _buildAddNewItem(context);
     }
 
     return Center(
@@ -48,17 +52,13 @@ class PosessionsSection extends StatelessWidget {
               rows: dataRows,
             ),
           ),
-          _buildAddNewItem(context, characterProvider)
+          _buildAddNewItem(context)
         ],
       ),
     );
   }
 
-  DataRow _buildPossessionDataCell(
-    BuildContext context,
-    Posession poss,
-    CharacterProvider characterProvider,
-  ) {
+  DataRow _buildPossessionDataCell(BuildContext context, Possession poss) {
     Iterable<DataCell> cells = poss.dataTableColumns.entries.map(
       (MapEntry<String, dynamic> e) {
         return DataCell(
@@ -75,36 +75,25 @@ class PosessionsSection extends StatelessWidget {
       cells: [
         ...cells,
         DataCell(
-          _buildPossessionActions(
-            context,
-            poss,
-            characterProvider,
-          ),
+          _buildPossessionActions(context, poss),
         )
       ],
     );
   }
 
-  void _openCreateDialog(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
-    Posession? newPossession = await showDialog<Posession?>(
+  void _openCreateDialog(BuildContext context) async {
+    Possession? newPossession = await showDialog<Possession?>(
       context: context,
       builder: (context) => const PossessionEditorDialog(),
     );
 
     if (newPossession != null) {
-      characterProvider.addPossession(newPossession);
+      _possessionsProvider.create(newPossession);
     }
   }
 
-  void _openEditDialog(
-    Posession poss,
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) async {
-    Posession? newPossession = await showDialog<Posession?>(
+  void _openEditDialog(Possession poss, BuildContext context) async {
+    Possession? newPossession = await showDialog<Possession?>(
       context: context,
       builder: (context) => PossessionEditorDialog(
         oldPossession: poss,
@@ -112,14 +101,11 @@ class PosessionsSection extends StatelessWidget {
     );
 
     if (newPossession != null) {
-      characterProvider.updatePossession(newPossession);
+      _possessionsProvider.update(newPossession);
     }
   }
 
-  Widget _buildAddNewItem(
-    BuildContext context,
-    CharacterProvider characterProvider,
-  ) {
+  Widget _buildAddNewItem(BuildContext context) {
     return Column(
       children: [
         const Divider(
@@ -128,27 +114,23 @@ class PosessionsSection extends StatelessWidget {
         ),
         const Text('Click to add a Possession'),
         IconButton.filled(
-          onPressed: () => _openCreateDialog(context, characterProvider),
+          onPressed: () => _openCreateDialog(context),
           icon: const Icon(Icons.add),
         ),
       ],
     );
   }
 
-  Widget _buildPossessionActions(
-    BuildContext context,
-    Posession poss,
-    CharacterProvider characterProvider,
-  ) {
+  Widget _buildPossessionActions(BuildContext context, Possession poss) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          onPressed: () => _openEditDialog(poss, context, characterProvider),
+          onPressed: () => _openEditDialog(poss, context),
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
-          onPressed: () => characterProvider.removePossession(poss),
+          onPressed: () => _possessionsProvider.delete(poss.id),
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(

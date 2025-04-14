@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/models/gear/armor.dart';
-import 'package:gurps_character_creation/models/gear/posession.dart';
 
 class CharacterProvider with ChangeNotifier {
   Character _character = Character.empty();
@@ -14,38 +12,11 @@ class CharacterProvider with ChangeNotifier {
   void clearProgress() {
     _character = Character.empty();
     _isDirty = false;
+    notifyListeners();
   }
 
   void updateCharacterMaxPoints(int? newValue) {
     _character.points = newValue ?? _character.points;
-    notifyListeners();
-  }
-
-  void addPossession(Posession poss) {
-    _character.possessions.add(poss);
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void updatePossession(Posession newPossession) {
-    _character.possessions = _character.possessions
-        .map(
-          (Posession poss) =>
-              poss.id == newPossession.id ? newPossession : poss,
-        )
-        .toList();
-
-    _isDirty = true;
-    notifyListeners();
-  }
-
-  void removePossession(Posession possessonToRemove) {
-    _character.possessions.removeWhere(
-      (Posession poss) => poss.id == possessonToRemove.id,
-    );
-
-    _isDirty = true;
     notifyListeners();
   }
 
@@ -58,6 +29,7 @@ class CharacterProvider with ChangeNotifier {
 
   void markDirty() {
     _isDirty = true;
+    notifyListeners();
   }
 
   void loadCharacterFromJson(Map<String, dynamic> jsonData) {

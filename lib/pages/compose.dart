@@ -14,6 +14,8 @@ import 'package:gurps_character_creation/services/character/traits_service.dart'
 import 'package:gurps_character_creation/services/compose_page_sidebar_provider.dart';
 import 'package:gurps_character_creation/services/gear/armor_provider.dart';
 import 'package:gurps_character_creation/services/gear/armor_service.dart';
+import 'package:gurps_character_creation/services/gear/possessions_provider.dart';
+import 'package:gurps_character_creation/services/gear/possessions_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
 import 'package:gurps_character_creation/services/character/personal_info_service.dart';
 import 'package:gurps_character_creation/services/gear/weapon_service.dart';
@@ -65,8 +67,7 @@ class _ComposePageState extends State<ComposePage> {
 
   @override
   Widget build(BuildContext context) {
-    final CharacterProvider characterProvider =
-        Provider.of<CharacterProvider>(context);
+    final characterProvider = context.watch<CharacterProvider>();
 
     final bool isDesktop =
         MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH;
@@ -150,6 +151,12 @@ class _ComposePageState extends State<ComposePage> {
             ArmorService(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (_) => PossessionsProvider(
+            characterProvider,
+            PossessionsService(),
+          ),
+        ),
       ],
       builder: (context, child) {
         final ComposePageSidebarProvider sidebarProvider =
@@ -218,7 +225,11 @@ class _ComposePageState extends State<ComposePage> {
                   character: characterProvider.character,
                   armorProvider: Provider.of<ArmorProvider>(context),
                 ),
-                const PosessionsSection(),
+                PosessionsSection(
+                  character: characterProvider.character,
+                  possessionsProvider:
+                      Provider.of<PossessionsProvider>(context),
+                ),
               ],
             ),
           ),
