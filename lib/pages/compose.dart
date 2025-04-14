@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_difficulty.dart';
+import 'package:gurps_character_creation/services/character/character_io_service.dart';
 import 'package:gurps_character_creation/services/character/providers/attributes_provider.dart';
 import 'package:gurps_character_creation/services/character/attributes_service.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
@@ -98,7 +99,9 @@ class _ComposePageState extends State<ComposePage> {
               });
             },
           ),
-          const SidebarSaveLoadTab(),
+          SidebarSaveLoadTab(
+            characterIOService: CharacterIOService(),
+          ),
           const SidebarSettingsTab(),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/services/character/character_io_service.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/utilities/app_routes.dart';
 import 'package:gurps_character_creation/utilities/common_constants.dart';
@@ -54,17 +55,24 @@ class _SetupPageState extends State<SetupPage> {
                   context.watch<CharacterProvider>().clearProgress();
 
                   Navigator.popAndPushNamed(
-                      context, AppRoutes.SETUP.destination);
+                    context,
+                    AppRoutes.SETUP.destination,
+                  );
                 },
                 child: const Text('proceed'),
               ),
             ),
             Expanded(
               child: TextButton(
-                onPressed: () => Navigator.popAndPushNamed(
-                  context,
-                  AppRoutes.COMPOSE.destination,
-                ),
+                onPressed: () async {
+                  await CharacterIOService().saveCharacterAs(context);
+                  context.read<CharacterProvider>().clearProgress();
+
+                  Navigator.popAndPushNamed(
+                    context,
+                    AppRoutes.COMPOSE.destination,
+                  );
+                },
                 child: const Text('save & continue'),
               ),
             ),
