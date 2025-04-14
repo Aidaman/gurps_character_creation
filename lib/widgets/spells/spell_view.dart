@@ -7,7 +7,7 @@ import 'package:gurps_character_creation/services/character/providers/character_
 import 'package:gurps_character_creation/services/character/providers/spells_provider.dart';
 import 'package:provider/provider.dart';
 
-class SpellView extends StatelessWidget {
+class SpellView extends StatefulWidget {
   final Spell spell;
   final void Function()? onAddClick;
   final void Function()? onRemoveClick;
@@ -21,11 +21,26 @@ class SpellView extends StatelessWidget {
     this.isIncluded,
   });
 
+  @override
+  State<SpellView> createState() => _SpellViewState();
+}
+
+class _SpellViewState extends State<SpellView> {
+  late bool _isExpanded;
+
+  @override
+  void initState() {
+    super.initState();
+    _isExpanded = widget.isIncluded == true;
+  }
+
   bool isAllPrerequisitesSatisfiedOrNull() {
-    bool prerequisitesIsNull = spell.unsatisfitedPrerequisitesList == null;
+    bool prerequisitesIsNull =
+        widget.spell.unsatisfitedPrerequisitesList == null;
 
     return prerequisitesIsNull ||
-        !prerequisitesIsNull && spell.unsatisfitedPrerequisitesList!.isEmpty;
+        !prerequisitesIsNull &&
+            widget.spell.unsatisfitedPrerequisitesList!.isEmpty;
   }
 
   @override
@@ -42,87 +57,101 @@ class SpellView extends StatelessWidget {
     CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 4.0),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: Theme.of(context).colorScheme.secondary,
-            width: 1.0,
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          if (widget.isIncluded != null && widget.isIncluded!) {
+            _isExpanded = !_isExpanded;
+          }
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 4.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Theme.of(context).colorScheme.secondary,
+              width: 1.0,
+            ),
           ),
         ),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Text(
-                  spell.name,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
-              Expanded(
-                child: Text(spell.college.join(', ')),
-              ),
-            ],
-          ),
-          const Gap(4),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: Text('Casting Time: ${spell.castingTime}')),
-              Expanded(child: Text('Casting Cost: ${spell.castingCost}')),
-            ],
-          ),
-          const Gap(4),
-          Row(
-            children: [
-              Expanded(
-                child: Text('Duration: ${spell.duration}'),
-              ),
-              Expanded(
-                child: Text('Maintanence cost: ${spell.maintenanceCost}'),
-              ),
-            ],
-          ),
-          const Gap(4),
-          Row(
-            children: [
-              Expanded(child: Text('Class: ${spell.spellClass}')),
-              Expanded(
-                  child: _generateSkillCostText(context, characterProvider)),
-            ],
-          ),
-          const Gap(4),
-          if (!isAllPrerequisitesSatisfiedOrNull())
+        child: Column(
+          children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: _buildPrerequisitesView(context)),
+                Expanded(
+                  child: Text(
+                    widget.spell.name,
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ),
+                Expanded(
+                  child: Text(widget.spell.college.join(', ')),
+                ),
               ],
             ),
-          const Gap(4),
-          Row(
-            children: [
-              Expanded(
-                child: _buildActions(
-                  iconButtonStyle,
-                  iconButtonConstraints,
-                ),
+            if (_isExpanded) const Gap(4),
+            if (_isExpanded)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                      child: Text('Casting Time: ${widget.spell.castingTime}')),
+                  Expanded(
+                      child: Text('Casting Cost: ${widget.spell.castingCost}')),
+                ],
               ),
-              Expanded(
-                child: _generateAdjustmentButtons(
-                  characterProvider,
-                  iconButtonStyle,
-                  iconButtonConstraints,
-                  context,
-                ),
+            if (_isExpanded) const Gap(4),
+            if (_isExpanded)
+              Row(
+                children: [
+                  Expanded(
+                    child: Text('Duration: ${widget.spell.duration}'),
+                  ),
+                  Expanded(
+                    child: Text(
+                        'Maintanence cost: ${widget.spell.maintenanceCost}'),
+                  ),
+                ],
               ),
-            ],
-          )
-        ],
+            const Gap(4),
+            Row(
+              children: [
+                Expanded(child: Text('Class: ${widget.spell.spellClass}')),
+                Expanded(
+                    child: _generateSkillCostText(context, characterProvider)),
+              ],
+            ),
+            const Gap(4),
+            if (!isAllPrerequisitesSatisfiedOrNull() && _isExpanded)
+              Row(
+                children: [
+                  Expanded(child: _buildPrerequisitesView(context)),
+                ],
+              ),
+            const Gap(4),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActions(
+                    iconButtonStyle,
+                    iconButtonConstraints,
+                  ),
+                ),
+                Expanded(
+                  child: _generateAdjustmentButtons(
+                    characterProvider,
+                    iconButtonStyle,
+                    iconButtonConstraints,
+                    context,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -141,7 +170,7 @@ class SpellView extends StatelessWidget {
       child: Column(
         children: [
           const Text('This spell requires to also include:'),
-          ...spell.unsatisfitedPrerequisitesList!.map(
+          ...widget.spell.unsatisfitedPrerequisitesList!.map(
             (String spellName) => _buildAddPrereqButton(spellName, context),
           )
         ],
@@ -173,16 +202,16 @@ class SpellView extends StatelessWidget {
   ) {
     return Row(
       children: [
-        if (onAddClick != null)
+        if (widget.onAddClick != null)
           IconButton(
-            onPressed: onAddClick,
+            onPressed: widget.onAddClick,
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.add),
           ),
-        if (onRemoveClick != null)
+        if (widget.onRemoveClick != null)
           IconButton(
-            onPressed: onRemoveClick,
+            onPressed: widget.onRemoveClick,
             style: iconButtonStyle,
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.remove),
@@ -199,11 +228,11 @@ class SpellView extends StatelessWidget {
   ) {
     return Row(
       children: [
-        if (isIncluded == true)
+        if (widget.isIncluded == true)
           IconButton(
             onPressed: () {
               context.read<SpellsProvider>().updateSpellLevel(
-                    spell,
+                    widget.spell,
                     doIncrease: true,
                     points: 1,
                   );
@@ -212,11 +241,11 @@ class SpellView extends StatelessWidget {
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.arrow_upward),
           ),
-        if (isIncluded == true)
+        if (widget.isIncluded == true)
           IconButton(
             onPressed: () {
               context.read<SpellsProvider>().updateSpellLevel(
-                    spell,
+                    widget.spell,
                     doIncrease: true,
                     points: 4,
                   );
@@ -225,11 +254,11 @@ class SpellView extends StatelessWidget {
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.keyboard_double_arrow_up_outlined),
           ),
-        if (isIncluded == true)
+        if (widget.isIncluded == true)
           IconButton(
             onPressed: () {
               context.read<SpellsProvider>().updateSpellLevel(
-                    spell,
+                    widget.spell,
                     doIncrease: false,
                     points: 1,
                   );
@@ -238,11 +267,11 @@ class SpellView extends StatelessWidget {
             constraints: iconButtonConstraints,
             icon: const Icon(Icons.arrow_downward),
           ),
-        if (isIncluded == true)
+        if (widget.isIncluded == true)
           IconButton(
             onPressed: () {
               context.read<SpellsProvider>().updateSpellLevel(
-                    spell,
+                    widget.spell,
                     doIncrease: false,
                     points: 4,
                   );
@@ -262,25 +291,25 @@ class SpellView extends StatelessWidget {
     );
 
     int effectiveSkill = mageryIndex == -1
-        ? spell.spellEfficiency(mageryLevel: 0)
-        : spell.spellEfficiency(
+        ? widget.spell.spellEfficiency(mageryLevel: 0)
+        : widget.spell.spellEfficiency(
             mageryLevel: characterProvider.character.traits[mageryIndex].level,
           );
 
     if (effectiveSkill < 0) {
       return Text(
-        'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}$effectiveSkill)',
+        'invested points: ${widget.spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}$effectiveSkill)',
       );
     }
 
     if (effectiveSkill == 0) {
       return Text(
-        'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue})',
+        'invested points: ${widget.spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue})',
       );
     }
 
     return Text(
-      'invested points: ${spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}+$effectiveSkill)',
+      'invested points: ${widget.spell.investedPoints} (${Attributes.IQ.abbreviatedStringValue}+$effectiveSkill)',
     );
   }
 }
