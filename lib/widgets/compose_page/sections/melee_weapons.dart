@@ -6,6 +6,7 @@ import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_editor_dialog.dart';
 
@@ -105,8 +106,7 @@ class MeleeWeaponsSection extends StatelessWidget {
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(
-          onPressed: () => showDialog(
-            context: context,
+          onPressed: () => context.showAdaptiveDialog(
             builder: (context) => HandWeaponDetailsDialog(handWeapon: hw),
           ),
           icon: const Icon(Icons.info_outline),
@@ -203,8 +203,7 @@ class MeleeWeaponsSection extends StatelessWidget {
   }
 
   void _openCreateDialog(BuildContext context) async {
-    HandWeapon? hw = await showDialog<HandWeapon?>(
-      context: context,
+    HandWeapon? hw = await context.showAdaptiveDialog<HandWeapon?>(
       builder: (context) => const HandWeaponEditorDialog(),
     );
 
@@ -214,8 +213,7 @@ class MeleeWeaponsSection extends StatelessWidget {
   }
 
   void _openEditDialog(HandWeapon hw, BuildContext context) async {
-    HandWeapon? newWeapon = await showDialog<HandWeapon?>(
-      context: context,
+    HandWeapon? newWeapon = await context.showAdaptiveDialog<HandWeapon?>(
       builder: (context) => HandWeaponEditorDialog(
         oldHandWeapon: hw,
       ),

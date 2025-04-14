@@ -4,6 +4,7 @@ import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/services/gear/weapon_provider.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/ranged_weapon_editor_dialog.dart';
 import 'package:provider/provider.dart';
@@ -83,8 +84,7 @@ class RangedWeaponsSection extends StatelessWidget {
               icon: const Icon(Icons.remove_outlined),
             ),
             IconButton(
-              onPressed: () => showDialog(
-                context: context,
+              onPressed: () => context.showAdaptiveDialog(
                 builder: (context) => RangedWeaponDetailsDialog(rw: rw),
               ),
               icon: const Icon(Icons.info_outlined),
@@ -155,8 +155,7 @@ class RangedWeaponsSection extends StatelessWidget {
   }
 
   void _openCreateDialog(BuildContext context) async {
-    RangedWeapon? rw = await showDialog<RangedWeapon?>(
-      context: context,
+    RangedWeapon? rw = await context.showAdaptiveDialog<RangedWeapon?>(
       builder: (context) => const RangedWeaponEditorDialog(),
     );
 
@@ -166,8 +165,7 @@ class RangedWeaponsSection extends StatelessWidget {
   }
 
   void _openEditDialog(RangedWeapon rw, BuildContext context) async {
-    RangedWeapon? newWeapon = await showDialog<RangedWeapon?>(
-      context: context,
+    RangedWeapon? newWeapon = await context.showAdaptiveDialog<RangedWeapon?>(
       builder: (context) => RangedWeaponEditorDialog(
         oldRangedWeapon: rw,
       ),

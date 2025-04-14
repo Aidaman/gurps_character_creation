@@ -48,10 +48,7 @@ class TraitView extends StatelessWidget {
               trait.name,
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            content: ConstrainedBox(
-              constraints: defineDialogConstraints(context),
-              child: Text(trait.notes),
-            ),
+            content: Text(trait.notes),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),

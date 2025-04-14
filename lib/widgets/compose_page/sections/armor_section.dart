@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/services/gear/armor_provider.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_editor_dialog.dart';
 
@@ -17,8 +18,7 @@ class ArmorSection extends StatelessWidget {
   });
 
   Future<void> _openCreateDialog(BuildContext context) async {
-    Armor? armor = await showDialog(
-      context: context,
+    Armor? armor = await context.showAdaptiveDialog(
       builder: (context) => const ArmorEditorDialog(),
     );
 
@@ -31,8 +31,7 @@ class ArmorSection extends StatelessWidget {
     Armor armor,
     BuildContext context,
   ) async {
-    Armor? newArmor = await showDialog<Armor?>(
-      context: context,
+    Armor? newArmor = await context.showAdaptiveDialog<Armor?>(
       builder: (context) => ArmorEditorDialog(
         oldArmor: armor,
       ),
@@ -154,8 +153,7 @@ class ArmorSection extends StatelessWidget {
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(
-          onPressed: () => showDialog(
-            context: context,
+          onPressed: () => context.showAdaptiveDialog(
             builder: (context) => ArmorDetailsDialog(armor: armor),
           ),
           icon: const Icon(Icons.info_outline),

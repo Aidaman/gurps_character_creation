@@ -27,18 +27,15 @@ class ChangeAspectPlaceholderNameDialogState
         style: Theme.of(context).textTheme.titleLarge,
       ),
       actions: _buildActions(context),
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: Expanded(
-            child: buildTextFormField(
-          label: widget.placeholder,
-          validator: validateText,
-          onChanged: (String? value) => setState(() {
-            updatedPlaceholder = value;
-          }),
-          context: context,
-        )),
-      ),
+      content: Expanded(
+          child: buildTextFormField(
+        label: widget.placeholder,
+        validator: validateText,
+        onChanged: (String? value) => setState(() {
+          updatedPlaceholder = value;
+        }),
+        context: context,
+      )),
     );
   }
 

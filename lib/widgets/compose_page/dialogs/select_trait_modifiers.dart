@@ -25,11 +25,8 @@ class _SelectTraitModifiersDialogState
       shape: dialogShape,
       actions: _buildActions(context),
       scrollable: true,
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: SingleChildScrollView(
-          child: _buildForm(),
-        ),
+      content: SingleChildScrollView(
+        child: _buildForm(),
       ),
     );
   }

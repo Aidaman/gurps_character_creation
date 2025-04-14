@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/services/gear/possessions_provider.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_detail_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_editor_dialog.dart';
 import 'package:provider/provider.dart';
@@ -82,8 +83,7 @@ class PosessionsSection extends StatelessWidget {
   }
 
   void _openCreateDialog(BuildContext context) async {
-    Possession? newPossession = await showDialog<Possession?>(
-      context: context,
+    Possession? newPossession = await context.showAdaptiveDialog<Possession?>(
       builder: (context) => const PossessionEditorDialog(),
     );
 
@@ -93,8 +93,7 @@ class PosessionsSection extends StatelessWidget {
   }
 
   void _openEditDialog(Possession poss, BuildContext context) async {
-    Possession? newPossession = await showDialog<Possession?>(
-      context: context,
+    Possession? newPossession = await context.showAdaptiveDialog<Possession?>(
       builder: (context) => PossessionEditorDialog(
         oldPossession: poss,
       ),
@@ -134,8 +133,7 @@ class PosessionsSection extends StatelessWidget {
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(
-          onPressed: () => showDialog(
-            context: context,
+          onPressed: () => context.showAdaptiveDialog(
             builder: (context) => PossessionDetailsDialog(possession: poss),
           ),
           icon: const Icon(Icons.info_outline),

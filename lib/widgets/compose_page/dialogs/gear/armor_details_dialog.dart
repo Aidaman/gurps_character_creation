@@ -15,11 +15,8 @@ class ArmorDetailsDialog extends StatelessWidget {
       shape: dialogShape,
       actions: _buildActions(context),
       scrollable: true,
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: SingleChildScrollView(
-          child: _buildBody(context),
-        ),
+      content: SingleChildScrollView(
+        child: _buildBody(context),
       ),
     );
   }

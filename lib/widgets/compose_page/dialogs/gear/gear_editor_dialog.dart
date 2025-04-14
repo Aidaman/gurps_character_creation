@@ -40,12 +40,11 @@ class _GearEditorDialogState extends State<GearEditorDialog> {
       title: _buildTitle(),
       shape: dialogShape,
       actions: widget.actions,
-      scrollable: true,
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: Form(
-          key: widget.formKey,
-          child: SingleChildScrollView(
+      content: Form(
+        key: widget.formKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 12.0),
             child: Column(
               children: [
                 ..._formFields,

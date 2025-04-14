@@ -29,22 +29,19 @@ class _EditCharacterPointsDialogState extends State<EditCharacterPointsDialog> {
     return AlertDialog.adaptive(
       title: const Text('Edit Max Point'),
       shape: dialogShape,
-      content: ConstrainedBox(
-        constraints: defineDialogConstraints(context),
-        child: buildTextFormField(
-          context: context,
-          label: 'Max Points',
-          validator: validateNumber,
-          onChanged: (String? value) {
-            if (value == null) {
-              return;
-            }
+      content: buildTextFormField(
+        context: context,
+        label: 'Max Points',
+        validator: validateNumber,
+        onChanged: (String? value) {
+          if (value == null) {
+            return;
+          }
 
-            setState(() {
-              newPoints = parseInput(value, int.parse) ?? widget.currentPoints;
-            });
-          },
-        ),
+          setState(() {
+            newPoints = parseInput(value, int.parse) ?? widget.currentPoints;
+          });
+        },
       ),
       actions: [
         TextButton(

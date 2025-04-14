@@ -3,6 +3,7 @@ import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
+import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
 
@@ -54,11 +55,11 @@ class AspectsProvider extends ChangeNotifier {
     final RegExpMatch match = placeholderAspectRegex.firstMatch(name)!;
     final String placeholder = match.group(1) ?? '';
 
-    final String? replacedWith = await showDialog<String>(
-      context: context,
+    final String? replacedWith = await context.showAdaptiveDialog<String>(
       builder: (context) => ChangeAspectPlaceholderNameDialog(
         placeholder: placeholder,
       ),
+      isScrollControlled: false,
     );
 
     if (replacedWith == null) {
