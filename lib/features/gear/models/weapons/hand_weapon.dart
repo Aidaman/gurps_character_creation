@@ -172,8 +172,6 @@ class HandWeapon extends Weapon {
         'weight': weight,
         'damage': damage.toJson(),
         'reach': reach.toJson(),
-        'parry': 0,
         'skill': associatedSkillName,
-        'lc': lc,
       };
 }

@@ -287,11 +287,8 @@ class RangedWeapon extends Weapon {
         'name': name,
         'price': price,
         'weight': weight,
-        'accuracy': accuracy,
         'ROF': rateOfFire,
-        'recoil': recoil,
         'range': range.toJson(),
-        'shots': shots.toJson(),
-        'st': st.toJson(),
+        'recoil': recoil,
       };
 }
