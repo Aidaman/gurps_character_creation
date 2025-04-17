@@ -10,22 +10,35 @@ extension AdaptiveDialogShape on BuildContext {
     final double screenWidth = MediaQuery.of(this).size.width;
     final double screenHeight = MediaQuery.of(this).size.height;
 
-    if (MediaQuery.of(this).size.width > MAX_MOBILE_WIDTH) {
+    if (MediaQuery.of(this).size.width > MAX_MOBILE_WIDTH &&
+        MediaQuery.of(this).size.width < MIN_DESKTOP_WIDTH) {
       return showDialog<T>(
         context: this,
         useRootNavigator: useRootNavigator,
         builder: (context) {
-          return Dialog(
-            shape: dialogShape,
-            insetPadding: EdgeInsets.zero,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: screenHeight / 1.5,
-                maxWidth: screenWidth / 3,
-                minWidth: screenWidth / 4,
-              ),
-              child: builder(context),
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: screenWidth * 0.8,
+              maxHeight: screenHeight * 0.8,
             ),
+            child: builder(context),
+          );
+        },
+      );
+    }
+
+    if (MediaQuery.of(this).size.width > MIN_DESKTOP_WIDTH) {
+      return showDialog<T>(
+        context: this,
+        useRootNavigator: useRootNavigator,
+        builder: (context) {
+          return ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: screenWidth * 0.5,
+              maxWidth: screenWidth * 0.75,
+              maxHeight: screenHeight * 0.75,
+            ),
+            child: builder(context),
           );
         },
       );
@@ -38,7 +51,7 @@ extension AdaptiveDialogShape on BuildContext {
       builder: (context) {
         return ConstrainedBox(
           constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
+            maxHeight: MediaQuery.of(context).size.height * 0.95,
           ),
           child: builder(context),
         );

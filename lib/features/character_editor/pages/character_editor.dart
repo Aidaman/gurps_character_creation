@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/character_editor_providers.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';

@@ -138,6 +138,7 @@ Widget buildFormDropdownMenu<T>({
         borderRadius: BorderRadius.circular(16),
       ),
     ),
+    menuMaxHeight: 512,
     validator: validateDropdown,
     items: items,
     onChanged: onChanged,
@@ -162,15 +163,6 @@ Widget buildTextFormField({
     inputFormatters: addTextInputFormatters(keyboardType, allowsDecimal),
     decoration: InputDecoration(
       labelText: label,
-      labelStyle: Theme.of(context).textTheme.labelMedium,
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Theme.of(context).colorScheme.secondary,
-        ),
-      ),
     ),
     initialValue: defaultValue,
     onChanged: onChanged,

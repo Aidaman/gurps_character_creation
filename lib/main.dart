@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
+import 'package:gurps_character_creation/core/themes/widgets/switch.dart';
+import 'package:gurps_character_creation/core/themes/widgets/text_input.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
@@ -54,6 +56,8 @@ class _MyAppState extends State<MyApp> {
           shadow: Color(0x64222222),
         ),
         useMaterial3: true,
+        switchTheme: getSwitchThemeData(context),
+        inputDecorationTheme: getInputDecorationTheme(context),
       ),
       darkTheme: ThemeData(
         colorScheme: const ColorScheme(
@@ -69,6 +73,8 @@ class _MyAppState extends State<MyApp> {
           shadow: Color(0x64222222),
         ),
         useMaterial3: true,
+        switchTheme: getSwitchThemeData(context),
+        inputDecorationTheme: getInputDecorationTheme(context),
       ),
       themeMode: themeProvider.currentTheme,
       routes: Map.fromEntries(
