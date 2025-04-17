@@ -106,9 +106,9 @@ class _SetupPageState extends State<SetupPage> {
               return;
             }
 
-            context.watch<CharacterProvider>().updateCharacterMaxPoints(
-                  parseInput(value, int.parse),
-                );
+            context
+                .read<CharacterProvider>()
+                .updateCharacterMaxPoints(parseInput(value, int.parse));
           },
         ),
         Text(
