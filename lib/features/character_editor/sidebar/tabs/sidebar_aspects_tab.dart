@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
@@ -62,7 +64,7 @@ class SidebarAspectsTab extends StatelessWidget {
           child: switch (filter.sidebarContent) {
             SidebarFutureTypes.TRAITS => _buildList<Trait>(
                 list: Provider.of<AspectsProvider>(context).traits,
-                noDataText: 'noDataText',
+                noDataText: 'No match found',
                 filterPredicate: (item) => context
                     .read<SidebarFilterProvider>()
                     .filterPredicate<Trait>(item),
@@ -77,7 +79,7 @@ class SidebarAspectsTab extends StatelessWidget {
               ),
             SidebarFutureTypes.SKILLS => _buildList<Skill>(
                 list: Provider.of<AspectsProvider>(context).skills,
-                noDataText: 'noDataText',
+                noDataText: 'No match found',
                 filterPredicate: (skl) => context
                     .read<SidebarFilterProvider>()
                     .filterPredicate<Skill>(skl),
@@ -92,7 +94,7 @@ class SidebarAspectsTab extends StatelessWidget {
               ),
             SidebarFutureTypes.MAGIC => _buildList<Spell>(
                 list: Provider.of<AspectsProvider>(context).spells,
-                noDataText: 'noDataText',
+                noDataText: 'No match found',
                 filterPredicate: (spl) => context
                     .read<SidebarFilterProvider>()
                     .filterPredicate<Spell>(spl),

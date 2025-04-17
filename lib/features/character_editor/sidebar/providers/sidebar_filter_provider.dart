@@ -75,20 +75,37 @@ class SidebarFilterProvider with ChangeNotifier {
 
     bool matchesFilterQuerry = nameLowerCase.contains(queryLowerCase);
 
-    if (aspect.runtimeType case Trait) {
-      if (selectedTraitCategories.isEmpty && !matchesFilterQuerry) {
+    if (aspect is Trait) {
+      final Iterable<TraitCategories> categories = selectedTraitCategories
+          .where((TraitCategories cat) => cat != TraitCategories.NONE);
+
+      if (categories.isEmpty && queryLowerCase.isEmpty) {
         return true;
       }
 
-      if (selectedSkillDifficulty.isEmpty) {
-        return matchesFilterQuerry;
+      if (categories.isNotEmpty && queryLowerCase.isEmpty) {
+        return categories.contains(aspect.category);
       }
 
-      return matchesFilterQuerry &&
-          selectedTraitCategories.contains((aspect as Trait).category);
+      return matchesFilterQuerry && categories.contains(aspect.category);
     }
 
-    if (aspect.runtimeType case Skill) {
+    if (aspect is Skill) {
+      final Iterable<SkillDifficulty> difficulties = _selectedSkillDifficulties
+          .where((SkillDifficulty diff) => diff != SkillDifficulty.NONE);
+
+      if (difficulties.isEmpty && queryLowerCase.isEmpty) {
+        return true;
+      }
+
+      if (difficulties.isNotEmpty && queryLowerCase.isEmpty) {
+        return difficulties.contains(aspect.difficulty);
+      }
+
+      return matchesFilterQuerry && difficulties.contains(aspect.difficulty);
+    }
+
+    if (aspect is Spell) {
       if (selectedSkillDifficulty.isEmpty && !matchesFilterQuerry) {
         return true;
       }
@@ -98,22 +115,9 @@ class SidebarFilterProvider with ChangeNotifier {
       }
 
       return matchesFilterQuerry &&
-          selectedSkillDifficulty.contains((aspect as Skill).difficulty);
+          selectedSkillDifficulty.contains(aspect.difficulty);
     }
 
-    if (aspect.runtimeType case Spell) {
-      if (selectedSkillDifficulty.isEmpty && !matchesFilterQuerry) {
-        return true;
-      }
-
-      if (selectedSkillDifficulty.isEmpty) {
-        return matchesFilterQuerry;
-      }
-
-      return matchesFilterQuerry &&
-          selectedSkillDifficulty.contains((aspect as Spell).difficulty);
-    } else {
-      return matchesFilterQuerry;
-    }
+    return matchesFilterQuerry;
   }
 }
