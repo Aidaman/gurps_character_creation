@@ -12,6 +12,37 @@ enum SidebarFutureTypes {
   MAGIC,
 }
 
+extension SidebarFutureTypesStringExtension on SidebarFutureTypes {
+  String get stringValue {
+    switch (this) {
+      case SidebarFutureTypes.TRAITS:
+        return 'Traits';
+      case SidebarFutureTypes.SKILLS:
+        return 'Skills';
+      case SidebarFutureTypes.MAGIC:
+        return 'Magic';
+    }
+  }
+
+  static SidebarFutureTypes fromString(String value) {
+    switch (value.toLowerCase()) {
+      case 'traits':
+      case 'advantages':
+      case 'disadvantages':
+      case 'perks':
+      case 'quirks':
+        return SidebarFutureTypes.TRAITS;
+      case 'skills':
+        return SidebarFutureTypes.SKILLS;
+      case 'magic':
+      case 'spells':
+        return SidebarFutureTypes.MAGIC;
+      default:
+        return SidebarFutureTypes.TRAITS;
+    }
+  }
+}
+
 class SidebarFilterProvider with ChangeNotifier {
   String _filterQuerry = '';
   SidebarFutureTypes _sidebarContent = SidebarFutureTypes.TRAITS;

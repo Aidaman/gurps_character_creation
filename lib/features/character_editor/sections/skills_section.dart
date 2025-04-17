@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/spells/models/spell.dart';
 import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
@@ -8,13 +9,11 @@ import 'package:gurps_character_creation/features/skills/widgets/skill_view.dart
 import 'package:gurps_character_creation/features/spells/widgets/spell_view.dart';
 
 class SkillsSection extends StatelessWidget {
-  final Widget Function(List<String> categories) emptyListBuilder;
   final SkillsProvider skillsProvider;
   final SpellsProvider spellsProvider;
 
   const SkillsSection({
     super.key,
-    required this.emptyListBuilder,
     required this.skillsProvider,
     required this.spellsProvider,
   });
@@ -33,7 +32,7 @@ class SkillsSection extends StatelessWidget {
     );
 
     if (spellsProvider.readAll().isEmpty) {
-      return emptyListBuilder(['spells']);
+      return const EmptyCategoryAction(categories: ['spells']);
     }
 
     return Column(
@@ -56,7 +55,7 @@ class SkillsSection extends StatelessWidget {
     );
 
     if (skills.isEmpty) {
-      return emptyListBuilder(['skills']);
+      return const EmptyCategoryAction(categories: ['skills']);
     }
 
     return Column(

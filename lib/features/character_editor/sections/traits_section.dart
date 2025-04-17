@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
 import 'package:gurps_character_creation/features/traits/models/trait.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
@@ -8,12 +9,10 @@ import 'package:gurps_character_creation/features/character_editor/dialogs/selec
 import 'package:gurps_character_creation/features/traits/widgets/trait_view.dart';
 
 class TraitsSection extends StatelessWidget {
-  final Widget Function(List<String> categories) emptyListBuilder;
   final TraitsProvider _traitsProvider;
 
   const TraitsSection({
     super.key,
-    required this.emptyListBuilder,
     required TraitsProvider traitsProvider,
   }) : _traitsProvider = traitsProvider;
 
@@ -43,8 +42,12 @@ class TraitsSection extends StatelessWidget {
         _traitsProvider.readAllOfMultipleCategories(categories);
 
     if (traits.isEmpty) {
-      return emptyListBuilder(
-        List.from(categories.map((TraitCategories tc) => tc.stringValue)),
+      return EmptyCategoryAction(
+        categories: List.from(
+          categories.map(
+            (TraitCategories tc) => tc.stringValue,
+          ),
+        ),
       );
     }
 

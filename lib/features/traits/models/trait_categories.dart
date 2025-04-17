@@ -44,7 +44,7 @@ extension TraitCategoriesExtension on TraitCategories {
     };
   }
 
-  static TraitCategories? fromString(String category) {
+  static TraitCategories fromString(String category) {
     return switch (category.toLowerCase()) {
       'advantage' => TraitCategories.ADVANTAGE,
       'disadvantage' => TraitCategories.DISADVANTAGE,

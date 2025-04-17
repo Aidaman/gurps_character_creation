@@ -38,23 +38,6 @@ class CharacterEditor extends StatefulWidget {
 }
 
 class _CharacterEditorState extends State<CharacterEditor> {
-  static const double _DIVIDER_INDENT = 32;
-
-  SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
-
-  void _toggleSidebar(
-    BuildContext context, {
-    SidebarFutureTypes? content,
-  }) {
-    if (content != null) {
-      setState(() {
-        sidebarContent = content;
-      });
-    }
-
-    context.read<SidebarProvider>().toggleSidebar(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     final characterProvider = context.watch<CharacterProvider>();
@@ -95,7 +78,8 @@ class _CharacterEditorState extends State<CharacterEditor> {
           floatingActionButton: !isDesktop
               ? Builder(
                   builder: (context) => FloatingActionButton(
-                    onPressed: () => _toggleSidebar(context),
+                    onPressed: () =>
+                        context.read<SidebarProvider>().toggleSidebar(context),
                     child: const Icon(Icons.now_widgets_outlined),
                   ),
                 )
@@ -116,19 +100,9 @@ class _CharacterEditorState extends State<CharacterEditor> {
                   attributesProvider: context.watch<AttributesProvider>(),
                 ),
                 TraitsSection(
-                  emptyListBuilder: (categories) =>
-                      _generateEmptyTraitOrSkillView(
-                    categories,
-                    context.read<SidebarProvider>(),
-                  ),
                   traitsProvider: context.watch<TraitsProvider>(),
                 ),
                 SkillsSection(
-                  emptyListBuilder: (categories) =>
-                      _generateEmptyTraitOrSkillView(
-                    categories,
-                    context.read<SidebarProvider>(),
-                  ),
                   skillsProvider: context.watch<SkillsProvider>(),
                   spellsProvider: context.watch<SpellsProvider>(),
                 ),
@@ -150,47 +124,6 @@ class _CharacterEditorState extends State<CharacterEditor> {
           ),
         );
       },
-    );
-  }
-
-  Widget _generateEmptyTraitOrSkillView(
-    List<String> categories,
-    SidebarProvider sidebarProvider,
-  ) {
-    final String types = categories.join('/');
-
-    SidebarFutureTypes contentType = SidebarFutureTypes.TRAITS;
-
-    if (categories.first.toLowerCase() == 'skills') {
-      contentType = SidebarFutureTypes.SKILLS;
-    }
-
-    if (categories.first.toLowerCase() == 'spells') {
-      contentType = SidebarFutureTypes.MAGIC;
-    }
-
-    return Column(
-      children: [
-        const Divider(
-          endIndent: _DIVIDER_INDENT,
-          indent: _DIVIDER_INDENT,
-        ),
-        Text('Click to add $types '),
-        Padding(
-          padding: const EdgeInsets.only(top: 6),
-          child: Builder(builder: (context) {
-            return IconButton.filled(
-              onPressed: () {
-                _toggleSidebar(
-                  context,
-                  content: contentType,
-                );
-              },
-              icon: const Icon(Icons.add),
-            );
-          }),
-        ),
-      ],
     );
   }
 }
