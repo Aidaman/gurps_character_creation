@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
 import 'package:provider/provider.dart';
 
 class ComposePageLayout extends StatelessWidget {

@@ -11,7 +11,7 @@ import 'package:gurps_character_creation/features/character/providers/personal_i
 import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
-import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
@@ -24,21 +24,21 @@ import 'package:gurps_character_creation/features/character_editor/sections/rang
 import 'package:gurps_character_creation/features/character_editor/sections/skills_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sections/traits_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_aspects_tab.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_save_load_tab.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_settings.dart';
-import 'package:gurps_character_creation/widgets/compose_page/compose_page_layout.dart';
-import 'package:gurps_character_creation/widgets/compose_page/compose_page_responsive_grid.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_aspects_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_save_load_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_settings.dart';
+import 'package:gurps_character_creation/features/character_editor/widgets/compose_page_layout.dart';
+import 'package:gurps_character_creation/features/character_editor/widgets/compose_page_responsive_grid.dart';
 import 'package:provider/provider.dart';
 
-class ComposePage extends StatefulWidget {
-  const ComposePage({super.key});
+class CharacterEditor extends StatefulWidget {
+  const CharacterEditor({super.key});
 
   @override
-  State<ComposePage> createState() => _ComposePageState();
+  State<CharacterEditor> createState() => _CharacterEditorState();
 }
 
-class _ComposePageState extends State<ComposePage> {
+class _CharacterEditorState extends State<CharacterEditor> {
   static const double _DIVIDER_INDENT = 32;
 
   TraitCategories selectedTraitCategory = TraitCategories.NONE;
@@ -79,17 +79,7 @@ class _ComposePageState extends State<ComposePage> {
             content: sidebarContent,
             onTraitFilterButtonPressed: onTraitFilterPressed,
             onSkillFilterButtonPressed: onSkillFilterPressed,
-            onSidebarFutureChange: (SidebarFutureTypes type) {
-              setState(() {
-                if (type == SidebarFutureTypes.TRAITS &&
-                    sidebarContent == SidebarFutureTypes.TRAITS) {
-                  selectedTraitCategory = TraitCategories.NONE;
-                  return;
-                }
-
-                sidebarContent = type;
-              });
-            },
+            onSidebarFutureChange: onSidebarFutureChange,
           ),
           SidebarSaveLoadTab(
             characterIOService: CharacterIOService(),
@@ -171,6 +161,18 @@ class _ComposePageState extends State<ComposePage> {
         );
       },
     );
+  }
+
+  void onSidebarFutureChange(SidebarFutureTypes type) {
+    setState(() {
+      if (type == SidebarFutureTypes.TRAITS &&
+          sidebarContent == SidebarFutureTypes.TRAITS) {
+        selectedTraitCategory = TraitCategories.NONE;
+        return;
+      }
+
+      sidebarContent = type;
+    });
   }
 
   void onTraitFilterPressed(TraitCategories category) {

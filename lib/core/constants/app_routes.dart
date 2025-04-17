@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/pages/settings.dart';
 import 'package:gurps_character_creation/pages/setup.dart';
-import 'package:gurps_character_creation/features/character_editor/pages/compose.dart';
+import 'package:gurps_character_creation/features/character_editor/pages/character_editor.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 
 enum AppRoutes {
@@ -36,7 +36,7 @@ extension Routes on AppRoutes {
   Widget Function(BuildContext) get pageBuilder => switch (this) {
         AppRoutes.HOMEPAGE => (context) => const Homepage(),
         AppRoutes.SETUP => (context) => const SetupPage(),
-        AppRoutes.COMPOSE => (context) => const ComposePage(),
+        AppRoutes.COMPOSE => (context) => const CharacterEditor(),
         AppRoutes.SETTINGS => (context) => const SettingsPage(),
       };
 }

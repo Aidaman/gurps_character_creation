@@ -16,7 +16,7 @@ import 'package:gurps_character_creation/features/spells/providers/spells_provid
 import 'package:gurps_character_creation/features/spells/services/spells_serivce.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
 import 'package:gurps_character_creation/features/traits/services/traits_service.dart';
-import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
 import 'package:provider/provider.dart';
 
 class CharacterEditorProviders extends StatelessWidget {
