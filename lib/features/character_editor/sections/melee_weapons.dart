@@ -7,8 +7,8 @@ import 'package:gurps_character_creation/features/gear/models/legality_class.dar
 import 'package:gurps_character_creation/features/gear/models/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_details_dialog.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/hand_weapon_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/details/hand_weapon_details_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/gear/hand_weapon_editor_dialog.dart';
 
 class MeleeWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;

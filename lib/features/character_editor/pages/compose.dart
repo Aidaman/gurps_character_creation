@@ -1,39 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/features/character_editor/widgets/character_editor_providers.dart';
 import 'package:gurps_character_creation/features/skills/models/skill_difficulty.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
-import 'package:gurps_character_creation/features/character/services/attributes_service.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
-import 'package:gurps_character_creation/features/skills/services/skill_service.dart';
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
-import 'package:gurps_character_creation/features/spells/services/spells_serivce.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
-import 'package:gurps_character_creation/features/traits/services/traits_service.dart';
 import 'package:gurps_character_creation/providers/compose_page_sidebar_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
-import 'package:gurps_character_creation/features/gear/services/armor_service.dart';
 import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
-import 'package:gurps_character_creation/features/gear/services/possessions_service.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
-import 'package:gurps_character_creation/features/character/services/personal_info_service.dart';
-import 'package:gurps_character_creation/features/gear/services/weapon_service.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/armor_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/personal_info_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/attributes_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/melee_weapons.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/possessions_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/ranged_weapons_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/skills_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sections/traits_section.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_aspects_tab.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_save_load_tab.dart';
-import 'package:gurps_character_creation/widgets/compose_page/sidebar/sidebar_settings.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/armor_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/personal_info_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/attributes_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/melee_weapons.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/possessions_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/ranged_weapons_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/skills_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sections/traits_section.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_aspects_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_save_load_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar_settings.dart';
 import 'package:gurps_character_creation/widgets/compose_page/compose_page_layout.dart';
 import 'package:gurps_character_creation/widgets/compose_page/compose_page_responsive_grid.dart';
 import 'package:provider/provider.dart';
@@ -53,8 +46,7 @@ class _ComposePageState extends State<ComposePage> {
   SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
 
   void _toggleSidebar(
-    BuildContext context,
-    ComposePageSidebarProvider sidebarProvider, {
+    BuildContext context, {
     SidebarFutureTypes? content,
   }) {
     if (content != null) {
@@ -63,7 +55,7 @@ class _ComposePageState extends State<ComposePage> {
       });
     }
 
-    sidebarProvider.toggleSidebar(context);
+    context.read<ComposePageSidebarProvider>().toggleSidebar(context);
   }
 
   @override
@@ -107,64 +99,9 @@ class _ComposePageState extends State<ComposePage> {
       ),
     );
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<ComposePageSidebarProvider>(
-          create: (_) => ComposePageSidebarProvider(),
-        ),
-        ChangeNotifierProvider<CharacterWeaponProvider>(
-          create: (_) => CharacterWeaponProvider(
-            characterProvider,
-            WeaponService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PersonalInfoProvider(
-            characterProvider,
-            CharacterPersonalInfoService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => AttributesProvider(
-            characterProvider,
-            CharacterAttributesService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => TraitsProvider(
-            characterProvider,
-            CharacterTraitsService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => SkillsProvider(
-            characterProvider,
-            CharacterSkillsService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => SpellsProvider(
-            characterProvider,
-            CharacterSpellsSerivce(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => ArmorProvider(
-            characterProvider,
-            ArmorService(),
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => PossessionsProvider(
-            characterProvider,
-            PossessionsService(),
-          ),
-        ),
-      ],
+    return CharacterEditorProviders(
+      characterProvider: characterProvider,
       builder: (context, child) {
-        final ComposePageSidebarProvider sidebarProvider =
-            Provider.of<ComposePageSidebarProvider>(context);
-
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: APP_BAR_HEIGHT,
@@ -178,7 +115,7 @@ class _ComposePageState extends State<ComposePage> {
           floatingActionButton: !isDesktop
               ? Builder(
                   builder: (context) => FloatingActionButton(
-                    onPressed: () => _toggleSidebar(context, sidebarProvider),
+                    onPressed: () => _toggleSidebar(context),
                     child: const Icon(Icons.now_widgets_outlined),
                   ),
                 )
@@ -202,7 +139,7 @@ class _ComposePageState extends State<ComposePage> {
                   emptyListBuilder: (categories) =>
                       _generateEmptyTraitOrSkillView(
                     categories,
-                    sidebarProvider,
+                    context.read<ComposePageSidebarProvider>(),
                   ),
                   traitsProvider: context.watch<TraitsProvider>(),
                 ),
@@ -210,7 +147,7 @@ class _ComposePageState extends State<ComposePage> {
                   emptyListBuilder: (categories) =>
                       _generateEmptyTraitOrSkillView(
                     categories,
-                    sidebarProvider,
+                    context.read<ComposePageSidebarProvider>(),
                   ),
                   skillsProvider: context.watch<SkillsProvider>(),
                   spellsProvider: context.watch<SpellsProvider>(),
@@ -292,7 +229,6 @@ class _ComposePageState extends State<ComposePage> {
               onPressed: () {
                 _toggleSidebar(
                   context,
-                  sidebarProvider,
                   content: contentType,
                 );
               },

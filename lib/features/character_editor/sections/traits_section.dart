@@ -4,7 +4,7 @@ import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/traits/models/trait.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/select_trait_modifiers.dart';
 import 'package:gurps_character_creation/features/traits/widgets/trait_view.dart';
 
 class TraitsSection extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:gurps_character_creation/features/aspects/models/aspect.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/spells/models/spell.dart';
 import 'package:gurps_character_creation/features/traits/models/trait.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/change_aspect_placeholder.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/change_aspect_placeholder.dart';
 
 class AspectsProvider extends ChangeNotifier {
   List<Trait> _traits = [];

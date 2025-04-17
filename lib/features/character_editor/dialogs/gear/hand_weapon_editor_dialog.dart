@@ -7,7 +7,7 @@ import 'package:gurps_character_creation/features/gear/models/weapons/hand_weapo
 import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/gear/gear_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {

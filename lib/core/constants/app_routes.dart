@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/pages/settings.dart';
 import 'package:gurps_character_creation/pages/setup.dart';
-import 'package:gurps_character_creation/pages/compose.dart';
+import 'package:gurps_character_creation/features/character_editor/pages/compose.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 
 enum AppRoutes {

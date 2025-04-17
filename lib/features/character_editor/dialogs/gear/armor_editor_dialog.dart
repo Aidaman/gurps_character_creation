@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/gear/models/armor.dart';
 import 'package:gurps_character_creation/features/gear/models/gear.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/gear/gear_editor_dialog.dart';
 
 class ArmorEditorDialog extends StatefulWidget {
   final Armor? oldArmor;

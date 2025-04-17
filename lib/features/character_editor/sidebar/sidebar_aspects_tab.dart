@@ -17,7 +17,7 @@ import 'package:gurps_character_creation/features/skills/providers/skill_provide
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
 import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
-import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/select_trait_modifiers.dart';
 import 'package:gurps_character_creation/features/skills/widgets/skill_view.dart';
 import 'package:gurps_character_creation/features/spells/widgets/spell_view.dart';
 import 'package:gurps_character_creation/features/traits/widgets/trait_view.dart';
