@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
 import 'package:gurps_character_creation/services/gear/possessions_provider.dart';
 import 'package:gurps_character_creation/utilities/dialog_shape.dart';
@@ -9,16 +8,12 @@ import 'package:provider/provider.dart';
 
 class PosessionsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
-
-  final Character _character;
   final PossessionsProvider _possessionsProvider;
 
   const PosessionsSection({
     super.key,
-    required Character character,
     required PossessionsProvider possessionsProvider,
-  })  : _character = character,
-        _possessionsProvider = possessionsProvider;
+  }) : _possessionsProvider = possessionsProvider;
 
   @override
   Widget build(BuildContext context) {

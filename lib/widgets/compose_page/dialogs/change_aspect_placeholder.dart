@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
 
 class ChangeAspectPlaceholderNameDialog extends StatefulWidget {

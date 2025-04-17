@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/services/character/providers/character_provider.dart';
@@ -11,12 +10,10 @@ import 'package:provider/provider.dart';
 
 class RangedWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
-  final Character character;
   final CharacterWeaponProvider weaponProvider;
 
   const RangedWeaponsSection({
     super.key,
-    required this.character,
     required this.weaponProvider,
   });
 

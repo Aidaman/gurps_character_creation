@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
 import 'package:gurps_character_creation/services/gear/armor_provider.dart';
 import 'package:gurps_character_creation/utilities/dialog_shape.dart';
@@ -9,11 +8,9 @@ import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor
 class ArmorSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
   final ArmorProvider armorProvider;
-  final Character character;
 
   const ArmorSection({
     super.key,
-    required this.character,
     required this.armorProvider,
   });
 

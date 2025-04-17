@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ import 'package:gurps_character_creation/services/character/providers/skill_prov
 import 'package:gurps_character_creation/services/character/providers/spells_provider.dart';
 import 'package:gurps_character_creation/services/character/providers/traits_provider.dart';
 import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/widgets/button/%20labeled_icon_button.dart';
+import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/select_trait_modifiers.dart';
 import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
 import 'package:gurps_character_creation/widgets/spells/spell_view.dart';

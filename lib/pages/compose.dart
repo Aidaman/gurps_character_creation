@@ -193,11 +193,10 @@ class _ComposePageState extends State<ComposePage> {
             bodyContent: ComposePageResponsiveGrid(
               children: [
                 PersonalInfoSection(
-                  personalInfoProvider:
-                      Provider.of<PersonalInfoProvider>(context),
+                  personalInfoProvider: context.watch<PersonalInfoProvider>(),
                 ),
                 AttributesSection(
-                  attributesProvider: Provider.of<AttributesProvider>(context),
+                  attributesProvider: context.watch<AttributesProvider>(),
                 ),
                 TraitsSection(
                   emptyListBuilder: (categories) =>
@@ -205,7 +204,7 @@ class _ComposePageState extends State<ComposePage> {
                     categories,
                     sidebarProvider,
                   ),
-                  traitsProvider: Provider.of<TraitsProvider>(context),
+                  traitsProvider: context.watch<TraitsProvider>(),
                 ),
                 SkillsSection(
                   emptyListBuilder: (categories) =>
@@ -213,25 +212,21 @@ class _ComposePageState extends State<ComposePage> {
                     categories,
                     sidebarProvider,
                   ),
-                  skillsProvider: Provider.of<SkillsProvider>(context),
-                  spellsProvider: Provider.of<SpellsProvider>(context),
+                  skillsProvider: context.watch<SkillsProvider>(),
+                  spellsProvider: context.watch<SpellsProvider>(),
                 ),
                 MeleeWeaponsSection(
                   character: characterProvider.character,
-                  weaponProvider: Provider.of<CharacterWeaponProvider>(context),
+                  weaponProvider: context.watch<CharacterWeaponProvider>(),
                 ),
                 RangedWeaponsSection(
-                  character: characterProvider.character,
-                  weaponProvider: Provider.of<CharacterWeaponProvider>(context),
+                  weaponProvider: context.watch<CharacterWeaponProvider>(),
                 ),
                 ArmorSection(
-                  character: characterProvider.character,
-                  armorProvider: Provider.of<ArmorProvider>(context),
+                  armorProvider: context.watch<ArmorProvider>(),
                 ),
                 PosessionsSection(
-                  character: characterProvider.character,
-                  possessionsProvider:
-                      Provider.of<PossessionsProvider>(context),
+                  possessionsProvider: context.watch<PossessionsProvider>(),
                 ),
               ],
             ),

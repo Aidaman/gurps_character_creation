@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/services/character/character_io_service.dart';
@@ -113,8 +115,8 @@ class _SetupPageState extends State<SetupPage> {
           'Define amount of points you can invest in your character',
           style: Theme.of(context).textTheme.labelSmall,
         ),
-        const Gap(32),
-        TextButton(
+        const Gap(8),
+        FilledButton.icon(
           onPressed: () {
             if (_formkey.currentState!.validate()) {
               Navigator.popAndPushNamed(
@@ -123,8 +125,19 @@ class _SetupPageState extends State<SetupPage> {
               );
             }
           },
-          child: const Text('continue'),
-        )
+          iconAlignment: IconAlignment.end,
+          icon: const Icon(Icons.arrow_forward),
+          label: const Text('continue'),
+        ),
+        const Gap(32),
+        TextButton.icon(
+          onPressed: () {},
+          label: Text(
+            'Load existing character',
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          icon: const Icon(Icons.upload_file_outlined),
+        ),
       ],
     );
   }

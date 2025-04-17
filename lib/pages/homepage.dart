@@ -41,7 +41,7 @@ class Homepage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, AppRoutes.SETUP.destination);
               },
-              child: const Text('Click here to Compose a Character Sheet'),
+              child: const Text('Compose a Character Sheet'),
             ),
           ],
         ),
