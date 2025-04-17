@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
-import 'package:gurps_character_creation/models/gear/armor.dart';
-import 'package:gurps_character_creation/providers/character/gear/armor_provider.dart';
+import 'package:gurps_character_creation/features/gear/models/armor.dart';
+import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_details_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/armor_editor_dialog.dart';
 

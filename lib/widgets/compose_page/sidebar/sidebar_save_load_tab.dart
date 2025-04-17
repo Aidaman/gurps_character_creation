@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/services/character/character_io_service.dart';
+import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 
 class SidebarSaveLoadTab extends StatelessWidget {
   final CharacterIOService characterIOService;

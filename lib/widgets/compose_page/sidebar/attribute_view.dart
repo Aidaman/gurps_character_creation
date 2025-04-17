@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/models/aspects/attributes.dart';
+import 'package:gurps_character_creation/features/character/models/attributes.dart';
 
 class AttributeView extends StatelessWidget {
   final Attributes attribute;

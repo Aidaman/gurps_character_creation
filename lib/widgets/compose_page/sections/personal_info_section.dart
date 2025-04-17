@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/providers/character/personal_info_provider.dart';
+import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 
 class _PersonalInfoField {
   final String label;

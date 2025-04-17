@@ -4,8 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/providers/character/character_provider.dart';
-import 'package:gurps_character_creation/providers/global/theme_provider.dart';
+import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
+import 'package:gurps_character_creation/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class SidebarSettingsTab extends StatelessWidget {

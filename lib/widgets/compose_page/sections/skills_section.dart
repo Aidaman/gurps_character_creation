@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
-import 'package:gurps_character_creation/models/aspects/spells/spell.dart';
-import 'package:gurps_character_creation/providers/character/skill_provider.dart';
-import 'package:gurps_character_creation/providers/character/spells_provider.dart';
-import 'package:gurps_character_creation/widgets/skills/skill_view.dart';
-import 'package:gurps_character_creation/widgets/spells/spell_view.dart';
+import 'package:gurps_character_creation/features/skills/models/skill.dart';
+import 'package:gurps_character_creation/features/spells/models/spell.dart';
+import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
+import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
+import 'package:gurps_character_creation/features/skills/widgets/skill_view.dart';
+import 'package:gurps_character_creation/features/spells/widgets/spell_view.dart';
 
 class SkillsSection extends StatelessWidget {
   final Widget Function(List<String> categories) emptyListBuilder;
