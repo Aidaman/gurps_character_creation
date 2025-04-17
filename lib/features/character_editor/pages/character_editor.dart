@@ -110,6 +110,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
                   weaponProvider: context.watch<CharacterWeaponProvider>(),
                 ),
                 RangedWeaponsSection(
+                  character: characterProvider.character,
                   weaponProvider: context.watch<CharacterWeaponProvider>(),
                 ),
                 ArmorSection(
