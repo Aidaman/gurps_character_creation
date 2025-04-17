@@ -14,7 +14,7 @@ SwitchThemeData getSwitchThemeData(BuildContext context) => SwitchThemeData(
         if (states.contains(WidgetState.disabled)) {
           return Theme.of(context).colorScheme.onPrimary;
         }
-        return Theme.of(context).colorScheme.onSecondary;
+        return Theme.of(context).colorScheme.onPrimary;
       }),
       trackColor: WidgetStateColor.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
@@ -32,6 +32,9 @@ SwitchThemeData getSwitchThemeData(BuildContext context) => SwitchThemeData(
         if (states.contains(WidgetState.disabled)) {
           return const Icon(Icons.close);
         }
-        return const Icon(Icons.close);
+        return Icon(
+          Icons.close,
+          color: Theme.of(context).colorScheme.primary,
+        );
       }),
     );
