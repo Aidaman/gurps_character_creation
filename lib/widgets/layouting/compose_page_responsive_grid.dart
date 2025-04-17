@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 
 class ComposePageResponsiveGrid extends StatelessWidget {
   final List<Widget> children;
-  // static const double _SEPARATOR_HEIGHT = 1;
-  // static const double _SEPARATOR_INDENT = 16;
 
   const ComposePageResponsiveGrid({
     super.key,

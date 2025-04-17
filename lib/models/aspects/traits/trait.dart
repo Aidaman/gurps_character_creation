@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/models/aspects/aspect.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill_bonus.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_modifier.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
 import 'package:uuid/uuid.dart';
 
 List<Trait> traitFromJson(String str) => List<Trait>.from(

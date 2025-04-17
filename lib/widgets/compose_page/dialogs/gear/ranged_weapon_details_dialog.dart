@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/models/gear/legality_class.dart';
 import 'package:gurps_character_creation/models/gear/weapons/ranged_weapon.dart';
-import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 
 class RangedWeaponDetailsDialog extends StatelessWidget {
   final RangedWeapon rw;

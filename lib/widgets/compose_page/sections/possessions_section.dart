@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/services/gear/possessions_provider.dart';
-import 'package:gurps_character_creation/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/providers/character/gear/possessions_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_detail_dialog.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/possession_editor_dialog.dart';
 import 'package:provider/provider.dart';

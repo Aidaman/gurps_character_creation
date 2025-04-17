@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/models/gear/gear.dart';
-import 'package:gurps_character_creation/utilities/dialog_shape.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
 
 class GearEditorDialog extends StatefulWidget {
   final GlobalKey<FormState> formKey;

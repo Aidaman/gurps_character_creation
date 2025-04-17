@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:gurps_character_creation/utilities/app_routes.dart';
-import 'package:gurps_character_creation/utilities/common_constants.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/constants/app_routes.dart';
+import 'package:gurps_character_creation/core/constants/common_constants.dart';
+import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});

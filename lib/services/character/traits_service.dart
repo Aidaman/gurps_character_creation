@@ -1,7 +1,7 @@
 import 'package:gurps_character_creation/models/aspects/traits/trait.dart';
 import 'package:gurps_character_creation/models/aspects/traits/trait_categories.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/services/character_crud_service.dart';
+import 'package:gurps_character_creation/services/character/character_crud_service.dart';
 
 class CharacterTraitsService extends CharacterCRUDService<Trait> {
   @override

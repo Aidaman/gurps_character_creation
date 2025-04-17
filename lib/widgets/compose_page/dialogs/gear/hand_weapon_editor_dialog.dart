@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/models/gear/gear.dart';
 import 'package:gurps_character_creation/models/gear/weapons/damage_type.dart';
 import 'package:gurps_character_creation/models/gear/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/models/gear/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
-import 'package:gurps_character_creation/services/character/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
+import 'package:gurps_character_creation/providers/character/aspects_provider.dart';
 import 'package:gurps_character_creation/widgets/compose_page/dialogs/gear/gear_editor_dialog.dart';
 import 'package:provider/provider.dart';
 

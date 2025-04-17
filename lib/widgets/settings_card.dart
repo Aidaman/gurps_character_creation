@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 
 class SettingsCard extends StatelessWidget {
   final Widget child;

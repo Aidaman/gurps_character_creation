@@ -1,6 +1,6 @@
 import 'package:gurps_character_creation/models/character/character.dart';
 import 'package:gurps_character_creation/models/gear/posession.dart';
-import 'package:gurps_character_creation/services/character_crud_service.dart';
+import 'package:gurps_character_creation/services/character/character_crud_service.dart';
 
 class PossessionsService extends CharacterCRUDService<Possession> {
   @override

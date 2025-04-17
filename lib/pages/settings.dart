@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
-import 'package:gurps_character_creation/services/theme_provider.dart';
-import 'package:gurps_character_creation/utilities/common_constants.dart';
-import 'package:gurps_character_creation/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/utilities/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/constants/common_constants.dart';
+import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
+import 'package:gurps_character_creation/providers/global/theme_provider.dart';
 import 'package:gurps_character_creation/widgets/settings_card.dart';
 import 'package:provider/provider.dart';
 

@@ -1,6 +1,6 @@
 import 'package:gurps_character_creation/models/aspects/skills/skill.dart';
 import 'package:gurps_character_creation/models/character/character.dart';
-import 'package:gurps_character_creation/services/character_crud_service.dart';
+import 'package:gurps_character_creation/services/character/character_crud_service.dart';
 
 class CharacterSkillsService extends CharacterCRUDService<Skill> {
   @override

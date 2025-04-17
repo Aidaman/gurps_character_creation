@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/models/gear/armor.dart';
-import 'package:gurps_character_creation/utilities/dialog_shape.dart';
 
 class ArmorDetailsDialog extends StatelessWidget {
   final Armor armor;
