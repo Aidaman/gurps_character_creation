@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_provider.dart';
 import 'package:provider/provider.dart';
 
 class ComposePageLayout extends StatelessWidget {
@@ -16,8 +16,7 @@ class ComposePageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ComposePageSidebarProvider sidebarProvider =
-        Provider.of<ComposePageSidebarProvider>(context);
+    SidebarProvider sidebarProvider = Provider.of<SidebarProvider>(context);
 
     double sidebarWidth = MediaQuery.of(context).size.width * 0.32;
     bool isDesktop = MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH;
@@ -43,7 +42,7 @@ class ComposePageLayout extends StatelessWidget {
     );
   }
 
-  Widget _buildToggleSidebarButton(ComposePageSidebarProvider sidebarProvider) {
+  Widget _buildToggleSidebarButton(SidebarProvider sidebarProvider) {
     bool isHovered = false;
 
     return StatefulBuilder(builder: (context, setState) {

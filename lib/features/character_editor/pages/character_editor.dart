@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/character_editor_providers.dart';
-import 'package:gurps_character_creation/features/skills/models/skill_difficulty.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
-import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
-import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
@@ -41,8 +40,6 @@ class CharacterEditor extends StatefulWidget {
 class _CharacterEditorState extends State<CharacterEditor> {
   static const double _DIVIDER_INDENT = 32;
 
-  TraitCategories selectedTraitCategory = TraitCategories.NONE;
-  SkillDifficulty selectedSkillDifficulty = SkillDifficulty.NONE;
   SidebarFutureTypes sidebarContent = SidebarFutureTypes.TRAITS;
 
   void _toggleSidebar(
@@ -55,7 +52,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
       });
     }
 
-    context.read<ComposePageSidebarProvider>().toggleSidebar(context);
+    context.read<SidebarProvider>().toggleSidebar(context);
   }
 
   @override
@@ -73,14 +70,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
           Icons.settings_outlined,
         ],
         tabs: [
-          SidebarAspectsTab(
-            selectedSkillDifficulty: selectedSkillDifficulty,
-            selectedTraitCategory: selectedTraitCategory,
-            content: sidebarContent,
-            onTraitFilterButtonPressed: onTraitFilterPressed,
-            onSkillFilterButtonPressed: onSkillFilterPressed,
-            onSidebarFutureChange: onSidebarFutureChange,
-          ),
+          const SidebarAspectsTab(),
           SidebarSaveLoadTab(
             characterIOService: CharacterIOService(),
           ),
@@ -129,7 +119,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
                   emptyListBuilder: (categories) =>
                       _generateEmptyTraitOrSkillView(
                     categories,
-                    context.read<ComposePageSidebarProvider>(),
+                    context.read<SidebarProvider>(),
                   ),
                   traitsProvider: context.watch<TraitsProvider>(),
                 ),
@@ -137,7 +127,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
                   emptyListBuilder: (categories) =>
                       _generateEmptyTraitOrSkillView(
                     categories,
-                    context.read<ComposePageSidebarProvider>(),
+                    context.read<SidebarProvider>(),
                   ),
                   skillsProvider: context.watch<SkillsProvider>(),
                   spellsProvider: context.watch<SpellsProvider>(),
@@ -163,47 +153,9 @@ class _CharacterEditorState extends State<CharacterEditor> {
     );
   }
 
-  void onSidebarFutureChange(SidebarFutureTypes type) {
-    setState(() {
-      if (type == SidebarFutureTypes.TRAITS &&
-          sidebarContent == SidebarFutureTypes.TRAITS) {
-        selectedTraitCategory = TraitCategories.NONE;
-        return;
-      }
-
-      sidebarContent = type;
-    });
-  }
-
-  void onTraitFilterPressed(TraitCategories category) {
-    setState(() {
-      sidebarContent = SidebarFutureTypes.TRAITS;
-
-      if (selectedTraitCategory == category) {
-        selectedTraitCategory = TraitCategories.NONE;
-        return;
-      }
-
-      selectedTraitCategory = category;
-    });
-  }
-
-  void onSkillFilterPressed(SkillDifficulty category) {
-    setState(() {
-      sidebarContent = SidebarFutureTypes.SKILLS;
-
-      if (selectedSkillDifficulty == category) {
-        selectedSkillDifficulty = SkillDifficulty.NONE;
-        return;
-      }
-
-      selectedSkillDifficulty = category;
-    });
-  }
-
   Widget _generateEmptyTraitOrSkillView(
     List<String> categories,
-    ComposePageSidebarProvider sidebarProvider,
+    SidebarProvider sidebarProvider,
   ) {
     final String types = categories.join('/');
 

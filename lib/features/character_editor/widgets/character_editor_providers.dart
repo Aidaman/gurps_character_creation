@@ -4,6 +4,7 @@ import 'package:gurps_character_creation/features/character/providers/character_
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/character/services/attributes_service.dart';
 import 'package:gurps_character_creation/features/character/services/personal_info_service.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
@@ -16,7 +17,7 @@ import 'package:gurps_character_creation/features/spells/providers/spells_provid
 import 'package:gurps_character_creation/features/spells/services/spells_serivce.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
 import 'package:gurps_character_creation/features/traits/services/traits_service.dart';
-import 'package:gurps_character_creation/features/character_editor/providers/compose_page_sidebar_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_provider.dart';
 import 'package:provider/provider.dart';
 
 class CharacterEditorProviders extends StatelessWidget {
@@ -34,8 +35,11 @@ class CharacterEditorProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ComposePageSidebarProvider>(
-          create: (_) => ComposePageSidebarProvider(),
+        ChangeNotifierProvider<SidebarProvider>(
+          create: (_) => SidebarProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SidebarFilterProvider(),
         ),
         ChangeNotifierProvider<CharacterWeaponProvider>(
           create: (_) => CharacterWeaponProvider(
