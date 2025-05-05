@@ -37,7 +37,10 @@ class CharacterIOService {
     }
   }
 
-  Future saveCharacterAs(BuildContext context) async {
+  /// Saves a character to a user-defined location.
+  /// return false on error
+  /// return true on success
+  Future<bool> saveCharacterAs(BuildContext context) async {
     final Character char = context.read<CharacterProvider>().character;
 
     try {
@@ -48,7 +51,7 @@ class CharacterIOService {
       );
 
       if (outputFile == null) {
-        return;
+        return false;
       }
 
       final File file = File(outputFile);
@@ -66,9 +69,14 @@ class CharacterIOService {
 
       rethrow;
     }
+
+    return true;
   }
 
-  Future loadCharacter(BuildContext context) async {
+  /// Loads a character from a JSON file.
+  /// return false on error
+  /// return true on success
+  Future<bool> loadCharacter(BuildContext context) async {
     final CharacterProvider characterProvider =
         context.read<CharacterProvider>();
 
@@ -88,6 +96,8 @@ class CharacterIOService {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Character loaded successfully!')),
         );
+
+        return true;
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -98,5 +108,7 @@ class CharacterIOService {
 
       rethrow;
     }
+
+    return false;
   }
 }

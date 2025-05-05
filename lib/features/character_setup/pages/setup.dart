@@ -1,12 +1,11 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
+import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
+import 'package:gurps_character_creation/features/character_setup/prompts/warning_prompt.dart';
 import 'package:gurps_character_creation/widgets/settings_card.dart';
 import 'package:provider/provider.dart';
 
@@ -19,70 +18,6 @@ class SetupPage extends StatefulWidget {
 
 class _SetupPageState extends State<SetupPage> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
-  Widget _buildWarningPrompt(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Warning',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const Gap(32),
-        Text(
-          'It seems you have an unfinished work. Would you want start anew without saving?',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        const Gap(16),
-        Row(
-          children: [
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.error,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('return'),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Theme.of(context).colorScheme.error,
-                ),
-                onPressed: () {
-                  context.watch<CharacterProvider>().clearProgress();
-
-                  Navigator.popAndPushNamed(
-                    context,
-                    AppRoutes.SETUP.destination,
-                  );
-                },
-                child: const Text('proceed'),
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                onPressed: () async {
-                  await CharacterIOService().saveCharacterAs(context);
-                  context.read<CharacterProvider>().clearProgress();
-
-                  Navigator.popAndPushNamed(
-                    context,
-                    AppRoutes.COMPOSE.destination,
-                  );
-                },
-                child: const Text('save & continue'),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
 
   Widget _buildNewCharacterPrompt(BuildContext context) {
     return Column(
@@ -131,7 +66,11 @@ class _SetupPageState extends State<SetupPage> {
         ),
         const Gap(32),
         TextButton.icon(
-          onPressed: () {},
+          onPressed: () async {
+            if (await CharacterIOService().loadCharacter(context)) {
+              Navigator.popAndPushNamed(context, AppRoutes.COMPOSE.destination);
+            }
+          },
           label: Text(
             'Load existing character',
             style: Theme.of(context).textTheme.labelSmall,
@@ -150,8 +89,7 @@ class _SetupPageState extends State<SetupPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.popAndPushNamed(
-                  context, AppRoutes.SETTINGS.destination);
+              Navigator.pushNamed(context, AppRoutes.SETTINGS.destination);
             },
             icon: const Icon(
               Icons.settings_outlined,
@@ -164,7 +102,7 @@ class _SetupPageState extends State<SetupPage> {
         child: Center(
           child: SettingsCard(
             child: context.watch<CharacterProvider>().isDirty
-                ? _buildWarningPrompt(context)
+                ? const WarningPrompt()
                 : _buildNewCharacterPrompt(context),
           ),
         ),
