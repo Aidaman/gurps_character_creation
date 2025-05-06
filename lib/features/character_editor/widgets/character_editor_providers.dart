@@ -4,7 +4,8 @@ import 'package:gurps_character_creation/features/character/providers/character_
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/character/services/attributes_service.dart';
 import 'package:gurps_character_creation/features/character/services/personal_info_service.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
@@ -39,7 +40,10 @@ class CharacterEditorProviders extends StatelessWidget {
           create: (_) => SidebarProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) => SidebarFilterProvider(),
+          create: (_) => SidebarAspectsFilterProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SidebarEquipmentFilterProvider(),
         ),
         ChangeNotifierProvider<CharacterWeaponProvider>(
           create: (_) => CharacterWeaponProvider(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/equipment_tab.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/character_editor_providers.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
@@ -22,9 +23,9 @@ import 'package:gurps_character_creation/features/character_editor/sections/rang
 import 'package:gurps_character_creation/features/character_editor/sections/skills_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sections/traits_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/sidebar.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_aspects_tab.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_save_load_tab.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/sidebar_settings.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/aspects_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/save_load_tab.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/settings.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/compose_page_layout.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/compose_page_responsive_grid.dart';
 import 'package:provider/provider.dart';
@@ -47,12 +48,14 @@ class _CharacterEditorState extends State<CharacterEditor> {
     final Widget sidebar = SafeArea(
       child: Sidebar(
         actions: const [
-          Icons.widgets_outlined,
+          Icons.psychology,
+          Icons.wallet_travel_outlined,
           Icons.save,
           Icons.settings_outlined,
         ],
         tabs: [
           const SidebarAspectsTab(),
+          const SidebarEquipmentTab(),
           SidebarSaveLoadTab(
             characterIOService: CharacterIOService(),
           ),

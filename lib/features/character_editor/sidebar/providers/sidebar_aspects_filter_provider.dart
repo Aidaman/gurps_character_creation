@@ -6,46 +6,42 @@ import 'package:gurps_character_creation/features/spells/models/spell.dart';
 import 'package:gurps_character_creation/features/traits/models/trait.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 
-enum SidebarFutureTypes {
-  TRAITS,
-  SKILLS,
-  MAGIC,
-}
+enum AspectsFutureTypes { TRAITS, SKILLS, MAGIC }
 
-extension SidebarFutureTypesStringExtension on SidebarFutureTypes {
+extension SidebarFutureTypesStringExtension on AspectsFutureTypes {
   String get stringValue {
     switch (this) {
-      case SidebarFutureTypes.TRAITS:
+      case AspectsFutureTypes.TRAITS:
         return 'Traits';
-      case SidebarFutureTypes.SKILLS:
+      case AspectsFutureTypes.SKILLS:
         return 'Skills';
-      case SidebarFutureTypes.MAGIC:
+      case AspectsFutureTypes.MAGIC:
         return 'Magic';
     }
   }
 
-  static SidebarFutureTypes fromString(String value) {
+  static AspectsFutureTypes fromString(String value) {
     switch (value.toLowerCase()) {
       case 'traits':
       case 'advantages':
       case 'disadvantages':
       case 'perks':
       case 'quirks':
-        return SidebarFutureTypes.TRAITS;
+        return AspectsFutureTypes.TRAITS;
       case 'skills':
-        return SidebarFutureTypes.SKILLS;
+        return AspectsFutureTypes.SKILLS;
       case 'magic':
       case 'spells':
-        return SidebarFutureTypes.MAGIC;
+        return AspectsFutureTypes.MAGIC;
       default:
-        return SidebarFutureTypes.TRAITS;
+        return AspectsFutureTypes.TRAITS;
     }
   }
 }
 
-class SidebarFilterProvider with ChangeNotifier {
+class SidebarAspectsFilterProvider with ChangeNotifier {
   String _filterQuerry = '';
-  SidebarFutureTypes _sidebarContent = SidebarFutureTypes.TRAITS;
+  AspectsFutureTypes _sidebarContent = AspectsFutureTypes.TRAITS;
   List<TraitCategories> _selectedTraitCategories = [];
   List<SkillDifficulty> _selectedSkillDifficulties = [];
 
@@ -53,9 +49,9 @@ class SidebarFilterProvider with ChangeNotifier {
   List<TraitCategories> get selectedTraitCategories => _selectedTraitCategories;
   List<SkillDifficulty> get selectedSkillDifficulty =>
       _selectedSkillDifficulties;
-  SidebarFutureTypes get sidebarContent => _sidebarContent;
+  AspectsFutureTypes get sidebarContent => _sidebarContent;
 
-  set sidebarContent(SidebarFutureTypes type) {
+  set sidebarContent(AspectsFutureTypes type) {
     _sidebarContent = type;
     notifyListeners();
   }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_provider.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_categories.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +14,8 @@ class EmptyCategoryAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final String types = categories.join('/');
     final SidebarProvider sidebarProvider = context.read<SidebarProvider>();
-    final SidebarFilterProvider sidebarFilter =
-        context.read<SidebarFilterProvider>();
+    final SidebarAspectsFilterProvider sidebarFilter =
+        context.read<SidebarAspectsFilterProvider>();
 
     return Column(
       children: [
@@ -34,12 +34,12 @@ class EmptyCategoryAction extends StatelessWidget {
                 sidebarProvider.toggleSidebar(context);
               }
 
-              SidebarFutureTypes sidebarContent =
+              AspectsFutureTypes sidebarContent =
                   SidebarFutureTypesStringExtension.fromString(types);
 
               sidebarFilter.sidebarContent = sidebarContent;
 
-              if (sidebarContent == SidebarFutureTypes.TRAITS) {
+              if (sidebarContent == AspectsFutureTypes.TRAITS) {
                 categories
                     .map((String c) => setTraitCategories(c, sidebarFilter))
                     .toList();
@@ -52,7 +52,8 @@ class EmptyCategoryAction extends StatelessWidget {
     );
   }
 
-  void setTraitCategories(String c, SidebarFilterProvider sidebarFilter) {
+  void setTraitCategories(
+      String c, SidebarAspectsFilterProvider sidebarFilter) {
     TraitCategories category = TraitCategoriesExtension.fromString(c);
 
     if (!sidebarFilter.selectedTraitCategories.contains(category)) {

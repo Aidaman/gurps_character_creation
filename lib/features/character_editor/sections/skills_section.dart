@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/spells/models/spell.dart';
@@ -34,7 +34,7 @@ class SkillsSection extends StatelessWidget {
 
     if (spellsProvider.readAll().isEmpty) {
       return EmptyCategoryAction(
-        categories: [SidebarFutureTypes.MAGIC.stringValue],
+        categories: [AspectsFutureTypes.MAGIC.stringValue],
       );
     }
 
@@ -59,7 +59,7 @@ class SkillsSection extends StatelessWidget {
 
     if (skills.isEmpty) {
       return EmptyCategoryAction(categories: [
-        SidebarFutureTypes.SKILLS.stringValue,
+        AspectsFutureTypes.SKILLS.stringValue,
       ]);
     }
 

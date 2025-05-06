@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/models/aspect.dart';
-import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_filter_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
+import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
 import 'package:gurps_character_creation/features/skills/models/skill_difficulty.dart';
 import 'package:gurps_character_creation/features/traits/models/trait_modifier.dart';
@@ -26,15 +27,10 @@ import 'package:provider/provider.dart';
 class SidebarAspectsTab extends StatelessWidget {
   const SidebarAspectsTab({super.key});
 
-  static const double _FILTER_SPACING = 24.0;
-  static const double _FILTER_RUN_SPACING = 0.0;
-
-  static const double SIDEBAR_HORIZONTAL_PADDING = 8.0;
-  static const double SIDEBAR_VERTICAL_PADDING = 4.0;
-
   @override
   Widget build(BuildContext context) {
-    SidebarFilterProvider filter = context.watch<SidebarFilterProvider>();
+    SidebarAspectsFilterProvider filter =
+        context.watch<SidebarAspectsFilterProvider>();
 
     return Column(
       children: [
@@ -62,11 +58,11 @@ class SidebarAspectsTab extends StatelessWidget {
         ),
         Expanded(
           child: switch (filter.sidebarContent) {
-            SidebarFutureTypes.TRAITS => _buildList<Trait>(
+            AspectsFutureTypes.TRAITS => _buildList<Trait>(
                 list: Provider.of<AspectsProvider>(context).traits,
                 noDataText: 'No match found',
                 filterPredicate: (item) => context
-                    .read<SidebarFilterProvider>()
+                    .read<SidebarAspectsFilterProvider>()
                     .filterPredicate<Trait>(item),
                 context: context,
                 itemBuilder: (item) => TraitView(
@@ -77,11 +73,11 @@ class SidebarAspectsTab extends StatelessWidget {
                   },
                 ),
               ),
-            SidebarFutureTypes.SKILLS => _buildList<Skill>(
+            AspectsFutureTypes.SKILLS => _buildList<Skill>(
                 list: Provider.of<AspectsProvider>(context).skills,
                 noDataText: 'No match found',
                 filterPredicate: (skl) => context
-                    .read<SidebarFilterProvider>()
+                    .read<SidebarAspectsFilterProvider>()
                     .filterPredicate<Skill>(skl),
                 context: context,
                 itemBuilder: (skl) => SkillView(
@@ -92,11 +88,11 @@ class SidebarAspectsTab extends StatelessWidget {
                   },
                 ),
               ),
-            SidebarFutureTypes.MAGIC => _buildList<Spell>(
+            AspectsFutureTypes.MAGIC => _buildList<Spell>(
                 list: Provider.of<AspectsProvider>(context).spells,
                 noDataText: 'No match found',
                 filterPredicate: (spl) => context
-                    .read<SidebarFilterProvider>()
+                    .read<SidebarAspectsFilterProvider>()
                     .filterPredicate<Spell>(spl),
                 context: context,
                 itemBuilder: (spl) => SpellView(
@@ -114,18 +110,19 @@ class SidebarAspectsTab extends StatelessWidget {
   }
 
   Widget _buildFilters(BuildContext context) {
-    SidebarFilterProvider filter = context.watch<SidebarFilterProvider>();
+    SidebarAspectsFilterProvider filter =
+        context.watch<SidebarAspectsFilterProvider>();
 
     return Column(
       children: [
         _buildSidebarContentFilter(context),
-        if (filter.sidebarContent == SidebarFutureTypes.TRAITS)
+        if (filter.sidebarContent == AspectsFutureTypes.TRAITS)
           Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             runAlignment: WrapAlignment.spaceAround,
-            runSpacing: _FILTER_RUN_SPACING,
-            spacing: _FILTER_SPACING,
+            runSpacing: FILTER_RUN_SPACING,
+            spacing: FILTER_SPACING,
             children: List.from(
               TraitCategories.values
                   .where((c) => c != TraitCategories.NONE)
@@ -137,13 +134,13 @@ class SidebarAspectsTab extends StatelessWidget {
                   ),
             ),
           )
-        else if (filter.sidebarContent == SidebarFutureTypes.SKILLS)
+        else if (filter.sidebarContent == AspectsFutureTypes.SKILLS)
           Wrap(
             alignment: WrapAlignment.center,
             crossAxisAlignment: WrapCrossAlignment.center,
             runAlignment: WrapAlignment.spaceAround,
-            runSpacing: _FILTER_RUN_SPACING,
-            spacing: _FILTER_SPACING,
+            runSpacing: FILTER_RUN_SPACING,
+            spacing: FILTER_SPACING,
             children: List.from(
               SkillDifficulty.values
                   .where((c) => c != SkillDifficulty.NONE)
@@ -160,42 +157,43 @@ class SidebarAspectsTab extends StatelessWidget {
   }
 
   Widget _buildSidebarContentFilter(BuildContext context) {
-    SidebarFilterProvider filter = context.watch<SidebarFilterProvider>();
+    SidebarAspectsFilterProvider filter =
+        context.watch<SidebarAspectsFilterProvider>();
 
     return Wrap(
       alignment: WrapAlignment.center,
       crossAxisAlignment: WrapCrossAlignment.center,
       runAlignment: WrapAlignment.spaceAround,
-      runSpacing: _FILTER_RUN_SPACING,
-      spacing: _FILTER_SPACING,
+      runSpacing: FILTER_RUN_SPACING,
+      spacing: FILTER_SPACING,
       children: [
         LabeledIconButton(
           iconValue: Icons.accessibility_outlined,
           onPressed: () {
-            filter.sidebarContent = SidebarFutureTypes.TRAITS;
+            filter.sidebarContent = AspectsFutureTypes.TRAITS;
           },
           label: 'Traits',
-          backgroundColor: filter.sidebarContent == SidebarFutureTypes.TRAITS
+          backgroundColor: filter.sidebarContent == AspectsFutureTypes.TRAITS
               ? Theme.of(context).colorScheme.secondary
               : null,
         ),
         LabeledIconButton(
           iconValue: Icons.handyman_outlined,
           onPressed: () {
-            filter.sidebarContent = SidebarFutureTypes.SKILLS;
+            filter.sidebarContent = AspectsFutureTypes.SKILLS;
           },
           label: 'Skills',
-          backgroundColor: filter.sidebarContent == SidebarFutureTypes.SKILLS
+          backgroundColor: filter.sidebarContent == AspectsFutureTypes.SKILLS
               ? Theme.of(context).colorScheme.secondary
               : null,
         ),
         LabeledIconButton(
           iconValue: Icons.bolt_outlined,
           onPressed: () {
-            filter.sidebarContent = SidebarFutureTypes.MAGIC;
+            filter.sidebarContent = AspectsFutureTypes.MAGIC;
           },
           label: 'Magic',
-          backgroundColor: filter.sidebarContent == SidebarFutureTypes.MAGIC
+          backgroundColor: filter.sidebarContent == AspectsFutureTypes.MAGIC
               ? Theme.of(context).colorScheme.secondary
               : null,
         ),
@@ -204,7 +202,8 @@ class SidebarAspectsTab extends StatelessWidget {
   }
 
   Widget _buildSkillsFilter(SkillDifficulty category, BuildContext context) {
-    SidebarFilterProvider filter = context.read<SidebarFilterProvider>();
+    SidebarAspectsFilterProvider filter =
+        context.read<SidebarAspectsFilterProvider>();
 
     return LabeledIconButton(
       iconValue: category.iconValue,
@@ -220,7 +219,7 @@ class SidebarAspectsTab extends StatelessWidget {
       },
       label: category.stringValue,
       backgroundColor: context
-              .read<SidebarFilterProvider>()
+              .read<SidebarAspectsFilterProvider>()
               .selectedSkillDifficulty
               .contains(category)
           ? Theme.of(context).colorScheme.secondary
@@ -230,7 +229,8 @@ class SidebarAspectsTab extends StatelessWidget {
 
   Widget _buildTraitCategoryFilter(
       TraitCategories category, BuildContext context) {
-    final SidebarFilterProvider filter = context.watch<SidebarFilterProvider>();
+    final SidebarAspectsFilterProvider filter =
+        context.watch<SidebarAspectsFilterProvider>();
 
     return LabeledIconButton(
       onPressed: () {

@@ -32,9 +32,6 @@ class _SearchFieldState extends State<SearchField> {
       },
       decoration: InputDecoration(
         labelText: 'Filter',
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
         enabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).colorScheme.secondary,
