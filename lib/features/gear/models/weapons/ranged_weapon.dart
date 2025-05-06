@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/features/gear/models/legality_class.dart';
 import 'package:gurps_character_creation/features/gear/models/weapons/damage_type.dart';
 import 'package:gurps_character_creation/features/gear/models/weapons/weapon.dart';
@@ -126,6 +129,22 @@ class Range {
 
     return '$maxRange';
   }
+}
+
+List<RangedWeapon> rangedWeaponsFromJson(String str) => List<RangedWeapon>.from(
+      json.decode(str).map(
+            (dynamic x) => RangedWeapon.fromJson(x),
+          ),
+    );
+
+String rangedWeaponsToJson(List<RangedWeapon> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+Future<List<RangedWeapon>> loadRangedWeapons() async {
+  final jsonString = await rootBundle.loadString(
+    'assets/Weapons/Ranged_Weapons.json',
+  );
+  return rangedWeaponsFromJson(jsonString);
 }
 
 class RangedWeapon extends Weapon {

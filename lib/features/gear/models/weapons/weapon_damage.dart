@@ -197,6 +197,53 @@ class WeaponDamage {
         damageType: DamageTypeString.fromString(json['damage_type']),
       );
 
+  factory WeaponDamage.empty() => WeaponDamage(
+        attackType: AttackTypes.NONE,
+        modifier: 0,
+        damageType: DamageType.NONE,
+      );
+
+  factory WeaponDamage.fromGURPSNotation(String notation) {
+    final attackTypeRegex = RegExp(r'^(sw|thr)');
+    final modifierRegex = RegExp(r'^(?:sw|thr)([+-]\d+)');
+
+    final attackTypeMatch = attackTypeRegex.firstMatch(notation);
+    final modifierMatch = modifierRegex.firstMatch(notation);
+
+    if (attackTypeMatch == null) {
+      throw Exception('Invalid GURPS notation: $notation');
+    }
+
+    final attackType = AttackTypesString.fromString(attackTypeMatch.group(0)!);
+    notation = notation.replaceAll(attackTypeMatch.group(0)!, '');
+
+    int modifier = 0;
+    if (modifierMatch != null) {
+      modifier = int.parse(modifierMatch.group(1)!);
+    }
+
+    // Remove the attack type and modifier from the notation
+    notation = notation.replaceAll(attackTypeMatch.group(0)!, '');
+
+    return WeaponDamage(
+      attackType: attackType,
+      modifier: modifier,
+      damageType: DamageTypeString.fromString(notation.trim()),
+    );
+  }
+
+  factory WeaponDamage.copyWith(
+    WeaponDamage wd, {
+    AttackTypes? attackType,
+    int? modifier,
+    DamageType? damageType,
+  }) =>
+      WeaponDamage(
+        attackType: attackType ?? wd.attackType,
+        modifier: modifier ?? wd.modifier,
+        damageType: damageType ?? wd.damageType,
+      );
+
   Map<String, dynamic> toJson() => {
         'attack_type': attackType.stringValue,
         'modifier': modifier,

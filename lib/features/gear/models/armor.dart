@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/features/gear/models/gear.dart';
 
 enum BodyPart {
@@ -135,6 +138,17 @@ class DamageResistance {
 
     return notation;
   }
+}
+
+List<Armor> armorsFromJson(String str) => json.decode(str).map<Armor>(
+      (dynamic x) => Armor.fromJson(x),
+    );
+
+Future<List<Armor>> loadArmors() async {
+  final String jsonString =
+      await rootBundle.loadString('assets/Gear/Armor/BasicSet.json');
+
+  return armorsFromJson(jsonString);
 }
 
 class Armor extends Gear {

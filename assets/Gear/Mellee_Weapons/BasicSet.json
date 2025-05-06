@@ -1,0 +1,638 @@
+[
+    {
+        "name": "Axe",
+        "damage": "sw+2 cut",
+        "price": 50.0,
+        "weight": 4.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Hatchet",
+        "damage": "sw cut",
+        "price": 40.0,
+        "weight": 2.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 8
+    },
+    {
+        "name": "Throwing Axe",
+        "damage": "sw+2 cut",
+        "price": 60.0,
+        "weight": 2.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Mace",
+        "damage": "sw+3 cr",
+        "price": 50.0,
+        "weight": 5.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Small Mace",
+        "damage": "sw+2 cr",
+        "price": 35.0,
+        "weight": 3.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Pick",
+        "damage": "sw+1 imp",
+        "price": 70.0,
+        "weight": 3.0,
+        "associated_skill_name": "Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Punch",
+        "damage": "thr-1 cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Brass Knuckles",
+        "damage": "thr cr",
+        "price": 10.0,
+        "weight": 0.25,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Kick",
+        "damage": "thr cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Kick w/ Boots",
+        "damage": "thr+1 cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Blunt Teeth",
+        "damage": "thr-1 cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Fangs",
+        "damage": "thr-1 imp",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Sharp Beak",
+        "damage": "thr-1 pi+",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Sharpunt Teeth",
+        "damage": "thr-1 cut",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Blackjack or Sap",
+        "damage": "thr cr",
+        "price": 20.0,
+        "weight": 1.0,
+        "associated_skill_name": "Brawling",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 7
+    },
+    {
+        "name": "Light Club",
+        "damage": "sw+1 cr",
+        "price": 5.0,
+        "weight": 3.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Broadsword",
+        "damage": "sw+1 cut",
+        "price": 500.0,
+        "weight": 3.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Thrusting Broadsword",
+        "damage": "thr+2 imp",
+        "price": 600.0,
+        "weight": 3.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Bastard Sword",
+        "damage": "sw+1 cut",
+        "price": 650.0,
+        "weight": 5.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Katana",
+        "damage": "sw+1 cut",
+        "price": 650.0,
+        "weight": 5.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Thrusting Bastard Sword",
+        "damage": "thr+2 imp",
+        "price": 750.0,
+        "weight": 5.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Cavalrt Saber",
+        "damage": "sw+1 cut",
+        "price": 500.0,
+        "weight": 3.0,
+        "associated_skill_name": "Broadsword",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Morningstar",
+        "damage": "sw+3 cr",
+        "price": 80.0,
+        "weight": 6.0,
+        "associated_skill_name": "Flail",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Nunchaku",
+        "damage": "sw+1 cr",
+        "price": 20.0,
+        "weight": 2.0,
+        "associated_skill_name": "Flail",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 7
+    },
+    {
+        "name": "Large Knife",
+        "damage": "sw+2 cut",
+        "price": 40.0,
+        "weight": 1.0,
+        "associated_skill_name": "Knife",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 6
+    },
+    {
+        "name": "SMall Knife",
+        "damage": "sw+3 cut",
+        "price": 30.0,
+        "weight": 0.5,
+        "associated_skill_name": "Knife",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 5
+    },
+    {
+        "name": "Wooden Stake",
+        "damage": "thr imp",
+        "price": 4.0,
+        "weight": 0.5,
+        "associated_skill_name": "Knife",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 5
+    },
+    {
+        "name": "Dagger",
+        "damage": "thr-1 imp",
+        "price": 20.0,
+        "weight": 0.25,
+        "associated_skill_name": "Knife",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 5
+    },
+    {
+        "name": "Stiletto",
+        "damage": "thr-1 imp",
+        "price": 30.0,
+        "weight": 0.5,
+        "associated_skill_name": "Knife",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 0
+        },
+        "minimum_st": 5
+    },
+    {
+        "name": "Kusari",
+        "damage": "sw+2 cr",
+        "price": 70.0,
+        "weight": 5.0,
+        "associated_skill_name": "Kusari",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 4
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Lance",
+        "damage": "thr+3 imp",
+        "price": 60.0,
+        "weight": 6.0,
+        "associated_skill_name": "Lance",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 4
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Glaive",
+        "damage": "sw+3 cut",
+        "price": 100.0,
+        "weight": 8.0,
+        "associated_skill_name": "Polearm",
+        "reach": {
+            "min_reach": 2,
+            "max_reach": 3
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Halberd",
+        "damage": "sw+5 cut",
+        "price": 150.0,
+        "weight": 12.0,
+        "associated_skill_name": "Polearm",
+        "reach": {
+            "min_reach": 2,
+            "max_reach": 3
+        },
+        "minimum_st": 13
+    },
+    {
+        "name": "Naginata",
+        "damage": "sw+2 cut",
+        "price": 100.0,
+        "weight": 6.0,
+        "associated_skill_name": "Polearm",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 9
+    },
+    {
+        "name": "Poleaxe",
+        "damage": "sw+4 cut",
+        "price": 120.0,
+        "weight": 10.0,
+        "associated_skill_name": "Polearm",
+        "reach": {
+            "min_reach": 2,
+            "max_reach": 3
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Whip",
+        "damage": "sw-1 cr",
+        "price": 15.0,
+        "weight": 2.0,
+        "associated_skill_name": "Whip",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 2
+        },
+        "minimum_st": 7
+    },
+    {
+        "name": "Rapier",
+        "damage": "thr+1 imp",
+        "price": 500.0,
+        "weight": 2.75,
+        "associated_skill_name": "Rapier",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 9
+    },
+    {
+        "name": "Saber",
+        "damage": "sw+1 cut",
+        "price": 700.0,
+        "weight": 2.0,
+        "associated_skill_name": "Saber",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 8
+    },
+    {
+        "name": "Shield Bash",
+        "damage": "thr cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Shield",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Shield Bash w/ Spike",
+        "damage": "thr+1 cr",
+        "price": 0.0,
+        "weight": 0.0,
+        "associated_skill_name": "Shield",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 0
+    },
+    {
+        "name": "Baton",
+        "damage": "sw cr",
+        "price": 20.0,
+        "weight": 1.0,
+        "associated_skill_name": "Shortsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 6
+    },
+    {
+        "name": "Shortsword",
+        "damage": "sw cut",
+        "price": 400.0,
+        "weight": 2.0,
+        "associated_skill_name": "Shortsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 8
+    },
+    {
+        "name": "Cutglass",
+        "damage": "sw cut",
+        "price": 300.0,
+        "weight": 2.0,
+        "associated_skill_name": "Shortsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 8
+    },
+    {
+        "name": "Small Staff",
+        "damage": "sw cr",
+        "price": 20.0,
+        "weight": 1.0,
+        "associated_skill_name": "Smallsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 6
+    },
+    {
+        "name": "Small Sword",
+        "damage": "thr+1 imp",
+        "price": 400.0,
+        "weight": 1.5,
+        "associated_skill_name": "Smallsword",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 5
+    },
+    {
+        "name": "Spear",
+        "damage": "thr+2 imp",
+        "price": 40.0,
+        "weight": 4.0,
+        "associated_skill_name": "Spear",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 9
+    },
+    {
+        "name": "Long Spear",
+        "damage": "thr+2 imp",
+        "price": 60.0,
+        "weight": 5.0,
+        "associated_skill_name": "Spear",
+        "reach": {
+            "min_reach": 2,
+            "max_reach": 3
+        },
+        "minimum_st": 10
+    },
+    {
+        "name": "Quarterstaff",
+        "damage": "sw+2 cr",
+        "price": 10.0,
+        "weight": 4.0,
+        "associated_skill_name": "Staff",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 7
+    },
+    {
+        "name": "Maul",
+        "damage": "sw+4 cr",
+        "price": 80.0,
+        "weight": 12.0,
+        "associated_skill_name": "Two-Handed Axe/Mace",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 13
+    },
+    {
+        "name": "Great Axe",
+        "damage": "sw+3 cut",
+        "price": 100.0,
+        "weight": 15.0,
+        "associated_skill_name": "Two-Handed Axe/Mace",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Scythe",
+        "damage": "sw+2 cut",
+        "price": 15.0,
+        "weight": 5.0,
+        "associated_skill_name": "Two-Handed Axe/Mace",
+        "reach": {
+            "min_reach": 0,
+            "max_reach": 1
+        },
+        "minimum_st": 11
+    },
+    {
+        "name": "Warhammer",
+        "damage": "sw+3 cr",
+        "price": 100.0,
+        "weight": 7.0,
+        "associated_skill_name": "Two-Handed Axe/Mace",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 12
+    },
+    {
+        "name": "Flail",
+        "damage": "sw+4 cr",
+        "price": 80.0,
+        "weight": 6.0,
+        "associated_skill_name": "Two-Handed Flail",
+        "reach": {
+            "min_reach": 1,
+            "max_reach": 2
+        },
+        "minimum_st": 12
+    }
+]

@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/features/gear/models/legality_class.dart';
 import 'package:gurps_character_creation/features/gear/models/weapons/damage_type.dart';
 import 'package:gurps_character_creation/features/gear/models/weapons/weapon.dart';
@@ -60,6 +62,22 @@ class HandWeaponReach {
     return '$maxReach';
   }
 }
+
+List<HandWeapon> handWeaponsFromJson(String str) => List<HandWeapon>.from(
+      json.decode(str).map(
+            (dynamic x) => HandWeapon.fromJson(x),
+          ),
+    );
+
+Future<List<HandWeapon>> loadHandWeapons() async {
+  final String response =
+      await rootBundle.loadString('assets/Gear/Mellee_Weapons/BasicSet.json');
+  final data = handWeaponsFromJson(response);
+  return data;
+}
+
+String handWeaponsToJson(List<HandWeapon> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class HandWeapon extends Weapon {
   final HandWeaponReach reach;
@@ -138,12 +156,14 @@ class HandWeapon extends Weapon {
         name: json['name'],
         price: json['price'] ?? 0,
         weight: json['weight'] ?? 0,
-        notes: json['notes'],
-        damage: WeaponDamage.fromJson(json['damage']),
+        notes: json['notes'] ?? '',
+        damage: WeaponDamage.fromGURPSNotation(json['damage']),
         reach: HandWeaponReach.fromJson(json['reach']),
         associatedSkillName: json['associated_skill_name'] ?? '',
         minimumSt: json['minimum_st'] ?? 0,
-        lc: LegalityClassExtention.fromString(json['lc']),
+        lc: json['lc'] == null
+            ? LegalityClass.OPEN
+            : LegalityClassExtention.fromString(json['lc']),
       );
 
   static double calculateParry(int skillLevel) {

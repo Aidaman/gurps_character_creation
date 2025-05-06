@@ -45,5 +45,8 @@ flutter:
     - assets/Traits/BasicSet.json
     - assets/Skills/BasicSet.json
     - assets/Spells/magic.json
+    - assets/Gear/Mellee_Weapons/BasicSet.json
+    - assets/Gear/Ranged_Weapons/BasicSet.json
+    - assets/Gear/Armor/BasicSet.json
     - assets/spell_book.svg
     - assets/favicon.png
