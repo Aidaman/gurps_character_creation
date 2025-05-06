@@ -4,37 +4,41 @@ import 'package:gurps_character_creation/features/character/providers/character_
 import 'package:gurps_character_creation/features/equipment/services/weapon_service.dart';
 
 class CharacterWeaponProvider with ChangeNotifier {
-  final CharacterProvider characterProvider;
-  final WeaponService weaponService;
+  final CharacterProvider _characterProvider;
+  final WeaponService _weaponService;
 
-  CharacterWeaponProvider(this.characterProvider, this.weaponService);
+  CharacterWeaponProvider(
+    CharacterProvider characterProvider,
+    WeaponService weaponService,
+  )   : _characterProvider = characterProvider,
+        _weaponService = weaponService;
 
   List<Weapon> readAll() {
-    return weaponService.readAll(characterProvider.character);
+    return _weaponService.readAll(_characterProvider.character);
   }
 
   Weapon read(String id) {
-    return weaponService.read(characterProvider.character, id);
+    return _weaponService.read(_characterProvider.character, id);
   }
 
   void create(Weapon weapon) {
-    weaponService.add(characterProvider.character, weapon);
+    _weaponService.add(_characterProvider.character, weapon);
 
-    characterProvider.markDirty();
+    _characterProvider.markDirty();
     notifyListeners();
   }
 
   void update(Weapon newWeapon) {
-    weaponService.update(characterProvider.character, newWeapon);
+    _weaponService.update(_characterProvider.character, newWeapon);
 
-    characterProvider.markDirty();
+    _characterProvider.markDirty();
     notifyListeners();
   }
 
   void delete(String weaponId) {
-    weaponService.delete(characterProvider.character, weaponId);
+    _weaponService.delete(_characterProvider.character, weaponId);
 
-    characterProvider.markDirty();
+    _characterProvider.markDirty();
     notifyListeners();
   }
 }

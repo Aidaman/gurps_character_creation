@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/details/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/hand_weapon.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/weapon_provider.dart';
+import 'package:gurps_character_creation/features/equipment/widgets/weapon_view.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +78,18 @@ class SidebarEquipmentTab extends StatelessWidget {
         Expanded(
           child: _buildList(
             list: context.watch<EquipmentProvider>().handWeapons,
-            itemBuilder: (item) => Text(item.name),
+            itemBuilder: (HandWeapon item) => WeaponView(
+              weapon: item,
+              onAddClick: () => context.read<CharacterWeaponProvider>().create(
+                    HandWeapon.copyWith(item),
+                  ),
+              onInfoClick: () => showDialog(
+                context: context,
+                builder: (context) => HandWeaponDetailsDialog(
+                  handWeapon: item,
+                ),
+              ),
+            ),
             filterPredicate: filter.filterPredicate,
             noDataText: 'No weapons found',
             context: context,
