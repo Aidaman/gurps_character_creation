@@ -4,14 +4,14 @@ import 'package:gurps_character_creation/features/character/models/attributes.da
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/spells/models/spell.dart';
 import 'package:gurps_character_creation/features/traits/models/trait.dart';
-import 'package:gurps_character_creation/features/gear/models/armor.dart';
-import 'package:gurps_character_creation/features/gear/models/legality_class.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/damage_type.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/hand_weapon.dart';
-import 'package:gurps_character_creation/features/gear/models/posession.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/ranged_weapon.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
+import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/damage_type.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/hand_weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/posession.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/ranged_weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon_damage.dart';
 import 'package:uuid/uuid.dart';
 
 class Character {

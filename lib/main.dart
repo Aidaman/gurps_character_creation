@@ -3,7 +3,7 @@ import 'package:gurps_character_creation/core/constants/app_routes.dart';
 import 'package:gurps_character_creation/core/themes/widgets/switch.dart';
 import 'package:gurps_character_creation/core/themes/widgets/text_input.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/features/gear/providers/gear_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/core/themes/theme_provider.dart';
@@ -14,7 +14,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AspectsProvider()),
-        ChangeNotifierProvider(create: (_) => GearProvider()),
+        ChangeNotifierProvider(create: (_) => EquipmentProvider()),
         ChangeNotifierProvider(create: (_) => CharacterProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     Provider.of<AspectsProvider>(context, listen: false).loadCharacteristics();
-    Provider.of<GearProvider>(context, listen: false).loadGear();
+    Provider.of<EquipmentProvider>(context, listen: false).loadEquipment();
   }
 
   @override

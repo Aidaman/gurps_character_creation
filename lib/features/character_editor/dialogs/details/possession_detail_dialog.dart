@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
-import 'package:gurps_character_creation/features/gear/models/posession.dart';
+import 'package:gurps_character_creation/features/equipment/models/posession.dart';
 
 class PossessionDetailsDialog extends StatelessWidget {
   final Possession possession;

@@ -1,6 +1,6 @@
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
 
-class Possession extends Gear {
+class Possession extends Equipment {
   final String description;
 
   Possession({

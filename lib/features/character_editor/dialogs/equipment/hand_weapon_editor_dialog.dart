@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/damage_type.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/hand_weapon.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/damage_type.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/hand_weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon_damage.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
-import 'package:gurps_character_creation/features/character_editor/dialogs/gear/gear_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/equipment_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 enum _HandWeaponEditorFields {
@@ -122,7 +122,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GearEditorDialog(
+    return EquipmentEditorDialog(
       formKey: _formkey,
       oldGear: _handWeapon,
       actions: [
@@ -167,7 +167,7 @@ class _HandWeaponEditorDialogState extends State<HandWeaponEditorDialog> {
           context: context,
         )
       ],
-      onGearUpdated: (Gear updatedGear) {
+      onGearUpdated: (Equipment updatedGear) {
         setState(() {
           _handWeapon = updatedGear as HandWeapon;
         });

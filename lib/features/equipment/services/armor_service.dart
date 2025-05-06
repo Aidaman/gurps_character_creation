@@ -1,5 +1,5 @@
 import 'package:gurps_character_creation/features/character/models/character.dart';
-import 'package:gurps_character_creation/features/gear/models/armor.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
 import 'package:gurps_character_creation/features/character/services/character_crud_service.dart';
 
 class ArmorService extends CharacterCRUDService<Armor> {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
 
 enum EquipmentFilterTypes { MELLEE_WEAPONS, RANGED_WEAPONS, ARMOR }
 
@@ -75,8 +75,8 @@ class SidebarEquipmentFilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool filterPredicate<T extends Gear>(T gear) {
-    String nameLowerCase = gear.name.toLowerCase();
+  bool filterPredicate<T extends Equipment>(T eqp) {
+    String nameLowerCase = eqp.name.toLowerCase();
     String queryLowerCase = filterQuerry.toLowerCase();
 
     if (queryLowerCase.isEmpty) {

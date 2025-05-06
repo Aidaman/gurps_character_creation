@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
-import 'package:gurps_character_creation/features/gear/models/armor.dart';
-import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
+import 'package:gurps_character_creation/features/equipment/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/armor_details_dialog.dart';
-import 'package:gurps_character_creation/features/character_editor/dialogs/gear/armor_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/armor_editor_dialog.dart';
 
 class ArmorSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;

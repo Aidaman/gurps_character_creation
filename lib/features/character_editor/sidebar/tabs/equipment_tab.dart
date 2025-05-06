@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
-import 'package:gurps_character_creation/features/gear/providers/gear_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +40,7 @@ class SidebarEquipmentTab extends StatelessWidget {
         const Gap(8),
         Expanded(
           child: _buildList(
-            list: context.watch<GearProvider>().handWeapons,
+            list: context.watch<EquipmentProvider>().handWeapons,
             itemBuilder: (item) => Text(item.name),
             noDataText: 'No weapons found',
             context: context,

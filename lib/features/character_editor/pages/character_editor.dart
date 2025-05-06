@@ -11,9 +11,9 @@ import 'package:gurps_character_creation/features/skills/providers/skill_provide
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_provider.dart';
-import 'package:gurps_character_creation/features/gear/providers/armor_provider.dart';
-import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
-import 'package:gurps_character_creation/features/gear/providers/weapon_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/armor_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/possessions_provider.dart';
+import 'package:gurps_character_creation/features/equipment/providers/weapon_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sections/armor_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sections/personal_info_section.dart';
 import 'package:gurps_character_creation/features/character_editor/sections/attributes_section.dart';

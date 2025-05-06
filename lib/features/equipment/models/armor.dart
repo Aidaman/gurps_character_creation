@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
 
 enum BodyPart {
   HEAD,
@@ -151,7 +151,7 @@ Future<List<Armor>> loadArmors() async {
   return armorsFromJson(jsonString);
 }
 
-class Armor extends Gear {
+class Armor extends Equipment {
   final BodyPart armorLocation;
   final String? notes;
   final DamageResistance damageResistance;

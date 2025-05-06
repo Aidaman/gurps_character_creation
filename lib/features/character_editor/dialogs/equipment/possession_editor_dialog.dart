@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
-import 'package:gurps_character_creation/features/gear/models/posession.dart';
-import 'package:gurps_character_creation/features/character_editor/dialogs/gear/gear_editor_dialog.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/equipment/models/posession.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/equipment_editor_dialog.dart';
 
 class PossessionEditorDialog extends StatefulWidget {
   final Possession? oldPossession;
@@ -25,7 +25,7 @@ class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GearEditorDialog(
+    return EquipmentEditorDialog(
       oldGear: _posession,
       formKey: _formkey,
       actions: [
@@ -65,7 +65,7 @@ class _PossessionEditorDialogState extends State<PossessionEditorDialog> {
           context: context,
         ),
       ],
-      onGearUpdated: (Gear updatedGear) {
+      onGearUpdated: (Equipment updatedGear) {
         setState(() {
           _posession = updatedGear as Possession;
         });

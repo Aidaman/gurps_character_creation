@@ -1,18 +1,18 @@
 import 'package:uuid/uuid.dart';
 
-abstract class Gear {
+abstract class Equipment {
   String id;
   String name;
   double price;
   double weight;
 
-  Gear({
+  Equipment({
     required this.name,
     required this.price,
     required this.weight,
   }) : id = const Uuid().v4();
 
-  Gear.withId({
+  Equipment.withId({
     required this.id,
     required this.name,
     required this.price,

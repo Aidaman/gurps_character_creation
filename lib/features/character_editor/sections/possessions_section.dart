@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
-import 'package:gurps_character_creation/features/gear/models/posession.dart';
-import 'package:gurps_character_creation/features/gear/providers/possessions_provider.dart';
+import 'package:gurps_character_creation/features/equipment/models/posession.dart';
+import 'package:gurps_character_creation/features/equipment/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/possession_detail_dialog.dart';
-import 'package:gurps_character_creation/features/character_editor/dialogs/gear/possession_editor_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/possession_editor_dialog.dart';
 import 'package:provider/provider.dart';
 
 class PosessionsSection extends StatelessWidget {

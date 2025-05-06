@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/features/gear/models/armor.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
-import 'package:gurps_character_creation/features/character_editor/dialogs/gear/gear_editor_dialog.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/equipment_editor_dialog.dart';
 
 class ArmorEditorDialog extends StatefulWidget {
   final Armor? oldArmor;
@@ -26,7 +26,7 @@ class _ArmorEditorDialogState extends State<ArmorEditorDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return GearEditorDialog(
+    return EquipmentEditorDialog(
       formKey: _formkey,
       oldGear: _armor,
       actions: [
@@ -195,7 +195,7 @@ class _ArmorEditorDialogState extends State<ArmorEditorDialog> {
           context: context,
         )
       ],
-      onGearUpdated: (Gear updatedGear) {
+      onGearUpdated: (Equipment updatedGear) {
         setState(() {
           _armor = updatedGear as Armor;
         });

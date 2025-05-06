@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:gurps_character_creation/features/gear/models/legality_class.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/damage_type.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
+import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/damage_type.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon_damage.dart';
 
 class HandWeaponReach {
   int? _minReach;

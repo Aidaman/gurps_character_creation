@@ -1,8 +1,8 @@
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
-import 'package:gurps_character_creation/features/gear/models/legality_class.dart';
-import 'package:gurps_character_creation/features/gear/models/weapons/weapon_damage.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon_damage.dart';
 
-abstract class Weapon extends Gear {
+abstract class Weapon extends Equipment {
   final WeaponDamage damage;
   final LegalityClass lc;
   final String associatedSkillName;

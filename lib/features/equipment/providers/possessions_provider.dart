@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/features/gear/models/posession.dart';
+import 'package:gurps_character_creation/features/equipment/models/posession.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
-import 'package:gurps_character_creation/features/gear/services/possessions_service.dart';
+import 'package:gurps_character_creation/features/equipment/services/possessions_service.dart';
 
 class PossessionsProvider extends ChangeNotifier {
   final CharacterProvider characterProvider;

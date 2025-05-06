@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/features/gear/models/gear.dart';
+import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
 
-class GearEditorDialog extends StatefulWidget {
+class EquipmentEditorDialog extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final List<Widget> actions;
-  final Gear oldGear;
+  final Equipment oldGear;
   final List<Widget> additionalChildren;
-  final ValueChanged<Gear> onGearUpdated;
+  final ValueChanged<Equipment> onGearUpdated;
 
-  const GearEditorDialog({
+  const EquipmentEditorDialog({
     super.key,
     required this.oldGear,
     required this.formKey,
@@ -21,11 +21,11 @@ class GearEditorDialog extends StatefulWidget {
   });
 
   @override
-  State<GearEditorDialog> createState() => _GearEditorDialogState();
+  State<EquipmentEditorDialog> createState() => _EquipmentEditorDialogState();
 }
 
-class _GearEditorDialogState extends State<GearEditorDialog> {
-  late Gear _gear;
+class _EquipmentEditorDialogState extends State<EquipmentEditorDialog> {
+  late Equipment _gear;
 
   @override
   void initState() {

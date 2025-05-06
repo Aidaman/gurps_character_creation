@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gurps_character_creation/features/gear/models/armor.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
-import 'package:gurps_character_creation/features/gear/services/armor_service.dart';
+import 'package:gurps_character_creation/features/equipment/services/armor_service.dart';
 
 class ArmorProvider with ChangeNotifier {
   final CharacterProvider characterProvider;
