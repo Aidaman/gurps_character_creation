@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/weapon.dart';
 
 enum EquipmentFilterTypes { MELLEE_WEAPONS, RANGED_WEAPONS, ARMOR }
 
@@ -55,9 +56,11 @@ extension SidebarEquipmentFilterTypesStringExtension on EquipmentFilterTypes {
 
 class SidebarEquipmentFilterProvider with ChangeNotifier {
   String _filterQuerry = '';
+  String _selectedSkillName = '';
   EquipmentFilterTypes _sidebarContent = EquipmentFilterTypes.MELLEE_WEAPONS;
 
   String get filterQuerry => _filterQuerry;
+  String get selectedSkillName => _selectedSkillName;
   EquipmentFilterTypes get sidebarContent => _sidebarContent;
 
   set sidebarContent(EquipmentFilterTypes type) {
@@ -70,8 +73,15 @@ class SidebarEquipmentFilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set selectedSkillName(String value) {
+    _selectedSkillName = value;
+    notifyListeners();
+  }
+
   void clearFilters() {
     _filterQuerry = '';
+    _selectedSkillName = '';
+    _sidebarContent = EquipmentFilterTypes.MELLEE_WEAPONS;
     notifyListeners();
   }
 
@@ -84,6 +94,11 @@ class SidebarEquipmentFilterProvider with ChangeNotifier {
     }
 
     bool matchesFilterQuerry = nameLowerCase.contains(queryLowerCase);
+
+    if (eqp is Weapon) {
+      return matchesFilterQuerry &&
+          eqp.associatedSkillName == _selectedSkillName;
+    }
 
     return matchesFilterQuerry;
   }

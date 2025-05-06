@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
+import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
+import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
 import 'package:provider/provider.dart';
 
@@ -29,10 +32,40 @@ class SidebarEquipmentTab extends StatelessWidget {
             children: [
               _buildFilters(context),
               const Gap(16),
-              SearchField(
-                onSearchChanged: (value) {
-                  filter.filterQuerry = value;
-                },
+              Row(
+                children: [
+                  Expanded(
+                    child: SearchField(
+                      onSearchChanged: (value) {
+                        filter.filterQuerry = value;
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: buildFormDropdownMenu<String?>(
+                      items: context
+                          .read<AspectsProvider>()
+                          .skills
+                          .map(
+                            (Skill e) => DropdownMenuItem<String>(
+                              value: e.name,
+                              child: Text(e.name),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (String? value) {
+                        if (value == null) {
+                          return;
+                        }
+
+                        filter.selectedSkillName = value;
+                      },
+                      context: context,
+                      hint: 'Skill',
+                      initialValue: null,
+                    ),
+                  )
+                ],
               )
             ],
           ),
@@ -42,6 +75,7 @@ class SidebarEquipmentTab extends StatelessWidget {
           child: _buildList(
             list: context.watch<EquipmentProvider>().handWeapons,
             itemBuilder: (item) => Text(item.name),
+            filterPredicate: filter.filterPredicate,
             noDataText: 'No weapons found',
             context: context,
           ),
