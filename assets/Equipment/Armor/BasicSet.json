@@ -1,0 +1,255 @@
+[
+    {
+        "name": "Fur Loincloth",
+        "armor_location": ["groin"],
+        "damage_resistance": {
+            "damage_resistance": 0,
+            "is_flexible": true
+        },
+        "price": 10,
+        "weight": 0,
+        "lc": ""
+    },
+    {
+        "name": "Fur Tunic",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 0,
+            "is_flexible": true
+        },
+        "price": 25,
+        "weight": 2,
+        "lc": ""
+    },
+    {
+        "name": "Bronze Breastplate",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 0,
+            "is_front_only": true
+        },
+        "price": 400,
+        "weight": 20,
+        "lc": "LC3"
+    },
+    {
+        "name": "Bronze Corselet",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 5
+        },
+        "price": 1300,
+        "weight": 40,
+        "lc": "LC3"
+    },
+    {
+        "name": "Cloth Armor",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 1,
+            "is_flexible": true
+        },
+        "price": 30,
+        "weight": 6,
+        "lc": ""
+    },
+    {
+        "name": "Leather Armor",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 2
+        },
+        "price": 100,
+        "weight": 10,
+        "lc": "LC4"
+    },
+    {
+        "name": "Leather Jacket",
+        "armor_location": ["torso", "arms"],
+        "damage_resistance": {
+            "damage_resistance": 1,
+            "is_flexible": true
+        },
+        "price": 50,
+        "weight": 4,
+        "lc": ""
+    },
+    {
+        "name": "Light Scale Armor",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 3
+        },
+        "price": 150,
+        "weight": 15,
+        "lc": "LC4"
+    },
+    {
+        "name": "Scale Armor",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 4
+        },
+        "price": 300,
+        "weight": 30,
+        "lc": "LC4"
+    },
+    {
+        "name": "Lorica Segmentata",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 5
+        },
+        "price": 680,
+        "weight": 26,
+        "lc": "lc3"
+    },
+    {
+        "name": "Mail Hauberk",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 4,
+            "denominator_resistance": 2,
+            "is_flexible": true
+        },
+        "price": 230,
+        "weight": 25,
+        "lc": "lc3"
+    },
+    {
+        "name": "Mail Shirt",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 4,
+            "denominator_resistance": 2,
+            "is_flexible": true
+        },
+        "price": 150,
+        "weight": 16,
+        "lc": "lc4"
+    },
+    {
+        "name":"Scale Armor",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 4
+        },
+        "price": 420,
+        "weight": 35,
+        "lc": "LC3"
+    },
+    {
+        "name": "Double Mail Hauberk",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 5,
+            "denominator_resistance": 3,
+            "is_flexible": true
+        },
+        "price": 520,
+        "weight": 44
+    }, 
+    {
+        "name": "Heavy Steel Corselet",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 7
+        },
+        "price": 2300,
+        "weight": 45,
+        "lc": "LC3"
+    },
+    {
+        "name": "Steel Breastplate",
+        "armor_location": ["torso"],
+        "damage_resistance": {
+            "damage_resistance": 5,
+            "is_front_only": true
+        },
+        "price": 500,
+        "weight": 18,
+        "lc": "LC3"
+    },
+    {
+        "name": "Steel Corselet",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 6
+        },
+        "price": 1300,
+        "weight": 35,
+        "lc": "LC3"
+    },
+    {
+        "name": "Steel Laminate Plate",
+        "armor_location": ["torso", "groin"],
+        "damage_resistance": {
+            "damage_resistance": 5
+        },
+        "price": 900,
+        "weight": 30,
+        "lc": "LC3"
+    },
+    {
+        "name": "Buff Coat",
+        "armor_location": ["body", "limbs"],
+        "damage_resistance": {
+            "damage_resistance": 2,
+            "is_flexible": true
+        },
+        "price": 210,
+        "weight": 16,
+        "lc": "lc4"
+    },
+    {
+        "name": "Bronze Armbands",
+        "armor_location": ["arms"],
+        "damage_resistance": {
+            "damage_resistance": 3
+        },
+        "price": 180,
+        "weight": 9,
+        "lc": "LC4"
+    },
+    {
+        "name": "Bronze Greaves",
+        "armor_location": ["legs"],
+        "damage_resistance": {
+            "damage_resistance": 3
+        },
+        "price": 270,
+        "weight": 17,
+        "lc": "LC4"
+    },
+    {
+        "name": "Cloth Sleeves",
+        "armor_location": ["arms"],
+        "damage_resistance": {
+            "damage_resistance": "1",
+            "is_flexible": true
+        },
+        "price": 20,
+        "weight": 2,
+        "lc": ""
+    },
+    {
+        "name": "Heavy Leather Leggins",
+        "armor_location": ["legs"],
+        "damage_resistance": {
+            "damage_resistance": 2
+        },
+        "price": 60,
+        "weight": 4,
+        "lc": "lc4"
+    },
+    {
+        "name": "Heavy Leather Sleeves",
+        "armor_location": ["arms"],
+        "damage_resistance": {
+            "damage_resistance": 2
+        },
+        "price": 50,
+        "weight": 4,
+        "lc": "lc4"
+    }
+]

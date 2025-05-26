@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:gurps_character_creation/features/equipment/models/equipment.dart';
+import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
 
 enum BodyPart {
   HEAD,
@@ -75,8 +76,8 @@ class DamageResistance {
         denominatorResistance: json['denominator_resistance'] != null
             ? int.parse(json['denominator_resistance'].toString())
             : null,
-        isFlexible: bool.parse(json['is_flexible'].toString()),
-        isFrontOnly: bool.parse(json['is_front_only'].toString()),
+        isFlexible: bool.tryParse(json['is_flexible'].toString()) ?? false,
+        isFrontOnly: bool.tryParse(json['is_front_only'].toString()) ?? false,
       );
 
   factory DamageResistance.fromGURPSNotation(String notation) {
@@ -140,21 +141,24 @@ class DamageResistance {
   }
 }
 
-List<Armor> armorsFromJson(String str) => json.decode(str).map<Armor>(
-      (dynamic x) => Armor.fromJson(x),
+List<Armor> armorsFromJson(String str) => List<Armor>.from(
+      json.decode(str).map(
+            (x) => Armor.fromJson(x),
+          ),
     );
 
 Future<List<Armor>> loadArmors() async {
   final String jsonString =
-      await rootBundle.loadString('assets/Gear/Armor/BasicSet.json');
-
-  return armorsFromJson(jsonString);
+      await rootBundle.loadString('assets/Equipment/Armor/BasicSet.json');
+  final data = armorsFromJson(jsonString);
+  return data;
 }
 
 class Armor extends Equipment {
-  final BodyPart armorLocation;
+  final List<BodyPart> armorLocation;
   final String? notes;
   final DamageResistance damageResistance;
+  final LegalityClass lc;
 
   Armor({
     required super.name,
@@ -162,6 +166,7 @@ class Armor extends Equipment {
     required super.weight,
     required this.armorLocation,
     required this.damageResistance,
+    required this.lc,
     this.notes,
   });
 
@@ -172,6 +177,7 @@ class Armor extends Equipment {
     required super.id,
     required this.armorLocation,
     required this.damageResistance,
+    required this.lc,
     this.notes,
   }) : super.withId();
 
@@ -181,8 +187,9 @@ class Armor extends Equipment {
     double? price,
     double? weight,
     String? id,
-    BodyPart? armorLocation,
+    List<BodyPart>? armorLocation,
     DamageResistance? damageResistance,
+    LegalityClass? lc,
     String? notes,
   }) =>
       Armor.withId(
@@ -192,37 +199,45 @@ class Armor extends Equipment {
         weight: weight ?? armor.weight,
         armorLocation: armorLocation ?? armor.armorLocation,
         damageResistance: damageResistance ?? armor.damageResistance,
+        notes: notes ?? armor.notes,
+        lc: lc ?? armor.lc,
       );
 
   factory Armor.empty() => Armor(
         name: '',
         price: 0,
         weight: 0,
-        armorLocation: BodyPart.TORSO,
+        armorLocation: [BodyPart.TORSO],
         damageResistance: DamageResistance(resistance: 0),
+        lc: LegalityClass.NONE,
       );
 
   factory Armor.fromJson(Map<String, dynamic> json) => Armor(
         name: json['name'],
-        price: json['price'],
-        weight: json['weight'],
-        armorLocation: BodyPartString.fromString(json['armor_location']),
+        price: double.parse(json['price'].toString()),
+        weight: double.parse(json['weight'].toString()),
+        armorLocation: List<BodyPart>.from(
+          json['armor_location'].map((x) => BodyPartString.fromString(x)),
+        ),
         damageResistance: DamageResistance.fromJson(json['damage_resistance']),
+        lc: LegalityClassExtention.fromString(json['lc'].toString()),
       );
 
   Map<String, dynamic> toJson() => {
         'name': name,
         'price': price,
         'weight': weight,
-        'armor_location': armorLocation.stringValue,
+        'armor_location': armorLocation.map((e) => e.stringValue).toList(),
         'damage_resistance': damageResistance.toJson(),
+        'lc': lc.stringValue,
       };
 
   Map<String, dynamic> get dataTableColumns => {
         'name': name,
         'price': price,
         'weight': weight,
-        'armor_location': armorLocation.stringValue,
+        'armor_location': armorLocation.join(', '),
         'damage_resistance': damageResistance.toJson(),
+        'lc': lc.stringValue,
       };
 }

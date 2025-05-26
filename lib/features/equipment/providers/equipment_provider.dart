@@ -17,13 +17,13 @@ class EquipmentProvider with ChangeNotifier {
       _handWeapons = await loadHandWeapons();
     }
 
-    // if (_rangedWeapons.isEmpty) {
-    //   _rangedWeapons = await loadRangedWeapons();
-    // }
+    if (_rangedWeapons.isEmpty) {
+      _rangedWeapons = await loadRangedWeapons();
+    }
 
-    // if (_armors.isEmpty) {
-    //   _armors = await loadArmors();
-    // }
+    if (_armors.isEmpty) {
+      _armors = await loadArmors();
+    }
 
     notifyListeners();
   }

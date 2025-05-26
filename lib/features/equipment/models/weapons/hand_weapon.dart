@@ -70,8 +70,8 @@ List<HandWeapon> handWeaponsFromJson(String str) => List<HandWeapon>.from(
     );
 
 Future<List<HandWeapon>> loadHandWeapons() async {
-  final String response =
-      await rootBundle.loadString('assets/Gear/Mellee_Weapons/BasicSet.json');
+  final String response = await rootBundle
+      .loadString('assets/Equipment/Mellee_Weapons/BasicSet.json');
   final data = handWeaponsFromJson(response);
   return data;
 }

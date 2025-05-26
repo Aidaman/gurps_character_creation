@@ -89,15 +89,15 @@ class SidebarEquipmentFilterProvider with ChangeNotifier {
     String nameLowerCase = eqp.name.toLowerCase();
     String queryLowerCase = filterQuerry.toLowerCase();
 
-    if (queryLowerCase.isEmpty) {
-      return true;
-    }
-
     bool matchesFilterQuerry = nameLowerCase.contains(queryLowerCase);
 
-    if (eqp is Weapon) {
+    if (eqp is Weapon && eqp.associatedSkillName.isNotEmpty) {
       return matchesFilterQuerry &&
-          eqp.associatedSkillName == _selectedSkillName;
+          eqp.associatedSkillName.contains(_selectedSkillName);
+    }
+
+    if (queryLowerCase.isEmpty) {
+      return true;
     }
 
     return matchesFilterQuerry;

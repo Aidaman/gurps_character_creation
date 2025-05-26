@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
 import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
-import 'package:gurps_character_creation/features/equipment/models/weapons/hand_weapon.dart';
-import 'package:gurps_character_creation/features/equipment/models/weapons/ranged_weapon.dart';
-import 'package:gurps_character_creation/features/equipment/models/weapons/weapon.dart';
 
-class WeaponView extends StatelessWidget {
-  final Weapon weapon;
-  final void Function()? onAddClick;
-  final void Function()? onInfoClick;
+class ArmorView extends StatelessWidget {
+  final Armor armor;
+  final void Function(Armor armor)? onAddClick;
+  final void Function(Armor armor)? onInfoClick;
 
-  const WeaponView({
+  const ArmorView({
     super.key,
-    required this.weapon,
+    required this.armor,
     this.onAddClick,
     this.onInfoClick,
   });
@@ -48,18 +46,14 @@ class WeaponView extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Row(
-                  children: [
-                    Text(
-                      weapon.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ],
+                child: Text(
+                  armor.name,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  'Min ST: ${weapon.minimumSt.toString()}',
+                  'DR: ${armor.damageResistance.GURPSNotation}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -69,13 +63,13 @@ class WeaponView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '(${weapon.associatedSkillName})',
+                  armor.weight.toString(),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  weapon.lc.stringValue,
+                  '\$${armor.price.toString()}',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
@@ -85,80 +79,39 @@ class WeaponView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  weapon.damage.toString(),
+                  armor.armorLocation.map((e) => e.name).join(', '),
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
                 child: Text(
-                  '${weapon.weight.toString()}lb',
+                  armor.lc.stringValue,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
             ],
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  _getReachText(weapon),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  '\$${weapon.price.toString()}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            ],
-          ),
-          if (weapon is RangedWeapon)
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                      'RoF: ${(weapon as RangedWeapon).rateOfFire.toString()}'),
-                ),
-                Expanded(
-                  child: Text(
-                      'Recoil: ${(weapon as RangedWeapon).recoil.toString()}'),
-                ),
-              ],
-            ),
           if (onAddClick != null || onInfoClick != null)
             Row(
               children: [
                 if (onAddClick != null)
                   IconButton(
-                    onPressed: onAddClick,
-                    icon: const Icon(Icons.add_outlined),
+                    icon: const Icon(Icons.add),
+                    onPressed: () => onAddClick?.call(armor),
                     style: iconButtonStyle,
                     constraints: iconButtonConstraints,
                   ),
                 if (onInfoClick != null)
                   IconButton(
-                    onPressed: onInfoClick,
                     icon: const Icon(Icons.info_outline),
+                    onPressed: () => onInfoClick?.call(armor),
                     style: iconButtonStyle,
                     constraints: iconButtonConstraints,
                   ),
               ],
-            )
+            ),
         ],
       ),
     );
-  }
-
-  String _getReachText(Weapon weapon) {
-    if (weapon is HandWeapon) {
-      return 'Reach: ${weapon.reach.toString()}';
-    }
-
-    if (weapon is RangedWeapon) {
-      return 'Range: ${weapon.range.toString()}';
-    }
-
-    return 'C';
   }
 }

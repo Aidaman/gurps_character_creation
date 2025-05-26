@@ -48,8 +48,8 @@ class _ArmorEditorDialogState extends State<ArmorEditorDialog> {
       additionalChildren: [
         buildFormDropdownMenu<BodyPart>(
           hint: 'Armor Location',
-          initialValue: _armor.armorLocation != BodyPart.NONE
-              ? _armor.armorLocation
+          initialValue: _armor.armorLocation.first != BodyPart.NONE
+              ? _armor.armorLocation.first
               : BodyPart.TORSO,
           items: BodyPart.values
               .where(
@@ -70,7 +70,7 @@ class _ArmorEditorDialogState extends State<ArmorEditorDialog> {
             setState(() {
               _armor = Armor.copyWith(
                 _armor,
-                armorLocation: value,
+                armorLocation: [value],
               );
             });
           },

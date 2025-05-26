@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/details/armor_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/hand_weapon_details_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/dialogs/details/ranged_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
+import 'package:gurps_character_creation/features/equipment/models/armor.dart';
 import 'package:gurps_character_creation/features/equipment/models/weapons/hand_weapon.dart';
+import 'package:gurps_character_creation/features/equipment/models/weapons/ranged_weapon.dart';
+import 'package:gurps_character_creation/features/equipment/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/weapon_provider.dart';
+import 'package:gurps_character_creation/features/equipment/widgets/armor_view.dart';
 import 'package:gurps_character_creation/features/equipment/widgets/weapon_view.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
 import 'package:gurps_character_creation/widgets/button/labeled_icon_button.dart';
@@ -45,56 +51,95 @@ class SidebarEquipmentTab extends StatelessWidget {
                       },
                     ),
                   ),
-                  Expanded(
-                    child: buildFormDropdownMenu<String?>(
-                      items: context
-                          .read<AspectsProvider>()
-                          .skills
-                          .map(
-                            (Skill e) => DropdownMenuItem<String>(
-                              value: e.name,
-                              child: Text(e.name),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (String? value) {
-                        if (value == null) {
-                          return;
-                        }
-
-                        filter.selectedSkillName = value;
-                      },
-                      context: context,
-                      hint: 'Skill',
-                      initialValue: null,
-                    ),
-                  )
+                  if (filter.sidebarContent != EquipmentFilterTypes.ARMOR)
+                    Expanded(
+                      child: buildFormDropdownMenu<String?>(
+                        items: [
+                          const DropdownMenuItem<String>(
+                            value: '',
+                            child: Text('All'),
+                          ),
+                          ...context.read<AspectsProvider>().skills.map(
+                                (Skill e) => DropdownMenuItem<String>(
+                                  value: e.name,
+                                  child: Text(e.name),
+                                ),
+                              ),
+                        ],
+                        onChanged: (String? value) {
+                          filter.selectedSkillName = value ?? '';
+                        },
+                        context: context,
+                        hint: 'Skill',
+                        initialValue: null,
+                      ),
+                    )
                 ],
               )
             ],
           ),
         ),
         const Gap(8),
-        Expanded(
-          child: _buildList(
-            list: context.watch<EquipmentProvider>().handWeapons,
-            itemBuilder: (HandWeapon item) => WeaponView(
-              weapon: item,
-              onAddClick: () => context.read<CharacterWeaponProvider>().create(
-                    HandWeapon.copyWith(item),
+        if (filter.sidebarContent == EquipmentFilterTypes.MELLEE_WEAPONS)
+          Expanded(
+            child: _buildList(
+              list: context.watch<EquipmentProvider>().handWeapons,
+              itemBuilder: (HandWeapon item) => WeaponView(
+                weapon: item,
+                onAddClick: () =>
+                    context.read<CharacterWeaponProvider>().create(
+                          HandWeapon.copyWith(item),
+                        ),
+                onInfoClick: () => showDialog(
+                  context: context,
+                  builder: (context) => HandWeaponDetailsDialog(
+                    handWeapon: item,
                   ),
-              onInfoClick: () => showDialog(
-                context: context,
-                builder: (context) => HandWeaponDetailsDialog(
-                  handWeapon: item,
                 ),
               ),
+              filterPredicate: filter.filterPredicate,
+              noDataText: 'No weapons found',
+              context: context,
             ),
-            filterPredicate: filter.filterPredicate,
-            noDataText: 'No weapons found',
-            context: context,
           ),
-        ),
+        if (filter.sidebarContent == EquipmentFilterTypes.RANGED_WEAPONS)
+          Expanded(
+            child: _buildList(
+              list: context.watch<EquipmentProvider>().rangedWeapons,
+              itemBuilder: (RangedWeapon item) => WeaponView(
+                weapon: item,
+                onAddClick: () =>
+                    context.read<CharacterWeaponProvider>().create(
+                          RangedWeapon.copyWith(item),
+                        ),
+                onInfoClick: () => showDialog(
+                  context: context,
+                  builder: (context) => RangedWeaponDetailsDialog(rw: item),
+                ),
+              ),
+              filterPredicate: filter.filterPredicate,
+              noDataText: 'No ranged weapons found',
+              context: context,
+            ),
+          ),
+        if (filter.sidebarContent == EquipmentFilterTypes.ARMOR)
+          Expanded(
+            child: _buildList(
+              list: context.watch<EquipmentProvider>().armors,
+              itemBuilder: (armor) => ArmorView(
+                armor: armor,
+                onAddClick: (armor) =>
+                    context.read<ArmorProvider>().create(Armor.copyWith(armor)),
+                onInfoClick: (armor) => showDialog(
+                  context: context,
+                  builder: (context) => ArmorDetailsDialog(armor: armor),
+                ),
+              ),
+              filterPredicate: filter.filterPredicate,
+              noDataText: 'No armors found',
+              context: context,
+            ),
+          ),
       ],
     );
   }

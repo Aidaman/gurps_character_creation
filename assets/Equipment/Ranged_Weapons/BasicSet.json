@@ -1,0 +1,163 @@
+[
+    
+    {
+        "name": "Bolas",
+        "associatedSkillName": "Bolas",
+        "damage": "thr-1 cr",
+        "accuracy": 1,
+        "range": {
+            "min_range": 0,
+            "max_range": 3
+        },
+        "weight": 2,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 20,
+        "st": 7,
+        "minimumst": 7,
+        "bulk": -2,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Longbow",
+        "associatedSkillName": "Bow",
+        "damage": "thr+2 imp",
+        "accuracy": 3,
+        "range": {
+            "min_range": 15,
+            "max_range": 20
+        },
+        "weight": 3,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 200,
+        "st": 11,
+        "minimumst": 11,
+        "bulk": -8,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Regular Bow",
+        "associatedSkillName": "Bow",
+        "damage": "thr+1 imp",
+        "accuracy": 2,
+        "range": {
+            "min_range": 15,
+            "max_range": 20
+        },
+        "weight": 2,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 100,
+        "st": 10,
+        "minimumst": 10,
+        "bulk": -7,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Short Bow",
+        "associatedSkillName": "Bow",
+        "damage": "thr imp",
+        "accuracy": 1,
+        "range": {
+            "min_range": 10,
+            "max_range": 15
+        },
+        "weight": 2,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 50,
+        "st": 7,
+        "minimumst": 10,
+        "bulk": -6,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Composite Bow",
+        "associatedSkillName": "Bow",
+        "damage": "thr+3 imp",
+        "accuracy": 3,
+        "range": {
+            "min_range": 20,
+            "max_range": 25
+        },
+        "weight": 4,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 900,
+        "st": 10,
+        "minimumst": 10,
+        "bulk": -7,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Crossbow",
+        "associatedSkillName": "Crossbow",
+        "damage": "thr+4 imp",
+        "accuracy": 4,
+        "range": {
+            "min_range": 20,
+            "max_range": 25
+        },
+        "weight": 6,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 150,
+        "st": 7,
+        "minimumst": 7,
+        "bulk": -6,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Pistol Crossbow",
+        "associatedSkillName": "Crossbow",
+        "damage": "thr+2 imp",
+        "accuracy": 1,
+        "range": {
+            "min_range": 15,
+            "max_range": 20
+        },
+        "weight": 6,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 150,
+        "st": 7,
+        "minimumst": 7,
+        "bulk": -4,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    },
+    {
+        "name": "Slingshot",
+        "associatedSkillName": "Sling",
+        "damage": "sw pi",
+        "accuracy": 0,
+        "range": {
+            "min_range": 6,
+            "max_range": 10
+        },
+        "weight": 0.5,
+        "rate_of_fire": 1,
+        "shots": 1,
+        "price": 20,
+        "st": 6,
+        "minimumst": 6,
+        "bulk": 0,
+        "lc": 0,
+        "recoil": 0,
+        "notes": ""
+    }
+]
