@@ -39,30 +39,21 @@ class ArmorSection extends StatelessWidget {
     }
   }
 
-  DataCell _buildMapValueCell(Map<String, dynamic> value, Armor armor) {
-    if (DamageResistance.isDamageResistance(value)) {
-      return DataCell(
-        Text(DamageResistance.fromJson(value).GURPSNotation),
-      );
-    }
-
-    return const DataCell(Text(''));
-  }
-
   DataRow _buildArmorDataCell(BuildContext context, Armor armor) {
     Iterable<DataCell> cells = armor.dataTableColumns.entries.map(
       (MapEntry<String, dynamic> e) {
-        final bool valueIsMap = e.value is Map;
-
-        if (valueIsMap) {
-          return _buildMapValueCell(e.value, armor);
+        if (e.key == 'DR') {
+          return DataCell(
+            Text(armor.damageResistance.GURPSNotation),
+          );
         }
 
-        if (BodyPartString.fromString(e.value.toString()) != BodyPart.NONE) {
-          DataCell(
+        if (e.key == 'put on') {
+          return DataCell(
             Center(
               child: Text(
-                  BodyPartString.fromString(e.value.toString()).stringValue),
+                armor.armorLocation.map((bp) => bp.stringValue).join(', '),
+              ),
             ),
           );
         }

@@ -8,6 +8,7 @@ abstract class Weapon extends Equipment {
   final String associatedSkillName;
   final String notes;
   final int minimumSt;
+  final int? maximumSt;
 
   Weapon({
     required this.damage,
@@ -18,6 +19,7 @@ abstract class Weapon extends Equipment {
     required super.weight,
     required super.name,
     required super.price,
+    this.maximumSt,
   });
 
   Weapon.withId({
@@ -30,6 +32,7 @@ abstract class Weapon extends Equipment {
     required super.price,
     required super.weight,
     required super.id,
+    this.maximumSt,
   }) : super.withId();
 
   Map<String, dynamic> toJson();

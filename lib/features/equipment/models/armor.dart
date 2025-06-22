@@ -236,8 +236,7 @@ class Armor extends Equipment {
         'name': name,
         'price': price,
         'weight': weight,
-        'armor_location': armorLocation.join(', '),
-        'damage_resistance': damageResistance.toJson(),
-        'lc': lc.stringValue,
+        'put on': armorLocation,
+        'DR': damageResistance,
       };
 }

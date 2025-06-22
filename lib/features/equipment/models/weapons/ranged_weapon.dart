@@ -178,6 +178,7 @@ class RangedWeapon extends Weapon {
     required this.st,
     required super.lc,
     required super.minimumSt,
+    super.maximumSt,
   });
 
   RangedWeapon.withId({
@@ -188,6 +189,7 @@ class RangedWeapon extends Weapon {
     required super.weight,
     required super.associatedSkillName,
     required super.minimumSt,
+    super.maximumSt,
     required this.range,
     required this.accuracy,
     required this.rateOfFire,
@@ -208,6 +210,7 @@ class RangedWeapon extends Weapon {
     double? weight,
     String? associatedSkillName,
     int? minimumSt,
+    int? maximumSt,
     Range? range,
     int? accuracy,
     int? rateOfFire,
@@ -226,6 +229,7 @@ class RangedWeapon extends Weapon {
       weight: weight ?? rw.weight,
       associatedSkillName: associatedSkillName ?? rw.associatedSkillName,
       minimumSt: minimumSt ?? rw.minimumSt,
+      maximumSt: maximumSt ?? rw.maximumSt,
       range: range ?? rw.range,
       accuracy: accuracy ?? rw.accuracy,
       rateOfFire: rateOfFire ?? rw.rateOfFire,
@@ -289,6 +293,7 @@ class RangedWeapon extends Weapon {
       st: WeaponStrengths.fromIntJson(json['st']),
       lc: LegalityClassExtention.fromString(json['lc'].toString()),
       minimumSt: json['min_st'] ?? 10,
+      maximumSt: json['max_st'],
     );
   }
 

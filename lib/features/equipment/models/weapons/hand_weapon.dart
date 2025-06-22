@@ -91,6 +91,7 @@ class HandWeapon extends Weapon {
     required super.weight,
     required super.associatedSkillName,
     required super.minimumSt,
+    super.maximumSt,
     required super.lc,
   });
 
@@ -103,6 +104,7 @@ class HandWeapon extends Weapon {
     required super.weight,
     required super.associatedSkillName,
     required super.minimumSt,
+    super.maximumSt,
     required super.lc,
     required super.id,
   }) : super.withId();
@@ -117,6 +119,8 @@ class HandWeapon extends Weapon {
     double? weight,
     String? associatedSkillName,
     int? minimumSt,
+    int? maximumSt,
+    int? maxSt,
     LegalityClass? lc,
   }) {
     return HandWeapon.withId(
@@ -129,6 +133,7 @@ class HandWeapon extends Weapon {
       weight: weight ?? hw.weight,
       associatedSkillName: associatedSkillName ?? hw.associatedSkillName,
       minimumSt: minimumSt ?? hw.minimumSt,
+      maximumSt: maximumSt ?? hw.maximumSt,
       lc: lc ?? hw.lc,
     );
   }
@@ -149,6 +154,7 @@ class HandWeapon extends Weapon {
         weight: 0,
         associatedSkillName: '',
         minimumSt: 0,
+        maximumSt: 0,
         lc: LegalityClass.OPEN,
       );
 
@@ -161,6 +167,7 @@ class HandWeapon extends Weapon {
         reach: HandWeaponReach.fromJson(json['reach']),
         associatedSkillName: json['associated_skill_name'] ?? '',
         minimumSt: json['minimum_st'] ?? 0,
+        maximumSt: json['maximum_st'] ?? 0,
         lc: json['lc'] == null
             ? LegalityClass.OPEN
             : LegalityClassExtention.fromString(json['lc']),

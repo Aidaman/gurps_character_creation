@@ -36,7 +36,7 @@ class WeaponDamage {
   });
 
   static bool isDamage(Map<String, dynamic> json) =>
-      json.containsKey('attack_type');
+      json.containsKey('attack_type') || json.containsKey('damage_type');
 
   /*
     As for thrusting damage, I struggle to find any pattern there
@@ -49,7 +49,14 @@ class WeaponDamage {
     But it is only when values more than 10, so I could
     Represent this like the following:
   */
-  static int thrustingAttackDiceAmount(int characterST) {
+  static int thrustingAttackDiceAmount(
+    int characterST, {
+    int? maxSt,
+  }) {
+    if (maxSt != null && characterST > maxSt) {
+      characterST = maxSt;
+    }
+
     if (characterST <= 4) {
       return 0;
     }
@@ -74,7 +81,15 @@ class WeaponDamage {
     return characterST ~/ 8.75;
   }
 
-  static int thrustingAttackModifier(int characterST, int? minST) {
+  static int thrustingAttackModifier(
+    int characterST,
+    int? minST, {
+    int? maxSt,
+  }) {
+    if (maxSt != null && characterST > maxSt) {
+      characterST = maxSt;
+    }
+
     if (characterST < 4) {
       return 0;
     }
@@ -132,7 +147,14 @@ class WeaponDamage {
   // (x)dice - 1; (x+1)dice; (x+1)dice + 1; (x+1)dice + 2
   // So, basically: ((CharacterST - 9) % 4) - 1 for a modifier
   // And ((CharacterST - 9) ~/4) + 1 for a dice
-  static int swingingAttackDiceAmount(int characterST) {
+  static int swingingAttackDiceAmount(
+    int characterST, {
+    int? maxSt,
+  }) {
+    if (maxSt != null && characterST > maxSt) {
+      characterST = maxSt;
+    }
+
     if (characterST <= 4) {
       return 0;
     }
@@ -144,7 +166,15 @@ class WeaponDamage {
     return ((characterST - 9) ~/ 4) + 1;
   }
 
-  static int swingingAttackModifier(int characterST, int? minST) {
+  static int swingingAttackModifier(
+    int characterST,
+    int? minST, {
+    int? maxSt,
+  }) {
+    if (maxSt != null && characterST > maxSt) {
+      characterST = maxSt;
+    }
+
     if (characterST <= 4) {
       return 0;
     }
@@ -251,7 +281,7 @@ class WeaponDamage {
       };
 
   // Use character's ST to calculate the actual damage
-  String calculateDamage(int characterST, int? minST) {
+  String calculateDamage(int characterST, int? minST, int? maxSt) {
     int damageDice = switch (attackType) {
       AttackTypes.THRUST => thrustingAttackDiceAmount(characterST),
       AttackTypes.SWING => swingingAttackDiceAmount(characterST),

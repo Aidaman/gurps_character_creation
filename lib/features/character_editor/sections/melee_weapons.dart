@@ -38,6 +38,7 @@ class MeleeWeaponsSection extends StatelessWidget {
         Text(damage.calculateDamage(
           character.attributes.getAttribute(Attributes.ST),
           hw.minimumSt,
+          hw.maximumSt,
         )),
       );
     }

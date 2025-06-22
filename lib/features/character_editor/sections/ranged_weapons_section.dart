@@ -60,6 +60,7 @@ class RangedWeaponsSection extends StatelessWidget {
               Text(damage.calculateDamage(
                 character.attributes.getAttribute(Attributes.ST),
                 rw.minimumSt,
+                rw.maximumSt,
               )),
             );
           }
