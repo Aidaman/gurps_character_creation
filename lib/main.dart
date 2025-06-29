@@ -4,9 +4,9 @@ import 'package:gurps_character_creation/core/themes/widgets/switch.dart';
 import 'package:gurps_character_creation/core/themes/widgets/text_input.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
+import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
 import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
-import 'package:gurps_character_creation/core/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,7 +16,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => AspectsProvider()),
         ChangeNotifierProvider(create: (_) => EquipmentProvider()),
         ChangeNotifierProvider(create: (_) => CharacterProvider()),
-        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
       ],
       child: const MyApp(),
     ),
@@ -32,16 +32,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  void initState() {
+  initState() {
     super.initState();
 
-    Provider.of<AspectsProvider>(context, listen: false).loadCharacteristics();
-    Provider.of<EquipmentProvider>(context, listen: false).loadEquipment();
+    context.read<AspectsProvider>().loadCharacteristics();
+    context.read<EquipmentProvider>().loadEquipment();
+    context.read<SettingsProvider>().loadSettings();
   }
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context);
 
     return MaterialApp(
       title: 'GURPS Composer',
@@ -79,7 +81,7 @@ class _MyAppState extends State<MyApp> {
         switchTheme: getSwitchThemeData(context),
         inputDecorationTheme: getInputDecorationTheme(context),
       ),
-      themeMode: themeProvider.currentTheme,
+      themeMode: settingsProvider.settings.theme,
       routes: Map.fromEntries(
         AppRoutes.values.map(
           (AppRoutes route) => MapEntry(

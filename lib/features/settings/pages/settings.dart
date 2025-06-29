@@ -4,7 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
-import 'package:gurps_character_creation/core/themes/theme_provider.dart';
+import 'package:gurps_character_creation/features/settings/models/app_settings.dart';
+import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
 import 'package:gurps_character_creation/widgets/settings_card.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    final SettingsProvider settingsProvider = context.watch<SettingsProvider>();
 
     return Scaffold(
       appBar: AppBar(),
@@ -33,9 +34,13 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                initialValue: ThemeMode.system,
-                onChanged: (ThemeMode? value) =>
-                    themeProvider.currentTheme = value,
+                initialValue: settingsProvider.settings.theme,
+                onChanged: (ThemeMode? value) {
+                  settingsProvider.settings = AppSettings.copyWith(
+                    settingsProvider.settings,
+                    theme: value,
+                  );
+                },
                 context: context,
                 hint: 'Theme',
               ),

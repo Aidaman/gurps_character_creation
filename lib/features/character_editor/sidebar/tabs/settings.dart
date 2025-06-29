@@ -5,7 +5,8 @@ import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
-import 'package:gurps_character_creation/core/themes/theme_provider.dart';
+import 'package:gurps_character_creation/features/settings/models/app_settings.dart';
+import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
 import 'package:provider/provider.dart';
 
 class SidebarSettingsTab extends StatelessWidget {
@@ -13,7 +14,8 @@ class SidebarSettingsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context);
     final CharacterProvider characterProvider =
         Provider.of<CharacterProvider>(context);
 
@@ -40,7 +42,11 @@ class SidebarSettingsTab extends StatelessWidget {
               ),
             ),
             initialValue: ThemeMode.system,
-            onChanged: (ThemeMode? value) => themeProvider.currentTheme = value,
+            onChanged: (ThemeMode? value) =>
+                settingsProvider.settings = AppSettings.copyWith(
+              settingsProvider.settings,
+              theme: value,
+            ),
             context: context,
             hint: 'Theme',
           ),
