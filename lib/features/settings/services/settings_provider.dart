@@ -6,16 +6,7 @@ import 'package:gurps_character_creation/features/settings/models/app_settings.d
 import 'package:path_provider/path_provider.dart';
 
 class SettingsProvider with ChangeNotifier {
-  late AppSettings _appSettings;
-
-  AppSettings get settings => _appSettings;
-  set settings(AppSettings settings) {
-    if (_appSettings.appVersion != settings.appVersion) {
-      return;
-    }
-
-    _appSettings = settings;
-  }
+  late AppSettings settings;
 
   void deleteSettingsFile() async {
     final Directory directory = await getApplicationDocumentsDirectory();
@@ -30,25 +21,23 @@ class SettingsProvider with ChangeNotifier {
       final File file = File('${directory.path}/settings.json');
 
       if (!await file.exists()) {
-        _appSettings = AppSettings.empty();
         saveSettings();
-        return _appSettings;
+        return settings;
       }
 
       print('File exists lol');
 
-      _appSettings =
-          AppSettings.fromJson(json.decode(await file.readAsString()));
+      settings = AppSettings.fromJson(json.decode(await file.readAsString()));
     } catch (e) {
       print('an error occured...');
-      _appSettings = AppSettings.empty();
+      settings = AppSettings.empty();
 
       rethrow;
     } finally {
       notifyListeners();
     }
 
-    return _appSettings;
+    return settings;
   }
 
   void saveSettings() async {
@@ -56,7 +45,7 @@ class SettingsProvider with ChangeNotifier {
       final Directory directory = await getApplicationDocumentsDirectory();
       final File file = File('${directory.path}/settings.json');
 
-      await file.writeAsString(json.encode(_appSettings.toJson()));
+      await file.writeAsString(json.encode(settings.toJson()));
     } catch (e) {
       rethrow;
     } finally {

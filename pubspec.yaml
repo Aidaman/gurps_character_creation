@@ -18,6 +18,7 @@ dependencies:
   flutter_svg: ^2.0.16
   file_picker: ^8.1.7
   path_provider: ^2.1.5
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_lints: ^3.0.0
@@ -38,6 +39,16 @@ flutter_launcher_icons:
     generate: true
     image_path: "assets/favicon.png"
 
+flutter_native_splash:
+  color: "#eeeeee"
+  color_dark: "#282b30"
+  background_image: "assets/favicon.png"
+
+  android_12:
+    color: "#eeeeee"
+    color_dark: "#282b30"
+    image: "assets/android12favicon.png"
+
 flutter:
   uses-material-design: true
 
@@ -50,3 +61,4 @@ flutter:
     - assets/Equipment/Armor/BasicSet.json
     - assets/spell_book.svg
     - assets/favicon.png
+    - assets/android12favicon.png

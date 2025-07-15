@@ -3,10 +3,10 @@ import 'package:gurps_character_creation/core/utilities/theme_string.dart';
 
 class AppSettings {
   final String _appVersion;
-  get appVersion => _appVersion;
+  String get appVersion => _appVersion;
 
   final ThemeMode _theme;
-  get theme => _theme;
+  ThemeMode get theme => _theme;
 
   AppSettings({required String appVersion, required ThemeMode theme})
       : _appVersion = appVersion,

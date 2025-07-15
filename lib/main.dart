@@ -1,15 +1,18 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
-import 'package:gurps_character_creation/core/themes/widgets/switch.dart';
-import 'package:gurps_character_creation/core/themes/widgets/text_input.dart';
+import 'package:gurps_character_creation/core/constants/themes.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
-import 'package:gurps_character_creation/pages/homepage.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(
     MultiProvider(
       providers: [
@@ -31,57 +34,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Queue<Future<void> Function()> loadQueue = Queue.from([]);
+
   @override
-  initState() {
+  void initState() {
     super.initState();
 
-    context.read<AspectsProvider>().loadCharacteristics();
-    context.read<EquipmentProvider>().loadEquipment();
-    context.read<SettingsProvider>().loadSettings();
+    loadQueue.addAll(
+      [
+        context.read<SettingsProvider>().loadSettings,
+        context.read<AspectsProvider>().loadCharacteristics,
+        context.read<EquipmentProvider>().loadEquipment,
+      ],
+    );
+
+    while (loadQueue.isNotEmpty) {
+      _runNextLoadTask();
+    }
+
+    FlutterNativeSplash.remove();
+  }
+
+  Future _runNextLoadTask() async {
+    final task = loadQueue.removeFirst();
+
+    await task();
   }
 
   @override
   Widget build(BuildContext context) {
-    final SettingsProvider settingsProvider =
-        Provider.of<SettingsProvider>(context);
-
     return MaterialApp(
       title: 'GURPS Composer',
-      theme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.light,
-          primary: Color(0xFF1565C0),
-          onPrimary: Color(0xFFeeeeee),
-          secondary: Color(0x3E9A9996),
-          onSecondary: Color(0xFF363636),
-          error: Color(0xFFD81B60),
-          onError: Color(0xFFeeeeee),
-          surface: Color(0xFFeeeeee),
-          onSurface: Color(0xFF363636),
-          shadow: Color(0x64222222),
-        ),
-        useMaterial3: true,
-        switchTheme: getSwitchThemeData(context),
-        inputDecorationTheme: getInputDecorationTheme(context),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: const ColorScheme(
-          brightness: Brightness.dark,
-          primary: Color(0xFF7289da),
-          onPrimary: Color(0xFFEEEEEE),
-          secondary: Color(0x3E607D8B),
-          onSecondary: Color(0xFFDCDCDC),
-          error: Color(0xFFEF5350),
-          onError: Color(0xFEFEFEFF),
-          surface: Color(0xFF282b30),
-          onSurface: Color(0xFFDCDCDC),
-          shadow: Color(0x64222222),
-        ),
-        useMaterial3: true,
-        switchTheme: getSwitchThemeData(context),
-        inputDecorationTheme: getInputDecorationTheme(context),
-      ),
-      themeMode: settingsProvider.settings.theme,
+      theme: defaultTheme(context),
+      darkTheme: darkTheme(context),
+      themeMode: context.watch<SettingsProvider>().settings.theme,
       routes: Map.fromEntries(
         AppRoutes.values.map(
           (AppRoutes route) => MapEntry(
@@ -90,16 +76,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      initialRoute: '/',
+      initialRoute: AppRoutes.HOMEPAGE.destination,
     );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Homepage();
   }
 }
