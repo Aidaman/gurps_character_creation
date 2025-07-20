@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
+import 'package:provider/provider.dart';
 
 class SidebarSaveLoadTab extends StatelessWidget {
   final CharacterIOService characterIOService;
@@ -21,8 +23,10 @@ class SidebarSaveLoadTab extends StatelessWidget {
           FilledButton.icon(
             icon: const Icon(Icons.save_outlined),
             label: const Text('Save Character'),
-            onPressed: () async =>
-                await characterIOService.saveCharacter(context),
+            onPressed: () async {
+              context.read<AutosaveService>().cancelAutosave();
+              return await characterIOService.saveCharacter(context);
+            },
           ),
           const Gap(8),
           FilledButton.icon(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/equipment/models/armor.dart';
 import 'package:gurps_character_creation/features/equipment/providers/armor_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/armor_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/armor_editor_dialog.dart';
+import 'package:provider/provider.dart';
 
 class ArmorSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
@@ -21,6 +23,7 @@ class ArmorSection extends StatelessWidget {
 
     if (armor != null) {
       armorProvider.create(armor);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 
@@ -36,6 +39,7 @@ class ArmorSection extends StatelessWidget {
 
     if (newArmor != null) {
       armorProvider.update(newArmor);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 
@@ -137,7 +141,10 @@ class ArmorSection extends StatelessWidget {
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
-          onPressed: () => armorProvider.delete(armor.id),
+          onPressed: () {
+            armorProvider.delete(armor.id);
+            context.read<AutosaveService>().triggerAutosave(context);
+          },
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(

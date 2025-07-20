@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/equipment/models/posession.dart';
 import 'package:gurps_character_creation/features/equipment/providers/possessions_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/possession_detail_dialog.dart';
@@ -84,6 +85,7 @@ class PosessionsSection extends StatelessWidget {
 
     if (newPossession != null) {
       _possessionsProvider.create(newPossession);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 
@@ -96,6 +98,7 @@ class PosessionsSection extends StatelessWidget {
 
     if (newPossession != null) {
       _possessionsProvider.update(newPossession);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 
@@ -124,7 +127,10 @@ class PosessionsSection extends StatelessWidget {
           icon: const Icon(Icons.edit_outlined),
         ),
         IconButton(
-          onPressed: () => _possessionsProvider.delete(poss.id),
+          onPressed: () {
+            _possessionsProvider.delete(poss.id);
+            context.read<AutosaveService>().triggerAutosave(context);
+          },
           icon: const Icon(Icons.remove_outlined),
         ),
         IconButton(

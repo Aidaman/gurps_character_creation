@@ -8,6 +8,8 @@ import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
+import 'package:provider/provider.dart';
 
 class _PersonalInfoField {
   final String label;
@@ -61,8 +63,10 @@ class PersonalInfoSection extends StatelessWidget {
                   size: 48,
                 ),
               )
-            : Image.file(
-                File(personalInfoProvider.getField('avatarURL')),
+            : CircleAvatar(
+                child: Image.file(
+                  File(personalInfoProvider.getField('avatarURL')),
+                ),
               ),
       ),
     );
@@ -152,55 +156,73 @@ class PersonalInfoSection extends StatelessWidget {
         label: 'Players Name',
         defaultValue: personalInfoProvider.getField('Players Name'),
         validator: validateText,
-        onChanged: (String? value) => personalInfoProvider.update(
-          field: 'Players Name',
-          value: value,
-        ),
+        onChanged: (String? value) {
+          personalInfoProvider.update(
+            field: 'Players Name',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
       _PersonalInfoField(
         label: 'Character Name',
         defaultValue: personalInfoProvider.getField('Character Name'),
         validator: validateText,
-        onChanged: (String? value) => personalInfoProvider.update(
-          field: 'Character Name',
-          value: value,
-        ),
+        onChanged: (String? value) {
+          personalInfoProvider.update(
+            field: 'Character Name',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
       _PersonalInfoField(
         label: 'Age',
         defaultValue: personalInfoProvider.getField('Age'),
         validator: validatePositiveNumber,
-        onChanged: (String? value) => personalInfoProvider.update(
-          field: 'Age',
-          value: value,
-        ),
+        onChanged: (String? value) {
+          personalInfoProvider.update(
+            field: 'Age',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
       _PersonalInfoField(
         label: 'Height',
         defaultValue: personalInfoProvider.getField('Height'),
         validator: validatePositiveNumber,
-        onChanged: (String? value) => personalInfoProvider.update(
-          field: 'Height',
-          value: value,
-        ),
+        onChanged: (String? value) {
+          personalInfoProvider.update(
+            field: 'Height',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
       _PersonalInfoField(
         label: 'Weight',
         defaultValue: personalInfoProvider.getField('Weight'),
         validator: validatePositiveNumber,
-        onChanged: (value) => personalInfoProvider.update(
-          field: 'Weight',
-          value: value,
-        ),
+        onChanged: (value) {
+          personalInfoProvider.update(
+            field: 'Weight',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
       _PersonalInfoField(
         label: 'Size Modifier',
         defaultValue: personalInfoProvider.getField('Size Modifier'),
         validator: validatePositiveNumber,
-        onChanged: (value) => personalInfoProvider.update(
-          field: 'Size Modifier',
-          value: value,
-        ),
+        onChanged: (value) {
+          personalInfoProvider.update(
+            field: 'Size Modifier',
+            value: value,
+          );
+          context.read<AutosaveService>().triggerAutosave(context);
+        },
       ),
     ];
 

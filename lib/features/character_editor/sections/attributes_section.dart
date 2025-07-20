@@ -3,6 +3,8 @@ import 'package:gurps_character_creation/core/constants/responsive_layouting_con
 import 'package:gurps_character_creation/features/character/models/attributes.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
 import 'package:gurps_character_creation/features/character/widgets/attribute_view.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
+import 'package:provider/provider.dart';
 
 class AttributesSection extends StatelessWidget {
   final AttributesProvider attributesProvider;
@@ -19,12 +21,14 @@ class AttributesSection extends StatelessWidget {
           attribute: attribute,
           value: attribute.adjustPriceOf,
         );
+        context.read<AutosaveService>().triggerAutosave(context);
       },
       onDecrement: () {
         attributesProvider.update(
           attribute: attribute,
           value: (attribute.adjustPriceOf * -1),
         );
+        context.read<AutosaveService>().triggerAutosave(context);
       },
     );
   }
@@ -41,12 +45,14 @@ class AttributesSection extends StatelessWidget {
           attribute: attribute,
           value: attribute.adjustPriceOf,
         );
+        context.read<AutosaveService>().triggerAutosave(context);
       },
       onDecrement: () {
         attributesProvider.update(
           attribute: attribute,
           value: attribute.adjustPriceOf * -1,
         );
+        context.read<AutosaveService>().triggerAutosave(context);
       },
     );
   }

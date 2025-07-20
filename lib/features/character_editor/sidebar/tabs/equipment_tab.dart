@@ -5,6 +5,7 @@ import 'package:gurps_character_creation/features/aspects/providers/aspects_prov
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/armor_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/ranged_weapon_details_dialog.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
@@ -86,10 +87,12 @@ class SidebarEquipmentTab extends StatelessWidget {
               list: context.watch<EquipmentProvider>().handWeapons,
               itemBuilder: (HandWeapon item) => WeaponView(
                 weapon: item,
-                onAddClick: () =>
-                    context.read<CharacterWeaponProvider>().create(
-                          HandWeapon.copyWith(item),
-                        ),
+                onAddClick: () {
+                  context.read<CharacterWeaponProvider>().create(
+                        HandWeapon.copyWith(item),
+                      );
+                  context.read<AutosaveService>().triggerAutosave(context);
+                },
                 onInfoClick: () => showDialog(
                   context: context,
                   builder: (context) => HandWeaponDetailsDialog(
@@ -108,10 +111,12 @@ class SidebarEquipmentTab extends StatelessWidget {
               list: context.watch<EquipmentProvider>().rangedWeapons,
               itemBuilder: (RangedWeapon item) => WeaponView(
                 weapon: item,
-                onAddClick: () =>
-                    context.read<CharacterWeaponProvider>().create(
-                          RangedWeapon.copyWith(item),
-                        ),
+                onAddClick: () {
+                  context.read<CharacterWeaponProvider>().create(
+                        RangedWeapon.copyWith(item),
+                      );
+                  context.read<AutosaveService>().triggerAutosave(context);
+                },
                 onInfoClick: () => showDialog(
                   context: context,
                   builder: (context) => RangedWeaponDetailsDialog(rw: item),
@@ -128,8 +133,10 @@ class SidebarEquipmentTab extends StatelessWidget {
               list: context.watch<EquipmentProvider>().armors,
               itemBuilder: (armor) => ArmorView(
                 armor: armor,
-                onAddClick: (armor) =>
-                    context.read<ArmorProvider>().create(Armor.copyWith(armor)),
+                onAddClick: (armor) {
+                  context.read<ArmorProvider>().create(Armor.copyWith(armor));
+                  context.read<AutosaveService>().triggerAutosave(context);
+                },
                 onInfoClick: (armor) => showDialog(
                   context: context,
                   builder: (context) => ArmorDetailsDialog(armor: armor),

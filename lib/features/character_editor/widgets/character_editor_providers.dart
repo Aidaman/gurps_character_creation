@@ -3,7 +3,9 @@ import 'package:gurps_character_creation/features/character/providers/attributes
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/character/services/attributes_service.dart';
+import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/services/personal_info_service.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_equipment_filter_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/armor_provider.dart';
@@ -12,6 +14,7 @@ import 'package:gurps_character_creation/features/equipment/providers/weapon_pro
 import 'package:gurps_character_creation/features/equipment/services/armor_service.dart';
 import 'package:gurps_character_creation/features/equipment/services/possessions_service.dart';
 import 'package:gurps_character_creation/features/equipment/services/weapon_service.dart';
+import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
 import 'package:gurps_character_creation/features/skills/providers/skill_provider.dart';
 import 'package:gurps_character_creation/features/skills/services/skill_service.dart';
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
@@ -36,6 +39,10 @@ class CharacterEditorProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(
+          create: (_) => AutosaveService(CharacterIOService(),
+              context.read<SettingsProvider>().settings.autosaveDelay),
+        ),
         ChangeNotifierProvider<SidebarProvider>(
           create: (_) => SidebarProvider(),
         ),

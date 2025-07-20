@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/character/models/attributes.dart';
 import 'package:gurps_character_creation/features/character/models/character.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/equipment/models/legality_class.dart';
 import 'package:gurps_character_creation/features/equipment/models/weapons/ranged_weapon.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
@@ -175,6 +176,7 @@ class RangedWeaponsSection extends StatelessWidget {
 
     if (rw != null) {
       weaponProvider.create(rw);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 
@@ -187,6 +189,7 @@ class RangedWeaponsSection extends StatelessWidget {
 
     if (newWeapon != null) {
       weaponProvider.update(newWeapon);
+      context.read<AutosaveService>().triggerAutosave(context);
     }
   }
 }

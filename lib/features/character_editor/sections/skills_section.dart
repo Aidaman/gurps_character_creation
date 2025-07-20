@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
 import 'package:gurps_character_creation/features/skills/models/skill.dart';
@@ -8,6 +9,7 @@ import 'package:gurps_character_creation/features/skills/providers/skill_provide
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/skills/widgets/skill_view.dart';
 import 'package:gurps_character_creation/features/spells/widgets/spell_view.dart';
+import 'package:provider/provider.dart';
 
 class SkillsSection extends StatelessWidget {
   final SkillsProvider skillsProvider;
@@ -52,6 +54,7 @@ class SkillsSection extends StatelessWidget {
               isIncluded: true,
               onRemoveClick: () {
                 skillsProvider.delete(skl);
+                context.read<AutosaveService>().triggerAutosave(context);
               },
             ),
           ),

@@ -9,7 +9,7 @@ class SettingsProvider with ChangeNotifier {
   late AppSettings settings;
 
   void deleteSettingsFile() async {
-    final Directory directory = await getApplicationDocumentsDirectory();
+    final Directory directory = await getApplicationSupportDirectory();
     final File file = File('${directory.path}/settings.json');
 
     await file.delete();
@@ -17,7 +17,7 @@ class SettingsProvider with ChangeNotifier {
 
   Future<AppSettings> loadSettings() async {
     try {
-      final Directory directory = await getApplicationDocumentsDirectory();
+      final Directory directory = await getApplicationSupportDirectory();
       final File file = File('${directory.path}/settings.json');
 
       if (!await file.exists()) {
@@ -25,11 +25,8 @@ class SettingsProvider with ChangeNotifier {
         return settings;
       }
 
-      print('File exists lol');
-
       settings = AppSettings.fromJson(json.decode(await file.readAsString()));
     } catch (e) {
-      print('an error occured...');
       settings = AppSettings.empty();
 
       rethrow;
@@ -42,7 +39,7 @@ class SettingsProvider with ChangeNotifier {
 
   void saveSettings() async {
     try {
-      final Directory directory = await getApplicationDocumentsDirectory();
+      final Directory directory = await getApplicationSupportDirectory();
       final File file = File('${directory.path}/settings.json');
 
       await file.writeAsString(json.encode(settings.toJson()));

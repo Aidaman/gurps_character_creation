@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/models/aspect.dart';
+import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/consts.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/widgets/search_field.dart';
@@ -67,9 +68,12 @@ class SidebarAspectsTab extends StatelessWidget {
                 context: context,
                 itemBuilder: (item) => TraitView(
                   trait: item,
-                  onAddClick: () => _addAspect(item, context),
+                  onAddClick: () {
+                    _addAspect(item, context);
+                  },
                   onRemoveClick: () {
                     context.read<TraitsProvider>().delete(item);
+                    context.read<AutosaveService>().triggerAutosave(context);
                   },
                 ),
               ),
@@ -82,9 +86,12 @@ class SidebarAspectsTab extends StatelessWidget {
                 context: context,
                 itemBuilder: (skl) => SkillView(
                   skill: skl,
-                  onAddClick: () => _addAspect(skl, context),
+                  onAddClick: () {
+                    _addAspect(skl, context);
+                  },
                   onRemoveClick: () {
                     context.read<SkillsProvider>().delete(skl);
+                    context.read<AutosaveService>().triggerAutosave(context);
                   },
                 ),
               ),
@@ -97,9 +104,12 @@ class SidebarAspectsTab extends StatelessWidget {
                 context: context,
                 itemBuilder: (spl) => SpellView(
                   spell: spl,
-                  onAddClick: () => _addAspect(spl, context),
+                  onAddClick: () {
+                    _addAspect(spl, context);
+                  },
                   onRemoveClick: () {
                     context.read<SpellsProvider>().delete(spl);
+                    context.read<AutosaveService>().triggerAutosave(context);
                   },
                 ),
               ),
@@ -331,5 +341,7 @@ class SidebarAspectsTab extends StatelessWidget {
     if (aspect is Spell) {
       context.read<SpellsProvider>().add(aspect);
     }
+
+    context.read<AutosaveService>().triggerAutosave(context);
   }
 }

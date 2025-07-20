@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/app_directory_service.dart';
 import 'package:gurps_character_creation/features/character/models/character.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +18,7 @@ class CharacterIOService {
     try {
       final Directory directory = await getApplicationDocumentsDirectory();
       final String filePath =
-          '${char.personalInfo.playerName}-${char.personalInfo.name}.json';
+          '${ApplicationDirectories.USER_CHARACTERS_DIRECTORY.stringValue}/${char.id}.json';
 
       final Uri fileUri = Uri.file('${directory.path}/$filePath');
       final file = File(fileUri.toFilePath());
