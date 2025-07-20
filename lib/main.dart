@@ -1,7 +1,5 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
 import 'package:gurps_character_creation/core/constants/themes.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
@@ -11,8 +9,6 @@ import 'package:gurps_character_creation/features/character/providers/character_
 import 'package:provider/provider.dart';
 
 void main() {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   runApp(
     MultiProvider(
       providers: [
@@ -34,49 +30,69 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Queue<Future<void> Function()> loadQueue = Queue.from([]);
+  late Future<void> _loadingFuture;
+  String _loadingMessage = '';
+
+  Future<void> _loadAll() async {
+    setState(() => _loadingMessage = "Loading settings...");
+    await context.read<SettingsProvider>().loadSettings();
+
+    setState(() => _loadingMessage = "Loading aspects...");
+    await context.read<AspectsProvider>().loadCharacteristics();
+
+    setState(() => _loadingMessage = "Loading equipment...");
+    await context.read<EquipmentProvider>().loadEquipment();
+
+    setState(() => _loadingMessage = "Finishing up...");
+  }
 
   @override
   void initState() {
     super.initState();
-
-    loadQueue.addAll(
-      [
-        context.read<SettingsProvider>().loadSettings,
-        context.read<AspectsProvider>().loadCharacteristics,
-        context.read<EquipmentProvider>().loadEquipment,
-      ],
-    );
-
-    while (loadQueue.isNotEmpty) {
-      _runNextLoadTask();
-    }
-
-    FlutterNativeSplash.remove();
-  }
-
-  Future _runNextLoadTask() async {
-    final task = loadQueue.removeFirst();
-
-    await task();
+    _loadingFuture = _loadAll();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'GURPS Composer',
-      theme: defaultTheme(context),
-      darkTheme: darkTheme(context),
-      themeMode: context.watch<SettingsProvider>().settings.theme,
-      routes: Map.fromEntries(
-        AppRoutes.values.map(
-          (AppRoutes route) => MapEntry(
-            route.destination,
-            route.pageBuilder,
-          ),
-        ),
-      ),
-      initialRoute: AppRoutes.HOMEPAGE.destination,
-    );
+    return FutureBuilder(
+        future: _loadingFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: Material(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const CircularProgressIndicator(),
+                      const Gap(24),
+                      Text(
+                        _loadingMessage,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+
+          return MaterialApp(
+            title: 'GURPS Composer',
+            theme: defaultTheme(context),
+            darkTheme: darkTheme(context),
+            themeMode: context.watch<SettingsProvider>().settings.theme,
+            routes: Map.fromEntries(
+              AppRoutes.values.map(
+                (AppRoutes route) => MapEntry(
+                  route.destination,
+                  route.pageBuilder,
+                ),
+              ),
+            ),
+            initialRoute: AppRoutes.HOMEPAGE.destination,
+          );
+        });
   }
 }
