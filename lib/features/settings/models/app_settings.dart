@@ -30,7 +30,7 @@ class AppSettings {
       appVersion: json['app_version'],
       theme: ThemeModeString.fromString(json['global_theme']),
       autosaveDelay: Duration(
-        seconds: int.tryParse(json['autosave_delay_seconds']) ?? 2,
+        seconds: json['autosave_delay_seconds'] ?? 2,
       ),
     );
   }
