@@ -6,7 +6,12 @@ import 'package:gurps_character_creation/features/settings/models/app_settings.d
 import 'package:path_provider/path_provider.dart';
 
 class SettingsProvider with ChangeNotifier {
-  late AppSettings settings;
+  late AppSettings _settings;
+  AppSettings get settings => _settings;
+  set settings(AppSettings value) {
+    _settings = value;
+    notifyListeners();
+  }
 
   void deleteSettingsFile() async {
     final Directory directory = await getApplicationSupportDirectory();

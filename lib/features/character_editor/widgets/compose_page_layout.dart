@@ -30,7 +30,11 @@ class ComposePageLayout extends StatelessWidget {
         Expanded(
           child: bodyContent,
         ),
-        if (isDesktop) _buildToggleSidebarButton(sidebarProvider),
+        if (isDesktop)
+          SizedBox(
+            width: 64.0,
+            child: _buildToggleSidebarButton(sidebarProvider),
+          ),
         AnimatedContainer(
           duration: const Duration(milliseconds: 512),
           curve: Curves.easeInOut,
@@ -49,6 +53,7 @@ class ComposePageLayout extends StatelessWidget {
       ColorScheme theme = Theme.of(context).colorScheme;
 
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const Gap(86),
           MouseRegion(

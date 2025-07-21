@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:gurps_character_creation/core/themes/widgets/buttons.dart';
+import 'package:gurps_character_creation/core/themes/widgets/card.dart';
 import 'package:gurps_character_creation/core/themes/widgets/switch.dart';
 import 'package:gurps_character_creation/core/themes/widgets/text_input.dart';
 
@@ -11,13 +14,16 @@ ThemeData defaultTheme(BuildContext context) => ThemeData(
         onSecondary: Color(0xFF363636),
         error: Color(0xFFD81B60),
         onError: Color(0xFFeeeeee),
-        surface: Color(0xFFeeeeee),
+        surface: Color(0xFFefefef),
         onSurface: Color(0xFF363636),
         shadow: Color(0x64222222),
       ),
       useMaterial3: true,
+      fontFamily: GoogleFonts.lato().fontFamily,
       switchTheme: getSwitchThemeData(context),
       inputDecorationTheme: getInputDecorationTheme(context),
+      cardTheme: getCardTheme(context),
+      textButtonTheme: getTextButtonThemeData(context),
     );
 
 ThemeData darkTheme(BuildContext context) => ThemeData(
@@ -33,7 +39,10 @@ ThemeData darkTheme(BuildContext context) => ThemeData(
         onSurface: Color(0xFFDCDCDC),
         shadow: Color(0x64222222),
       ),
+      fontFamily: GoogleFonts.lato().fontFamily,
       useMaterial3: true,
       switchTheme: getSwitchThemeData(context),
       inputDecorationTheme: getInputDecorationTheme(context),
+      cardTheme: getCardTheme(context),
+      textButtonTheme: getTextButtonThemeData(context),
     );

@@ -8,27 +8,22 @@ class SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
-          ? SETTING_CARD_DESKTOP_WIDTH
-          : SETTING_CARD_MOBILE_WIDTH,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: 8.0,
+    return Card(
+      elevation:
+          MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH ? null : 0,
+      child: Container(
+        width: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+            ? SETTING_CARD_DESKTOP_WIDTH
+            : null,
+        height: MediaQuery.of(context).size.width > MAX_MOBILE_WIDTH
+            ? null
+            : MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 8.0,
+        ),
+        child: child,
       ),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 8,
-            color: Theme.of(context).colorScheme.shadow,
-            spreadRadius: 1,
-            offset: const Offset(2, 8),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: child,
     );
   }
 }
