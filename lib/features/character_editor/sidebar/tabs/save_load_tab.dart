@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/services/notification_service.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
-import 'package:provider/provider.dart';
 
 class SidebarSaveLoadTab extends StatelessWidget {
   const SidebarSaveLoadTab({super.key});
@@ -24,9 +24,9 @@ class SidebarSaveLoadTab extends StatelessWidget {
             icon: const Icon(Icons.save_outlined),
             label: const Text('Save Character'),
             onPressed: () async {
-              context.read<AutosaveService>().cancelAutosave();
+              serviceLocator.get<AutosaveService>().cancelAutosave();
               try {
-                await characterIOService.saveCharacter();
+                await CharacterIOService.saveCharacter();
                 notificator
                     .showMessageWithSnackBar('Character Saved Successfull');
               } catch (e) {
@@ -39,8 +39,7 @@ class SidebarSaveLoadTab extends StatelessWidget {
           FilledButton.icon(
             icon: const Icon(Icons.save_as_outlined),
             label: const Text('Save Character As'),
-            onPressed: () async =>
-                await characterIOService.saveCharacterAs(context),
+            onPressed: () async => await CharacterIOService.saveCharacterAs(),
           ),
           const Gap(24),
           Text(
@@ -51,7 +50,7 @@ class SidebarSaveLoadTab extends StatelessWidget {
           FilledButton.icon(
             icon: const Icon(Icons.save_alt_outlined),
             label: const Text('Load Character'),
-            onPressed: () async => await characterIOService.loadCharacterFrom(),
+            onPressed: () async => await CharacterIOService.loadCharacterFrom(),
           ),
         ],
       ),

@@ -270,32 +270,44 @@ class RangedWeapon extends Weapon {
         minimumSt: 10,
       );
 
-  factory RangedWeapon.fromJson(Map<String, dynamic> json) {
-    return RangedWeapon(
-      damage: json['damage'] == null
-          ? WeaponDamage(
-              attackType: AttackTypes.THRUST,
-              damageType: DamageType.BURNING,
-              modifier: 0,
-            )
-          : WeaponDamage.fromGURPSNotation(json['damage']),
-      notes: json['notes'],
-      name: json['name'],
-      price: double.tryParse(json['price'].toString()) ?? double.infinity,
-      weight: double.tryParse(json['weight'].toString()) ?? double.infinity,
-      associatedSkillName: json['associatedSkillName'] ?? '',
-      range: Range.fromJson(json['range']),
-      accuracy: json['accuracy'],
-      rateOfFire: json['rate_of_fire'],
-      shots: RangeWeaponShots.fromIntJson(json['shots']),
-      bulk: json['bulk'],
-      recoil: json['recoil'],
-      st: WeaponStrengths.fromIntJson(json['st']),
-      lc: LegalityClassExtention.fromString(json['lc'].toString()),
-      minimumSt: json['min_st'] ?? 10,
-      maximumSt: json['max_st'],
+  static WeaponDamage _parseDamage(dynamic damageJson) {
+    if (damageJson is String) {
+      return WeaponDamage.fromGURPSNotation(damageJson);
+    }
+
+    if (damageJson is Map<String, dynamic>) {
+      return WeaponDamage.fromJson(damageJson);
+    }
+
+    return WeaponDamage(
+      attackType: AttackTypes.THRUST,
+      damageType: DamageType.BURNING,
+      modifier: 0,
     );
   }
+
+  factory RangedWeapon.fromJson(Map<String, dynamic> json) => RangedWeapon(
+        damage: _parseDamage(json['damage']),
+        notes: json['notes'],
+        name: json['name'],
+        price: double.tryParse(json['price'].toString()) ?? double.infinity,
+        weight: double.tryParse(json['weight'].toString()) ?? double.infinity,
+        associatedSkillName: json['associatedSkillName'] ?? '',
+        range: Range.fromJson(json['range']),
+        accuracy: json['accuracy'],
+        rateOfFire: json['rate_of_fire'],
+        shots: json['shots'] is int
+            ? RangeWeaponShots.fromIntJson(json['shots'])
+            : RangeWeaponShots.fromJson(json['shots']),
+        bulk: json['bulk'],
+        recoil: json['recoil'],
+        st: json['st'] is int
+            ? WeaponStrengths.fromIntJson(json['st'])
+            : WeaponStrengths.fromJson(json['str']),
+        lc: LegalityClassExtention.fromString(json['lc'].toString()),
+        minimumSt: json['min_st'] ?? 10,
+        maximumSt: json['max_st'],
+      );
 
   @override
   Map<String, dynamic> toJson() => {

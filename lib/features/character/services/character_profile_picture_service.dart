@@ -4,13 +4,12 @@ import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as path;
 
-import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/services/app_directory_service.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CharacterProfilePictureService {
-  Future<List<int>> _convertToPng(Uint8List bytes) async {
+  static Future<List<int>> _convertToPng(Uint8List bytes) async {
     final img.Image? image = img.decodeImage(bytes);
 
     if (image == null) {
@@ -20,7 +19,7 @@ class CharacterProfilePictureService {
     return img.encodePng(image);
   }
 
-  Future<File> _beforeEach() async {
+  static Future<File> _beforeEach() async {
     final String characterId =
         serviceLocator.get<CharacterProvider>().character.id;
 
@@ -33,7 +32,7 @@ class CharacterProfilePictureService {
     return File(fullPath);
   }
 
-  Future<void> saveProfilePicture(BuildContext context, Uint8List bytes) async {
+  static Future<void> saveProfilePicture(Uint8List bytes) async {
     try {
       File charPFP = await _beforeEach();
       final pngBytes = await _convertToPng(bytes);
@@ -44,7 +43,7 @@ class CharacterProfilePictureService {
     }
   }
 
-  Future<Uint8List> loadProfilePictureBytes(BuildContext context) async {
+  static Future<Uint8List> loadProfilePictureBytes() async {
     try {
       File charPFP = await _beforeEach();
       return await charPFP.readAsBytes();

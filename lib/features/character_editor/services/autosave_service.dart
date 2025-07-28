@@ -14,7 +14,7 @@ class AutosaveService {
     _debounce = Timer(
       _delay ?? _defaultDelay,
       () async {
-        await characterIOService.saveCharacter();
+        await CharacterIOService.saveCharacter();
       },
     );
   }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:provider/provider.dart';
@@ -60,11 +61,11 @@ class WarningPrompt extends StatelessWidget {
             Expanded(
               child: TextButton(
                 onPressed: () async {
-                  if (!await CharacterIOService().saveCharacterAs(context)) {
+                  if (!await CharacterIOService.saveCharacterAs()) {
                     return;
                   }
 
-                  context.read<CharacterProvider>().clearProgress();
+                  serviceLocator.get<CharacterProvider>().clearProgress();
 
                   Navigator.popAndPushNamed(
                     context,

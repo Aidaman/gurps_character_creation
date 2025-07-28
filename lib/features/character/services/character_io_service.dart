@@ -12,16 +12,10 @@ import 'package:gurps_character_creation/features/character/providers/character_
 import 'package:path_provider/path_provider.dart';
 
 class CharacterIOService {
-  static final _instance = CharacterIOService._intenal();
-
-  CharacterIOService._intenal();
-
-  factory CharacterIOService() => _instance;
-
   /// Saves a character to a default location.
   /// return false on error
   /// return true on success
-  Future saveCharacter() async {
+  static Future saveCharacter() async {
     final Character char = serviceLocator.get<CharacterProvider>().character;
 
     try {
@@ -43,7 +37,7 @@ class CharacterIOService {
   /// Saves a character to a user-defined location.
   /// return false on error
   /// return true on success
-  Future<bool> saveCharacterAs(BuildContext context) async {
+  static Future<bool> saveCharacterAs() async {
     final Character char = serviceLocator.get<CharacterProvider>().character;
 
     try {
@@ -70,7 +64,7 @@ class CharacterIOService {
   /// Loads a character from a JSON file.
   /// return false on error
   /// return true on success
-  Future<bool> loadCharacterFrom() async {
+  static Future<bool> loadCharacterFrom() async {
     final CharacterProvider characterProvider =
         serviceLocator.get<CharacterProvider>();
 
@@ -89,12 +83,10 @@ class CharacterIOService {
 
         return true;
       }
-    } catch (e) {
-      throw Exception('Failed to load the Character ');
-    }
 
-    return false;
+      return false;
+    } catch (e, st) {
+      throw Exception('Failed to load the Character $e, $st');
+    }
   }
 }
-
-final CharacterIOService characterIOService = CharacterIOService();

@@ -42,7 +42,7 @@ class HandWeaponReach {
   factory HandWeaponReach.fromJson(Map<String, dynamic> json) =>
       HandWeaponReach(
         minReach: json['min_reach'] ?? 0,
-        maxReach: json['max_reach'],
+        maxReach: json['max_reach'] ?? 1,
       );
 
   static bool isReach(Map<String, dynamic> json) =>
@@ -163,7 +163,9 @@ class HandWeapon extends Weapon {
         price: json['price'] ?? 0,
         weight: json['weight'] ?? 0,
         notes: json['notes'] ?? '',
-        damage: WeaponDamage.fromGURPSNotation(json['damage']),
+        damage: json['damage'] is String
+            ? WeaponDamage.fromGURPSNotation(json['damage'])
+            : WeaponDamage.fromJson(json['damage']),
         reach: HandWeaponReach.fromJson(json['reach']),
         associatedSkillName: json['associated_skill_name'] ?? '',
         minimumSt: json['minimum_st'] ?? 0,

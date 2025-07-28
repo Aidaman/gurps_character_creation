@@ -1,15 +1,15 @@
-// ignore_for_file: unused_field
-
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/services/notification_service.dart';
 import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
+import 'package:gurps_character_creation/features/character/services/character_profile_picture_service.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class _PersonalInfoField {
   final String label;
@@ -38,15 +38,22 @@ class PersonalInfoSection extends StatelessWidget {
   Widget _buildCharacterAvatar() {
     return GestureDetector(
       onTap: () async {
-        FilePickerResult? result = await FilePicker.platform.pickFiles();
+        XFile? image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+        );
 
-        if (result == null) {
+        if (image == null) {
+          notificator.showMessageWithSnackBar('You haven\' picked any image');
           return;
         }
 
         personalInfoProvider.update(
           field: 'avatarURL',
-          value: result.files.first.path!,
+          value: image.path,
+        );
+
+        CharacterProfilePictureService.saveProfilePicture(
+          await image.readAsBytes(),
         );
       },
       child: Container(
@@ -64,7 +71,7 @@ class PersonalInfoSection extends StatelessWidget {
                 ),
               )
             : CircleAvatar(
-                child: Image.file(
+                foregroundImage: FileImage(
                   File(personalInfoProvider.getField('avatarURL')),
                 ),
               ),
