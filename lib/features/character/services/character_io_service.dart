@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/services/app_directory_service.dart';
 import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character/models/character.dart';

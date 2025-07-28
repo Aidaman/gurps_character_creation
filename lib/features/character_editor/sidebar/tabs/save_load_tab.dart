@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/services/notification_service.dart';
 import 'package:gurps_character_creation/core/services/service_locator.dart';
+import 'package:gurps_character_creation/features/character/models/character.dart';
+import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
+import 'package:gurps_character_creation/features/character_registry/providers/character_registry_provider.dart';
 
 class SidebarSaveLoadTab extends StatelessWidget {
   const SidebarSaveLoadTab({super.key});
@@ -27,6 +30,14 @@ class SidebarSaveLoadTab extends StatelessWidget {
               serviceLocator.get<AutosaveService>().cancelAutosave();
               try {
                 await CharacterIOService.saveCharacter();
+
+                final Character character =
+                    serviceLocator.get<CharacterProvider>().character;
+
+                serviceLocator
+                    .get<CharacterRegistryProvider>()
+                    .updateOne(character);
+
                 notificator
                     .showMessageWithSnackBar('Character Saved Successfull');
               } catch (e) {

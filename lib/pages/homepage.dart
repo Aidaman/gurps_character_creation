@@ -47,7 +47,8 @@ class Homepage extends StatelessWidget {
             const Gap(16),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.SETUP.destination);
+                Navigator.pushNamed(
+                    context, AppRoutes.CHARACTER_REGISTRY.destination);
               },
               child: const Text('Watch characters'),
             ),

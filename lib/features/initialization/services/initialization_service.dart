@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/services/app_directory_service.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
+import 'package:gurps_character_creation/features/character_registry/providers/character_registry_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/features/initialization/models/load_queue_entry.dart';
 import 'package:gurps_character_creation/features/settings/services/settings_provider.dart';
@@ -31,6 +32,10 @@ class InitializationService {
               message: 'Ensuring Application Directories...',
               task: AppDirectoryService().ensureDirectories,
             ),
+            LoadQueueEntry(
+              message: 'Loading characters...',
+              task: context.read<CharacterRegistryProvider>().loadCharacters,
+            )
           ],
         );
 

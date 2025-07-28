@@ -3,8 +3,12 @@ import 'package:gurps_character_creation/features/character/models/character.dar
 
 class CharacterProvider with ChangeNotifier {
   Character _character = Character.empty();
-
   Character get character => _character;
+  set character(Character value) {
+    _character = value;
+
+    notifyListeners();
+  }
 
   bool _isDirty = false;
   bool get isDirty => _isDirty;
@@ -17,13 +21,6 @@ class CharacterProvider with ChangeNotifier {
 
   void updateCharacterMaxPoints(int? newValue) {
     _character.points = newValue ?? _character.points;
-    notifyListeners();
-  }
-
-  void setProfilePicture(String path) {
-    _character.personalInfo.avatarURL = path;
-
-    _isDirty = true;
     notifyListeners();
   }
 

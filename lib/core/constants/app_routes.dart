@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/features/character_registry/page/character_registry.dart';
 import 'package:gurps_character_creation/features/character_setup/pages/setup.dart';
 import 'package:gurps_character_creation/features/settings/pages/settings.dart';
 import 'package:gurps_character_creation/features/character_editor/pages/character_editor.dart';
@@ -9,7 +10,7 @@ enum AppRoutes {
   SETUP,
   COMPOSE,
   SETTINGS,
-  // CHARACTER_REGISTRY,
+  CHARACTER_REGISTRY,
 }
 
 extension Routes on AppRoutes {
@@ -18,7 +19,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => 'setup',
         AppRoutes.COMPOSE => 'compose',
         AppRoutes.SETTINGS => 'settings',
-        // AppRoutes.CHARACTER_REGISTRY => 'characters',
+        AppRoutes.CHARACTER_REGISTRY => 'characters',
       };
 
   String get destination => switch (this) {
@@ -26,7 +27,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => '/setup',
         AppRoutes.COMPOSE => '/compose',
         AppRoutes.SETTINGS => '/settings',
-        // AppRoutes.CHARACTER_REGISTRY => '/characters',
+        AppRoutes.CHARACTER_REGISTRY => '/characters',
       };
 
   IconData get icon => switch (this) {
@@ -34,7 +35,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => Icons.abc,
         AppRoutes.COMPOSE => Icons.create,
         AppRoutes.SETTINGS => Icons.settings,
-        // AppRoutes.CHARACTER_REGISTRY => Icons.people_alt_outlined,
+        AppRoutes.CHARACTER_REGISTRY => Icons.people_alt_outlined,
       };
 
   Widget Function(BuildContext) get pageBuilder => switch (this) {
@@ -42,6 +43,6 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => (context) => const SetupPage(),
         AppRoutes.COMPOSE => (context) => const CharacterEditor(),
         AppRoutes.SETTINGS => (context) => const SettingsPage(),
-        // AppRoutes.CHARACTER_REGISTRY => throw UnimplementedError(),
+        AppRoutes.CHARACTER_REGISTRY => (context) => const CharacterRegistry(),
       };
 }

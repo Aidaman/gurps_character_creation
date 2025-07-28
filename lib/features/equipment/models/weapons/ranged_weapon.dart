@@ -303,7 +303,7 @@ class RangedWeapon extends Weapon {
         recoil: json['recoil'],
         st: json['st'] is int
             ? WeaponStrengths.fromIntJson(json['st'])
-            : WeaponStrengths.fromJson(json['str']),
+            : WeaponStrengths.fromJson(json['st']),
         lc: LegalityClassExtention.fromString(json['lc'].toString()),
         minimumSt: json['min_st'] ?? 10,
         maximumSt: json['max_st'],
