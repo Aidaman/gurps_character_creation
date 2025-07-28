@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/initialization/models/load_queue_entry.dart';
 import 'package:gurps_character_creation/features/initialization/services/initialization_service.dart';
 import 'package:gurps_character_creation/features/initialization/view/error_screen.dart';
@@ -48,6 +49,8 @@ class _AppInitializerState extends State<AppInitializer> {
             onReportBugClick: () {},
           );
         }
+
+        serviceLocator.context = context;
 
         return widget.app;
       },

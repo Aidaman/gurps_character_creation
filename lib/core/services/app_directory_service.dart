@@ -8,6 +8,7 @@ enum ApplicationDirectories {
   USER_CHARACTERS_DIRECTORY,
   USER_ASPECTS_DIRECTORY,
   USER_EQUIPMENT_DIRECTORY,
+  USER_CHARACTER_PROFILE_PICTURES_DIRECTORY,
 }
 
 extension ApplicationDirectoriesParser on ApplicationDirectories {
@@ -22,6 +23,8 @@ extension ApplicationDirectoriesParser on ApplicationDirectories {
           'gurps_character_composer/user_content/aspects',
         ApplicationDirectories.USER_EQUIPMENT_DIRECTORY =>
           'gurps_character_composer/user_content/equipment',
+        ApplicationDirectories.USER_CHARACTER_PROFILE_PICTURES_DIRECTORY =>
+          'gurps_character_composer/user_content/character_pfps',
       };
 
   static ApplicationDirectories parseApplicationDirectory(String value) =>
@@ -36,6 +39,8 @@ extension ApplicationDirectoriesParser on ApplicationDirectories {
           ApplicationDirectories.USER_ASPECTS_DIRECTORY,
         'gurps_character_composer/user_content/equipment' =>
           ApplicationDirectories.USER_EQUIPMENT_DIRECTORY,
+        'gurps_character_composer/user_content/character_pfps' =>
+          ApplicationDirectories.USER_CHARACTER_PROFILE_PICTURES_DIRECTORY,
         String() => throw const FormatException(),
       };
 }

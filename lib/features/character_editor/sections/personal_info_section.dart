@@ -6,10 +6,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
-import 'package:provider/provider.dart';
 
 class _PersonalInfoField {
   final String label;
@@ -161,7 +161,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Players Name',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
       _PersonalInfoField(
@@ -173,7 +173,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Character Name',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
       _PersonalInfoField(
@@ -185,7 +185,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Age',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
       _PersonalInfoField(
@@ -197,7 +197,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Height',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
       _PersonalInfoField(
@@ -209,7 +209,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Weight',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
       _PersonalInfoField(
@@ -221,7 +221,7 @@ class PersonalInfoSection extends StatelessWidget {
             field: 'Size Modifier',
             value: value,
           );
-          context.read<AutosaveService>().triggerAutosave(context);
+          serviceLocator.get<AutosaveService>().triggerAutosave();
         },
       ),
     ];

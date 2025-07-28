@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
 import 'package:gurps_character_creation/core/constants/themes.dart';
+import 'package:gurps_character_creation/core/services/notification_service.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/features/equipment/providers/equipment_provider.dart';
 import 'package:gurps_character_creation/features/initialization/widgets/app_initializer.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GURPS Composer',
+      scaffoldMessengerKey: notificator.messengerKey,
       theme: defaultTheme(context),
       darkTheme: darkTheme(context),
       themeMode: context.watch<SettingsProvider>().settings.theme,

@@ -9,6 +9,7 @@ enum AppRoutes {
   SETUP,
   COMPOSE,
   SETTINGS,
+  // CHARACTER_REGISTRY,
 }
 
 extension Routes on AppRoutes {
@@ -17,6 +18,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => 'setup',
         AppRoutes.COMPOSE => 'compose',
         AppRoutes.SETTINGS => 'settings',
+        // AppRoutes.CHARACTER_REGISTRY => 'characters',
       };
 
   String get destination => switch (this) {
@@ -24,6 +26,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => '/setup',
         AppRoutes.COMPOSE => '/compose',
         AppRoutes.SETTINGS => '/settings',
+        // AppRoutes.CHARACTER_REGISTRY => '/characters',
       };
 
   IconData get icon => switch (this) {
@@ -31,6 +34,7 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => Icons.abc,
         AppRoutes.COMPOSE => Icons.create,
         AppRoutes.SETTINGS => Icons.settings,
+        // AppRoutes.CHARACTER_REGISTRY => Icons.people_alt_outlined,
       };
 
   Widget Function(BuildContext) get pageBuilder => switch (this) {
@@ -38,5 +42,6 @@ extension Routes on AppRoutes {
         AppRoutes.SETUP => (context) => const SetupPage(),
         AppRoutes.COMPOSE => (context) => const CharacterEditor(),
         AppRoutes.SETTINGS => (context) => const SettingsPage(),
+        // AppRoutes.CHARACTER_REGISTRY => throw UnimplementedError(),
       };
 }

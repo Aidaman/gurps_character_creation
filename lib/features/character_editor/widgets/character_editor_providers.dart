@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
 import 'package:gurps_character_creation/features/character/services/attributes_service.dart';
-import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/services/personal_info_service.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
@@ -40,7 +40,7 @@ class CharacterEditorProviders extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(
-          create: (_) => AutosaveService(CharacterIOService(),
+          create: (_) => AutosaveService(
               context.read<SettingsProvider>().settings.autosaveDelay),
         ),
         ChangeNotifierProvider<SidebarProvider>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/equipment/models/posession.dart';
@@ -85,7 +86,7 @@ class PosessionsSection extends StatelessWidget {
 
     if (newPossession != null) {
       _possessionsProvider.create(newPossession);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 
@@ -98,7 +99,7 @@ class PosessionsSection extends StatelessWidget {
 
     if (newPossession != null) {
       _possessionsProvider.update(newPossession);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 
@@ -129,7 +130,7 @@ class PosessionsSection extends StatelessWidget {
         IconButton(
           onPressed: () {
             _possessionsProvider.delete(poss.id);
-            context.read<AutosaveService>().triggerAutosave(context);
+            serviceLocator.get<AutosaveService>().triggerAutosave();
           },
           icon: const Icon(Icons.remove_outlined),
         ),

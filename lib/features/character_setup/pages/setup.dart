@@ -68,7 +68,7 @@ class _SetupPageState extends State<SetupPage> {
         const Gap(32),
         TextButton.icon(
           onPressed: () async {
-            if (await CharacterIOService().loadCharacter(context)) {
+            if (await characterIOService.loadCharacterFrom()) {
               Navigator.popAndPushNamed(context, AppRoutes.COMPOSE.destination);
             }
           },

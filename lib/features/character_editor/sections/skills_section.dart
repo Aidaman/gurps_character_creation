@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/providers/sidebar_aspects_filter_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
@@ -9,7 +10,6 @@ import 'package:gurps_character_creation/features/skills/providers/skill_provide
 import 'package:gurps_character_creation/features/spells/providers/spells_provider.dart';
 import 'package:gurps_character_creation/features/skills/widgets/skill_view.dart';
 import 'package:gurps_character_creation/features/spells/widgets/spell_view.dart';
-import 'package:provider/provider.dart';
 
 class SkillsSection extends StatelessWidget {
   final SkillsProvider skillsProvider;
@@ -21,7 +21,7 @@ class SkillsSection extends StatelessWidget {
     required this.spellsProvider,
   });
 
-  Widget _buildSpellList(BuildContext context) {
+  Widget _buildSpellList() {
     final List<Widget> spells = List.from(
       spellsProvider.readAll().map(
             (Spell spl) => SpellView(
@@ -29,6 +29,7 @@ class SkillsSection extends StatelessWidget {
               isIncluded: true,
               onRemoveClick: () {
                 spellsProvider.delete(spl);
+                serviceLocator.get<AutosaveService>().triggerAutosave();
               },
             ),
           ),
@@ -46,7 +47,7 @@ class SkillsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillList(BuildContext context) {
+  Widget _buildSkillList() {
     final List<Widget> skills = List.from(
       skillsProvider.readAll().map(
             (Skill skl) => SkillView(
@@ -54,7 +55,7 @@ class SkillsSection extends StatelessWidget {
               isIncluded: true,
               onRemoveClick: () {
                 skillsProvider.delete(skl);
-                context.read<AutosaveService>().triggerAutosave(context);
+                serviceLocator.get<AutosaveService>().triggerAutosave();
               },
             ),
           ),
@@ -79,8 +80,8 @@ class SkillsSection extends StatelessWidget {
     if (isMobile) {
       return Column(
         children: [
-          _buildSpellList(context),
-          _buildSkillList(context),
+          _buildSpellList(),
+          _buildSkillList(),
         ],
       );
     }
@@ -89,8 +90,8 @@ class SkillsSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: _buildSpellList(context)),
-        Expanded(child: _buildSkillList(context)),
+        Expanded(child: _buildSpellList()),
+        Expanded(child: _buildSkillList()),
       ],
     );
   }

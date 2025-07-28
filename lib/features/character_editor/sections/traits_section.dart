@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/empty_category_action.dart';
@@ -8,7 +9,6 @@ import 'package:gurps_character_creation/features/traits/models/trait_categories
 import 'package:gurps_character_creation/features/traits/providers/traits_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/select_trait_modifiers.dart';
 import 'package:gurps_character_creation/features/traits/widgets/trait_view.dart';
-import 'package:provider/provider.dart';
 
 class TraitsSection extends StatelessWidget {
   final TraitsProvider _traitsProvider;
@@ -61,23 +61,23 @@ class TraitsSection extends StatelessWidget {
           trait: t,
           onRemoveClick: () {
             _traitsProvider.delete(t);
-            context.read<AutosaveService>().triggerAutosave(context);
+            serviceLocator.get<AutosaveService>().triggerAutosave();
           },
           onChangeModifiersClick: _generateChangeModifiers(context, t),
           onChangePlaceholderClick: () async {
             await _traitsProvider.updateTraitTitle(t, context);
-            context.read<AutosaveService>().triggerAutosave(context);
+            serviceLocator.get<AutosaveService>().triggerAutosave();
           },
           onIncreaseLevel: t.canLevel
               ? () {
                   _traitsProvider.updateTraitLevel(t, doIncrease: true);
-                  context.read<AutosaveService>().triggerAutosave(context);
+                  serviceLocator.get<AutosaveService>().triggerAutosave();
                 }
               : null,
           onReduceLevel: t.canLevel
               ? () {
                   _traitsProvider.updateTraitLevel(t, doIncrease: false);
-                  context.read<AutosaveService>().triggerAutosave(context);
+                  serviceLocator.get<AutosaveService>().triggerAutosave();
                 }
               : null,
         ),

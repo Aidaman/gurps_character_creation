@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character_editor/sidebar/tabs/equipment_tab.dart';
 import 'package:gurps_character_creation/features/character_editor/widgets/character_editor_providers.dart';
-import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character/providers/attributes_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:gurps_character_creation/features/character/providers/personal_info_provider.dart';
@@ -45,21 +45,19 @@ class _CharacterEditorState extends State<CharacterEditor> {
     final bool isDesktop =
         MediaQuery.of(context).size.width > MIN_DESKTOP_WIDTH;
 
-    final Widget sidebar = SafeArea(
+    const Widget sidebar = SafeArea(
       child: Sidebar(
-        actions: const [
+        actions: [
           Icons.psychology,
           Icons.wallet_travel_outlined,
           Icons.save,
           Icons.settings_outlined,
         ],
         tabs: [
-          const SidebarAspectsTab(),
-          const SidebarEquipmentTab(),
-          SidebarSaveLoadTab(
-            characterIOService: CharacterIOService(),
-          ),
-          const SidebarSettingsTab(),
+          SidebarAspectsTab(),
+          SidebarEquipmentTab(),
+          SidebarSaveLoadTab(),
+          SidebarSettingsTab(),
         ],
       ),
     );
@@ -67,6 +65,8 @@ class _CharacterEditorState extends State<CharacterEditor> {
     return CharacterEditorProviders(
       characterProvider: characterProvider,
       builder: (context, child) {
+        serviceLocator.context = context;
+
         return Scaffold(
           appBar: AppBar(
             toolbarHeight: APP_BAR_HEIGHT,
@@ -87,7 +87,7 @@ class _CharacterEditorState extends State<CharacterEditor> {
                 )
               : null,
           endDrawer: !isDesktop
-              ? Drawer(
+              ? const Drawer(
                   child: sidebar,
                 )
               : null,

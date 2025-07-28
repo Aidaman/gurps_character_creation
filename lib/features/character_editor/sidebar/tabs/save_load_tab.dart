@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/services/notification_service.dart';
 import 'package:gurps_character_creation/features/character/services/character_io_service.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
 import 'package:provider/provider.dart';
 
 class SidebarSaveLoadTab extends StatelessWidget {
-  final CharacterIOService characterIOService;
-  const SidebarSaveLoadTab({super.key, required this.characterIOService});
+  const SidebarSaveLoadTab({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,14 @@ class SidebarSaveLoadTab extends StatelessWidget {
             label: const Text('Save Character'),
             onPressed: () async {
               context.read<AutosaveService>().cancelAutosave();
-              return await characterIOService.saveCharacter(context);
+              try {
+                await characterIOService.saveCharacter();
+                notificator
+                    .showMessageWithSnackBar('Character Saved Successfull');
+              } catch (e) {
+                notificator
+                    .showMessageWithSnackBar('Failed to save Character: $e');
+              }
             },
           ),
           const Gap(8),
@@ -44,8 +51,7 @@ class SidebarSaveLoadTab extends StatelessWidget {
           FilledButton.icon(
             icon: const Icon(Icons.save_alt_outlined),
             label: const Text('Load Character'),
-            onPressed: () async =>
-                await characterIOService.loadCharacter(context),
+            onPressed: () async => await characterIOService.loadCharacterFrom(),
           ),
         ],
       ),

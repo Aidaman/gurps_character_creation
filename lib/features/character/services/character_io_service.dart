@@ -6,14 +6,23 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:gurps_character_creation/core/services/app_directory_service.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/features/character/models/character.dart';
 import 'package:gurps_character_creation/features/character/providers/character_provider.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:provider/provider.dart';
 
 class CharacterIOService {
-  Future saveCharacter(BuildContext context) async {
-    final Character char = context.read<CharacterProvider>().character;
+  static final _instance = CharacterIOService._intenal();
+
+  CharacterIOService._intenal();
+
+  factory CharacterIOService() => _instance;
+
+  /// Saves a character to a default location.
+  /// return false on error
+  /// return true on success
+  Future saveCharacter() async {
+    final Character char = serviceLocator.get<CharacterProvider>().character;
 
     try {
       final Directory directory = await getApplicationDocumentsDirectory();
@@ -24,17 +33,10 @@ class CharacterIOService {
       final file = File(fileUri.toFilePath());
 
       await file.writeAsString(jsonEncode(char.toJson()));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Character saved successfully!')),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to save your character: $e'),
-        ),
-      );
 
-      rethrow;
+      return true;
+    } catch (e) {
+      throw Exception('Failed to save the Character');
     }
   }
 
@@ -42,7 +44,7 @@ class CharacterIOService {
   /// return false on error
   /// return true on success
   Future<bool> saveCharacterAs(BuildContext context) async {
-    final Character char = context.read<CharacterProvider>().character;
+    final Character char = serviceLocator.get<CharacterProvider>().character;
 
     try {
       final String? outputFile = await FilePicker.platform.saveFile(
@@ -58,17 +60,8 @@ class CharacterIOService {
       final File file = File(outputFile);
 
       await file.writeAsString(jsonEncode(char.toJson()));
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Character saved successfully!')),
-      );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to save your character: $e'),
-        ),
-      );
-
-      rethrow;
+      throw Exception('Failed to save the Character');
     }
 
     return true;
@@ -77,9 +70,9 @@ class CharacterIOService {
   /// Loads a character from a JSON file.
   /// return false on error
   /// return true on success
-  Future<bool> loadCharacter(BuildContext context) async {
+  Future<bool> loadCharacterFrom() async {
     final CharacterProvider characterProvider =
-        context.read<CharacterProvider>();
+        serviceLocator.get<CharacterProvider>();
 
     try {
       final FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -94,22 +87,14 @@ class CharacterIOService {
 
         characterProvider.loadCharacterFromJson(jsonData);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Character loaded successfully!')),
-        );
-
         return true;
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to load your character: $e'),
-        ),
-      );
-
-      rethrow;
+      throw Exception('Failed to load the Character ');
     }
 
     return false;
   }
 }
+
+final CharacterIOService characterIOService = CharacterIOService();

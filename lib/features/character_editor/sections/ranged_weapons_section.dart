@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/character/models/attributes.dart';
 import 'package:gurps_character_creation/features/character/models/character.dart';
@@ -176,7 +177,7 @@ class RangedWeaponsSection extends StatelessWidget {
 
     if (rw != null) {
       weaponProvider.create(rw);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 
@@ -189,7 +190,7 @@ class RangedWeaponsSection extends StatelessWidget {
 
     if (newWeapon != null) {
       weaponProvider.update(newWeapon);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 }

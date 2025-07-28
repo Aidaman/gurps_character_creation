@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/dialog_shape.dart';
 import 'package:gurps_character_creation/features/character/models/attributes.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
@@ -10,7 +11,6 @@ import 'package:gurps_character_creation/features/equipment/models/weapons/weapo
 import 'package:gurps_character_creation/features/equipment/providers/weapon_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/hand_weapon_details_dialog.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/equipment/hand_weapon_editor_dialog.dart';
-import 'package:provider/provider.dart';
 
 class MeleeWeaponsSection extends StatelessWidget {
   static const double _DIVIDER_INDENT = 32;
@@ -107,7 +107,7 @@ class MeleeWeaponsSection extends StatelessWidget {
         IconButton(
           onPressed: () {
             weaponProvider.delete(hw.id);
-            context.read<AutosaveService>().triggerAutosave(context);
+            serviceLocator.get<AutosaveService>().triggerAutosave();
           },
           icon: const Icon(Icons.remove_outlined),
         ),
@@ -215,7 +215,7 @@ class MeleeWeaponsSection extends StatelessWidget {
 
     if (hw != null) {
       weaponProvider.create(hw);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 
@@ -228,7 +228,7 @@ class MeleeWeaponsSection extends StatelessWidget {
 
     if (newWeapon != null) {
       weaponProvider.update(newWeapon);
-      context.read<AutosaveService>().triggerAutosave(context);
+      serviceLocator.get<AutosaveService>().triggerAutosave();
     }
   }
 }

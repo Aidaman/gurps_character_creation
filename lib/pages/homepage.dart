@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:gurps_character_creation/core/constants/app_routes.dart';
 import 'package:gurps_character_creation/core/constants/common_constants.dart';
 import 'package:gurps_character_creation/core/constants/responsive_layouting_constants.dart';
@@ -42,6 +43,13 @@ class Homepage extends StatelessWidget {
                 Navigator.pushNamed(context, AppRoutes.SETUP.destination);
               },
               child: const Text('Compose a Character Sheet'),
+            ),
+            const Gap(16),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.SETUP.destination);
+              },
+              child: const Text('Watch characters'),
             ),
           ],
         ),

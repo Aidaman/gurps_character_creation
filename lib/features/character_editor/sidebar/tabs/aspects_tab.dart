@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/models/aspect.dart';
 import 'package:gurps_character_creation/features/character_editor/services/autosave_service.dart';
@@ -73,7 +74,7 @@ class SidebarAspectsTab extends StatelessWidget {
                   },
                   onRemoveClick: () {
                     context.read<TraitsProvider>().delete(item);
-                    context.read<AutosaveService>().triggerAutosave(context);
+                    serviceLocator.get<AutosaveService>().triggerAutosave();
                   },
                 ),
               ),
@@ -91,7 +92,7 @@ class SidebarAspectsTab extends StatelessWidget {
                   },
                   onRemoveClick: () {
                     context.read<SkillsProvider>().delete(skl);
-                    context.read<AutosaveService>().triggerAutosave(context);
+                    serviceLocator.get<AutosaveService>().triggerAutosave();
                   },
                 ),
               ),
@@ -109,7 +110,7 @@ class SidebarAspectsTab extends StatelessWidget {
                   },
                   onRemoveClick: () {
                     context.read<SpellsProvider>().delete(spl);
-                    context.read<AutosaveService>().triggerAutosave(context);
+                    serviceLocator.get<AutosaveService>().triggerAutosave();
                   },
                 ),
               ),
@@ -342,6 +343,6 @@ class SidebarAspectsTab extends StatelessWidget {
       context.read<SpellsProvider>().add(aspect);
     }
 
-    context.read<AutosaveService>().triggerAutosave(context);
+    serviceLocator.get<AutosaveService>().triggerAutosave();
   }
 }

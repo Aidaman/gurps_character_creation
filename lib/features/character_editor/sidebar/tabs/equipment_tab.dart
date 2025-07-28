@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:gurps_character_creation/core/services/service_locator.dart';
 import 'package:gurps_character_creation/core/utilities/form_helpers.dart';
 import 'package:gurps_character_creation/features/aspects/providers/aspects_provider.dart';
 import 'package:gurps_character_creation/features/character_editor/dialogs/details/armor_details_dialog.dart';
@@ -91,7 +92,7 @@ class SidebarEquipmentTab extends StatelessWidget {
                   context.read<CharacterWeaponProvider>().create(
                         HandWeapon.copyWith(item),
                       );
-                  context.read<AutosaveService>().triggerAutosave(context);
+                  serviceLocator.get<AutosaveService>().triggerAutosave();
                 },
                 onInfoClick: () => showDialog(
                   context: context,
@@ -115,7 +116,7 @@ class SidebarEquipmentTab extends StatelessWidget {
                   context.read<CharacterWeaponProvider>().create(
                         RangedWeapon.copyWith(item),
                       );
-                  context.read<AutosaveService>().triggerAutosave(context);
+                  serviceLocator.get<AutosaveService>().triggerAutosave();
                 },
                 onInfoClick: () => showDialog(
                   context: context,
@@ -135,7 +136,7 @@ class SidebarEquipmentTab extends StatelessWidget {
                 armor: armor,
                 onAddClick: (armor) {
                   context.read<ArmorProvider>().create(Armor.copyWith(armor));
-                  context.read<AutosaveService>().triggerAutosave(context);
+                  serviceLocator.get<AutosaveService>().triggerAutosave();
                 },
                 onInfoClick: (armor) => showDialog(
                   context: context,
